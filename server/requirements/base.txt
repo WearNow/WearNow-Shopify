@@ -1,0 +1,71 @@
+fastapi==0.100.1
+uvicorn==0.23.2
+httptools==0.6.0
+numpy==1.24.3
+Pillow==10.0.0
+pillow-heif==0.13.0
+requests==2.31.0
+scikit-image==0.21.0
+semver==3.0.1
+scipy==1.10.1
+ujson==5.8.0
+pydantic==1.10.12 
+boto3==1.28.17
+aioboto3==11.3.0
+python-multipart==0.0.6
+langdetect==1.0.9
+aliyun-python-sdk-core-v3==2.13.33
+aliyun-python-sdk-alimt==3.2.0
+aliyun-python-sdk-green==3.6.6
+aliyun-python-sdk-green-extension==1.0.0
+oss2==2.18.0
+mysql-connector-python==8.0.33
+SQLAlchemy==1.4.48
+python-dotenv==1.0.0
+aiomysql==0.2.0
+passlib[bcrypt]==1.7.4
+python-jose==3.3.0
+aiohttp==3.8.4
+databases==0.7.0
+
+
+# Chinese payments
+wechatpayv3==1.2.39
+python-alipay-sdk==3.3.0
+
+# WeChat login
+pywe-miniapp==1.1.6
+
+# Google pay
+inapppy==2.5.2
+
+alembic==1.11.1
+
+# Google API
+google-api-python-client==2.91.0
+google-cloud-translate==2.0.1
+
+# Phone
+phonenumbers==8.13.16
+
+# Country code
+pycountry==22.3.5
+pycountry_convert==0.7.2
+babel==2.12.1
+
+httpx==0.24.1
+loguru==0.7.0
+
+
+gspread==5.10.0
+
+async-lru==2.0.4
+pyi18n-v2==1.2.1
+
+redis==5.00
+hiredis==2.2.3
+stripe==6.1.0
+
+app-store-server-library==0.2.1
+orjson==3.9.9
+deprecation==2.1.0
