@@ -4,8 +4,6 @@ import { boundary } from "@shopify/shopify-app-remix/server";
 import { AppProvider } from "@shopify/shopify-app-remix/react";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 import { authenticate } from "../shopify.server";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from "./components/Header/Header";
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
@@ -20,8 +18,7 @@ export default function App() {
 
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
-      <Header/>
-      <ui-nav-menu>
+      <ui-nav-menu>shf
         <Link to="/app" rel="home">
           Home
         </Link>
@@ -39,3 +36,6 @@ export function ErrorBoundary() {
 export const headers = (headersArgs) => {
   return boundary.headers(headersArgs);
 };
+
+
+

@@ -14,6 +14,8 @@ import {
   InlineStack,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
+import '../../components/Onboarding/onboarding.css';
+import Onboarding from "../../components/Onboarding/Onboarding";
 export const loader = async ({ request }) => {
   await authenticate.admin(request);
 
@@ -105,6 +107,8 @@ export default function Index() {
   }, [productId]);
   const generateProduct = () => submit({}, { replace: true, method: "POST" });
   return (
-    <></>
+    <>
+     <Onboarding/>
+    </>
   );
 }

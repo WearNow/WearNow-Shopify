@@ -3,7 +3,7 @@
 client_id = "68c0496da36fc88a48113e8cca008191"
 name = "ai"
 handle = "ai-20"
-application_url = "https://term-lived-dame-knives.trycloudflare.com"
+application_url = "https://bizrate-dim-memo-aggregate.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://term-lived-dame-knives.trycloudflare.com/auth/callback",
-  "https://term-lived-dame-knives.trycloudflare.com/auth/shopify/callback",
-  "https://term-lived-dame-knives.trycloudflare.com/api/auth/callback"
+  "https://bizrate-dim-memo-aggregate.trycloudflare.com/auth/callback",
+  "https://bizrate-dim-memo-aggregate.trycloudflare.com/auth/shopify/callback",
+  "https://bizrate-dim-memo-aggregate.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
