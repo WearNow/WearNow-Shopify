@@ -16,7 +16,7 @@ COPY . /app
 
 # Install project dependencies
 COPY ./requirements /app/requirements
-RUN --mount=type=cache,target=/root/.cache/pip pip3 install -r ./requirements/prod.txt
+RUN pip3 install -r ./requirements/prod.txt
 
 # Copy the .env file
 COPY .env /app
