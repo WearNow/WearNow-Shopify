@@ -16,6 +16,7 @@ COPY . /app
 
 # Install project dependencies
 COPY ./requirements /app/requirements
+Run pip3 install --upgrade pip
 RUN pip3 install -r ./requirements/prod.txt
 
 # Copy the .env file
