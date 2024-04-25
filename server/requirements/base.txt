@@ -13,12 +13,6 @@ pydantic==1.10.12
 boto3==1.28.17
 aioboto3==11.3.0
 python-multipart==0.0.6
-langdetect==1.0.9
-aliyun-python-sdk-core-v3==2.13.33
-aliyun-python-sdk-alimt==3.2.0
-aliyun-python-sdk-green==3.6.6
-aliyun-python-sdk-green-extension==1.0.0
-oss2==2.18.0
 mysql-connector-python==8.0.33
 SQLAlchemy==1.4.48
 python-dotenv==1.0.0
