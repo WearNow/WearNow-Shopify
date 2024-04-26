@@ -1,5 +1,5 @@
 {
-  "include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "app/components/Onboarding/dummy.js"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "strict": true,
@@ -21,6 +21,6 @@
     },
     "types": [
       "node", "@shopify/app-bridge-types"
-    ]   
+    ]
   }
 }

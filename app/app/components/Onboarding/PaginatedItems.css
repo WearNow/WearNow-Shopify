@@ -1,0 +1,35 @@
+.item-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+.item-container label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  padding: 1px;
+  border: 2px solid #dfdfdf;
+  border-radius: 12px;
+}
+
+.item-title {
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 20px;
+  text-align: left;
+}
+
+.item-container input {
+  height: 18px;
+  width: 18px;
+  outline: none !important;
+  border: none !important;
+}

@@ -1,9 +1,9 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "68c0496da36fc88a48113e8cca008191"
-name = "ai"
-handle = "ai-20"
-application_url = "https://bizrate-dim-memo-aggregate.trycloudflare.com"
+client_id = "bfdb6cc77aeff152d3b1f0187bafbc29"
+name = "new-ai-app"
+handle = "new-ai-app"
+application_url = "https://wal-ro-playing-connections.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://bizrate-dim-memo-aggregate.trycloudflare.com/auth/callback",
-  "https://bizrate-dim-memo-aggregate.trycloudflare.com/auth/shopify/callback",
-  "https://bizrate-dim-memo-aggregate.trycloudflare.com/api/auth/callback"
+  "https://wal-ro-playing-connections.trycloudflare.com/auth/callback",
+  "https://wal-ro-playing-connections.trycloudflare.com/auth/shopify/callback",
+  "https://wal-ro-playing-connections.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

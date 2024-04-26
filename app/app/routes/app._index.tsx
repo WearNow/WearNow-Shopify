@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
+import '../components/Onboarding/onboarding.css'
 import { useActionData, useNavigation, useSubmit } from "@remix-run/react";
 import {
   Page,
@@ -14,15 +16,16 @@ import {
   InlineStack,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
-import '../../components/Onboarding/onboarding.css';
-import Onboarding from "../../components/Onboarding/Onboarding";
-export const loader = async ({ request }) => {
+import handleRequest from "~/entry.server";
+import Onboarding from "~/components/Onboarding/Onboarding";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   await authenticate.admin(request);
 
   return null;
 };
 
-export const action = async ({ request }) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
   const color = ["Red", "Orange", "Yellow", "Green"][
     Math.floor(Math.random() * 4)
@@ -58,8 +61,9 @@ export const action = async ({ request }) => {
     },
   );
   const responseJson = await response.json();
+
   const variantId =
-    responseJson.data.productCreate.product.variants.edges[0].node.id;
+    responseJson.data!.productCreate!.product!.variants.edges[0]!.node!.id!;
   const variantResponse = await admin.graphql(
     `#graphql
       mutation updateVariant($input: ProductVariantInput!) {
@@ -81,17 +85,18 @@ export const action = async ({ request }) => {
       },
     },
   );
+
   const variantResponseJson = await variantResponse.json();
 
   return json({
-    product: responseJson.data.productCreate.product,
-    variant: variantResponseJson.data.productVariantUpdate.productVariant,
+    product: responseJson!.data!.productCreate!.product,
+    variant: variantResponseJson!.data!.productVariantUpdate!.productVariant,
   });
 };
 
 export default function Index() {
   const nav = useNavigation();
-  const actionData = useActionData();
+  const actionData = useActionData<typeof action>();
   const submit = useSubmit();
   const isLoading =
     ["loading", "submitting"].includes(nav.state) && nav.formMethod === "POST";
@@ -106,9 +111,14 @@ export default function Index() {
     }
   }, [productId]);
   const generateProduct = () => submit({}, { replace: true, method: "POST" });
+  
+  const handleButton = ()=>{
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>aaaaa")
+  }
+
   return (
     <>
-     <Onboarding/>
+    <Onboarding/>
     </>
   );
 }
