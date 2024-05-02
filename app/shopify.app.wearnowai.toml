@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "8c68b6bdc0b60e380281b7d1fbcbf3ed"
+name = "wearnowAI"
+handle = "wearnowai"
+application_url = "https://infected-wagner-surfing-hr.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "ansari-test-store.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = ""
+
+[auth]
+redirect_urls = [
+  "https://infected-wagner-surfing-hr.trycloudflare.com/auth/callback",
+  "https://infected-wagner-surfing-hr.trycloudflare.com/auth/shopify/callback",
+  "https://infected-wagner-surfing-hr.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[pos]
+embedded = false
