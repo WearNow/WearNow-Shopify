@@ -1,0 +1,114 @@
+{
+  "D:/wearnow/WearNow-Shopify/app/app/tailwind.css": {
+    "file": "assets/tailwind--0Pce7OH.css",
+    "src": "D:/wearnow/WearNow-Shopify/app/app/tailwind.css"
+  },
+  "D:/wearnow/WearNow-Shopify/app/node_modules/@shopify/polaris/build/esm/styles.css": {
+    "file": "assets/styles-BGjgDe03.css",
+    "src": "D:/wearnow/WearNow-Shopify/app/node_modules/@shopify/polaris/build/esm/styles.css"
+  },
+  "_components-A2SuPOEf.js": {
+    "file": "assets/components-A2SuPOEf.js",
+    "name": "components",
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js"
+    ]
+  },
+  "_jsx-runtime-x_ubZUSp.js": {
+    "file": "assets/jsx-runtime-x_ubZUSp.js",
+    "name": "jsx-runtime"
+  },
+  "_styles-BY-d0i2d.js": {
+    "file": "assets/styles-BY-d0i2d.js",
+    "name": "styles",
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js"
+    ]
+  },
+  "app/root.tsx?client-route=1": {
+    "file": "assets/root-hFdGWqW4.js",
+    "name": "root",
+    "src": "app/root.tsx?client-route=1",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js",
+      "_components-A2SuPOEf.js"
+    ]
+  },
+  "app/routes/_index/route.tsx?client-route=1": {
+    "file": "assets/route-B0I0oiJW.js",
+    "name": "route",
+    "src": "app/routes/_index/route.tsx?client-route=1",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js",
+      "_components-A2SuPOEf.js"
+    ],
+    "css": [
+      "assets/route-Qq2qOeDq.css"
+    ]
+  },
+  "app/routes/app._index.tsx?client-route=1": {
+    "file": "assets/app._index-CS5Yu7Rn.js",
+    "name": "app._index",
+    "src": "app/routes/app._index.tsx?client-route=1",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js",
+      "_components-A2SuPOEf.js"
+    ]
+  },
+  "app/routes/app.additional.tsx?client-route=1": {
+    "file": "assets/app.additional-LDKqjLds.js",
+    "name": "app.additional",
+    "src": "app/routes/app.additional.tsx?client-route=1",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js"
+    ]
+  },
+  "app/routes/app.tsx?client-route=1": {
+    "file": "assets/app-DhoiYBBl.js",
+    "name": "app",
+    "src": "app/routes/app.tsx?client-route=1",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js",
+      "_components-A2SuPOEf.js",
+      "_styles-BY-d0i2d.js"
+    ]
+  },
+  "app/routes/auth.$.tsx?client-route=1": {
+    "file": "assets/auth._-l0sNRNKZ.js",
+    "name": "auth._",
+    "src": "app/routes/auth.$.tsx?client-route=1",
+    "isEntry": true
+  },
+  "app/routes/auth.login/route.tsx?client-route=1": {
+    "file": "assets/route-PSC88KHh.js",
+    "name": "route",
+    "src": "app/routes/auth.login/route.tsx?client-route=1",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js",
+      "_styles-BY-d0i2d.js",
+      "_components-A2SuPOEf.js"
+    ]
+  },
+  "app/routes/webhooks.tsx?client-route=1": {
+    "file": "assets/webhooks-l0sNRNKZ.js",
+    "name": "webhooks",
+    "src": "app/routes/webhooks.tsx?client-route=1",
+    "isEntry": true
+  },
+  "node_modules/@remix-run/dev/dist/config/defaults/entry.client.tsx": {
+    "file": "assets/entry.client-DZOHsLo1.js",
+    "name": "entry.client",
+    "src": "node_modules/@remix-run/dev/dist/config/defaults/entry.client.tsx",
+    "isEntry": true,
+    "imports": [
+      "_jsx-runtime-x_ubZUSp.js",
+      "_components-A2SuPOEf.js"
+    ]
+  }
+}
