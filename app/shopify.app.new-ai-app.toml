@@ -3,7 +3,7 @@
 client_id = "bfdb6cc77aeff152d3b1f0187bafbc29"
 name = "new-ai-app"
 handle = "new-ai-app"
-application_url = "https://sweet-sessions-phillips-statistics.trycloudflare.com"
+application_url = "https://clearance-tions-shopzilla-commit.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://sweet-sessions-phillips-statistics.trycloudflare.com/auth/callback",
-  "https://sweet-sessions-phillips-statistics.trycloudflare.com/auth/shopify/callback",
-  "https://sweet-sessions-phillips-statistics.trycloudflare.com/api/auth/callback"
+  "https://clearance-tions-shopzilla-commit.trycloudflare.com/auth/callback",
+  "https://clearance-tions-shopzilla-commit.trycloudflare.com/auth/shopify/callback",
+  "https://clearance-tions-shopzilla-commit.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
