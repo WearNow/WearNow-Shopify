@@ -545,7 +545,7 @@ const SecondHeader: React.FC = () => {
                         <div className='flex w-[287px] items-start shrink-0 flex-nowrap relative z-[14]'>
                           <div className='flex w-[72px] pt-[6px] pr-[6px] pb-[6px] pl-[6px] items-center shrink-0 flex-nowrap bg-[#fff] relative overflow-hidden z-[15]'>
                             <div className='flex w-[60px] gap-[8px] items-start shrink-0 flex-nowrap bg-[#fdfdfd] rounded-[8px] relative overflow-hidden shadow-[0_0_0_0_rgba(0,0,0,0.08)_inset] z-[16]'>
-                              <div className='w-[60px] h-[60px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Rene_1_2.png?v=1714646888)] bg-cover bg-no-repeat relative z-[17]' />
+                              <div className='w-[60px] h-[60px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Rene_1_4.png?v=1714648274)] bg-cover bg-no-repeat relative z-[17]' />
                             </div>
                           </div>
                           <div className='flex w-[72px] pt-[6px] pr-[6px] pb-[6px] pl-[6px] items-center shrink-0 flex-nowrap bg-[#fff] relative overflow-hidden z-[18]'>

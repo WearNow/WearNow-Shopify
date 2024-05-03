@@ -3,7 +3,7 @@
 client_id = "bfdb6cc77aeff152d3b1f0187bafbc29"
 name = "new-ai-app"
 handle = "new-ai-app"
-application_url = "https://clearance-tions-shopzilla-commit.trycloudflare.com"
+application_url = "https://teachers-pure-capable-trio.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://clearance-tions-shopzilla-commit.trycloudflare.com/auth/callback",
-  "https://clearance-tions-shopzilla-commit.trycloudflare.com/auth/shopify/callback",
-  "https://clearance-tions-shopzilla-commit.trycloudflare.com/api/auth/callback"
+  "https://teachers-pure-capable-trio.trycloudflare.com/auth/callback",
+  "https://teachers-pure-capable-trio.trycloudflare.com/auth/shopify/callback",
+  "https://teachers-pure-capable-trio.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
