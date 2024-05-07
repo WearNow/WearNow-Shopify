@@ -1,12 +1,11 @@
 import re
 from typing import Optional, List
 
-from pydantic import BaseModel, Field, HttpUrl, root_validator, validator
-
+from pydantic import BaseModel
 
 class StoreProductsOnboardingResponse(BaseModel):
     message: str = ""
-    success: str = True
+    success: bool = True
 
 class ProductPhoto(BaseModel):
     url: str
