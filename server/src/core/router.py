@@ -1,5 +1,4 @@
 import json
-from pprint import pprint
 from fastapi import APIRouter, Request
 from .utils.hasura_helpers import client
 from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput
@@ -13,7 +12,6 @@ async def handle_store_onboarding(request: Request):
         body = await request.body()
         body_str = body.decode()
         data = json.loads(body_str)["input"]["input"]
-        pprint(data)
         products = data["products"]
         input_products = []
         for prod in products:
