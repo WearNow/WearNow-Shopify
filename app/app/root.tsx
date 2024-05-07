@@ -23,7 +23,7 @@ export default function App() {
          <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441" />
         <link
           rel="stylesheet"
-          href="https://cdn.shopify.com/static/fonts/inter/v4/styles.css"
+          href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441"
         />
         <Meta />
         <Links />

@@ -66,7 +66,8 @@ function Billing() {
                 <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[25]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[26]">
-                1000 Try-On Experiences
+                1000 Try-On Experiences  
+                
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[27]'>
@@ -122,7 +123,7 @@ function Billing() {
           </button>
         </div>
       </div>
-      <button className='flex w-[132px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none absolute top-[36px] left-[163.5px] z-[138] pointer'>
+      <button className='flex w-[132px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none absolute top-[36px] left-[250.5px] z-[138] pointer'>
         <div className='w-[16px] h-[16px] shrink-0 relative overflow-hidden z-[139]'>
           <div className='w-[13.333px] h-[13.333px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/clock.png?v=1714641444)] bg-[length:100%_100%] bg-no-repeat relative z-[140] mt-[1.333px] mr-0 mb-0 ml-[1.333px]' />
         </div>
@@ -228,7 +229,7 @@ function Billing() {
           </button>
         </div>
       </div>
-      <button className='flex w-[102px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none absolute top-[36px] left-[524.5px] z-[136] pointer'>
+      <button className='flex w-[102px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none absolute top-[36px] left-[694.5px] z-[136] pointer'>
         <span className="flex w-[78px] h-[21px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-normal leading-[21px] text-[#1e429f] relative text-center whitespace-nowrap z-[137]">
           Most Popular
         </span>
@@ -380,7 +381,7 @@ function Billing() {
           <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[8]'>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[9]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-10'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/80061d4f-9511-47f2-b4ee-13cbd00f5e96.png)] bg-[length:100%_100%] bg-no-repeat relative z-[11] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[11] mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[12]">
                 50 Products
@@ -388,15 +389,16 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[13]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[14]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/5a919d21-45db-4204-9286-7854d91fb5f8.png)] bg-[length:100%_100%] bg-no-repeat relative z-[15] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[15] mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[16]">
                 1000 Try-On Experiences
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[177.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[17]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[18]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/6cd25efd-093b-4600-8b07-612ab1856976.png)] bg-[length:100%_100%] bg-no-repeat relative z-[19] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[19]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-20">
                 50 Product Photos
@@ -404,15 +406,16 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[21]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[22]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/440e45c0-4154-462f-9722-1a1b118b9799.png)] bg-[length:100%_100%] bg-no-repeat relative z-[23] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[23]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[24]">
                 Access to 5 Pro Models
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[161.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[25]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[26]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/7e95f7ce-2c62-459e-95ae-e34fa7785c82.png)] bg-[length:100%_100%] bg-no-repeat relative z-[27] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[27] mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[28]">
                 Support Team
@@ -420,7 +423,7 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[29]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-30'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/3f2820b9-be2e-42f5-9bf8-3169f6709d7a.png)] bg-[length:100%_100%] bg-no-repeat relative z-[31] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle2.png?v=1714636264)] bg-[length:100%_100%] bg-no-repeat relative z-[31] mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[32]">
                 Upload Your Own Model
@@ -428,7 +431,7 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[33]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[34]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/7c98fced-6eda-4901-b80f-0dd355dad986.png)] bg-[length:100%_100%] bg-no-repeat relative z-[35] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle2.png?v=1714636264)] bg-[length:100%_100%] bg-no-repeat relative z-[35] mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[36]">
                 HD Photos
@@ -473,7 +476,7 @@ function Billing() {
           <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-50'>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[51]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[52]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/15dab1ea-c032-4a4a-9bb8-a9472e1bf13f.png)] bg-[length:100%_100%] bg-no-repeat relative z-[53] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[53]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[54]">
                 250 Products
@@ -481,15 +484,16 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[55]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[56]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/264e1e48-71aa-4a46-b22b-9a403d44c8b8.png)] bg-[length:100%_100%] bg-no-repeat relative z-[57] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[57]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[58]">
                 5000 Try-On Experiences
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[180.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[59]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[60]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/1f26b1b3-3983-45b4-9273-1ded7cd36cee.png)] bg-[length:100%_100%] bg-no-repeat relative z-[61] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[61]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[62]">
                 300 Product Photos
@@ -497,15 +501,17 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[63]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[64]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/6b3cbfdf-74c2-4c94-94ac-4759ae55bd8c.png)] bg-[length:100%_100%] bg-no-repeat relative z-[65] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[65]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[66]">
                 Access to 20 Pro Models
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[172.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
+              
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[67]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[68]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/5a0a3f01-aba6-4627-8f12-a977936b95aa.png)] bg-[length:100%_100%] bg-no-repeat relative z-[69] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[69]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[70]">
                 Dedicated Support Channel
@@ -513,15 +519,17 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[71]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[72]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/d5b650e4-4833-4333-b70f-3ed75f79029a.png)] bg-[length:100%_100%] bg-no-repeat relative z-[73] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[73]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[74]">
                 Upload Your Own Model
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[168.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
+              
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[75]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[76]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/cab1e73a-3484-4b1c-b660-4f20472aec5f.png)] bg-[length:100%_100%] bg-no-repeat relative z-[77] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle_2.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[77]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[78]">
                 HD Photos
@@ -560,7 +568,7 @@ function Billing() {
           <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[92]'>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[93]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[94]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/993568e6-d96f-4dd4-bd57-2e36d71f4e74.png)] bg-[length:100%_100%] bg-no-repeat relative z-[95] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[95]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[96]">
                 Unlimited Products
@@ -568,15 +576,16 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[97]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[98]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/3efef649-42fd-443b-a906-75a914368521.png)] bg-[length:100%_100%] bg-no-repeat relative z-[99] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[99]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[100]">
                 Unlimited Try-On Experiences
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[210.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[101]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[102]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/3651ec9c-bc50-4465-80a7-1ed568e4f658.png)] bg-[length:100%_100%] bg-no-repeat relative z-[103] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[103]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[104]">
                 Unlimited Product Photos
@@ -584,15 +593,16 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[105]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[106]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/863d492f-cea8-4dfd-8e14-5e91367787ee.png)] bg-[length:100%_100%] bg-no-repeat relative z-[107] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[107]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[108]">
                 Access to 50 Pro Models
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[175.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[109]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[110]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/4e97b936-cabd-4f47-acc4-b4611a3d4dd8.png)] bg-[length:100%_100%] bg-no-repeat relative z-[111] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[111]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[112]">
                 24/7 Live Support
@@ -600,15 +610,16 @@ function Billing() {
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[113]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[114]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/8c6051a5-6c69-41a4-bd02-4ca41838a233.png)] bg-[length:100%_100%] bg-no-repeat relative z-[115] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[115]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[116]">
                 Upload Your Own Model
+                <div className="w-[16px] h-[16px] shrink-0 absolute top-[3px] left-[170.5px] z-[145]"><div className="w-full h-full absolute top-0 left-0 overflow-hidden z-[146]"><div className="w-[16px] h-[16px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Help_icon_c9adcdff-f8e0-4024-9a2c-9b538439c7b0.png?v=1714636340)] bg-[length:100%_100%] bg-no-repeat relative z-[147] mt-[0.67px] mr-0 mb-0 ml-[0.67px]"></div></div></div>
               </span>
             </div>
             <div className='flex pt-[2px] pr-0 pb-[2px] pl-0 gap-[12px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[117]'>
               <div className='w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[118]'>
-                <div className='w-[15px] h-[15px] bg-[url(../assets/images/35f4dd5f-fd2a-451a-a637-f18ee2bb1a06.png)] bg-[length:100%_100%] bg-no-repeat relative z-[119] mt-[2.5px] mr-0 mb-0 ml-[2.5px]' />
+                <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/check-circle.png?v=1714636065)] bg-[length:100%_100%] bg-no-repeat relative z-[119]  mr-0 mb-0 ml-[2.5px]' />
               </div>
               <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#6b7280] relative text-left whitespace-nowrap z-[120]">
                 HD Photos

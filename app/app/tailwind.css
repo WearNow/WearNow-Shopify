@@ -249,3 +249,114 @@
 body{
   background: #fff !important;
 }
+
+.try_on_active input:checked + label {
+  background: green;
+}
+*{
+  font-family: 'SF Pro Display' !important;
+}
+
+
+/*=================================  Dashboard start style code ============================== */
+.perfactpicture_col {
+  position: relative;
+}
+button.perfactpicture_overlay_btn {
+  display: flex;
+  width: 131px;
+  height: 48px;
+  padding: 6px 0px 6px 0px;
+  gap: 8px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  color: #0570DE;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: left;
+  letter-spacing: 1px;
+}
+
+.perfactpicture_overlay_content {
+  position: absolute;
+  bottom: 30px;
+  padding-left: 60px;
+}
+.perfactpicture_overlay_title {
+  color: #fff;
+  font-family: SF Pro Display;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
+  text-align: left;
+}
+.dashboard_content_container {
+  display: flex;
+  justify-content: center;
+}
+.dashboard_content_row {
+  display: block;
+  width: 100%;
+  padding: 0px 20px 10px;
+  gap: 20px;
+}
+.perfactpicture_col {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.perfactpicture_conainer {
+  height: auto;
+  width: 100%;
+}
+.virtual_tryon_with_studio>div {
+  flex: 0 0 49%;
+}
+.perfactpicture_col>img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.dashboard_content_container>div:first-child {
+  flex: 0 0 70%;
+}
+.dashboard_content_container>div:last-child {
+  flex: 0 0 29%;
+}
+.virtual_tryon_with_studio_content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+img.virtual_tryon_with_studio_img1 {
+  width: 93px;
+  height: 107px;
+  gap: 0px;
+  border-radius: 10px 0px 0px 0px;
+  opacity: var(--size-025);
+  position: relative;
+  top: 23px;
+}
+img.virtual_tryon_with_studio_img2 {
+  width: 105px;
+  height: 154px;
+  gap: 0px;
+  border-radius: 10px 0px 0px 0px;
+  opacity: var(--size-025);
+}
+img.virtual_tryon_with_studio_img3 {
+  width: 89px;
+  height: 107px;
+  gap: 0px;
+  border-radius: 10px 0px 0px 0px;
+  opacity: var(--size-025);
+  position: relative;
+  top: 28px;
+}
+/*=================================  Dashboard end style code ============================== */
+
