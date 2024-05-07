@@ -63,3 +63,4 @@ stripe==6.1.0
 app-store-server-library==0.2.1
 orjson==3.9.9
 deprecation==2.1.0
+pydantic-settings
