@@ -5,6 +5,7 @@ from src.doc import TAGS_METADATA
 from src.config import app_configs
 from starlette.middleware.cors import CORSMiddleware
 from src.auth.router import router as auth_router
+from src.core.router import router as core_router
 
 # Init Fast API
 app = FastAPI(**app_configs, openapi_tags=TAGS_METADATA)
@@ -31,3 +32,4 @@ def read_root():
     return {"Wearnow API": "v1"}
 
 app.include_router(auth_router, prefix="/api", tags=["Authentication"])
+app.include_router(core_router, prefix="/api", tags=["Store"])
