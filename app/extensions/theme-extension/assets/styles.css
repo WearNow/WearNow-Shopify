@@ -1,145 +1,660 @@
+body {
+  font-family: 'Arial', sans-serif;
+}
 
-      body {
-        font-family: 'Arial', sans-serif;
-      }
+.customization-panel {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+.customization-panel.customization-panel2>* {
+  width: 50%;
+  height: 100%;
+}
+.customization-panel1, .customization-panel2 {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 40px 40px 40px 40px;
+  max-width: 100%;
+  display: flex;
+  gap: 30px;
+  margin-left: 0;
+  height: 100%;
+  position: relative;
+}
+.simple_photo_content {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+label.form_content {
+  font-family: SF Pro Display;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  color: #888e99;
+  margin: 5px 0px;
+}
 
-      .customization-panel {
-        background-color: #f5f5f5;
-        border-radius: 10px;
-        padding: 20px;
-        max-width: 800px;
-        margin: auto;
-      }
+form#customizationForm div {
+  margin-bottom: 25px;
+}
 
-      .option-group {
-        margin-bottom: 20px;
-      }
+.form_content {
+  display: flex;
+  flex-direction: column;
+}
 
-      .option-group label,
-      .option-group h3 {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-        font-weight: bold;
-      }
+footer {
+  position: relative;
+  z-index: -1;
+}
 
-      .option-group select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-      }
+.option-group {
+  margin-bottom: 20px;
+}
 
-      .hair-styles img,
-      .poses img,
-      .backgrounds img {
-        width: 100px;
-        height: 100px;
-        margin-right: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+.option-group label,
+.option-group h3 {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: bold;
+}
 
-      .hair-styles,
-      .poses,
-      .backgrounds {
-        display: flex;
-      }
+.option-group select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
 
-      /* Additional styles for hover effects, selected state, etc. */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
-        z-index: 9999; /* Ensure modal is on top of other content */
-        overflow: auto;
-      }
+.hair-styles img,
+.poses img,
+.backgrounds img {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-      .modal-content {
-        background-color: #fff;
-        margin: 20% auto;
-        padding: 20px;
-        border-radius: 10px;
-        max-width: 80%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-      form#customizationForm * {
-        margin-bottom: 12px;
-    }
-      form#customizationForm {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-    }
+.hair-styles,
+.poses,
+.backgrounds {
+  display: flex;
+}
+
+/* Additional styles for hover effects, selected state, etc. */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* semi-transparent black overlay */
+  z-index: 9999;
+  /* Ensure modal is on top of other content */
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 20% auto;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+svg.back_btn {
+  cursor: pointer;
+}
+form#customizationForm div {
+  margin-bottom: 15px;
+}
+
+form#customizationForm {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.button-container button {
+  margin: 0;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button-container {
+  margin: 0 !important;
+  margin-top: 25px !important;
+  justify-content: left;
+  align-items: flex-start;
+  text-align: left !important;
+}
 
 
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 0% auto;
+  padding: 0px 0px 10px;
+  border: 1px solid #888;
+  width: auto;
+  min-width: 700px;
+}
+.customization-panel h2 {
+  color: #333;
+  margin: 0px;
+  margin-bottom: 15px;
+}
 
 
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group input[type=file] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.footer_model {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #D9D9D9;
+  margin-top: 20px;
+  padding: 0px 20px;
+}
+
+.footer_model_text_with_icon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.button-container button:hover {
+  background-color: #666;
+}
 
 
+.button-container>button img {
+  margin-left: 10px;
+  height: 18px;
+  width: 18px;
+}
+
+:root {
+  --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.main-container {
+  overflow: hidden;
+}
+
+.main-container,
+.main-container * {
+  box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+  outline: 0;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 4px;
+  position: relative;
+  width: 240px;
+  margin: 0 auto;
+}
+
+.button-label-description {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  position: relative;
+  width: 240px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.description {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: relative;
+  width: 240px;
+  height: 16px;
+  color: #6a7383;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.form_content select, .form-group select {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  gap: 8px;
+  position: relative;
+  min-width: 0;
+  padding: 10px 10px 10px 10px;
+  cursor: pointer;
+  background: #ffffff;
+  border: 1px solid #d5dbe1;
+  z-index: 2;
+  overflow: hidden;
+  color: #6a7383;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  border-radius: 4px;
+
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+select option {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: relative;
+  height: 18px;
+  color: #6a7383;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  white-space: nowrap;
+  letter-spacing: -0.08px;
+  z-index: 3;
+}
+
+.form_content label:first-child,.form-group label{
+  color: #303030 !important;
+  /* font-family: SF Pro Text, var(--default-font-family); */
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.3199999928474426px;
+  text-align: left;
+
+}
+
+.button-container button {
+  display: flex;
+  background: #046FB4;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: relative;
+  color: #ffffff;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
+  white-space: nowrap;
+  letter-spacing: -0.32px;
+  z-index: 1;
+  align-items: center;
+}
+.custmize_your_fit {
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.3199999928474426px;
+  text-align: left;
+  display: flex;
+  gap: 10px;
+}
+.model_photo {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: contents;
+}
+input,
+select,
+textarea,
+button {
+  outline: 0;
+}
+.upload_photo_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  flex-wrap: nowrap;
+  gap: 8px;
+  position: relative;
+  width: 240px;
+  height: 67px;
+  margin: 0 auto;
+  background: #fdfdfd;
+  border: 0.66px dashed #8a8a8a;
+  border-radius: 8px;
+  margin-left: 0px;
+}
+.upload_photo_container .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  gap: 2px;
+  position: relative;
+  width: 83px;
+  padding: 5px 12px 6px 12px;
+  cursor: pointer;
+  background: #ffffff;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0px 0px 0px 1px #b7b7b7 inset;
+  min-height: 28px;
+  min-width: 83px;
+  margin-top: 8px;
+}
+.upload_photo_container button.button:after ,.upload_photo_container button.button:before{
+  display:none;
+}
+.upload_photo_container .label {
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: relative;
+  height: 16px;
+  color: #303030;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 1;
+}
+.upload_photo_container .action-hint {
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: relative;
+  height: 16px;
+  color: #616161;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.upload_photo_best_practice {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-wrap: nowrap;
+  gap: 0px;
+  position: relative;
+  width: 166px;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  position: relative;
+  width: 150px;
+}
+.link-text {
+  flex-shrink: 0;
+  flex-basis: auto;
+  position: relative;
+  height: 13px;
+  color: #000000;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  text-align: left;
+  white-space: nowrap;
+  letter-spacing: 0.07px;
+  z-index: 1;
+}
+.glyph {
+  flex-shrink: 0;
+  position: relative;
+  width: 12px;
+  height: 25px;
+  background-size: 100% 100%;
+  z-index: 3;
+}
+.customization-panel>img {
+  height: 102%;
+  width: 100%;
+  max-width: 298px;
+}
+.sample_photo {
+  display: flex;
+  flex-direction: column;
+}
+.simple_photo_content img {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+}
+.simple_photo_title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.3199999928474426px;
+  text-align: left;
+  margin: 0 0 10px;
+}
+.model_photo img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  max-width: 298px;
+}
+@media (max-width: 1244px) {
+ .main_content_model .form_content select,body .form-group select {
+    padding: 5px 10px 5px 8px;
+}
+.main_content_model .modal-content {
+  height: 75vh;
+  overflow: scroll;
+}
+.main_content_model .upload_photo_container {
+  height: 67px;
+}
+.main_content_model form#customizationForm div {
+  margin-bottom: 24px;
+}
+.main_content_model .form-group {
+  margin-bottom: 20px;
+}
+
+.main_content_model .upload_photo_container .button {
+  min-height: 34px;
+  min-width: 87px;
+}
+.main_content_model .simple_photo_content img {
+  height: 41px;
+  width: 41px;
+}
+.main_content_model .customization-panel.customization-panel2 .button-container {
+  margin-top: 10px !important;
+}
+}
+@media (max-width: 991px) {
+  .model_ai .modal-content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 667px) {
+  .customization-panel.customization-panel1>img {
+    display: none;
+  }
+  .main_content_model .modal-content {
+    height:  unset !important;
+}
+h2.footer_model_title {
+  display: none;
+}
+.main_content_model .footer_model {
+  justify-content: flex-end;
+}
+body .main_content_model .form_content select, body .form-group select {
+  padding: 10px 10px 10px 7px;
+}
+body .main_content_model .upload_photo_container {
+  height: 90px;
+}
+.main_content_model  .modal-content {
+  min-width: 90%;
+}
+.main_content_model .customization-panel.customization-panel2>* {
+  width: 100%;
+  height: 100%;
+}
+body .main_content_model .customization-panel.customization-panel2 .button-container {
+  margin-top: 30px !important;
+}
+  .main_content_model  .model_photo {
+    display: none;
+}
+  .model_ai form#customizationForm {
+    width: 100%;
+  }
+
+  .model_ai .customization-panel1, .model_ai .customization-panel2 {
+    max-width: 100%;
+    padding: 0px;
+    padding-top: 15px;
+}
+
+  .model_ai h2.footer_model_title {
+    display: none;
+  }
+
+  .model_ai .footer_model {
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+  }
+  form#customizationForm {
+    width: 100%;
+  }
+  #myModal .modal-content {
+    min-width: 90%;
+  }
+}
 
 
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-    
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto; /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%; /* Could be more or less, depending on screen size */
-    }
-    
-    .customization-panel h2 {
-      color: #333;
-    }
-    
-    .form-group {
-      margin-bottom: 15px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    
-    .form-group select, .form-group input[type=file] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    
-    .button-container {
-      text-align: center;
-    }
-    
-    .button-container button {
-      padding: 10px 20px;
-      background-color: #555;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    .button-container button:hover {
-      background-color: #666;
-    }
+@media (max-width: 567px) {
+
+.main_content_model .customization-panel1, .customization-panel2 {
+  height: 60vh;
+  overflow: scroll;
+}
+body .main_content_model form#customizationForm div {
+  margin-bottom: 15px;
+}
+
+body .customization-panel1, .customization-panel2 {
+  padding: 20px 20px 21px 20px;
+}
+.main_content_model .button-container {
+  margin: 0 !important;
+  margin-top: 20px !important;
+}
+body .main_content_model .form-group {
+  margin-bottom: 0px;
+}
+body .main_content_model .upload_photo_container {
+  height: 72px;
+}
+body .main_content_model .form_content select, body .form-group select {
+  padding: 7px 10px 7px 7px;
+}
+body .main_content_model .customization-panel.customization-panel2 .button-container {
+  margin-top: 16px !important;
+}
+}

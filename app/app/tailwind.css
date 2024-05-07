@@ -330,7 +330,7 @@ button.perfactpicture_overlay_btn {
 .virtual_tryon_with_studio_content {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 50%;
   position: relative;
 }
 img.virtual_tryon_with_studio_img1 {
@@ -357,6 +357,49 @@ img.virtual_tryon_with_studio_img3 {
   opacity: var(--size-025);
   position: relative;
   top: 28px;
+}
+.dashboard_navigation>div{
+  cursor: pointer;
+}
+.dashboard_navigation>div:hover {
+  background: rgba(0,0,0,0.08);
+}
+.photo_created_content {
+  position: relative;
+  width: 100%;
+  display: block;
+  height: 58vh;
+  margin-top: 6px;
+}
+.photo_created {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 106px;
+  max-height: 100vh;
+  display: flex;
+}
+img.photo_created_choosfile_icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 92px;
+  width: 91px;
+  transform: translate(-50%, -50%);
+}
+img.photo_created_rounded {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+button.photo_created_btn {
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 /*=================================  Dashboard end style code ============================== */
 

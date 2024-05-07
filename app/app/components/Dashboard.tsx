@@ -3,6 +3,7 @@ import PerfactPicture from './PerfactPicture'
 import CompleteOnBording from './CompleteOnBording'
 import VartualTryOnWithStudio from './VartualTryOnWithStudio'
 
+
 function Dashboard() {
     return (
         <>
@@ -13,7 +14,7 @@ function Dashboard() {
                             <div className='w-[40px] h-[40px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/logo.png?v=1714718286)] bg-[length:100%_100%] bg-no-repeat relative z-[3] mr-0 mb-0 ml-[4.133px]' />
                         </div>
                     </div>
-                    <div className='flex w-[459px] pt-0 pr-[4px] pb-0 pl-[4px] gap-[4px] items-start shrink-0 flex-nowrap relative z-[4]'>
+                    <div className='dashboard_navigation flex w-[459px] pt-0 pr-[4px] pb-0 pl-[4px] gap-[4px] items-start shrink-0 flex-nowrap relative z-[4]'>
                         <button className='flex w-[87px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap bg-[rgba(0,0,0,0.08)] rounded-[8px] border-none relative z-[5] pointer'>
                             <span className="flex w-[63px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-[6]">
                                 Dashboard
