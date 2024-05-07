@@ -1,24 +1,25 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "8c68b6bdc0b60e380281b7d1fbcbf3ed"
+client_id = "239dcf8af34d2c5a6f9093c65a92bbf9"
 name = "wearnowAI"
-handle = "wearnowai"
-application_url = "https://infected-wagner-surfing-hr.trycloudflare.com"
+handle = "wearnowai-1"
+application_url = "https://wearnow-shopify-7c945fcdc96d.herokuapp.com/"
 embedded = true
 
 [build]
-automatically_update_urls_on_dev = true
-dev_store_url = "ansari-test-store.myshopify.com"
+automatically_update_urls_on_dev = false
+dev_store_url = "teststorewna.myshopify.com"
+include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+scopes = "write_products,read_products,write_orders,write_checkouts,unauthenticated_write_checkouts,unauthenticated_read_selling_plans"
 
 [auth]
 redirect_urls = [
-  "https://infected-wagner-surfing-hr.trycloudflare.com/auth/callback",
-  "https://infected-wagner-surfing-hr.trycloudflare.com/auth/shopify/callback",
-  "https://infected-wagner-surfing-hr.trycloudflare.com/api/auth/callback"
+  "https://wearnow-shopify-7c945fcdc96d.herokuapp.com/auth/callback",
+  "https://wearnow-shopify-7c945fcdc96d.herokuapp.com/auth/shopify/callback",
+  "https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/auth/callback"
 ]
 
 [webhooks]
@@ -26,3 +27,6 @@ api_version = "2024-04"
 
 [pos]
 embedded = false
+
+[app_preferences]
+url = "https://wearnow-shopify-7c945fcdc96d.herokuapp.com/"

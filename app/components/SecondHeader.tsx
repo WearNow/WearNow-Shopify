@@ -1,11 +1,94 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CustomSlider from "./CustomSilder";
-const SecondHeader: React.FC = () => {
+import axios from "axios";
+import { apiURL } from "../services/Services";
+
+const SecondHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
+  const [checkedProducts, setCheckedProducts] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [startIndex, setStartIndex] = useState<number>(1);
   const images: string[] = [
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107",
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107",
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106",
   ];
+
+  useEffect(() => {
+    console.log("dataLimit.start ::", dataLimit.start);
+    console.log("dataLimit.start ::", dataLimit.end);
+  }, [dataLimit.start, dataLimit.end])
+
+
+
+
+
+  const fetchProducts = async () => {
+    try {
+      // Prepare the data to send
+      const data = JSON.stringify({
+        queryfor: "getSelectedProdctsData",
+        shop: sessionData.auth_session.shop,
+      });
+
+      // Define the request configuration
+      const config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      // Send the request
+      const response = await axios.request(config);
+      console.log(response);
+      setProducts(response.data);
+    } catch (error) { console.log(error) }
+  };
+  useEffect(() => {
+    // Call the fetchProducts function when the component mounts
+    fetchProducts();
+  }, []); // Empty dependency array ensures it only runs once on mount
+  console.log(products, "Second Header products");
+
+  const handleCheckboxChange = (productId: string) => {
+    setCheckedProducts((prevState) => ({
+      [productId]: !prevState[productId],
+    }));
+  };
+  const handlePrev = () => {
+    if (dataLimit.start > 0 ) {
+      setDataLimit(prevLimit => ({
+        start: prevLimit.start - 3,
+        end: prevLimit.end - 3
+      }));
+    }
+  };
+
+  const handleNext = () => {
+    if (dataLimit.end < products.length) {
+      setDataLimit(prevLimit => ({
+        start: prevLimit.start + 3,
+
+        end: prevLimit.end + 3
+      }));
+    }
+  };
+
+  let start = ((3 * startIndex) - 3);
+  let end = 3 * startIndex;
+  useEffect(() => {
+    start = ((3 * startIndex) - 3);
+    end = 3 * startIndex;
+
+  }, [startIndex])
+  // console.log(checkedProducts, "checkedProducts");
+  // console.log("start", start, "end", end);
   return (
     <div className="self-stretch second_header">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -18,7 +101,7 @@ const SecondHeader: React.FC = () => {
               Take your product photos to the next level in just 4 easy steps!
             </span>
           </div>
-          <div className='flex h-[481px] flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]' style={{ display: "none" }}>
+          <div className='flex h-[481px] flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
             <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>
               <div className='flex w-[578px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[6]'>
                 <div className='flex w-[188px] flex-col items-center shrink-0 flex-nowrap relative z-[7]'>
@@ -37,98 +120,65 @@ const SecondHeader: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className='flex w-[530px] h-[196px] flex-col items-start shrink-0 flex-nowrap rounded-[12px] absolute top-[56px] left-[48px] overflow-hidden z-[14]'>
+              <div className='flex w-[530px] h-[196px] flex-col items-start shrink-0 flex-nowrap rounded-[12px] absolute top-[56px] left-[48px]  z-[14]'>
                 <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
-                  <div className='flex w-[34px] flex-col items-start shrink-0 flex-nowrap relative z-[16]'>
-                    <div className='flex w-[34px] pt-[18px] pr-[6px] pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[24]'>
-                      <div className='flex w-[16px] flex-col justify-center items-start shrink-0 flex-nowrap relative z-[25]'>
-                        <div className='flex w-[16px] gap-[8px] items-center shrink-0 flex-nowrap relative z-[26]'>
-                          <div className='flex w-[16px] gap-[8px] items-start shrink-0 flex-nowrap rounded-[4px] relative z-[32]'>
-                            <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                              <input type="checkbox" />
-                              <label htmlFor="checkbox"></label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='flex w-[34px] pt-[18px] pr-[6px] pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[24]'>
-                      <div className='flex w-[16px] flex-col justify-center items-start shrink-0 flex-nowrap relative z-[25]'>
-                        <div className='flex w-[16px] gap-[8px] items-center shrink-0 flex-nowrap relative z-[26]'>
-                          <div className='flex w-[16px] gap-[8px] items-start shrink-0 flex-nowrap rounded-[4px] relative z-[32]'>
-                            <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                              <input type="checkbox" />
-                              <label htmlFor="checkbox"></label>
+             
+
+                  <div className='flex flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
+                   
+                    {products.slice(dataLimit.start, dataLimit.end).map((product, index) => (
+                      <>
+                       
+                        <div className='flex pt-[16px] gap-3 pr-[8px] pb-[16px] pl-[0px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[45]'>
+                          <div className='flex w-[29px] pt-[18px]  pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40  relative  z-[29]'>
+                            <div className='flex w-[16px] flex-col justify-center items-start shrink-0 flex-nowrap relative z-30'>
+                              <div className='flex w-[16px] gap-[8px] items-center shrink-0 flex-nowrap relative z-[31]'>
+                                <div className='flex w-[16px] gap-[8px] items-start shrink-0 flex-nowrap rounded-[4px] relative z-[32]'>
+                                  <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
+                                    <input id={product.productId} name={product.productId}
+                                      checked={checkedProducts[product.productId]} // Check if the product is checked
+                                      onChange={() => handleCheckboxChange(product.productId)}
+                                      type="checkbox" />
+                                    <label htmlFor="checkbox"></label>
+                                    
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
 
-                        </div>
-                      </div>
-                    </div>
-                    <div className='flex w-[34px] pt-[18px] pr-[6px] pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[29]'>
-                      <div className='flex w-[16px] flex-col justify-center items-start shrink-0 flex-nowrap relative z-30'>
-                        <div className='flex w-[16px] gap-[8px] items-center shrink-0 flex-nowrap relative z-[31]'>
-                          <div className='flex w-[16px] gap-[8px] items-start shrink-0 flex-nowrap rounded-[4px] relative z-[32]'>
-                            <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                              <input type="checkbox" />
-                              <label htmlFor="checkbox"></label>
-                            </div>
+                          <div className='w-[40px] h-[40px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Image.png?v=1714052433)] bg-cover bg-no-repeat relative z-[43]' >
+                            <img
+                              src={product.productImage + "&height=40"}
+                            />
                           </div>
+
+
+                          <span className="h-[20px] grow shrink-0 basis-auto font-['Inter'] text-[13px] font-[550] leading-[20px] text-[#303030] relative text-left whitespace-nowrap z-[46]">
+                            {product.productName}
+                          </span>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='flex w-[52px] flex-col items-start shrink-0 flex-nowrap relative z-[34]'>
-                    <div className='flex w-[52px] pt-[6px] pr-[6px] pb-[6px] pl-[6px] items-center shrink-0 flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[35]'>
-                      <div className='flex w-[40px] gap-[8px] items-start shrink-0 flex-nowrap bg-[#fdfdfd] rounded-[8px] relative overflow-hidden shadow-[0_0_0_0_rgba(0,0,0,0.08)_inset] z-[36]'>
-                        <div className='w-[40px] h-[40px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Image_2.png?v=1714052434)] bg-cover bg-no-repeat relative z-[37]' />
-                      </div>
-                    </div>
-                    <div className='flex w-[52px] pt-[6px] pr-[6px] pb-[6px] pl-[6px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[38]'>
-                      <div className='flex w-[40px] gap-[8px] items-start shrink-0 flex-nowrap bg-[#fdfdfd] rounded-[8px] relative overflow-hidden shadow-[0_0_0_0_rgba(0,0,0,0.08)_inset] z-[39]'>
-                        <div className='w-[40px] h-[40px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Image_1.png?v=1714052433)] bg-cover bg-no-repeat relative z-40' />
-                      </div>
-                    </div>
-                    <div className='flex w-[52px] pt-[6px] pr-[6px] pb-[6px] pl-[6px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[41]'>
-                      <div className='flex w-[40px] gap-[8px] items-start shrink-0 flex-nowrap bg-[#fdfdfd] rounded-[8px] relative overflow-hidden shadow-[0_0_0_0_rgba(0,0,0,0.08)_inset] z-[42]'>
-                        <div className='w-[40px] h-[40px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Image.png?v=1714052433)] bg-cover bg-no-repeat relative z-[43]' />
-                      </div>
-                    </div>
-                  </div>
-                  <div className='flex flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
-                    <div className='flex pt-[16px] pr-[8px] pb-[16px] pl-[8px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[45]'>
-                      <span className="h-[20px] grow shrink-0 basis-auto font-['Inter'] text-[13px] font-[550] leading-[20px] text-[#303030] relative text-left whitespace-nowrap z-[46]">
-                        Black Top
-                      </span>
-                    </div>
-                    <div className='flex pt-[16px] pr-[8px] pb-[16px] pl-[8px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[47]'>
-                      <span className="h-[20px] grow shrink-0 basis-auto font-['Inter'] text-[13px] font-[550] leading-[20px] text-[#303030] relative text-left whitespace-nowrap z-[48]">
-                        White Dress
-                      </span>
-                    </div>
-                    <div className='flex pt-[16px] pr-[8px] pb-[16px] pl-[8px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] opacity-40 border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[49]'>
-                      <span className="h-[20px] grow shrink-0 basis-auto font-['Inter'] text-[13px] font-[550] leading-[20px] text-[#303030] relative text-left whitespace-nowrap z-50">
-                        Red Top
-                      </span>
-                    </div>
+                      </>
+                    ))}
                   </div>
                 </div>
+
                 <div className='flex pt-[6px] pr-[8px] pb-[6px] pl-[12px] items-center self-stretch shrink-0 flex-nowrap bg-[#f7f7f7] relative z-[51]'>
                   <div className='flex justify-end items-center grow shrink-0 basis-0 flex-nowrap relative z-[52]'>
                     <div className='flex w-[28px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] items-start shrink-0 flex-nowrap rounded-tl-[8px] rounded-tr-none rounded-br-none rounded-bl-[8px] relative z-[53]'>
                       <div className='w-[20px] h-[20px] shrink-0 relative z-[54]'>
-                        <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ChevronLeft.png?v=1714384767)] bg-cover bg-no-repeat relative z-[55]  mr-0 mb-0 ml-[6.5px]' />
+                        <div onClick={() => handlePrev()} className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ChevronLeft.png?v=1714384767)] bg-cover bg-no-repeat relative z-[55]  mr-0 mb-0 ml-[6.5px]' />
                       </div>
                     </div>
                     <div className='flex w-[28px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] items-start shrink-0 flex-nowrap rounded-tl-none rounded-tr-[8px] rounded-br-[8px] rounded-bl-none relative z-[56]'>
                       <div className='w-[20px] h-[20px] shrink-0 relative z-[57]'>
-                        <div className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ChevronRight.png?v=1714384785)] bg-cover bg-no-repeat relative z-[58]  mr-0 mb-0 ml-[7.5px]' />
+                        <div onClick={() => handleNext()} className='w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ChevronRight.png?v=1714384785)] bg-cover bg-no-repeat relative z-[58]  mr-0 mb-0 ml-[7.5px]' />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap absolute top-[265px] left-[48px] z-[59]'>
+              {/* <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap absolute top-[265px] left-[48px] z-[59]'>
                 <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
                   <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left whitespace-nowrap z-[61]">
                     Please select the number of photos you would like to create
@@ -152,7 +202,7 @@ const SecondHeader: React.FC = () => {
                   All the photos in a creation request will have very minor
                   changes between them
                 </span>
-              </div>
+              </div> */}
             </div>
             <div className='w-[176px] h-[36px] shrink-0 rounded-[100px] absolute top-[371px] left-0 z-[70]'>
               <div className='flex w-[36px] h-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center flex-nowrap bg-[#fff] rounded-[100px] border-solid border border-[#e7e7e7] absolute top-0 left-0 overflow-hidden z-[72]'>

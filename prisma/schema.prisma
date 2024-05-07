@@ -21,5 +21,25 @@ model Session {
   scope       String?
   expires     DateTime?
   accessToken String
-  userId      BigInt?
+  userId      String?
+  tryOn    Boolean  @default(false)
+  tryOnPerProduct Int @default(0)
 }
+
+model selectProdcutData {
+  id          String @id
+  productId   String 
+  productName String
+  productImage String?
+  productShop String
+}
+
+
+model selectedFilnalProdcutData {
+  id          String @id
+  productId   String
+  productName String
+  productImage String?
+  productShop String
+}
+
