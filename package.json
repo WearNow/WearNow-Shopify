@@ -2,6 +2,7 @@
   "name": "luxury-shareholder-app",
   "private": true,
   "scripts": {
+    "clean": "rm -rf ./build",
     "build": "vite build && vite build --ssr",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
