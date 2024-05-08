@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import db from "../../db.server";
-import { cors } from "remix-utils";
+import { cors } from "remix-utils/cors";
 import type { ActionFunctionArgs } from "@remix-run/node";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
