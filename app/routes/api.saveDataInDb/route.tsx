@@ -11,7 +11,7 @@ interface Product {
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     const body = await request.json();
-    const { shop, queryfor, selectedProdct, finalSelectedProdcuts, try_on, productID } = body;
+    const { shop, queryfor, selectedProdct, finalSelectedProdcuts, try_on, productID, tryOnPerProduct } = body;
 
     await db.session.findFirst({
       where: { shop },
@@ -24,6 +24,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       case "saveTryOn":
         await saveTryOn(shop,try_on);
         break;
+      case "tryOnPerProduct":
+        await db.session.update({ 
+          where: { id:"offline_"+shop }, 
+          data:{tryOnPerProduct:tryOnPerProduct}
+        });
+      break;
       case "deleteProduct":
         const existingProduct = await db.selectProdcutData.findFirst({
           where: { productId: productID },
@@ -31,13 +37,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
      
         await db.selectProdcutData.delete({where:{id:existingProduct.id}})
         break;
-        case "getSelectedProdctsData":
-         return await getSelectedProducts(shop); 
-        break;
+        
       case "selectedFilnalProdcutData":
         await processFinalSelectedProducts(finalSelectedProdcuts, shop);
         break;
-
+        case "getSelectedProductsData":
+         return await getSelectedProducts(shop); 
+        break;
       default:
         // console.log("Unknown query type:", queryfor);
         return { error: "Unknown query type", status: 400 };

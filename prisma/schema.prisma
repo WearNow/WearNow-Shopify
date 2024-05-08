@@ -23,7 +23,7 @@ model Session {
   accessToken String
   userId      String?
   tryOn    Boolean  @default(false)
-  tryOnPerProduct Int @default(0)
+  tryOnPerProduct Int @default(10)
 }
 
 model selectProdcutData {

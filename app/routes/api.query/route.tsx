@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import db from "../../db.server";
-import { cors } from "remix-utils/cors";
+import { cors } from "remix-utils";
 import type { ActionFunctionArgs } from "@remix-run/node";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -76,6 +76,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
                 images(first: 10) {
                   nodes {
                     src
+                  }
+                }
+                variants(first: 10) {
+                  nodes {
+                    id
+                    image {
+                      src
+                      id
+                    }
+                    title
                   }
                 }
               }

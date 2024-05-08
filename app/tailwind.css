@@ -249,3 +249,18 @@
 body{
   background: #fff !important;
 }
+.product_item_content {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.product_items {
+  display: flex;
+  flex-direction: column;
+}
+
+.variant_item_content {
+  margin-left: 20px;
+}

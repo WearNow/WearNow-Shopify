@@ -3,6 +3,10 @@ import axios from "axios";
  import {apiURL} from "../services/Services"
 
 
+ export const sub_str = (str:string, start:number, length:number) => {
+  // Implementation of the sub_str function
+  return str.substring(start, length)
+};
 
 
 const ProdcutModal: React.FC<{
@@ -20,11 +24,11 @@ const ProdcutModal: React.FC<{
 
   useEffect(() => {
     if (inputData || inputQueryValue) {
-      fetchProdctData();
+      fetchProductData();
     }
   }, [inputData, inputQueryValue]);
 
-  const fetchProdctData = async () => {
+  const fetchProductData = async () => {
     try {
       const data = JSON.stringify({
         queryfor: "product",
@@ -47,6 +51,7 @@ const ProdcutModal: React.FC<{
       axios
         .request(config)
         .then((response) => {
+          console.log(response.data,"response from graphql api");
           const getProdcutsTitle = response.data.response.data.products?.edges;
           setGetprodcuts(getProdcutsTitle);
         })
@@ -58,6 +63,7 @@ const ProdcutModal: React.FC<{
 
   const sendSelectedProdcut = async () => {
     try {
+      console.log("checkedProductscheckedProductscheckedProducts",checkedProducts)
       // Get an array of selected product IDs
       const selectedProductIds = Object.keys(checkedProducts).filter(
         (productId) => checkedProducts[productId]
@@ -126,7 +132,7 @@ const ProdcutModal: React.FC<{
           <div className="justify-center py-3 pr-3 pl-4 text-sm leading-5 border-b border-solid bg-[color:var(--p-color-surface-tertiary)] border-neutral-200 font-[650] text-[color:var(--p-color-text)] max-md:max-w-full">
             Select products to import
           </div>
-          <div className="flex flex-col items-start self-center px-5 mt-4 w-full text-sm leading-5 rounded-xl max-w-[628px] max-md:max-w-full">
+          <div className="flex flex-col items-start self-center px-5 mt-4 w-full text-sm leading-5 rounded-xl max-w-[628px] max-md:max-w-full"style={{height:"50vh",overflowY:"scroll"}}>
             <div className="flex gap-1 self-stretch max-md:flex-wrap">
               <div
                 className="flex gap-1 px-3 py-1.5 whitespace-nowrap bg-white border border-solid border-zinc-500 font-[450] rounded-[var(--p-border-radius-button)] text-[color:var(--p-color-text-secondary)] max-md:flex-wrap"
@@ -153,18 +159,19 @@ const ProdcutModal: React.FC<{
                   className="shrink-0 my-auto w-4 aspect-square"
                   alt=""
                 />
-                <div>Most popular</div>
+                <div style={{fontSize:"13px"}}>Most popular</div>
               </div>
             </div>
             <div className="mt-3 font-[450] text-[color:var(--p-color-text)]">
-              Available products
+              {/* Available products */}
             </div>
             {/* Mapping through productTitles array */}
             {getprodcuts.map((product, index) => (
               <div
                 key={index}
-                className="flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)]"
+                className="flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)] product_items"
               >
+              <div className="product_item_content">  
                 <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
                   <input
                     type="checkbox"
@@ -173,8 +180,33 @@ const ProdcutModal: React.FC<{
                   />
                   <label htmlFor="checkbox"></label>
                 </div>
-                <div><img src={product.node.images.nodes[0].src + "&height=20"} /></div>
-                <div>{product.node.title}</div>
+               <div >
+                  <img src={product?.node?.images?.nodes[0]?.src ?product.node.images.nodes[0].src + "&height=20":null} /></div>
+                    <div className="product_title">{sub_str(product.node.title,0,20)}</div>
+               </div>
+               <div className="variant_item_content">
+                    {product?.node?.variants?.nodes.map((item, index) => (
+                      <>
+                    {item.title!="Default Title" && (
+                    <div
+                    key={index}
+                    className="variant_item flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)]"
+                    >
+                    <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
+                    <input
+                      type="checkbox"
+                      checked={checkedProducts[item.id]} // Check if the product is checked
+                      onChange={() => handleCheckboxChange(item.id)} // Handle checkbox change
+                    />
+                    <label htmlFor="checkbox"></label>
+                    </div>
+                    <div><img src={item?.image?.src ?item?.image?.src + "&height=20":null} /></div>
+                    <div>{sub_str(item.title,0,20)}</div>
+                    </div>
+                    )}
+                    </>
+                    ))}
+                </div>
               </div>
             ))}
           </div>

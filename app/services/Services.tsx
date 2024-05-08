@@ -1,1 +1,1 @@
-export const apiURL = `https://voted-prove-denied-surfaces.trycloudflare.com/`
+export const apiURL = `https://people-refuse-cheats-chapel.trycloudflare.com/`

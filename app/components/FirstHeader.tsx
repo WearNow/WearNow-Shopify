@@ -6,7 +6,7 @@ import CustomSlider from "./CustomSilder";
 
 
 
-const FirstHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
+const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionData,onActivate  }) => {
   const [modals, setModals] = useState<boolean>(false);
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [inputData, setInputData] = useState<number>(10);
@@ -19,10 +19,34 @@ const FirstHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
     setModals(!modals);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = async(event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     if (!isNaN(newValue)) {
       setInputData(newValue);
+      try {
+        // Prepare the data to send
+        const data = JSON.stringify({
+          queryfor: "tryOnPerProduct",
+          shop: sessionData.auth_session.shop,
+          tryOnPerProduct:newValue,
+        });
+    
+        // Define the request configuration
+        const config = {
+          method: "post", 
+          maxBodyLength: Infinity,
+          url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: data,
+        };
+    
+        // Send the request
+        const response = await axios.request(config);
+        console.log(response);
+        setProducts(response.data);
+      } catch (error) {console.log(error)}
     } else {
       setInputData(undefined);
     }
@@ -80,10 +104,6 @@ const FirstHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
     }
   };
 
-  const gotonext = async () => {
-      console.log("hello");
-  };
-
   const images: string[] = [
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107",
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107",
@@ -94,7 +114,7 @@ const FirstHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
     try {
       // Prepare the data to send
       const data = JSON.stringify({
-        queryfor: "getSelectedProdctsData",
+        queryfor: "getSelectedProductsData",
         shop: sessionData.auth_session.shop,
       });
   
@@ -108,10 +128,9 @@ const FirstHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
         },
         data: data,
       };
-  
       // Send the request
       const response = await axios.request(config);
-      console.log(response);
+      console.log(response.data,"get Products response")
       setProducts(response.data);
     } catch (error) {console.log(error)}
   };
@@ -379,7 +398,7 @@ const FirstHeader: React.FC<{ sessionData: any }> = ({ sessionData }) => {
                 </div>
                 <div className="flex gap-5 justify-between self-start mt-5 text-base font-medium leading-6">
                   <div  
-                   onClick={gotonext}
+                   onClick={onActivate}
                    className="cursor-pointer flex gap-2 justify-center px-5 py-2.5 text-white whitespace-nowrap bg-sky-600 rounded-[999px]">
                     <div>Continue</div>
                     <img
