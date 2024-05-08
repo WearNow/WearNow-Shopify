@@ -1,9 +1,11 @@
 {
   "name": "luxury-shareholder-app",
   "private": true,
+  
+
   "scripts": {
     "clean": "rm -rf ./build",
-    "build": "npm run clean && rm -rf build && vite build && vite build --ssr",
+    "build": "npm run clean && vite build && vite build --ssr",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
@@ -20,7 +22,7 @@
     "vite": "vite"
   },
   "type": "module",
-   "engines": {
+  "engines": {
     "node": "18.x",
     "npm": "8.x"
   },
