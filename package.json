@@ -20,12 +20,16 @@
     "vite": "vite"
   },
   "type": "module",
+   "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
   "dependencies": {
     "@prisma/client": "^5.4.2",
-    "@remix-run/dev": "2.7.1",
-    "@remix-run/node": "^2.7.1",
+    "@remix-run/dev": "2.7.2",
+    "@remix-run/node": "^2.7.2",
     "@remix-run/react": "^2.0.0",
-    "@remix-run/serve": "^2.7.1",
+    "@remix-run/serve": "^2.7.2",
     "@shopify/app": "^3.58.2",
     "@shopify/cli": "^3.59.3",
     "@shopify/polaris": "^12.0.0",
