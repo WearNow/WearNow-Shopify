@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf ./build",
-    "build": "vite build && vite build --ssr",
+    "build": "npm run clean && vite build && vite build --ssr",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
