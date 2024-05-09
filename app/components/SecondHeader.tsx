@@ -29,7 +29,7 @@ const SecondHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDa
     try {
       // Prepare the data to send
       const data = JSON.stringify({
-        queryfor: "getSelectedProdctsData",
+        queryfor: "getSelectedProductsData",
         shop: sessionData.auth_session.shop,
       });
 
@@ -178,7 +178,7 @@ const SecondHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDa
                   </div>
                 </div>
               </div>
-              {/* <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap absolute top-[265px] left-[48px] z-[59]'>
+              <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap absolute top-[265px] left-[48px] z-[59]'>
                 <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
                   <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left whitespace-nowrap z-[61]">
                     Please select the number of photos you would like to create
@@ -202,9 +202,9 @@ const SecondHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDa
                   All the photos in a creation request will have very minor
                   changes between them
                 </span>
-              </div> */}
+              </div> 
             </div>
-            {/* <div className='w-[176px] h-[36px] shrink-0 rounded-[100px] absolute top-[371px] left-0 z-[70]'>
+         <div className='w-[176px] h-[36px] shrink-0 rounded-[100px] absolute top-[371px] left-0 z-[70]'>
               <div className='flex w-[36px] h-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center flex-nowrap bg-[#fff] rounded-[100px] border-solid border border-[#e7e7e7] absolute top-0 left-0 overflow-hidden z-[72]'>
                 <span className="flex w-[19px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#b7b7b7] relative text-center whitespace-nowrap z-[73]">
                   02
@@ -233,8 +233,8 @@ const SecondHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDa
               <span className="flex h-[24px] justify-start items-start font-['SF_Pro_Display'] text-[20px] font-normal leading-[24px] text-[#b7b7b7] tracking-[0.38px] absolute top-[6px] left-[48px] text-left whitespace-nowrap z-[79]">
                 Select a pose
               </span>
-            </div> */}
-            {/* <div className='flex w-[236px] h-[44px] gap-[20px] items-start shrink-0 flex-nowrap absolute top-[535px] left-0 z-[82]'>
+            </div> 
+             <div className='flex w-[236px] h-[44px] gap-[20px] items-start shrink-0 flex-nowrap absolute top-[535px] left-0 z-[82]'>
               <button className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
@@ -252,10 +252,9 @@ const SecondHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDa
                   </span>
                 </div>
               </div>
-            </div> */}
+            </div> 
           </div>
-          <div className='main-container flex w-[768px] flex-col gap-[32px] items-start flex-nowrap  mx-auto my-0'>
-
+         {/* <div className='main-container flex w-[768px] flex-col gap-[32px] items-start flex-nowrap  mx-auto my-0'>
             <div className='flex h-[481px] flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[3]'>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
                 <div className='flex w-[578px] h-[115px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[5]'>
@@ -675,7 +674,7 @@ const SecondHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDa
               </div>
             </div>
 
-          </div>
+          </div>*/}
 
         </div>
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">

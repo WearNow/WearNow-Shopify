@@ -16,7 +16,7 @@ const ProdcutModal: React.FC<{
   inputData: number;
   updateCheckedData: (data: any[]) => void; 
 }> = ({ isOpen, toggleModal, sessionData, inputData,updateCheckedData }) => {
-  const [getprodcuts, setGetprodcuts] = useState([]);
+  const [getproducts, setgetproducts] = useState([]);
   const [inputQueryValue, setInputQueryValue] = useState("");
   const [checkedProducts, setCheckedProducts] = useState<{
     [key: string]: boolean;
@@ -52,8 +52,8 @@ const ProdcutModal: React.FC<{
         .request(config)
         .then((response) => {
           console.log(response.data,"response from graphql api");
-          const getProdcutsTitle = response.data.response.data.products?.edges;
-          setGetprodcuts(getProdcutsTitle);
+          const getproductsTitle = response.data.response.data.products?.edges;
+          setgetproducts(getproductsTitle);
         })
         .catch((error) => {
           console.log(error);
@@ -70,21 +70,30 @@ const ProdcutModal: React.FC<{
       );
   
       // Filter the products based on the selected IDs and map them to include titles
-      const selectedProducts = getprodcuts
-        .filter((product) => selectedProductIds.includes(product.node.id))
-        .map((product) => ({
-          id: product.node.id,
-          title: product.node.title,
-          image: product.node.images.nodes[0].src
-        }));
-  
+      const selectedProducts = getproducts.filter((product) => selectedProductIds.includes(product.node.id)).map((product) => ({
+            id: product.node.id,
+            title: product.node.title,
+            image: product.node.images.nodes[0] ? product.node.images.nodes[0].src : null,
+          }));
+          const selectedVariants:any = [];
+          getproducts.forEach((product:any, index:number) => {
+            const filteredVariants = product.node.variants.nodes.map((item:any)=> ({
+              id:item.id,
+              title: item.title,
+              image: item.image?.src
+            })).filter((item:any)=> selectedProductIds.includes(item.id));
+            filteredVariants.forEach((variant:any) => {
+              selectedVariants.push(variant);
+            });
+          });
+        console.log(selectedVariants,"selectedProductsselectedProductsselectedProducts",selectedProducts);
       // Prepare the data to send
       const data = JSON.stringify({
         queryfor: "selectedProdctsData",
-        selectedProdct: selectedProducts,
+        selectedProdct: [...selectedProducts,...selectedVariants],
         shop: sessionData.auth_session.shop,
       });
-  
+      console.log("data:=>",data);
       // Define the request configuration
       const config = {
         method: "post", 
@@ -111,14 +120,59 @@ const ProdcutModal: React.FC<{
   };
 
   const handleCheckboxChange = (productId: string) => {
+    getproducts.filter((product) => productId.includes(product.node.id)).forEach((product:any, index:number) => {
+      const filteredVariants = product.node.variants.nodes.map((item:any)=> ({
+        id:item.id,
+        title: item.title,
+        image: item.image?.src
+      }))
+      filteredVariants.forEach((variant:any) => {
+        setCheckedProducts((prevState) => ({
+          ...prevState,
+          [variant.id]: !prevState[productId],
+        }));
+      });
+    });
     setCheckedProducts((prevState) => ({
       ...prevState,
       [productId]: !prevState[productId],
     }));
   };
+  const handleVariantCheckboxChange = (variantId: string) => {
+    setCheckedProducts((prevState) => ({
+      ...prevState,
+      [variantId]: !prevState[variantId],
+    }));
+    getproducts.forEach((product:any, index:number) => {
+      const filteredVariants = product.node.variants.nodes.filter((item:any) => variantId.includes(item.id)).map((item:any)=> ({
+        id:item.id,
+        title: item.title,
+        image: item.image?.src,
+        pid:product.node.id
+      }))
+      filteredVariants.forEach((variant:any) => {
+        if(checkedProducts[variant.id]==false){
+          checkedProducts[variant.pid]= true;
+        }
+        else{
+          let check=false;
+          getproducts.filter((inner) => variant.pid.includes(inner.node.id)).forEach((inner:any) => {
+             inner.node.variants.nodes.map((v:any)=> {
+                if(variant.id!=v.id && checkedProducts[v.id]==true){
+                    check=true;
+                }
+            })
+          })
+          if(!check){   
+            checkedProducts[variant.pid]= false;
+          }
+        }
+      }); 
+    });
+  };
 
   const displayCheckedData = () => {
-    const checkedData = getprodcuts.filter(
+    const checkedData = getproducts.filter(
       (product) => checkedProducts[product.node.id]
     );
     console.log(checkedData, "selected data ");
@@ -166,7 +220,7 @@ const ProdcutModal: React.FC<{
               {/* Available products */}
             </div>
             {/* Mapping through productTitles array */}
-            {getprodcuts.map((product, index) => (
+            {getproducts.map((product, index) => (
               <div
                 key={index}
                 className="flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)] product_items"
@@ -196,7 +250,7 @@ const ProdcutModal: React.FC<{
                     <input
                       type="checkbox"
                       checked={checkedProducts[item.id]} // Check if the product is checked
-                      onChange={() => handleCheckboxChange(item.id)} // Handle checkbox change
+                      onChange={() => handleVariantCheckboxChange(item.id)} // Handle checkbox change
                     />
                     <label htmlFor="checkbox"></label>
                     </div>

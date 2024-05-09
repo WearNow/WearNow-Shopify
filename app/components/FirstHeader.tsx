@@ -130,14 +130,13 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
       };
       // Send the request
       const response = await axios.request(config);
-      console.log(response.data,"get Products response")
       setProducts(response.data);
     } catch (error) {console.log(error)}
   };
   useEffect(() => {
     // Call the fetchProducts function when the component mounts
      fetchProducts();
-  }, []); // Empty dependency array ensures it only runs once on mount
+  }, [updateCheckedData]); // Empty dependency array ensures it only runs once on mount
 
   const handleChange = async(tryOn:boolean) =>{
     let  tt=false;
