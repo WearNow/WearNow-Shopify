@@ -152,6 +152,7 @@ const ProdcutModal: React.FC<{
         pid:product.node.id
       }))
       filteredVariants.forEach((variant:any) => {
+       console.log("checkedProducts[variant.id]",checkedProducts[variant.id]);
         if(checkedProducts[variant.id]=="undefined" || checkedProducts[variant.id]==false){
           //checkedProducts[variant.pid]= true;
          setCheckedProducts((prevState) => ({
