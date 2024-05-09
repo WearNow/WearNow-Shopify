@@ -55,9 +55,9 @@ const VartualTryOnWithStudio = () => {
           </div>
         </div>
       </div>
-      <div className='flex w-full pt-[30px] pr-0 pb-[20px] pl-0 flex-col gap-[24px] items-center shrink-0 flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative z-[21]'>
+      <div className='flex w-full pt-[30px] pr-0 pb-[20px] pl-0 flex-col gap-[24px] items-center shrink-0 flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative z-[1]'>
         <div className='flex flex-col gap-[-12px] justify-center items-center self-stretch shrink-0 flex-nowrap relative z-[22]'>
-          <div className='flex pt-0 pr-[20px] pb-0 pl-[20px] flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[23]'>
+          <div className='flex pt-0 pr-[20px] pb-0 pl-[20px] flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[1]'>
             <div className='flex w-[283px] h-full gap-[6.224px] items-center shrink-0 flex-nowrap relative z-[24] m-auto	'>
               <div className='flex w-[282.867px] flex-col gap-[5.533px] justify-center items-start shrink-0 flex-nowrap relative z-[25]'>
                 <div className='flex gap-[5.533px] items-center self-stretch shrink-0 flex-nowrap relative z-[26]'>

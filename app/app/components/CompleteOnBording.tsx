@@ -38,10 +38,8 @@ function CompleteOnBording() {
                     </div>
                 </div>
             </div>
-            
          < UsageStatistics/>
-         {/* <DashboardHistory/> */}
-         <PhotoCreated/>
+         <DashboardHistory/>
         </>
     )
 }

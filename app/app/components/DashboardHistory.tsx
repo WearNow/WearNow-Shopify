@@ -1,8 +1,8 @@
 import React from 'react'
-
+import DashboardModel from './DashboardModel';
 const DashboardHistory = () => {
     return (
-        <div className='main-container flex mt-5 w-[437px] h-[544px] pt-[30px] pr-0 pb-[20px] pl-0 flex-col gap-[24px] items-center flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative mx-auto my-0'>
+        <div className='main-container flex mt-5 w-full h-[544px] pt-[30px] pr-0 pb-[20px] pl-0 flex-col gap-[24px] items-center flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative mx-auto my-0'>
             <div className='flex w-[437px] h-[64px] flex-col gap-[-12px] justify-center items-center shrink-0 flex-nowrap absolute top-[20px] left-[-1px]'>
                 <div className='flex pt-0 pr-[20px] pb-0 pl-[20px] flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[1]'>
                     <div className='flex h-[30px] flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[2]'>
@@ -19,6 +19,16 @@ const DashboardHistory = () => {
                     </div>
                 </div>
             </div>
+            <div className='photo_created'>
+                <button className='photo_created_btn'>
+                    <div className='photo_created_content'style={{display:"block"}}>
+                        <img className="photo_created_rounded" src='https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Content.png?v=1714977637' />
+                        <img className='photo_created_choosfile_icon' src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/photo_created_icon_c3933789-a940-4208-979b-1b079877a371.png?v=1714977636"/>
+                    </div>
+                </button>
+            </div>
+            < DashboardModel/>
+            <div style={{display:"none"}}>
             <div className='flex w-[120px] h-[120px] flex-col items-start shrink-0 flex-nowrap bg-[#fff] rounded-[8px] absolute top-[107px] left-[19px] overflow-hidden z-[7]'>
                 <div className='flex flex-col items-start self-stretch shrink-0 flex-nowrap bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805)] bg-cover bg-no-repeat relative z-[8]'>
                     <div className='flex flex-col justify-center items-center self-stretch shrink-0 flex-nowrap bg-[rgba(255,255,255,0)] relative z-[9]'>
@@ -279,6 +289,7 @@ const DashboardHistory = () => {
                         </span>
                     </button>
                 </div>
+            </div>
             </div>
         </div>
     )

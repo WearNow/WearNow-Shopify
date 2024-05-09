@@ -3,7 +3,7 @@
 client_id = "bfdb6cc77aeff152d3b1f0187bafbc29"
 name = "new-ai-app"
 handle = "new-ai-app"
-application_url = "https://ear-crawford-leading-sporting.trycloudflare.com"
+application_url = "https://undefined-bare-sys-base.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://ear-crawford-leading-sporting.trycloudflare.com/auth/callback",
-  "https://ear-crawford-leading-sporting.trycloudflare.com/auth/shopify/callback",
-  "https://ear-crawford-leading-sporting.trycloudflare.com/api/auth/callback"
+  "https://undefined-bare-sys-base.trycloudflare.com/auth/callback",
+  "https://undefined-bare-sys-base.trycloudflare.com/auth/shopify/callback",
+  "https://undefined-bare-sys-base.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

@@ -531,14 +531,126 @@ button {
   width: 100%;
   object-fit: cover;
   max-width: 298px;
+  border-radius: 20px;
 }
+.last_model_content {
+  display: flex;
+  /* padding: 40px; */
+  flex-direction: column;
+}
+.last_model_content .modal-content_row>div {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  display: block;
+}
+.modal-content_row {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+}
+.last_model_customization_panel {
+  padding-left: 25px !important;
+}
+button.add_to_cart_btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  min-width: 0;
+  cursor: pointer;
+  border: none;
+  gap: 10px;
+  position: relative;
+  width: 206px;
+  padding: 20px 20px 20px 20px;
+  background: #046fb4;
+  overflow: hidden;
+  border-radius: 30px;
+  color: #ffffff;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
+  white-space: nowrap;
+  letter-spacing: -0.32px;
+  z-index: 1;
+}
+.try_something_btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  min-width: 0;
+  cursor: pointer;
+  border: none;
+  gap: 10px;
+  position: relative;
+  width: 206px;
+  padding: 20px 20px 20px 20px;
+  background: #b6bac3;
+  overflow: hidden;
+  border-radius: 30px;
+  color: #ffffff;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
+  white-space: nowrap;
+  letter-spacing: -0.32px;
+  z-index: 1;
+}
+.add_to_cart_container {
+  display: flex;
+  flex-direction: column;
+  height: 17%;
+  gap: 10px;
+  margin-top: 27px;
+}
+div#sizeResults>p {
+  position: relative;
+  color: #303030;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  letter-spacing: -0.32px;
+  margin: 0px;
+  margin-bottom: 14px;
+}
+div#sizeResults span {
+  color: #303030;
+  font-family: SF Pro Text, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 21px;
+  text-align: center;
+  letter-spacing: -0.32px;
+  margin-left: 1px;
+}
+.last_model_content .model_photo {
+  display: block !important;
+}
+/* div#myModal4  .footer_model {
+  display: none;
+} */
 @media (max-width: 1244px) {
  .main_content_model .form_content select,body .form-group select {
     padding: 5px 10px 5px 8px;
 }
 .main_content_model .modal-content {
   height: 75vh;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 .main_content_model .upload_photo_container {
   height: 67px;
@@ -567,13 +679,55 @@ button {
     width: 100%;
   }
 }
-
+.mobile_view.add_to_cart_container {
+  display: none;
+}
 @media (max-width: 667px) {
+ body .modal-content_row {
+    padding: 20px;
+}
+body div#myModal4  .footer_model {
+  display: flex;
+}
+  body div#sizeResults>p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: normal;
+  
+}
+body .mobile_view.add_to_cart_container {
+  display: block;
+  margin-bottom: 20px;
+  padding: 0px 20px;
+}
+#myModal4 .last_model_content {
+  display: flex;
+  padding: 0px;
+  flex-direction: column;
+}
+#myModal4 button.add_to_cart_btn, #myModal4 .try_something_btn {
+  width: 100%;
+  padding: 10px 20px 10px 13px;
+  margin-bottom: 10px;
+}
+.last_model_customization_panel svg {
+  height: 40px;
+  width: 40px;
+}
+.last_model_customization_panel button.add_to_cart_btn , .last_model_customization_panel .try_something_btn{
+  width: 129px;
+  padding: 11px 8px 11px 12px;
+  display: none;
+}
+.last_model_customization_panel h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
   .customization-panel.customization-panel1>img {
     display: none;
   }
   .main_content_model .modal-content {
-    height:  unset !important;
+    height:  66vh !important;
 }
 h2.footer_model_title {
   display: none;
@@ -625,14 +779,21 @@ body .main_content_model .customization-panel.customization-panel2 .button-conta
   #myModal .modal-content {
     min-width: 90%;
   }
+  .main_content_model form#customizationForm div {
+    margin-bottom: 4px;
+}
+body .customization-panel2 {
+  margin-bottom: 140px;
+}
 }
 
 
 @media (max-width: 567px) {
-
-.main_content_model .customization-panel1, .customization-panel2 {
-  height: 60vh;
-  overflow: scroll;
+  #myModal4 .last_model_content {
+    padding: 0px;
+}
+body .customization-panel2 {
+  margin-bottom: 30px;
 }
 body .main_content_model form#customizationForm div {
   margin-bottom: 15px;
