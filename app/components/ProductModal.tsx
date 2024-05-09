@@ -139,6 +139,7 @@ const ProdcutModal: React.FC<{
     }));
   };
   const handleVariantCheckboxChange = (variantId: string) => {
+   console.log("variantId",variantId);
     setCheckedProducts((prevState) => ({
       ...prevState,
       [variantId]: !prevState[variantId],
@@ -162,6 +163,7 @@ const ProdcutModal: React.FC<{
           let check=false;
           getproducts.filter((inner) => variant.pid.includes(inner.node.id)).forEach((inner:any) => {
              inner.node.variants.nodes.map((v:any)=> {
+              console.log("checkedProducts[v.id]",checkedProducts[v.id]);
                 if(variant.id!=v.id && checkedProducts[v.id]==true){
                     check=true;
                 }
@@ -177,6 +179,7 @@ const ProdcutModal: React.FC<{
         }
       }); 
     });
+   console.log("CheckedProducts",checkedProducts);
   };
 
   const displayCheckedData = () => {
