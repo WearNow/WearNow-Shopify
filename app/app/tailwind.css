@@ -72,12 +72,14 @@
     padding: 0 !important;
     vertical-align: text-top;
     height: 15px;
-    width: 14px;
+    width: 15px;
     -webkit-appearance: none;
     opacity: .5;
     top: -1px;
 }
-  
+.model_dont_show_content  .product_import input[type=checkbox] {
+  top: -2px;
+}
   .product_import input[type=checkbox]:hover {
     opacity: 1;
   }
@@ -330,7 +332,7 @@ button.perfactpicture_overlay_btn {
 .virtual_tryon_with_studio_content {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 50%;
   position: relative;
 }
 img.virtual_tryon_with_studio_img1 {
@@ -358,5 +360,91 @@ img.virtual_tryon_with_studio_img3 {
   position: relative;
   top: 28px;
 }
+.dashboard_navigation>div{
+  cursor: pointer;
+}
+.dashboard_navigation>div:hover {
+  background: rgba(0,0,0,0.08);
+}
+.photo_created_content {
+  position: relative;
+  width: 100%;
+  display: block;
+  height: 53vh;
+  margin-top: 6px;
+}
+.photo_created {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 106px;
+  max-height: 100vh;
+  display: flex;
+}
+img.photo_created_choosfile_icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 92px;
+  width: 91px;
+  transform: translate(-50%, -50%);
+}
+img.photo_created_rounded {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+button.photo_created_btn {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.roundend_circle_overlay:after {
+  content: '';
+  background: url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/rounded_overlay_img.png?v=1715156160);
+  height: 336px;
+  width: 336px;
+  background-color: transparent;
+  position: absolute;
+  background-repeat: no-repeat;
+  left: -127px;
+  top: -121px;
+  z-index: 0;
+}
 /*=================================  Dashboard end style code ============================== */
 
+
+/* ================================ Product Page style code  ================================ */
+
+.product_page_row {
+  display: flex;
+  width: 100%;
+  padding: 0px 21px;
+  gap: 20px;
+}
+table.product_page_table td, table.product_page_table tr {
+  color: black;
+}
+.product_page_table th {
+  color: #616161;
+}
+/* Remove hover effect */
+.no-border:hover {
+  outline: none; /* Remove outline on hover */
+}
+
+/* Remove focus indicator */
+.no-border:focus,
+.no-border:focus-visible {  
+  outline: none; /* Remove outline on focus */
+}
+.no-arrow::-webkit-inner-spin-button,
+.no-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* ================================ Product Page end style code  ================================ */
