@@ -139,7 +139,6 @@ const ProdcutModal: React.FC<{
     }));
   };
   const handleVariantCheckboxChange = (variantId: string) => {
-   console.log("variantId",variantId);
     setCheckedProducts((prevState) => ({
       ...prevState,
       [variantId]: !prevState[variantId],
@@ -152,19 +151,13 @@ const ProdcutModal: React.FC<{
         pid:product.node.id
       }))
       filteredVariants.forEach((variant:any) => {
-       console.log("checkedProducts[variant.id]",checkedProducts[variant.id]);
-        if(checkedProducts[variant.id]===undefined || checkedProducts[variant.id]==false){
-          //checkedProducts[variant.pid]= true;
-         setCheckedProducts((prevState) => ({
-            ...prevState,
-            [variant.pid]: true,
-          }));
+        if(checkedProducts[variant.id]==false){
+          checkedProducts[variant.pid]= true;
         }
         else{
           let check=false;
           getproducts.filter((inner) => variant.pid.includes(inner.node.id)).forEach((inner:any) => {
              inner.node.variants.nodes.map((v:any)=> {
-              console.log("checkedProducts[v.id]",checkedProducts[v.id]);
                 if(variant.id!=v.id && checkedProducts[v.id]==true){
                     check=true;
                 }
@@ -172,15 +165,10 @@ const ProdcutModal: React.FC<{
           })
           if(!check){   
             checkedProducts[variant.pid]= false;
-            setCheckedProducts((prevState) => ({
-             ...prevState,
-             [variant.pid]: false,
-           }));
           }
         }
       }); 
     });
-   console.log("CheckedProducts",checkedProducts);
   };
 
   const displayCheckedData = () => {
