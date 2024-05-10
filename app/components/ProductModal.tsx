@@ -151,8 +151,14 @@ const ProdcutModal: React.FC<{
         pid:product.node.id
       }))
       filteredVariants.forEach((variant:any) => {
+       
         if(checkedProducts[variant.id]===undefined || checkedProducts[variant.id]==false){
-          checkedProducts[variant.pid]= true;
+          
+          setCheckedProducts((prevState) => ({
+            ...prevState,
+            [variant.pid]: true,
+          }));
+        
         }
         else{
           let check=false;
@@ -164,7 +170,11 @@ const ProdcutModal: React.FC<{
             })
           })
           if(!check){   
-            checkedProducts[variant.pid]= false;
+            setCheckedProducts((prevState) => ({
+              ...prevState,
+              [variant.pid]: false,
+            }));
+            
           }
         }
       }); 
