@@ -447,4 +447,19 @@ table.product_page_table td, table.product_page_table tr {
   -webkit-appearance: none;
   margin: 0;
 }
+.product_item_content {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.product_items {
+  display: flex;
+  flex-direction: column;
+}
+
+.variant_item_content {
+  margin-left: 20px;
+}
 /* ================================ Product Page end style code  ================================ */
