@@ -462,4 +462,67 @@ table.product_page_table td, table.product_page_table tr {
 .variant_item_content {
   margin-left: 20px;
 }
+select:focus {
+  outline: none;
+} 
+.after_border:after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 17px;
+  background: black;
+  height: 73%;
+  width: 1px;
+}
+
+.after_border_next:after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 17px;
+  background: black;
+  height: 100%;
+  width: 1px;
+}
 /* ================================ Product Page end style code  ================================ */
+
+
+/* ================================ Vartual try on  Page  style code  ================================ */
+
+.vartualtryon_container {
+  padding: 0px 25px;
+  padding-bottom: 50px;
+}
+
+select {
+  border: none;
+  outline: none;
+}
+
+select:focus {
+  outline: none;
+}
+
+select::-moz-focus-inner {
+  border: 0;
+}
+
+select::-ms-expand {
+  display: none;
+}
+.selected_items {
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  margin-left: 40px;
+  position: relative;
+  top: 8px;
+  gap: 7px;
+}
+svg.search_icon {
+  position: absolute;
+  top: 11px;
+  left: 12px;
+}
+/* ================================ Vartual try on  Page end style code  ================================ */

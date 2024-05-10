@@ -19,11 +19,13 @@ const DashboardHeader = () => {
                         </span>
                     </button>
                 </Link>
+                <Link to="/app/vartualtryon">
                     <div className='flex w-[107px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap rounded-[8px] relative z-[7]'>
                         <span className="flex w-[83px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-[8]">
                             Virtual Try-On
                         </span>
                     </div>
+                    </Link>
                     <Link to="/app/photostudio">
                     <div className='flex w-[99px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap rounded-[8px] relative z-[9]'>
                         <span className="flex w-[75px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-10">
