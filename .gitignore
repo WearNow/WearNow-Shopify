@@ -25,3 +25,5 @@ dist/
 extensions/*/build
 
 
+# lockfile
+package-lock.json

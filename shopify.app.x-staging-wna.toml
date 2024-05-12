@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "765b11ac4e52a762b5e5956b22ca5c3b"
+name = "X-staging-wna"
+handle = "x-staging-wna"
+application_url = "https://smiling-sunbeam-thankful.ngrok-free.app"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "teststorewna.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,unauthenticated_read_selling_plans,unauthenticated_write_checkouts,write_checkouts,write_orders,write_products"
+
+[auth]
+redirect_urls = [
+  "https://smiling-sunbeam-thankful.ngrok-free.app/auth/callback",
+  "https://smiling-sunbeam-thankful.ngrok-free.app/auth/shopify/callback",
+  "https://smiling-sunbeam-thankful.ngrok-free.app/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[pos]
+embedded = false
