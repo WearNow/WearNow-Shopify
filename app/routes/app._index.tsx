@@ -16,7 +16,28 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const auth_session = await db.session.findFirst({
     where: { shop },
   });
-  return {auth_session}
+  const myHeaders = new Headers();
+myHeaders.append("content-type", "application/json");
+myHeaders.append("x-hasura-admin-secret", "sau1XI9_2o0=&mxuY6P$*o");
+
+const graphql = JSON.stringify({
+  query: `mutation MyMutation {\r\n  insert_session(objects: {accessToken: "${auth_session?.accessToken}", created_at: "2024-05-13 4:40:00", isOnline: ${auth_session?.isOnline}, scope: "${auth_session?.scope}", shop_id: "${auth_session?.shop}",state:"1234",expires:"2025-05-13 4:40:00"})\r\n  {\r\n    returning {\r\n      accessToken\r\n    }\r\n    }\r\n}\r\n`,
+  variables: {}
+})
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: graphql,
+  redirect: "follow"
+};
+
+await fetch("https://graphql.wearnow.ai/v1/graphql", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+  console.log("requestOptionsrequestOptions",requestOptions);
+  
+    return {auth_session}
 };
 
 

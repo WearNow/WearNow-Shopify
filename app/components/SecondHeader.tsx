@@ -10,10 +10,13 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
   const [products, setProducts] = useState<any[]>([]);
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [checkedProduct, setCheckedProduct] = useState<string>();
-  const [startIndex, setStartIndex] = useState<number>(1);
   const [model, setModel] = useState<number>();
   const [background, setBackground] = useState<number>();
   const [pose, setPose] = useState<number>();
+  const [tmpCheckedProduct, setTmpCheckedProduct] = useState<string>();
+  const [tmpModel, setTmpModel] = useState<number>();
+  const [tmpBackground, setTmpBackground] = useState<number>();
+  const [tmpPose, setTmpPose] = useState<number>();
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -118,14 +121,42 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     console.log("model id: " + id)
   };
 
-  let start = ((3 * startIndex) - 3);
-  let end = 3 * startIndex;
-  useEffect(() => {
-    start = ((3 * startIndex) - 3);
-    end = 3 * startIndex;
-
-  }, [startIndex])
-
+  const handleEdit = (step:string)=>{
+    switch(step) {
+      case '01':
+        console.log("we are in first step",checkedProduct);
+        setTmpCheckedProduct(checkedProduct);
+        setCheckedProduct(undefined);
+        setTmpModel(model);
+        setModel(undefined);
+        setTmpBackground(background);
+        setBackground(undefined);
+        setTmpPose(pose);
+        setPose(undefined);
+      break;
+      case '02':
+        console.log("we are in second step",model);
+        setTmpModel(model);
+        setModel(undefined);
+        setTmpBackground(background);
+        setBackground(undefined);
+        setTmpPose(pose);
+        setPose(undefined);
+      break;
+      case '03':
+        console.log("we are in third step",background);
+        setTmpBackground(background);
+        setBackground(undefined);
+        setTmpPose(pose);
+        setPose(undefined);
+      break;
+      case '04':
+        console.log("we are in forth step",pose);
+        setTmpPose(pose);
+        setPose(undefined);
+      break;
+    }
+  };
   return (
     <div className="self-stretch second_header">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -168,6 +199,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                                     <div className='flex w-[16px] gap-[8px] items-start shrink-0 flex-nowrap rounded-[4px] relative z-[32]'>
                                       <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
                                         <input id={product.productId} name={product.productId}
+                                          checked={tmpCheckedProduct==product.productId?true:false}
                                           onChange={() => handleCheckboxChange(product.productId)}
                                           type="checkbox" />
                                         <label htmlFor="checkbox"></label>
@@ -242,7 +274,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
               <>
                 {products.filter((product: any) => checkedProduct.includes(product.id)).map((product, index) => (
 
-                    <SelectedOnbording step="01" data={product.productName} image={product.productImage} />
+                    <SelectedOnbording step="01" data={product.productName} image={product.productImage} handleEdit={handleEdit} />
                 ))}
                 {!model && (
                   <>
@@ -253,7 +285,9 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                 )}
                 {model && !background ? (
               <>
-              <SelectedOnbording step={stepModel} data={model} image={models.image} />
+              {models.filter((m:any)=>model==m.id).map((m:any)=>( 
+              <SelectedOnbording step={stepModel} data={m.name}  image={m.image} handleEdit={handleEdit} />
+            ))}
               <SelectOnboarding step={stepBackground} selectLoop={backgrounds} handleSelection={handleSelection} type='background'/>
               <FadedOnboarding step={stepPose} sectionText={textPose} />
               </>
@@ -261,8 +295,12 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
               <>
               {model && background && !pose && (
                 <>
-              <SelectedOnbording step={stepModel} data={model}  image={models.image} />
-              <SelectedOnbording step={stepBackground} data={background} image={backgrounds.image} />
+              {models.filter((m:any)=>model==m.id).map((m:any)=>( 
+              <SelectedOnbording step={stepModel} data={m.name}  image={m.image} handleEdit={handleEdit} />
+            ))}
+             {backgrounds.filter((b:any)=>background==b.id).map((b:any)=>( 
+              <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
+            ))}
               <SelectOnboarding step={stepPose} selectLoop={poses} handleSelection={handleSelection} type='pose'/>
               </>
               )}
@@ -271,13 +309,13 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
             {model && background && pose && (
                 <>
                 {models.filter((m:any)=>model==m.id).map((m:any)=>( 
-              <SelectedOnbording step={stepModel} data={m.name}  image={m.image} />
+              <SelectedOnbording step={stepModel} data={m.name}  image={m.image} handleEdit={handleEdit} />
             ))}
             {backgrounds.filter((b:any)=>background==b.id).map((b:any)=>( 
-              <SelectedOnbording step={stepBackground} data={b.name} image={b.image} />
+              <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
             ))}
              {poses.filter((p:any)=>pose==p.id).map((p:any)=>( 
-              <SelectedOnbording step={stepPose} data={p.name} image={p.image} />
+              <SelectedOnbording step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
             ))}
               </>
               )}
