@@ -127,28 +127,28 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         console.log("we are in first step",checkedProduct);
         setTmpCheckedProduct(checkedProduct);
         setCheckedProduct(undefined);
-        setTmpModel(model);
-        setModel(undefined);
-        setTmpBackground(background);
-        setBackground(undefined);
-        setTmpPose(pose);
-        setPose(undefined);
+        // setTmpModel(model);
+        // setModel(undefined);
+        // setTmpBackground(background);
+        // setBackground(undefined);
+        // setTmpPose(pose);
+        // setPose(undefined);
       break;
       case '02':
         console.log("we are in second step",model);
         setTmpModel(model);
         setModel(undefined);
-        setTmpBackground(background);
-        setBackground(undefined);
-        setTmpPose(pose);
-        setPose(undefined);
+        // setTmpBackground(background);
+        // setBackground(undefined);
+        // setTmpPose(pose);
+        // setPose(undefined);
       break;
       case '03':
         console.log("we are in third step",background);
         setTmpBackground(background);
         setBackground(undefined);
-        setTmpPose(pose);
-        setPose(undefined);
+        // setTmpPose(pose);
+        // setPose(undefined);
       break;
       case '04':
         console.log("we are in forth step",pose);
