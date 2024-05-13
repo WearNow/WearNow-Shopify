@@ -1,7 +1,7 @@
 import React from 'react'
 
 function SelectedOnbording(props:any) {
-    const { step, data, image } = props;
+    const { step, data, image, handleEdit } = props;
   return (
     <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
     <div className='flex w-[578px] h-[115px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[5]'>
@@ -20,7 +20,7 @@ function SelectedOnbording(props:any) {
           <div className='w-[20px] h-[20px] shrink-0 relative z-[31]'>
           <div className='w-[12.945px] h-[12.945px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Icon.png?v=1714574880)] bg-cover bg-no-repeat relative z-[32] mt-[3.555px] mr-0 mb-0 ml-[3.5px]' />
           </div>
-          <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#616161] relative text-left whitespace-nowrap z-[33]">
+          <span onClick={()=>handleEdit(step)} className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#616161] relative text-left whitespace-nowrap z-[33]">
           Edit
           </span>
           </button>
