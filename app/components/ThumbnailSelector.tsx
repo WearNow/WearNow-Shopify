@@ -1,8 +1,7 @@
-import { Badge, Bleed, BlockStack, InlineStack, Box, Button, Card, Image, InlineGrid, Pagination, Scrollable, Tag, Text, Icon } from '@shopify/polaris';
-import { PlusIcon, UploadIcon } from '@shopify/polaris-icons';
+import { Badge, Bleed, BlockStack, Box, Card, Image, InlineGrid, InlineStack, Pagination, Scrollable, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
 
-import { LegacyCard, EmptyState } from '@shopify/polaris';
+import { EmptyState } from '@shopify/polaris';
 
 function EmptyStateExample() {
   return (
@@ -28,66 +27,57 @@ interface DataType {
   tags: string[];
 }
 
-const segments: DataType[] = [
-  {
-    label: 'Model 1',
-    id: 'gid://shopify/CustomerSegment/1',
-    value: '0',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_1.png?v=1715483175',
-    tags: ['Dark skin', 'Small Size']
-  },
-  {
-    label: 'Model 2',
-    id: 'gid://shopify/CustomerSegment/2',
-    value: '1',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_2.png?v=1715483175',
-    tags: ['Pale skin', 'Medium Size']
-  },
-  {
-    label: 'Model 3',
-    id: 'gid://shopify/CustomerSegment/3',
-    value: '2',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_3.png?v=1715483177',
-    tags: ['Pale skin', 'Medium Size']
-  },
-  {
-    label: 'Model 4',
-    id: 'gid://shopify/CustomerSegment/4',
-    value: '3',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_4.png?v=1715483175',
-    tags: ['Pale skin', 'Medium Size']
+// const segments: DataType[] = [
+//   {
+//     label: 'Model 1',
+//     id: 'gid://shopify/CustomerSegment/1',
+//     value: '0',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_1.png?v=1715483175',
+//     tags: ['Dark skin', 'Small Size']
+//   },
+//   {
+//     label: 'Model 2',
+//     id: 'gid://shopify/CustomerSegment/2',
+//     value: '1',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_2.png?v=1715483175',
+//     tags: ['Pale skin', 'Medium Size']
+//   },
+//   {
+//     label: 'Model 3',
+//     id: 'gid://shopify/CustomerSegment/3',
+//     value: '2',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_3.png?v=1715483177',
+//     tags: ['Pale skin', 'Medium Size']
+//   },
+//   {
+//     label: 'Model 4',
+//     id: 'gid://shopify/CustomerSegment/4',
+//     value: '3',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_4.png?v=1715483175',
+//     tags: ['Pale skin', 'Medium Size']
+//   }
+// ];
+
+// const lazyLoadSegments = Array.from(Array(10)).map((_, index) => {
+//   let tmp = { ...segments[index % segments.length] };
+//   tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
+//   tmp.value = `${index + segments.length}`;
+//   return tmp;
+// });
+
+// segments.push(...lazyLoadSegments);
+
+
+
+const ThumbnailSelector: React.FC<{ modelSelectId: string, setSelectModelId: any, ModuleData: DataType[] }> = ({ modelSelectId, setSelectModelId, ModuleData }) => {
+
+  const isSelected = (index: string) => index === modelSelectId;
+
+  // const segments = ModuleData
+
+  const onClickHandle = (e: any) => {
+    setSelectModelId(e)
   }
-];
-
-const lazyLoadSegments = Array.from(Array(10)).map((_, index) => {
-  let tmp = { ...segments[index % segments.length] };
-  tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
-  tmp.value = `${index + segments.length}`;
-  return tmp;
-});
-
-segments.push(...lazyLoadSegments);
-
-const ProductSelector: React.FC = ({}) => {
-  const listboxItemMarkup = (seg: DataType) => (
-    <div style={{ display: 'flex', height: '250px', justifyContent: 'space-around' }}>
-      <Card>
-        <Bleed marginInline="400" marginBlock="400">
-          <Image source={seg.img} alt="a sheet with purple and orange stripes" />
-          <Box padding="400">
-            <div className="self-stretch justify-start items-center gap-2 inline-flex">
-              <div style={{ width: 193, color: '#303030', fontSize: 13, fontFamily: 'Inter', fontWeight: '650', wordWrap: 'break-word' }}>{seg.label}</div>
-            </div>
-            <div className="pt-2 gap-2 flex">
-              {seg.tags.map(tag => (
-                <Badge size="large">{tag}</Badge>
-              ))}
-            </div>
-          </Box>
-        </Bleed>
-      </Card>
-    </div>
-  );
 
   const SpacingBackground = ({ children, width = '100%' }: { children: React.ReactNode; width?: string }) => {
     return (
@@ -102,34 +92,45 @@ const ProductSelector: React.FC = ({}) => {
     );
   };
 
+
+  const listboxItemStyle =
+    { display: 'flex', height: '250px', justifyContent: 'space-around', borderRadius: '15px', border: "3px solid ", borderColor: 'rgba(4,111,180,0)' }
+
+  const listboxItemSelectedStyle =
+    { display: 'flex', height: '250px', justifyContent: 'space-around', borderRadius: '15px', border: "3px solid ", borderColor: 'rgba(4,111,180,1)' }
+
+  const listboxItemMarkup = (seg: DataType) => (
+
+    <div className='w-56 flex' key={seg.id} onClick={() => { onClickHandle(seg.value) }} style={isSelected(seg.value) ? listboxItemSelectedStyle : listboxItemStyle}>
+      <Card>
+        <Bleed marginInline="400" marginBlock="400">
+          <Image source={seg.img} alt="a sheet with purple and orange stripes" />
+          <Box padding="400">
+            <div className="self-stretch justify-start items-center gap-2 inline-flex">
+              <div style={{ width: 193, color: '#303030', fontSize: 13, fontFamily: 'Inter', fontWeight: '650', wordWrap: 'break-word' }}>{seg.label}</div>
+            </div>
+            <div className="pt-2 gap-2 flex">
+              {seg.tags.map((tag, idx) => (
+                <Badge key={idx} size="large">{tag}</Badge>
+              ))}
+            </div>
+          </Box>
+        </Bleed>
+      </Card>
+    </div >
+  );
   const listboxMarkup = (
     <>
-      <div style={{ display: 'flex', width: '100%' }}>
+      <div style={{ display: 'flex', width: '100%' }} >
         <SpacingBackground>
-          <InlineGrid gap="400" columns={2}>
-            {segments.map(seg => listboxItemMarkup(seg))}
+          <InlineGrid gap="400" columns={2} >
+            {ModuleData.map(seg => listboxItemMarkup(seg))}
           </InlineGrid>
         </SpacingBackground>
       </div>
     </>
   );
 
-  const textFieldMarkup = (
-    <div className="w-full absolute bottom-0 h-12 pl-3 pr-2 bg-neutral-100">
-      <div className="grow shrink basis-0 h-12 justify-end items-center flex">
-        <Pagination
-          hasPrevious
-          onPrevious={() => {
-            console.log('Previous');
-          }}
-          hasNext
-          onNext={() => {
-            console.log('Next');
-          }}
-        />
-      </div>
-    </div>
-  );
 
   const [tryOn, setTryOn] = useState(false);
 
@@ -141,17 +142,17 @@ const ProductSelector: React.FC = ({}) => {
     <div
       style={{
         alignItems: 'stretch',
-        borderTop: '1px solid #DFE3E8',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'stretch',
         position: 'relative',
         width: '100%',
         height: '100%',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        overflowY: 'scroll'
       }}
     >
-      <BlockStack gap="200">
+      <BlockStack >
         <Card background="bg-surface-secondary">
           <div style={{ margin: 10 }}>
             <InlineStack blockAlign="start">
@@ -174,7 +175,6 @@ const ProductSelector: React.FC = ({}) => {
                   </div>
                 </div>
               </div>
-              <div style={{ display: 'block', clear: 'both' }}></div>
             </InlineStack>
           </div>
 
@@ -199,17 +199,13 @@ const ProductSelector: React.FC = ({}) => {
                     id="Icon"
                     d="M6.66669 13.3333L10 10M10 10L13.3334 13.3333M10 10V17.5M16.6667 13.9524C17.6846 13.1117 18.3334 11.8399 18.3334 10.4167C18.3334 7.88536 16.2813 5.83333 13.75 5.83333C13.5679 5.83333 13.3976 5.73833 13.3051 5.58145C12.2184 3.73736 10.212 2.5 7.91669 2.5C4.46491 2.5 1.66669 5.29822 1.66669 8.75C1.66669 10.4718 2.36289 12.0309 3.48914 13.1613"
                     stroke="#475467"
-                    stroke-width="1.66667"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.66667"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </g>
               </svg>
 
-              {/* <Icon
-            source={UploadIcon}
-            tone="base"
-          /> */}
             </button>
             <div className="w-full h-5 justify-center items-center gap-1.5 inline-flex">
               <div className="text-sky-700 text-sm font-semibold font-['Inter'] leading-tight">Upload Your Own Model</div>
@@ -219,12 +215,11 @@ const ProductSelector: React.FC = ({}) => {
           <Scrollable
             style={{
               position: 'relative',
-              height: '715px',
-              padding: 'var(--p-space-200) 0',
+              height: '642px',
+              // padding: 'var(--p-space-200) 0',
               borderBottomLeftRadius: 'var(--p-border-radius-200)',
               borderBottomRightRadius: 'var(--p-border-radius-200)'
             }}
-            // onScrolledToBottom={handleLazyLoadSegments}
           >
             {listboxMarkup}
           </Scrollable>
@@ -234,4 +229,4 @@ const ProductSelector: React.FC = ({}) => {
   );
 };
 
-export default ProductSelector;
+export default ThumbnailSelector;

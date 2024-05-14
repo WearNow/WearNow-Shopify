@@ -6,6 +6,7 @@ interface StepPropItem {
   status?: 'waiting' | 'processing' | 'completed';
   title: string;
   sutitle?: React.ReactNode | string | undefined;
+  completedTitle?: React.ReactNode | string | undefined;
 }
 interface StepperProps {
   currentStep: number;
@@ -47,6 +48,7 @@ const Stepper: React.FC<StepperProps> = (prop: StepperProps) => {
               <div className={`w-full h-9 text-black/opacity-20 text-xl font-medium font-['SF Pro Display'] leading-normal ${titleColor(index)}`}>{_.title}</div>
               {/* sutitle */}
               {isProcessingStep(index) ? <div className="w-full">{_.sutitle}</div> : null}
+              {isCompletedStep(index) ? <div className="w-full">{_.completedTitle}</div> : null}
             </div>
           </React.Fragment>
         </div>
@@ -60,7 +62,9 @@ const MySetps: React.FC<StepperProps> = (prop: StepperProps) => {
 
   const NextButton = (
     <div
-      className="w-20 opacity-40 justify-center items-end inline-flex"
+    // opacity-40
+      className="w-20  justify-center items-end inline-flex"
+      style={{ cursor: 'pointer' }}
       onClick={() => {
         if (onStepChange) onStepChange(currentStep);
       }}

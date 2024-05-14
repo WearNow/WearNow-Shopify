@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Icon, Card, TextField, Listbox, AutoSelection, Scrollable, EmptySearchResult, Button, Pagination } from '@shopify/polaris';
+import { AutoSelection, Button, Card, EmptySearchResult, Listbox, Pagination, Scrollable, TextField } from '@shopify/polaris';
 import { SearchIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
 
 const actionValue = '__ACTION__';
 
@@ -26,24 +26,24 @@ const segments = [
 ];
 
 const lazyLoadSegments = Array.from(Array(100)).map((_, index) => {
-  let tmp = {...segments[(index%segments.length)]}
-  tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`
-  tmp.value = `${index + segments.length}`
-  return tmp
+  let tmp = { ...segments[index % segments.length] };
+  tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
+  tmp.value = `${index + segments.length}`;
+  return tmp;
 });
 
 segments.push(...lazyLoadSegments);
 
-// console.log(segments)
+// console.log(segments);
 
 const interval = 25;
 
-const ProductSelector: React.FC = ({ }) => {
+const ProductSelector: React.FC = ({}) => {
   const [showFooterAction, setShowFooterAction] = useState(true);
   const [query, setQuery] = useState<string>('');
   const [lazyLoading, setLazyLoading] = useState(false);
   const [willLoadMoreResults, setWillLoadMoreResults] = useState(true);
-  const [visibleOptionIndex, setVisibleOptionIndex] = useState(10);
+  const [visibleOptionIndex, setVisibleOptionIndex] = useState(100);
   const [activeOptionId, setActiveOptionId] = useState(segments[0].id);
   const [selectedSegmentIndex, setSelectedSegmentIndex] = useState(0);
   const [filteredSegments, setFilteredSegments] = useState<(typeof segments)[number][]>([]);
@@ -132,15 +132,17 @@ const ProductSelector: React.FC = ({ }) => {
           const selected = segments[selectedSegmentIndex].value === value;
 
           return (
-            <Listbox.Option key={id} value={value} selected={selected}>
-              <Listbox.TextOption selected={selected}>
-                {/* <Thumbnail source={img} alt={label} />  */}
-                <div style={{ display: 'inline-flex' }}>
-                  <img className="w-10 h-10" src={img}></img>
-                  <div className="w-96 leading-10 px-2 ">{label}</div>
-                </div>
-              </Listbox.TextOption>
-            </Listbox.Option>
+            // <div className='border border-neutral-200'>
+            <div className="" key={id}>
+              <Listbox.Option  value={value} selected={selected}>
+                <Listbox.TextOption selected={selected}>
+                  <div style={{ display: 'inline-flex' }}>
+                    <img className="w-10 h-10" src={img}></img>
+                    <div className="w-96 leading-10 px-2 ">{label}</div>
+                  </div>
+                </Listbox.TextOption>
+              </Listbox.Option>
+            </div>
           );
         })
       : null;
@@ -155,24 +157,27 @@ const ProductSelector: React.FC = ({ }) => {
 
   const noResultsMarkup = segmentOptions.length === 0 ? <EmptySearchResult title="" description={`No segments found matching "${query}"`} /> : null;
   const listboxMarkup = (
-    <Listbox
-      enableKeyboardControl
-      autoSelection={AutoSelection.FirstSelected}
-      accessibilityLabel="Search for and select a customer segment"
-      customListId={listboxId}
-      onSelect={handleSegmentSelect}
-      onActiveOptionChange={handleActiveOptionChange}
-    >
-      {segmentList}
+    // <div className='h-[642px] overflow-hidden'>
+    <div>
+      <Listbox
+        enableKeyboardControl
+        autoSelection={AutoSelection.FirstSelected}
+        accessibilityLabel="Search for and select a customer segment"
+        customListId={listboxId}
+        onSelect={handleSegmentSelect}
+        onActiveOptionChange={handleActiveOptionChange}
+      >
+        {segmentList}
 
-      {/* {showAllMarkup} */}
-      {noResultsMarkup}
-      {/* {lazyLoadingMarkup} */}
-    </Listbox>
+        {/* {showAllMarkup} */}
+        {noResultsMarkup}
+        {/* {lazyLoadingMarkup} */}
+      </Listbox>
+    </div>
   );
 
   const paginationMarkup = (
-    <div className="w-full absolute bottom-0 h-12 pl-3 pr-2 bg-neutral-100">
+    <div className="w-full mt-1 h-12 bg-neutral-100">
       <div className="grow shrink basis-0 h-12 justify-end items-center flex">
         <Pagination
           hasPrevious
@@ -189,7 +194,7 @@ const ProductSelector: React.FC = ({ }) => {
   );
 
   return (
-    <Card>
+    <Card padding="0">
       <div
         style={{
           alignItems: 'stretch',
@@ -197,17 +202,16 @@ const ProductSelector: React.FC = ({ }) => {
           flexDirection: 'column',
           justifyContent: 'stretch',
           position: 'relative',
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden'
+          width: '100%'
         }}
       >
         {textFieldMarkup}
 
         <Scrollable
           style={{
+            height: '642px',
+            overflowY: 'scroll',
             position: 'relative',
-            height: '715px',
             padding: 'var(--p-space-200) 0',
             borderBottomLeftRadius: 'var(--p-border-radius-200)',
             borderBottomRightRadius: 'var(--p-border-radius-200)'
@@ -215,8 +219,8 @@ const ProductSelector: React.FC = ({ }) => {
           onScrolledToBottom={handleLazyLoadSegments}
         >
           {listboxMarkup}
-          {paginationMarkup}
         </Scrollable>
+        {paginationMarkup}
       </div>
     </Card>
   );
