@@ -215,7 +215,7 @@ const ThumbnailSelector: React.FC<{ modelSelectId: string, setSelectModelId: any
           <Scrollable
             style={{
               position: 'relative',
-              height: '642px',
+              height: '736px',
               // padding: 'var(--p-space-200) 0',
               borderBottomLeftRadius: 'var(--p-border-radius-200)',
               borderBottomRightRadius: 'var(--p-border-radius-200)'

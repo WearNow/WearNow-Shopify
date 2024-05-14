@@ -1,5 +1,5 @@
-import { Card } from '@shopify/polaris';
-
+import { Icon } from '@shopify/polaris';
+import { EditIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 interface StepPropItem {
@@ -22,7 +22,8 @@ const Stepper: React.FC<StepperProps> = (prop: StepperProps) => {
   const isProcessingStep = (index: number) => index === currentStep;
   const isCompletedStep = (index: number) => index < currentStep;
 
-  const circleColor = (index: number) => (isWaitingStep(index) ? 'border-gray' : isProcessingStep(index) ? 'border-dashed border-black' : isCompletedStep(index) ? 'border-green-600' : 'bg-gray-300');
+  const circleColor = (index: number) =>
+    isWaitingStep(index) ? 'border-gray' : isProcessingStep(index) ? 'border-dashed border-black' : isCompletedStep(index) ? 'cursor-pointer border-green-600' : 'bg-gray-300';
   const circleTextColor = (index: number) => (isWaitingStep(index) ? 'text-gray-300' : isProcessingStep(index) ? 'text-black' : isCompletedStep(index) ? 'text-green-600' : 'text-gray-500');
   const titleColor = (index: number) => (isWaitingStep(index) ? 'text-gray-300' : 'text-black');
   const lineColor = (index: number) => (isWaitingStep(index) ? 'border-black' : 'bg-black');
@@ -43,12 +44,24 @@ const Stepper: React.FC<StepperProps> = (prop: StepperProps) => {
             </div>
             {/* input or img */}
 
-            <div className="ml-2">
-              {/* title */}
-              <div className={`w-full h-9 text-black/opacity-20 text-xl font-medium font-['SF Pro Display'] leading-normal ${titleColor(index)}`}>{_.title}</div>
+            <div className="w-full ml-2">
+              <div className="w-full flex items-center justify-start">
+                {/* title */}
+                <div className={`w-1/2 h-9 text-black/opacity-20 text-xl font-medium font-['SF Pro Display'] leading-normal ${titleColor(index)}`}>{_.title}</div>
+                {/* edit button */}
+                {isCompletedStep(index) ? (
+                  <div className="w-1/2 mr-2 flex items-center justify-end">
+                    <div className="w-16 h-7 pl-1.5 pr-2 py-1 cursor-pointer bg-black bg-opacity-5 rounded-lg justify-center items-center gap-1 inline-flex">
+                      <Icon source={EditIcon} tone="base" />
+                      <div className="text-zinc-600 text-xs font-['Inter'] leading-none">Edit</div>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+
               {/* sutitle */}
-              {isProcessingStep(index) ? <div className="w-full">{_.sutitle}</div> : null}
-              {isCompletedStep(index) ? <div className="w-full">{_.completedTitle}</div> : null}
+              {isProcessingStep(index) ? <div className="w-4/5">{_.sutitle}</div> : null}
+              {isCompletedStep(index) ? <div className="w-4/5">{_.completedTitle}</div> : null}
             </div>
           </React.Fragment>
         </div>
@@ -62,7 +75,7 @@ const MySetps: React.FC<StepperProps> = (prop: StepperProps) => {
 
   const NextButton = (
     <div
-    // opacity-40
+      // opacity-40
       className="w-20  justify-center items-end inline-flex"
       style={{ cursor: 'pointer' }}
       onClick={() => {

@@ -1,7 +1,8 @@
-import { Select, Thumbnail } from "@shopify/polaris";
+import { Thumbnail } from "@shopify/polaris";
 import React, { useCallback, useState } from "react";
 import BackGroundSelector from "~/components/BackGroundSelector";
 import DashboardHeader from "~/components/DashboardHeader";
+import MySelect from "~/components/MySelect";
 import MySetps from "~/components/MySteps";
 import PhotoToShow from "~/components/PhotoToShow";
 import ProductSelector from "~/components/ProductoSelector";
@@ -22,7 +23,18 @@ const LeftTop: React.FC = () => {
   );
 };
 
+interface CreateProductPhotosDataModel {
+  product?: string;
+  photosNumber?: number;
+  model?: string;
+  background?: string;
+  pose?: string;
+}
+
 const App: React.FC = () => {
+  const [createProductPhotosData, setCreateProductPhotosData] =
+    useState<CreateProductPhotosDataModel>({});
+
   const completedTitle = (
     <Thumbnail
       source="https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_black.png?v=1715481859"
@@ -31,65 +43,21 @@ const App: React.FC = () => {
   );
 
   const [selectedNumberOfPhotos, setSelectedNumberOfPhotos] = useState("1");
-  const handleSelectChange = useCallback((value: string) => {
-    console.log(this, value);
-    setSelectedNumberOfPhotos(value);
-  }, []);
-  const numberOfPhotos = [
-    {
-      label: "1 Photo",
-      value: "1",
-    },
-    {
-      label: "2 Photos",
-      value: "2",
-    },
-    {
-      label: "3 Photos",
-      value: "3",
-    },
-    {
-      label: "4 Photos",
-      value: "4",
-    },
-    {
-      label: "5 Photos",
-      value: "5",
-    },
-  ];
 
-  const selectNumberOfPhotoMarkup = (vvv: string) => (
-    <Select
-      label={
-        <div className="w-full h-full pl-0.5 py-1 gap-1 ">
-          <div className="text-zinc-600 text-sm font-medium font-['SF Pro Display'] leading-none">
-            Select the number of photos you would like to create
-          </div>
-        </div>
-      }
-      options={numberOfPhotos}
-      onChange={handleSelectChange}
-      value={vvv}
-    />
-  );
   const [items, setItmes] = React.useState([
     {
       title: "Select 1 Product",
       sutitle: (
-        <>
-          <Select
-            label={
-              <div className="w-full h-full pl-0.5 py-1 gap-1 ">
-                <div className="text-zinc-600 text-sm font-medium font-['SF Pro Display'] leading-none">
-                  Select the number of photos you would like to create
-                </div>
-              </div>
-            }
-            options={numberOfPhotos}
-            onChange={handleSelectChange}
-            value={selectedNumberOfPhotos}
-          />
-        </>
+        <MySelect
+          label="Select the number of photos you would like to create"
+          options={[
+            { label: "1", value: "1" },
+            { label: "2", value: "2" },
+            { label: "3", value: "3" },
+            { label: "4", value: "4" },
+          ]}
+          onChange={setSelectedNumberOfPhotos}
+        />
       ),
       completedTitle: completedTitle,
     },
@@ -253,20 +221,24 @@ const App: React.FC = () => {
     }
   };
   return (
-    <>
+    <div className="bg-white h-full">
       <DashboardHeader />
-      <div className="w-full flex justify-between items-start bg-white px-[60px] my-[40px]">
-        <div className="h-full w-400">
+      <div className="md:w-[1152px] md:pl-10 md:p min-h-[900px] md:m-auto flex flex-wrap  ">
+        <div className="md:w-1/2 max-md:ml-0 max-md:w-full max-md:mt-10">
           <LeftTop />
           <MySetps
             items={items}
             currentStep={currentStep}
-            onNext={(step) => setCurrentStep(step + 1)}
+            onNext={(step) => {
+              setCurrentStep(step + 1);
+            }}
           />
         </div>
-        <div className="h-[720px] w-280">{renderRight()}</div>
+        <div className="md:w-1/2 max-md:ml-0 max-md:w-full max-md:mt-10">
+          {renderRight()}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

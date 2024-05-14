@@ -43,7 +43,7 @@ const ProductSelector: React.FC = ({}) => {
   const [query, setQuery] = useState<string>('');
   const [lazyLoading, setLazyLoading] = useState(false);
   const [willLoadMoreResults, setWillLoadMoreResults] = useState(true);
-  const [visibleOptionIndex, setVisibleOptionIndex] = useState(100);
+  const [visibleOptionIndex, setVisibleOptionIndex] = useState(12);
   const [activeOptionId, setActiveOptionId] = useState(segments[0].id);
   const [selectedSegmentIndex, setSelectedSegmentIndex] = useState(0);
   const [filteredSegments, setFilteredSegments] = useState<(typeof segments)[number][]>([]);
@@ -202,14 +202,14 @@ const ProductSelector: React.FC = ({}) => {
           flexDirection: 'column',
           justifyContent: 'stretch',
           position: 'relative',
-          width: '100%'
+          width: '100%',
         }}
       >
         {textFieldMarkup}
 
         <Scrollable
           style={{
-            height: '642px',
+            height: '736px',
             overflowY: 'scroll',
             position: 'relative',
             padding: 'var(--p-space-200) 0',

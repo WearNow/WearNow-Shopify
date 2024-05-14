@@ -2,8 +2,8 @@ import React from 'react';
 
 interface Prop {
   photos:
-  | string[]
-  | ['https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106', 'https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107'];
+    | string[]
+    | ['https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106', 'https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107'];
   title?: string | 'Take Your Store to the Next Level';
   description?: string | 'Give your users the ability to try before they purchase and see your conversion rate skyrocket.';
 }
@@ -13,12 +13,11 @@ const PhotoToShow: React.FC<Prop> = (prop: Prop) => {
 
   return (
     <>
-      <div style={{ width: "500px", height: '100%' }} className="w-500 h-500 px-7 py-5 bg-zinc-100 rounded-2xl flex-col justify-start items-center gap-2.5 inline-flex">
-
-        <div style={{ width: "420px", height: '100%' }} className=" justify-start items-center inline-flex">
-          {photoUrls.map((item, index) => (
-            <img key={index} className="w-36 h-80 rounded-2xl" src={item} alt="Image 1" />
-          ))}
+      <div className="w-full h-full px-7 py-5 bg-zinc-100 rounded-2xl flex-col justify-center items-center gap-2.5 inline-flex">
+        <div className="justify-start items-center inline-flex">
+          <img className="w-40 h-80 rounded-2xl" src={photoUrls[0]} />
+          <img className="w-44 h-96 rounded-2xl" src={photoUrls[1]} />
+          <img className="w-36 h-80 rounded-2xl" src={photoUrls[2]} />
         </div>
         <div className="text-center text-zinc-800 text-3xl font-medium font-['SF Pro Display'] leading-9">Take Your Store to the Next Level</div>
         <div className="flex-col justify-start items-center gap-11 flex">
