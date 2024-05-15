@@ -17,6 +17,21 @@ class Client:
         assert request.ok, f"Failed with code {request.status_code}"
         return request.json()
 
+    def get_store_product(self, uuid): return self.run_query(
+                """
+                    query store_products_by_pk($uuid: uuid!){
+                        store_products_by_pk(uuid:$uuid){
+                            created_at
+                            images
+                            price
+                            product_id
+                            store_id
+                            title
+                            uuid
+                        }
+                    }
+                """, {"uuid": uuid}
+    )
     def add_store_products(self, objects): return self.run_query(
         """
             mutation AddStoreProducts($objects: [store_products_insert_input!]!) {

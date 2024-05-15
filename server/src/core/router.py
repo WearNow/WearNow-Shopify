@@ -1,10 +1,23 @@
 import json
 from fastapi import APIRouter, Request
 from .utils.hasura_helpers import client
-from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput
+from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput, SingleStoreProductOutput
 
 router = APIRouter()
 
+@router.post("/single-vto-request", status_code=201)
+async def handle_single_vto_request(request: Request):
+    body = await request.body()
+    body_str = body.decode()
+    data = json.loads(body_str)["input"]["input"]
+    store_prod = client.get_store_product(data)
+    print("store prod", store_prod)
+    return SingleStoreProductOutput(tracking="tracking-id", success=True)
+
+
+@router.post("/request-vto", status_code=201)
+async def handle_single_prod_image(request: Request):
+    pass
 
 @router.post("/store-onboarding", status_code=201)
 async def handle_store_onboarding(request: Request):
@@ -14,6 +27,7 @@ async def handle_store_onboarding(request: Request):
         data = json.loads(body_str)["input"]["input"]
         products = data["products"]
         input_products = []
+        # T
         for prod in products:
             payload = {
                 "images": prod["photos"],

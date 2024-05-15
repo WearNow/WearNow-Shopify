@@ -3,6 +3,10 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
+class SingleStoreProductOutput(BaseModel):
+    tracking: str = ""
+    success: bool = True
+
 class StoreProductsOnboardingResponse(BaseModel):
     message: str = ""
     success: bool = True
