@@ -567,3 +567,16 @@ p.hover_effect_content {
   display: block;
 }
 /* ================================ Vartual try on  Page end style code  ================================ */
+
+
+
+@media (max-width: 1144px) {
+  .biling_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+  .biling_container>div {
+    width: 100% !important;
+}
+}
