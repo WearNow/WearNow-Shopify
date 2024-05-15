@@ -363,8 +363,13 @@ img.virtual_tryon_with_studio_img3 {
 .dashboard_navigation>div{
   cursor: pointer;
 }
-.dashboard_navigation>div:hover {
+.dashboard_navigation>div:hover,.dashboard_navigation>a:hover {
   background: rgba(0,0,0,0.08);
+  border-radius: 9px;
+}
+.dashboard_navigation>a.active {
+  background: rgba(0,0,0,0.08);
+  border-radius: 9px;
 }
 .photo_created_content {
   position: relative;
@@ -524,5 +529,14 @@ svg.search_icon {
   position: absolute;
   top: 11px;
   left: 12px;
+}
+.select_model>div:hover {
+  border: 1px solid black;
+}
+.select_model img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
 }
 /* ================================ Vartual try on  Page end style code  ================================ */

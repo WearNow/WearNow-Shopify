@@ -1,7 +1,8 @@
 import React from 'react'
 
 function SelectOnboarding(props:any) {
-    const { step, selectLoop, handleSelection, type } = props;
+    const { step, value, selectLoop, handleSelection, type } = props;
+   
     return (
         <>
             <div className='w-full h-[220px] shrink-0 rounded-[100px] relative z-[26]'>
@@ -17,9 +18,11 @@ function SelectOnboarding(props:any) {
                         </span>
                     </div>
 
-                    <div className="flex items-center gap-2 mt-5" style={{ position: "relative", left: "50px" }}>
+                    <div className="flex items-center gap-2 mt-5 select_model" style={{ position: "relative", left: "50px" }}>
                         {selectLoop.map((model: any) => ( 
-                            <div onClick={() => handleSelection(model.id,type)} className='flex w-[159px] h-[177px] flex-col items-start shrink-0 flex-nowrap bg-[#fff] rounded-[12px]  top-[50px] left-[47px] overflow-hidden shadow-[0_1px_0_0_rgba(26,26,26,0.07)] z-[34]'>
+                 
+        
+                            <div  onClick={() => handleSelection(model.id,type)}  className='flex w-[159px] h-[177px] flex-col items-start shrink-0 flex-nowrap bg-[#fff] rounded-[12px]  top-[50px] left-[47px] overflow-hidden shadow-[0_1px_0_0_rgba(26,26,26,0.07)] z-[34]'>
                                 <div className=' self-stretch h-[81px]  grow shrink-0 basis-0  relative z-[35]' >
                                     <img src={model.image} style={{height:"100%",width:"100%"}}/>
                                 </div>

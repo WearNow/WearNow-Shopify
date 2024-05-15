@@ -1,3 +1,4 @@
+import React, { useState, useEffect,useCallback } from "react";
 import {
   Box,
   Card,
@@ -7,12 +8,19 @@ import {
   Page,
   Text,
   BlockStack,
+  Checkbox
 } from "@shopify/polaris";
 import Dashboard from "~/components/Dashboard";
 import DashboardHeader from "~/components/DashboardHeader";
 import DashboardModal from "~/components/DashboardModel";
 
+
 export default function ProductPage() {
+  const [checked, setChecked] = useState(false);
+  const handleChange = useCallback(
+    (newChecked: boolean) => setChecked(newChecked),
+    [],
+  );
   return (
     <>
       <DashboardHeader />
@@ -68,12 +76,12 @@ export default function ProductPage() {
                       <tr>
                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div className="flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                            <Checkbox
+                            label="Product"
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                             <button className="flex items-center gap-x-2">
-                              <span>Product</span>
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                               <path d="M10.6339 4.36612C10.1457 3.87796 9.35427 3.87796 8.86612 4.36612L6.21967 7.01256C5.92678 7.30546 5.92678 7.78033 6.21967 8.07322C6.51256 8.36612 6.98744 8.36612 7.28033 8.07322L9.75 5.60355L12.2197 8.07322C12.5126 8.36612 12.9874 8.36612 13.2803 8.07322C13.5732 7.78033 13.5732 7.30546 13.2803 7.01256L10.6339 4.36612Z" fill="#CCCCCC"/>
                               <path d="M13.2803 13.0734L10.6339 15.7198C10.1457 16.208 9.35427 16.208 8.86612 15.7198L6.21967 13.0734C5.92678 12.7805 5.92678 12.3056 6.21967 12.0127C6.51256 11.7198 6.98744 11.7198 7.28033 12.0127L9.75 14.4824L12.2197 12.0127C12.5126 11.7198 12.9874 11.7198 13.2803 12.0127C13.5732 12.3056 13.5732 12.7805 13.2803 13.0734Z" fill="#4A4A4A"/>
@@ -103,10 +111,11 @@ export default function ProductPage() {
                       <tr style={{background:"rgb(243 243 243)",borderTop: "1px solid #bebcbf"}}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                        <Checkbox
+                          label=""
+                          checked={checked}
+                          onChange={handleChange}
+                          />
                             <div className="flex items-center gap-x-2">
                             <img className="object-cover w-[40px] h-[40px] rounded-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
                             <div>
@@ -123,10 +132,11 @@ export default function ProductPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                        <input type="checkbox" />
-                        <label htmlFor="checkbox"></label>
-                        </div>
+                        <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <div className='main-container flex w-full pt-[6px] pr-[12px] pb-[6px] pl-[12px] gap-[4px] items-center flex-nowrap bg-[#fdfdfd] rounded-[8px] border-solid border-[0.66px] border-[#8a8a8a] relative mx-auto my-0'>
@@ -146,10 +156,11 @@ export default function ProductPage() {
                       <tr style={{background:"rgb(243 243 243)",borderTop: "1px solid #bebcbf"}}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                          <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                             <div className="flex items-center gap-x-2">
                             <img className="object-cover w-[40px] h-[40px] rounded-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
                             <div>
@@ -166,10 +177,11 @@ export default function ProductPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                        <input type="checkbox" />
-                        <label htmlFor="checkbox"></label>
-                        </div>
+                        <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <div className='main-container flex w-full pt-[6px] pr-[12px] pb-[6px] pl-[12px] gap-[4px] items-center flex-nowrap bg-[#fdfdfd] rounded-[8px] border-solid border-[0.66px] border-[#8a8a8a] relative mx-auto my-0'>
@@ -189,10 +201,11 @@ export default function ProductPage() {
                       <tr style={{background:"rgb(243 243 243)",borderTop: "1px solid #bebcbf"}}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                          <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                             <div className="flex items-center gap-x-2">
                             <img className="object-cover w-[40px] h-[40px] rounded-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
                             <div>
@@ -209,10 +222,11 @@ export default function ProductPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                        <input type="checkbox" />
-                        <label htmlFor="checkbox"></label>
-                        </div>
+                        <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <div className='main-container flex w-full pt-[6px] pr-[12px] pb-[6px] pl-[12px] gap-[4px] items-center flex-nowrap bg-[#fdfdfd] rounded-[8px] border-solid border-[0.66px] border-[#8a8a8a] relative mx-auto my-0'>
@@ -232,10 +246,11 @@ export default function ProductPage() {
                       <tr style={{background:"rgb(243 243 243)",borderTop: "1px solid #bebcbf"}}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                          <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                             <div className="flex items-center gap-x-2">
                             <img className="object-cover w-[40px] h-[40px] rounded-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
                             <div>
@@ -252,10 +267,11 @@ export default function ProductPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                        <input type="checkbox" />
-                        <label htmlFor="checkbox"></label>
-                        </div>
+                        <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <div className='main-container flex w-full pt-[6px] pr-[12px] pb-[6px] pl-[12px] gap-[4px] items-center flex-nowrap bg-[#fdfdfd] rounded-[8px] border-solid border-[0.66px] border-[#8a8a8a] relative mx-auto my-0'>
@@ -275,10 +291,11 @@ export default function ProductPage() {
                       <tr style={{background:"rgb(243 243 243)",borderTop: "1px solid #bebcbf"}}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                          <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                             <div className="flex items-center gap-x-2">
                             <img className="object-cover w-[40px] h-[40px] rounded-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
                             <div>
@@ -295,10 +312,11 @@ export default function ProductPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                        <input type="checkbox" />
-                        <label htmlFor="checkbox"></label>
-                        </div>
+                        <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <div className='main-container flex w-full pt-[6px] pr-[12px] pb-[6px] pl-[12px] gap-[4px] items-center flex-nowrap bg-[#fdfdfd] rounded-[8px] border-solid border-[0.66px] border-[#8a8a8a] relative mx-auto my-0'>
@@ -318,10 +336,11 @@ export default function ProductPage() {
                       <tr style={{background:"rgb(243 243 243)",borderTop: "1px solid #bebcbf"}}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                          <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                          <input type="checkbox" />
-                          <label htmlFor="checkbox"></label>
-                          </div>
+                          <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                             <div className="flex items-center gap-x-2">
                             <img className="object-cover w-[40px] h-[40px] rounded-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
                             <div>
@@ -338,10 +357,11 @@ export default function ProductPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                        <input type="checkbox" />
-                        <label htmlFor="checkbox"></label>
-                        </div>
+                        <Checkbox
+                            label=""
+                            checked={checked}
+                            onChange={handleChange}
+                            />
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <div className='main-container flex w-full pt-[6px] pr-[12px] pb-[6px] pl-[12px] gap-[4px] items-center flex-nowrap bg-[#fdfdfd] rounded-[8px] border-solid border-[0.66px] border-[#8a8a8a] relative mx-auto my-0'>

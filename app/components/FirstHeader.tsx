@@ -3,6 +3,7 @@ import ProdcutModal from "./ProductModal";
 import CustomSlider from "./CustomSilder";
  import axios from "axios";
  import {apiURL} from "../services/Services"
+import { Link } from "@remix-run/react";
 
 
 
@@ -407,9 +408,11 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                       className="shrink-0 my-auto aspect-[0.56] w-[5px]"
                     />
                   </div>
-                  <div className="my-auto text-zinc-600">
-                    I’ll do this later
-                  </div>
+                  <Link to="/app/dashboard"className="flex justify-center items-end">
+                    <div className="my-auto text-zinc-600">
+                      I’ll do this later
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>

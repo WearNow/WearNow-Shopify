@@ -5,8 +5,64 @@ import { apiURL } from "../services/Services";
 import SelectOnboarding from "./SelectOnboarding";
 import SelectedOnbording from "./SelectedOnbording";
 import FadedOnboarding from "./FadedOnboarding";
+import * as ApolloClients from '@apollo/client';
+import { Link } from "@remix-run/react";
+const { gql, InMemoryCache, ApolloClient } = ApolloClients;
+
 
 const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
+  
+  const client = new ApolloClient({
+    uri: 'https://graphql.wearnow.ai/v1/graphql',
+    cache: new InMemoryCache(),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-hasura-admin-secret': 'sau1XI9_2o0'
+    }
+  });
+  
+client
+.query({
+  query: gql`
+    query MyQuery {
+  default_background {
+    image
+    name
+    uuid
+  }
+  default_pose {
+    image
+    name
+    uuid
+    created_at
+    active
+  }
+  ai_model {
+    name
+    path
+    uuid
+    created_at
+  }
+  model_label {
+    label
+    model_id
+    uuid
+  }
+  stores {
+    uuid
+    store_id
+    onboarding_status
+    virtual_enabled
+    name
+    created_at
+  }
+
+}
+
+  `,
+})
+.then((result) =>{ console.log(result, "apollo client")});
+
   const [products, setProducts] = useState<any[]>([]);
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [checkedProduct, setCheckedProduct] = useState<string>();
@@ -127,33 +183,33 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         console.log("we are in first step",checkedProduct);
         setTmpCheckedProduct(checkedProduct);
         setCheckedProduct(undefined);
-        // setTmpModel(model);
-        // setModel(undefined);
-        // setTmpBackground(background);
-        // setBackground(undefined);
-        // setTmpPose(pose);
-        // setPose(undefined);
+        if(tmpPose){ setPose(tmpPose); }
+        if(tmpModel){ setModel(tmpModel); }
+        if(tmpBackground){ setBackground(tmpBackground); }
       break;
       case '02':
         console.log("we are in second step",model);
         setTmpModel(model);
         setModel(undefined);
-        // setTmpBackground(background);
-        // setBackground(undefined);
-        // setTmpPose(pose);
-        // setPose(undefined);
+        if(tmpCheckedProduct){ setCheckedProduct(tmpCheckedProduct); }
+        if(tmpPose){ setPose(tmpPose); }
+        if(tmpBackground){ setBackground(tmpBackground); }
       break;
       case '03':
         console.log("we are in third step",background);
         setTmpBackground(background);
         setBackground(undefined);
-        // setTmpPose(pose);
-        // setPose(undefined);
+        if(tmpCheckedProduct){ setCheckedProduct(tmpCheckedProduct); }
+        if(tmpModel){ setModel(tmpModel); }
+        if(tmpPose){ setPose(tmpPose); }
       break;
       case '04':
         console.log("we are in forth step",pose);
         setTmpPose(pose);
         setPose(undefined);
+        if(tmpCheckedProduct){ setCheckedProduct(tmpCheckedProduct); }
+        if(tmpModel){ setModel(tmpModel); }
+        if(tmpBackground){ setBackground(tmpBackground); }
       break;
     }
   };
@@ -184,7 +240,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                             01
                           </span>
                         </button>
-                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0,0.2)] relative text-left whitespace-nowrap z-[11]">
+                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left whitespace-nowrap z-[11]">
                           Select 1 Product
                         </span>
                       </div>
@@ -266,21 +322,63 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                   </span>
                 </div>
               </div>
+              {!model ?
               <FadedOnboarding step={stepModel} sectionText={textModel} />
+              :
+              <>
+              {models.filter((m:any)=>model==m.id).map((m:any)=>( 
+                <SelectedOnbording step={stepModel} data={m.name}  image={m.image} handleEdit={handleEdit} />
+              ))}
+              </>
+              }
+              {!background ?
               <FadedOnboarding step={stepBackground} sectionText={textBackground} />
+              :
+              <>
+              {backgrounds.filter((b:any)=>background==b.id).map((b:any)=>( 
+              <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
+            ))}
+              </>
+              }
+              {!pose ?
               <FadedOnboarding step={stepPose} sectionText={textPose} />
+              :
+              <>
+              {poses.filter((p:any)=>pose==p.id).map((p:any)=>( 
+              <SelectedOnbording step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+            ))}
+              </>
+              }
+              
+              
               </>
             ) : (
               <>
                 {products.filter((product: any) => checkedProduct.includes(product.id)).map((product, index) => (
 
-                    <SelectedOnbording step="01" data={product.productName} image={product.productImage} handleEdit={handleEdit} />
+                    <SelectedOnbording step="01"  value={checkedProduct} data={product.productName} image={product.productImage} handleEdit={handleEdit} />
                 ))}
                 {!model && (
                   <>
-                  <SelectOnboarding step={stepModel} selectLoop={models} handleSelection={handleSelection} type='model'/>
-                  <FadedOnboarding step={stepBackground} sectionText={textBackground} />
-                  <FadedOnboarding step={stepPose} sectionText={textPose} />
+                  <SelectOnboarding step={stepModel} value={tmpModel} selectLoop={models} handleSelection={handleSelection} type='model'/>
+                  {!background ?
+                    <FadedOnboarding step={stepBackground} sectionText={textBackground} />
+                    :
+                    <>
+                    {backgrounds.filter((b:any)=>background==b.id).map((b:any)=>( 
+                    <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
+                  ))}
+                    </>
+                    }
+                  {!pose ?
+                    <FadedOnboarding step={stepPose} sectionText={textPose} />
+                    :
+                    <>
+                    {poses.filter((p:any)=>pose==p.id).map((p:any)=>( 
+                    <SelectedOnbording step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                  ))}
+                    </>
+                    }
                   </>
                 )}
                 {model && !background ? (
@@ -288,8 +386,16 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
               {models.filter((m:any)=>model==m.id).map((m:any)=>( 
               <SelectedOnbording step={stepModel} data={m.name}  image={m.image} handleEdit={handleEdit} />
             ))}
-              <SelectOnboarding step={stepBackground} selectLoop={backgrounds} handleSelection={handleSelection} type='background'/>
-              <FadedOnboarding step={stepPose} sectionText={textPose} />
+              <SelectOnboarding step={stepBackground} value={tmpBackground} selectLoop={backgrounds} handleSelection={handleSelection} type='background'/>
+              {!pose ?
+                    <FadedOnboarding step={stepPose} sectionText={textPose} />
+                    :
+                    <>
+                    {poses.filter((p:any)=>pose==p.id).map((p:any)=>( 
+                    <SelectedOnbording step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                  ))}
+                    </>
+                    }
               </>
             ):(
               <>
@@ -301,7 +407,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
              {backgrounds.filter((b:any)=>background==b.id).map((b:any)=>( 
               <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
             ))}
-              <SelectOnboarding step={stepPose} selectLoop={poses} handleSelection={handleSelection} type='pose'/>
+              <SelectOnboarding step={stepPose} value={tmpPose} selectLoop={poses} handleSelection={handleSelection} type='pose'/>
               </>
               )}
               </>
@@ -341,6 +447,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                   </div>
                 </div>
               </button>
+              <Link to="/app/dashboard" className="flex justify-center items-end">
               <div className='flex w-[134px] justify-center items-end shrink-0 flex-nowrap relative z-[88]'>
                 <div className='flex w-[134px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[999px] relative overflow-hidden z-[89]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#4b5059] relative text-left whitespace-nowrap z-[90]">
@@ -348,6 +455,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                   </span>
                 </div>
               </div>
+              </Link>
             </div>
           </div>
           
@@ -356,7 +464,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         </div>
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
           <CustomSlider images={images} />
-        </div>
+        </div>	
       </div>
     </div >
 
