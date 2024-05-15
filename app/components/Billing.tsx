@@ -22,17 +22,17 @@ const Billing = () => {
 
   return (
     <>
-      <div className='main-container flex w-full h-[877px] pt-[60px] pr-[10px] pb-[60px] pl-[10px] flex-col gap-[30px] items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
-        <div className='billing_content flex w-full h-[85px] flex-col gap-[16px] items-center shrink-0 flex-nowrap absolute top-[38px] left-[134.5px]'>
-          <span className="flex w-[318px] h-[45px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-center whitespace-nowrap z-[1]">
+      <div className='main-container flex w-full pt-[60px] pr-[10px] pb-[60px] pl-[10px] flex-col gap-[30px] items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
+        <div className='billing_content flex w-full h-[85px] flex-col gap-[16px] items-center shrink-0 flex-nowrap  top-[38px] left-[134.5px]'>
+          <span className="flex w-[325px] h-[45px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-center ">
             Transform your store
           </span>
-          <span className="flex w-[1003px] h-[24px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-center whitespace-nowrap z-[2]">
+          <span className="flex w-full  justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-center ">
             Power up your product display with AI-driven imagery and virtual
             try-on experiences.
           </span>
         </div>
-        <div className='flex w-[316px] h-[52px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] gap-[8px] items-start shrink-0 flex-nowrap bg-[rgba(116,116,128,0.08)] rounded-[100px] absolute top-[153px]  z-[3]'>
+        <div className='flex w-[316px] h-[52px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] gap-[8px] items-start shrink-0 flex-nowrap bg-[rgba(116,116,128,0.08)] rounded-[100px]  top-[153px]  z-[3]'>
           <button onClick={() => handleTabClick1()}   className='flex w-[150px] pt-[10px] pr-[10px] pb-[10px] pl-[10px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[#1d2127] rounded-[100px] border-none relative z-[4] pointer'style={{background:bgcolorTab}}>
             <span className="flex w-[57px] h-[24px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-center whitespace-nowrap z-[5]"style={{color:colorTab}}>
               Monthly
@@ -49,18 +49,26 @@ const Billing = () => {
           </div>
         </div>
         {activeTab === 1 &&
-          <div className='flex w-[1244px] h-[546px] gap-px items-end shrink-0 flex-nowrap rounded-[16px] border-solid border border-[#e0e0e0] absolute top-[235px] z-[9]'>
-            <div className='flex w-[414px] pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-10'>
+          <div className='biling_container flex  h-[550px] gap-px items-end shrink-0 flex-nowrap rounded-[16px]   top-[235px] z-[9]'>
+            <div className='flex biling_item pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-10'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[11]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[12]'>
                   <div className='flex flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative z-[13]'>
-                    <span className="h-[30px] self-stretch shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-bold leading-[30px] text-[#6b7280] relative text-left whitespace-nowrap z-[14]">
+                    <span className="h-[30px] flex  justify-between self-stretch shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-bold leading-[30px] text-[#6b7280] relative text-left whitespace-nowrap z-[14]">
                       Basic
+                      <button className='flex w-[132px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none  top-[36px] left-[250.5px] z-[138] pointer'>
+                      <div className='w-[16px] h-[16px] shrink-0 relative z-[139]'>
+                      <div className='w-[13.333px] h-[13.333px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/clock.png?v=1714641444)] bg-[length:100%_100%] bg-no-repeat relative z-[140] mt-[1.333px] mr-0 mb-0 ml-[1.333px]' />
+                      </div>
+                      <span className="flex w-[88px] h-[21px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-normal leading-[21px] text-[#1e429f] relative text-center whitespace-nowrap z-[141]">
+                      Early Bird Offer
+                      </span>
+                      </button>
                     </span>
                   </div>
                   <div className='flex w-[320px] gap-[10px] items-end shrink-0 flex-nowrap relative z-[15]'>
                     <div className="w-[192px] shrink-0 font-['SF_Pro_Display'] text-[48px] flex gap-2 font-black leading-[48px] relative text-left whitespace-nowrap z-[16]">
-                      <span className="font-['SF_Pro_Display'] text-[48px] font-thin leading-[48px] text-[#111928] relative text-left">
+                      <span className="font-['SF_Pro_Display'] text-[48px] font-thin leading-[48px] text-[#111928] relative text-left line-through	">
                         $99
                       </span>
                       <span className="font-['SF_Pro_Display'] text-[48px] font-black leading-[48px] text-[#111928] relative text-left">
@@ -158,9 +166,9 @@ const Billing = () => {
                     </span>
                   </div>
                 </div>
-                <button className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative z-[47] pointer'>
-                  <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative z-[48]'>
-                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap z-[49]">
+                <button className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
+                  <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
+                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
                       Start 14-Day Free Trial
                     </span>
                     <div className='w-[5px] h-[9px] shrink-0 relative z-50'>
@@ -170,23 +178,18 @@ const Billing = () => {
                 </button>
               </div>
             </div>
-            <button className='flex w-[132px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none absolute top-[36px] left-[250.5px] z-[138] pointer'>
-              <div className='w-[16px] h-[16px] shrink-0 relative z-[139]'>
-                <div className='w-[13.333px] h-[13.333px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/clock.png?v=1714641444)] bg-[length:100%_100%] bg-no-repeat relative z-[140] mt-[1.333px] mr-0 mb-0 ml-[1.333px]' />
-              </div>
-              <span className="flex w-[88px] h-[21px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-normal leading-[21px] text-[#1e429f] relative text-center whitespace-nowrap z-[141]">
-                Early Bird Offer
-              </span>
-            </button>
-
-            <div className='flex w-[414px] pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#023353] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[52]'>
+            <div className='flex biling_item pt-[35px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#023353] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[52]'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[53]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[54]'>
                   <div className='flex flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative z-[55]'>
-                    <span className="h-[30px] self-stretch shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-bold leading-[30px] text-[#b1d6ed] relative text-left whitespace-nowrap z-[56]">
+                    <span className="h-[30px] flex justify-between self-stretch shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-bold leading-[30px] text-[#b1d6ed] relative text-left whitespace-nowrap z-[56]">
                       Pro
+                      <button className='flex w-[102px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none  top-[36px] left-[694.5px] z-[136] pointer'>
+                      <span className="flex w-[78px] h-[21px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-normal leading-[21px] text-[#1e429f] relative text-center whitespace-nowrap z-[137]">
+                      Most Popular
+                      </span>
+                      </button>
                     </span>
-
                   </div>
                   <div className='flex w-[320px] gap-[10px] items-end shrink-0 flex-nowrap relative z-[57]'>
                     <span className="h-[48px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[48px] font-black leading-[48px] text-[#f6f6f7] relative text-left whitespace-nowrap z-[58]">
@@ -310,12 +313,8 @@ const Billing = () => {
                 </button>
               </div>
             </div>
-            <button className='flex w-[102px] h-[25px] pt-[2px] pr-[12px] pb-[2px] pl-[12px] justify-center items-center shrink-0 flex-nowrap bg-[#e1effe] rounded-[6px] border-none absolute top-[36px] left-[694.5px] z-[136] pointer'>
-              <span className="flex w-[78px] h-[21px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-normal leading-[21px] text-[#1e429f] relative text-center whitespace-nowrap z-[137]">
-                Most Popular
-              </span>
-            </button>
-            <div className='flex w-[414px] pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] rounded-tl-none rounded-tr-[8px] rounded-br-[8px] rounded-bl-none border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[94]'>
+
+            <div className='flex biling_item pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] rounded-tl-none rounded-tr-[8px] rounded-br-[8px] rounded-bl-none border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[94]'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[95]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[96]'>
                   <div className='flex flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative z-[97]'>
@@ -448,8 +447,8 @@ const Billing = () => {
           </div>
         }
         {activeTab === 2 &&
-          <div className='main-container flex w-[1244px] h-[546px] gap-px items-end flex-nowrap rounded-[16px] border-solid border border-[#e0e0e0]  mx-auto my-0' style={{ marginTop: "180px" }}>
-            <div className='flex w-[414.66px] pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'>
+          <div className='biling_container flex  h-[550px] gap-px items-end flex-nowrap rounded-[16px]   mx-auto my-0'>
+            <div className='flex biling_item pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[1]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[2]'>
                   <div className='flex flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative z-[3]'>
@@ -460,7 +459,7 @@ const Billing = () => {
                   </div>
                   <div className='flex w-[320px] gap-[10px] items-end shrink-0 flex-nowrap relative z-[5]'>
                     <div className="flex w-[189px] shrink-0 font-['SF_Pro_Display'] gap-2 text-[48px] font-black leading-[48px] relative text-left whitespace-nowrap z-[6]">
-                      <span className="font-['SF_Pro_Display'] text-[48px] font-thin leading-[48px] text-[#111928] relative text-left">
+                      <span className="font-['SF_Pro_Display'] text-[48px] font-thin leading-[48px] text-[#111928] relative text-left line-through	">
                         $59
                       </span>
                       <span className="font-['SF_Pro_Display'] text-[48px] font-black leading-[48px] text-[#111928] relative text-left">
@@ -571,7 +570,7 @@ const Billing = () => {
                 </button>
               </div>
             </div>
-            <div className='flex w-[414.66px] pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#023353] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[42]'>
+            <div className='flex biling_item pt-[35px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#023353] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[42]'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[43]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[44]'>
                   <div className='flex flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative z-[45]'>
@@ -585,11 +584,11 @@ const Billing = () => {
                     </span>
 
                   </div>
-                  <div className='flex w-[320px] gap-[10px] items-end shrink-0 flex-nowrap relative z-[47]'>
-                    <span className="h-[48px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[48px] font-black leading-[48px] text-[#f6f6f7] relative text-left whitespace-nowrap z-[48]">
+                  <div className='flex w-[320px] gap-[10px] items-end shrink-0 flex-nowrap relative '>
+                    <span className="h-[48px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[48px] font-black leading-[48px] text-[#f6f6f7] relative text-left whitespace-nowrap ">
                       $299
                     </span>
-                    <span className="flex w-[62px] justify-center items-end self-stretch shrink-0 font-['SF_Pro_Display'] text-[18px] font-medium leading-[27px] text-[#fff] relative text-center z-[49]">
+                    <span className="flex w-[62px] justify-center items-end self-stretch shrink-0 font-['SF_Pro_Display'] text-[18px] font-medium leading-[27px] text-[#fff] relative text-center">
                       /month
                     </span>
                   </div>
@@ -707,7 +706,7 @@ const Billing = () => {
                 </button>
               </div>
             </div>
-            <div className='flex w-[414.66px] pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] rounded-tl-none rounded-tr-[8px] rounded-br-[8px] rounded-bl-none border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[84]'>
+            <div className='flex biling_item pt-[32px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#fff] rounded-tl-none rounded-tr-[8px] rounded-br-[8px] rounded-bl-none border-solid border border-[#e5e7eb] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[84]'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[85]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[86]'>
                   <div className='flex flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative z-[87]'>
