@@ -7,6 +7,7 @@ import MySetps from "~/components/MySteps";
 import PhotoToShow from "~/components/PhotoToShow";
 import ProductSelector from "~/components/ProductoSelector";
 import ThumbnailSelector from "~/components/ThumbnailSelector";
+import { useNotification } from '~/components/Notification';
 
 const LeftTop: React.FC = () => {
   return (
@@ -220,6 +221,9 @@ const App: React.FC = () => {
         return <PhotoToShow photos={photos} />;
     }
   };
+
+const { showNotification } = useNotification();  
+
   return (
     <div className="bg-white h-full">
       <DashboardHeader />
@@ -230,6 +234,8 @@ const App: React.FC = () => {
             items={items}
             currentStep={currentStep}
             onNext={(step) => {
+              showNotification("下一步")
+              
               setCurrentStep(step + 1);
             }}
           />

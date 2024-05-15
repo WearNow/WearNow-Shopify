@@ -158,7 +158,7 @@ const ThumbnailSelector: React.FC<{ modelSelectId: string, setSelectModelId: any
             <InlineStack blockAlign="start">
               <div>
                 <Text as="h2" variant="headingSm">
-                  Model Librayl
+                  Model Library
                 </Text>
               </div>
 
