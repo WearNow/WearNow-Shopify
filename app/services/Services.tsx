@@ -1,1 +1,1 @@
-export const apiURL = `https://copper-def-toyota-directly.trycloudflare.com/`
+export const apiURL = `https://wearnow-shopify-7c945fcdc96d.herokuapp.com/`

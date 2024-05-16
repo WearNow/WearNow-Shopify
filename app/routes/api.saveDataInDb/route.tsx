@@ -10,16 +10,15 @@ interface Product {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
-    const body = await request.json();
+    const body = await request.json(); 
     const { shop, queryfor, selectedProdct, finalSelectedProdcuts, try_on, productID, tryOnPerProduct } = body;
 
-    await db.session.findFirst({
+    const auth_session = await db.session.findFirst({
       where: { shop },
     });
-
     switch (queryfor) {
-      case "selectedProdctsData":
-        await processSelectedProducts(selectedProdct, shop); 
+      case "selectedProductsData":
+        await processSelectedProducts(selectedProdct, shop, auth_session); 
         break;
       case "saveTryOn":
         await saveTryOn(shop,try_on);
@@ -69,7 +68,40 @@ async function saveTryOn(shop:string,tryOn:boolean)
     data:{tryOn:try_on}
   });
 }
-async function processSelectedProducts(products: Product[], shop: string) {
+async function processSelectedProducts(products: Product[], shop: string,session:any) {
+  const myHeaders = new Headers();
+  myHeaders.append("X-Shopify-Access-Token", session.accessToken);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+
+  const response = await fetch(`https://${session.shop}/admin/api/2024-04/shop.json`, requestOptions);
+
+  const responseJson = await response.json();
+  const email = responseJson.data.shop.email;
+  const store_id = responseJson.data.shop.id;
+//   query MyQuery {
+//   stores(limit: 10, where: {store_id: {_eq: "87576215865"}}) {
+//     name
+//     onboarding_status
+//     store_id
+//     uuid
+//   }
+// }
+//   mutation MyMutation {
+//     insert_store_products(objects: {variant_id: "czxc", title: "sadf", store_id: "asdf", sku: "afsd", product_id: "sadf", price: "sadf", images: "{url:sdafasdf}"}) {
+//       returning {
+//         images
+//         title
+//         variant_id
+//         product_id
+//       }
+//     }
+//   }
+  
   for (const product of products) {
     const { id, title, image } = product;
     const existingProduct = await db.selectProdcutData.findFirst({
