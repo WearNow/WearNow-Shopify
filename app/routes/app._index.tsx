@@ -7,37 +7,68 @@ import  { useEffect, useState } from "react";
 import { authenticate } from "../shopify.server";
 import { useLoaderData } from "@remix-run/react";
 import db from "../db.server";
+import {InMemoryCache} from '@apollo/client/cache';
+import {ApolloClient} from '@apollo/client/core';
+import pkg from '@apollo/client';
+const {gql} = pkg;
 
 
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const  admin  = await authenticate.admin(request);
-  const {shop}  =  admin.session ?? null
-  const auth_session = await db.session.findFirst({
-    where: { shop },
+  const  admin1  = await authenticate.admin(request);
+  const {shop}  =  admin1.session ?? null
+  // const auth_session = await db.session.findFirst({
+  //   where: { shop },
+  // });
+  let auth_session={};
+  const client = new ApolloClient({
+    uri: 'https://graphql.wearnow.ai/v1/graphql',
+    cache: new InMemoryCache(),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-hasura-admin-secret': 'sau1XI9_2o0',
+    },
   });
-  const myHeaders = new Headers();
-myHeaders.append("content-type", "application/json");
-myHeaders.append("x-hasura-admin-secret", "sau1XI9_2o0=&mxuY6P$*o");
-
-const graphql = JSON.stringify({
-  query: `mutation MyMutation {\r\n  insert_session(objects: {accessToken: "${auth_session?.accessToken}", created_at: "2024-05-13 4:40:00", isOnline: ${auth_session?.isOnline}, scope: "${auth_session?.scope}", shop_id: "${auth_session?.shop}",state:"1234",expires:"2025-05-13 4:40:00"})\r\n  {\r\n    returning {\r\n      accessToken\r\n    }\r\n    }\r\n}\r\n`,
-  variables: {}
-})
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: graphql,
-  redirect: "follow"
-};
-
-await fetch("https://graphql.wearnow.ai/v1/graphql", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
-  console.log("requestOptionsrequestOptions",requestOptions);
+  console.log(shop,"hsop shop")
+  await client
+  .query({
+    query: gql`
+      query MyQuery2($shop: String!) {
+        session(limit: 10, where: {shop_id: {_eq: $shop}}) {
+          accessToken
+          shop_id
+          state
+          scope
+          isOnline
+          expires
+          store {
+            name
+            store_id
+            onboarding_status
+            uuid
+            virtual_enabled
+          }
+          store_id
+          uuid
+        }
+      }
+    `,
+    variables: {
+      shop: shop,
+    },
+  })
+  .then((result) => {
+    auth_session=result?.data.session[0] ?? result?.data.session;
+    console.log(result.data.session, "apollo client");
+  });
+  const authWithShop = {
+    ...auth_session,
+    shop: shop,
+    tryOn:false
+  };
+  console.log(authWithShop,"auth session");
   
-    return {auth_session}
+    return {authWithShop}
 };
 
 

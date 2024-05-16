@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import ProdcutModal from "./ProductModal";
 import CustomSlider from "./CustomSilder";
- import axios from "axios";
- import {apiURL} from "../services/Services"
+import axios from "axios";
+import { apiURL } from "../services/Services";
+import client from "../services/ApolloClient";
+
 import { Link } from "@remix-run/react";
 
+import gql from 'graphql-tag';
 
 
-const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionData,onActivate  }) => {
+
+
+const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
   const [modals, setModals] = useState<boolean>(false);
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [inputData, setInputData] = useState<number>(10);
   const [checkedData, setCheckedData] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
-  const [try_on, setTry_on] = useState<boolean>(sessionData.auth_session.tryOn);
+  const [try_on, setTry_on] = useState<boolean>(sessionData?.store?.virtual_enabled);
 
-  
+
   const toggleModal = () => {
     setModals(!modals);
   };
 
-  const handleInputChange = async(event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     if (!isNaN(newValue)) {
       setInputData(newValue);
@@ -28,13 +33,13 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
         // Prepare the data to send
         const data = JSON.stringify({
           queryfor: "tryOnPerProduct",
-          shop: sessionData.auth_session.shop,
-          tryOnPerProduct:newValue,
+          shop: sessionData.shop,
+          tryOnPerProduct: newValue,
         });
-    
+
         // Define the request configuration
         const config = {
-          method: "post", 
+          method: "post",
           maxBodyLength: Infinity,
           url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
           headers: {
@@ -42,12 +47,12 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
           },
           data: data,
         };
-    
+
         // Send the request
         const response = await axios.request(config);
         console.log(response);
         setProducts(response.data);
-      } catch (error) {console.log(error)}
+      } catch (error) { console.log(error) }
     } else {
       setInputData(undefined);
     }
@@ -58,36 +63,39 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
   };
 
   //delete checkedData  data
-  const handleDeleteItem = (idToDelete: string) => {
+  const handleDeleteItem = async(idToDelete: string) => {
+    const MyMutation = gql`
+    mutation ($uuid:uuid!){
+   
+      delete_store_products(where: {uuid: {_eq: $uuid}}) {
+        returning {
+          title
+          images
+          uuid
+        }
+      }
+    
+      }
+   `;
+
     try {
-      const data = JSON.stringify({
-        queryfor: "deleteProduct",
-        shop: sessionData.auth_session.shop,
-        productID: idToDelete,
+      const result = await client.mutate({
+        mutation: MyMutation,
+        variables: {
+          uuid: idToDelete
+        },
       });
 
-      let config = {
-        method: "post",
-        maxBodyLength: Infinity,
-        url: `${apiURL}api/saveDataInDb`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-      axios
-        .request(config)
-        .then((response) => {
-          console.log(response.data);fetchProducts();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {console.log(error)}
+      console.log('Mutation result for delete:', result);
+
+    } catch (error) {
+      console.error('Error executing mutation:', error);
+    }
+    
   };
 
   const handlePrevItems = () => {
-    if (dataLimit.start > 0 ) {
+    if (dataLimit.start > 0) {
       setDataLimit(prevLimit => ({
         start: prevLimit.start - 3,
         end: prevLimit.end - 3
@@ -112,69 +120,91 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
   ];
 
   const fetchProducts = async () => {
-    try {
-      // Prepare the data to send
-      const data = JSON.stringify({
-        queryfor: "getSelectedProductsData",
-        shop: sessionData.auth_session.shop,
-      });
+   
+      await client
+        .query({
+          query: gql`
+      query MyQuery3($storeid: uuid!) {
+      store_products(limit: 50, where: {store_id: {_eq: $storeid}}) {
+        store_id
+        title
+        uuid
+        variant_id
+        product_id
+        images
+        price
+        sku
+      }
+    }
+    `,
+          variables: {
+            storeid: sessionData.authWithShop.store_id,
+          },
+        })
+        .then((result) => {
+          var store_products = result.data.store_products;
+          // Map over store_products to create a new array with the added 'image' property
+          const updatedStoreProducts = store_products.map((sp:any, index:number) => {
+            // Assuming sp.images is already a JSON string that needs to be parsed
+            let images = sp.images;
+            console.log("images: :::" , images.url);
+            return {
+              ...sp, // Spread the existing properties of the product
+              image: images.url // Add the new image property
+            };
+          });
+           
+          setProducts(updatedStoreProducts);
+          console.log("apollo client store id: :::",updatedStoreProducts);
+        });
+
   
-      // Define the request configuration
-      const config = {
-        method: "post", 
-        maxBodyLength: Infinity,
-        url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-      // Send the request
-      const response = await axios.request(config);
-      setProducts(response.data);
-    } catch (error) {console.log(error)}
   };
   useEffect(() => {
     // Call the fetchProducts function when the component mounts
-     fetchProducts();
-  }, [updateCheckedData]); // Empty dependency array ensures it only runs once on mount
+    fetchProducts();
+  }, []); // Empty dependency array ensures it only runs once on mount
 
-  const handleChange = async(tryOn:boolean) =>{
-    let  tt=false;
-    if(tryOn==false){
-    setTry_on(true);
-    tt=true;
+  const handleChange = async (tryOn: boolean) => {
+    let tt = false;
+    if (tryOn == false) {
+      setTry_on(true);
+      tt = true;
     }
-    else{
+    else {
       setTry_on(false);
-      tt=false;
+      tt = false;
     }
+    console.log(sessionData, "Trying to update via apollo client", sessionData.authWithShop.store_id)
+    const MyMutation = gql`
+    mutation MyMutation3 ($tryOn:Boolean!,$uuid:uuid!){
+        update_stores(where: {uuid: {_eq: $uuid}}, _set: {virtual_enabled: $tryOn}) {
+          returning {
+            store_id
+            uuid
+            name
+            virtual_enabled
+          }
+        }
+      }
+   `;
+
     try {
-      // Prepare the data to send
-      const data = JSON.stringify({
-        queryfor: "saveTryOn",
-        shop: sessionData.auth_session.shop,
-        try_on:tt,
-      });
-  
-      // Define the request configuration
-      const config = {
-        method: "post", 
-        maxBodyLength: Infinity,
-        url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
-        headers: {
-          "Content-Type": "application/json",
+      const result = await client.mutate({
+        mutation: MyMutation,
+        variables: {
+          tryOn: tt,
+          uuid: sessionData.authWithShop.store_id
         },
-        data: data,
-      };
-  
-      // Send the request
-      const response = await axios.request(config);
-      console.log(response);
-      setProducts(response.data);
-    } catch (error) {console.log(error)}
+      });
+
+      console.log('Mutation result:', result);
+
+    } catch (error) {
+      console.error('Error executing mutation:', error);
+    }
   };
- 
+
   return (
     <>
       {modals && (
@@ -240,27 +270,27 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                         {products.slice(dataLimit.start, dataLimit.end)
                           .map((item) => (
 
-                          
+
                             <div
-                              key={item.productId}
+                              key={item.uuid}
                               className="flex pt-[16px] gap-2 pr-[8px] pb-[16px] pl-[8px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[12]"
                             >
-                                <div
-                                  className={`flex w-[40px] h-[40px] items-center shrink-0 flex-nowrap bg-#fff relative overflow-hidden`}
-                                >
-                                  <img
-                                    src={item.productImage + "&height=40"}
-                                  />
+                              <div
+                                className={`flex w-[40px] h-[40px] items-center shrink-0 flex-nowrap bg-#fff relative overflow-hidden`}
+                              >
+                                <img
+                                  src={item?.image!=undefined?item.image + "&height=40":''}
+                                />
 
-                                </div>
-                        
-                
+                              </div>
+
+
                               <span className="h-[20px] grow shrink-0 basis-auto font-['Inter'] text-[13px] font-[550] leading-[20px] text-[#303030] relative text-left whitespace-nowrap z-[13]">
-                                {item.productName} {/* Display item title */}
+                                {item.title} {/* Display item title */}
                               </span>
                               <div className="w-[20px] h-[20px] shrink-0 relative z-[14] cursor-pointer">
                                 <div
-                                  onClick={() => handleDeleteItem(item.id)}
+                                  onClick={() => handleDeleteItem(item.uuid)}
                                   className="w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Delete.png?v=1714384615)] bg-cover bg-no-repeat relative z-[15]  mr-0 mb-0 ml-[3.5px]"
                                 />
                               </div>
@@ -299,10 +329,10 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                   <div className="enabled_vartual_try_on flex flex-col justify-center items-start p-1 my-auto rounded-xl">
                     <div className="switch">
                       <input type="checkbox"
-                      checked={try_on}
-                      onChange={()=> handleChange(try_on)}
-                      id="try_on"
-                      name="try_on"
+                        checked={try_on}
+                        onChange={() => handleChange(try_on)}
+                        id="try_on"
+                        name="try_on"
                       />
                       <label htmlFor="try_on">Toggle</label>
                     </div>
@@ -357,7 +387,7 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                     </div>
                   </div>
                 </div>
-                <div style={{display:"none"}} className=" flex w-full pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fde8eb] rounded-[8px] relative mx-auto my-0">
+                <div style={{ display: "none" }} className=" flex w-full pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fde8eb] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[1]">
                       <div className="flex gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative z-[2]">
@@ -382,7 +412,7 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                     </div>
                   </div>
                 </div>
-                <div style={{display:"none"}} className=" flex w-full pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#e8f6e9] rounded-[8px] relative mx-auto my-0">
+                <div style={{ display: "none" }} className=" flex w-full pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#e8f6e9] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[1]">
                       <div className="flex gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative z-[2]">
@@ -397,9 +427,9 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                   </div>
                 </div>
                 <div className="flex gap-5 justify-between self-start mt-5 text-base font-medium leading-6">
-                  <div  
-                   onClick={onActivate}
-                   className="cursor-pointer flex gap-2 justify-center px-5 py-2.5 text-white whitespace-nowrap bg-sky-600 rounded-[999px]">
+                  <div
+                    onClick={onActivate}
+                    className="cursor-pointer flex gap-2 justify-center px-5 py-2.5 text-white whitespace-nowrap bg-sky-600 rounded-[999px]">
                     <div>Continue</div>
                     <img
                       alt=""
@@ -408,7 +438,7 @@ const FirstHeader: React.FC<{ sessionData: any,onActivate:any }> = ({ sessionDat
                       className="shrink-0 my-auto aspect-[0.56] w-[5px]"
                     />
                   </div>
-                  <Link to="/app/dashboard"className="flex justify-center items-end">
+                  <Link to="/app/dashboard" className="flex justify-center items-end">
                     <div className="my-auto text-zinc-600">
                       I’ll do this later
                     </div>

@@ -298,12 +298,15 @@ button.perfactpicture_overlay_btn {
 }
 .dashboard_content_container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0px 20px;  
+  gap: 20px;
+  /* overflow: hidden; */
 }
 .dashboard_content_row {
   display: block;
   width: 100%;
-  padding: 0px 20px 10px;
+  /* padding: 0px 20px 10px; */
   gap: 20px;
 }
 .perfactpicture_col {
@@ -324,10 +327,12 @@ button.perfactpicture_overlay_btn {
   object-fit: contain;
 }
 .dashboard_content_container>div:first-child {
-  flex: 0 0 70%;
+  /* flex: 0 0 70%; */
+  width: 70%;
 }
 .dashboard_content_container>div:last-child {
-  flex: 0 0 29%;
+  /* flex: 0 0 29%; */
+  width: 29%;
 }
 .virtual_tryon_with_studio_content {
   display: flex;
@@ -379,12 +384,13 @@ img.virtual_tryon_with_studio_img3 {
   margin-top: 6px;
 }
 .photo_created {
-  position: absolute;
+  position: relative;
   height: 100%;
-  width: 100%;
-  top: 106px;
-  max-height: 100vh;
+  width: 92%;
+  top: 67px;
+  max-height: 100%;
   display: flex;
+  overflow: hidden;
 }
 img.photo_created_choosfile_icon {
   position: absolute;
@@ -404,7 +410,7 @@ img.photo_created_rounded {
   width: 100%;
 }
 button.photo_created_btn {
-  height: 100%;
+  height: 438px;
   width: 100%;
   display: flex;
 }
@@ -419,6 +425,13 @@ button.photo_created_btn {
   left: -127px;
   top: -121px;
   z-index: 0;
+}
+.product_create_select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+  padding: 0px 20px;
 }
 /*=================================  Dashboard end style code ============================== */
 
@@ -566,11 +579,41 @@ p.hover_effect_content {
 .show_on_hover:hover p.hover_effect_content {
   display: block;
 }
+.dashboard_navigation  span {
+  text-transform: capitalize;
+}
+.dashboard_vartual_content_row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 /* ================================ Vartual try on  Page end style code  ================================ */
 
-
-
+@media (max-width: 1350px) {
+  body .dashboard_content_container>div:first-child {
+    width: 100%;
+  }
+  body .dashboard_content_container>div:last-child {
+   width: 100%;
+}
+}
 @media (max-width: 1144px) {
+body .dashboard_content_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.dashboard_content_container button.photo_created_btn {
+  height: 741px;
+  width: 390px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+body .virtual_tryon_with_studio {
+  display: flex;
+  flex-direction: column;
+}
   .biling_container {
     display: flex;
     flex-direction: column;
