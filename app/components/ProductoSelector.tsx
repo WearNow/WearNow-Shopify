@@ -209,7 +209,7 @@ const ProductSelector: React.FC = ({}) => {
 
         <Scrollable
           style={{
-            height: '736px',
+            height: "640px",
             overflowY: 'scroll',
             position: 'relative',
             padding: 'var(--p-space-200) 0',

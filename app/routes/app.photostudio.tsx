@@ -227,8 +227,8 @@ const { showNotification } = useNotification();
   return (
     <div className="bg-white h-full">
       <DashboardHeader />
-      <div className="md:w-[1152px] md:pl-10 md:p min-h-[900px] md:m-auto flex flex-wrap  ">
-        <div className="md:w-1/2 max-md:ml-0 max-md:w-full max-md:mt-10">
+      <div className="lg:w-[1272px] lg:pl-10 lg:p min-h-[755px] lg:m-auto flex flex-wrap  ">
+        <div className="lg:w-1/2 max-lg:ml-0 max-lg:w-full max-lg:mt-10">
           <LeftTop />
           <MySetps
             items={items}
@@ -240,7 +240,7 @@ const { showNotification } = useNotification();
             }}
           />
         </div>
-        <div className="md:w-1/2 max-md:ml-0 max-md:w-full max-md:mt-10">
+        <div className="lg:w-[528px] lg:h-[715px] max-lg:ml-0 max-lg:w-full max-lg:mt-10">
           {renderRight()}
         </div>
       </div>
