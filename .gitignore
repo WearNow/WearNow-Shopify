@@ -27,3 +27,6 @@ extensions/*/build
 
 # lockfile
 package-lock.json
+
+# prisma local file
+prisma/dev.sqlite
