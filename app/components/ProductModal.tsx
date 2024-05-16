@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
  import {apiURL} from "../services/Services"
+ import client from "../services/ApolloClient"
+ import gql from "graphql-tag"
+
 
 
  export const sub_str = (str:string, start:number, length:number) => {
@@ -35,10 +38,10 @@ const ProdcutModal: React.FC<{
         first: 50,
         fields: "id,title,",
         pagination: "yes",
-        shop: sessionData.auth_session.shop,
+        shop: sessionData.authWithShop.shop,
         searchQuery: inputQueryValue,
       });
-
+      console.log(data,"data sending for the quey");
       let config = {
         method: "post",
         maxBodyLength: Infinity,
@@ -57,7 +60,7 @@ const ProdcutModal: React.FC<{
         })
         .catch((error) => {
           console.log(error);
-        });
+        }); 
     } catch (error) {}
   };
 
@@ -74,40 +77,59 @@ const ProdcutModal: React.FC<{
             id: product.node.id,
             title: product.node.title,
             image: product.node.images.nodes[0] ? product.node.images.nodes[0].src : null,
+            pid: product.node.id,
+            vid: product.node.variants.nodes[0].id
           }));
           const selectedVariants:any = [];
           getproducts.forEach((product:any, index:number) => {
             const filteredVariants = product.node.variants.nodes.map((item:any)=> ({
               id:item.id,
               title: item.title,
-              image: item.image?.src
+              image: item.image?.src,
+              pid:product.node.id,
+              vid:item.id
             })).filter((item:any)=> selectedProductIds.includes(item.id));
             filteredVariants.forEach((variant:any) => {
               selectedVariants.push(variant);
             });
           });
         console.log(selectedVariants,"selectedProductsselectedProductsselectedProducts",selectedProducts);
-      // Prepare the data to send
-      const data = JSON.stringify({
-        queryfor: "selectedProdctsData",
-        selectedProdct: [...selectedProducts,...selectedVariants],
-        shop: sessionData.auth_session.shop,
-      });
-      console.log("data:=>",data);
-      // Define the request configuration
-      const config = {
-        method: "post", 
-        maxBodyLength: Infinity,
-        url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-  
-      // Send the request
-      const response = await axios.request(config);
-      console.log(response.data);
+        const collabProduct=[...selectedProducts,...selectedVariants];
+        console.log(collabProduct,"selectedProductsselectedProducts");
+        const MY_MUTATION = gql`
+          mutation MyMutation($variantId: String!, $title: String!, $storeId: uuid!, $sku: String!, $productId: String!, $price: String!, $images: json!) {
+            insert_store_products(objects: {variant_id: $variantId, title: $title, store_id: $storeId, sku: $sku, product_id: $productId, price: $price, images: $images}) {
+              returning {
+                images
+                title
+                variant_id
+                product_id
+              }
+            }
+          }
+        `;
+          try {
+            collabProduct.map(async(cp) => {
+            const result = await client.mutate({
+              mutation: MY_MUTATION,
+              variables: {
+                variantId: cp.vid,
+                title: cp.title,
+                storeId: sessionData.authWithShop.store_id,
+                sku: "afsd",
+                productId: cp.pid,
+                price: "sadf",
+                images: `{"url":"${cp.image}"}`,
+              },
+            });
+            console.log('Mutation result:', result);
+            });
+            
+
+          } catch (error) {
+            console.error('Error executing mutation:', error);
+          }
+      
     } catch (error) {
       console.log(error);
     }
