@@ -17,7 +17,6 @@ function Dashboard() {
 
             <div className='dashboard_vartual_content_row'>
               <CompleteOnBording/>
-               
             </div>
         </div>
         </>

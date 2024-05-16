@@ -45,7 +45,11 @@ const VartualTryOnWithStudio = () => {
               Change Settings
             </span>
             <div className='w-[16px] h-[16px] shrink-0 relative z-[17]'>
-              <div className='w-[8.301px] h-[14.6px] bg-[url(../assets/images/80ba103a-a483-4dde-9665-ebe6c49db49b.png)] bg-[length:100%_100%] bg-no-repeat relative z-[18] mt-[0.7px] mr-0 mb-0 ml-[5px]' />
+              <div className='w-[8.301px] h-[14.6px] bg-[url(../assets/images/80ba103a-a483-4dde-9665-ebe6c49db49b.png)] bg-[length:100%_100%] bg-no-repeat relative z-[18] mt-[0.7px] mr-0 mb-0 ml-[5px]' >
+                <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.293164 2.40888C-0.0977214 2.018 -0.0977214 1.38425 0.293164 0.99336C0.68405 0.602474 1.3178 0.602474 1.70869 0.99336L8.00842 7.29309C8.39894 7.68361 8.39894 8.31678 8.00842 8.7073L1.70869 15.007C1.3178 15.3979 0.68405 15.3979 0.293164 15.007C-0.0977214 14.6161 -0.0977214 13.9824 0.293164 13.5915L5.88448 8.0002L0.293164 2.40888Z" fill="white"/>
+                </svg>
+              </div>
             </div>
           </button>
           <div className='flex w-[126px] h-[40px] pt-[6px] pr-[16px] pb-[6px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[4px] relative z-[19]'>

@@ -1,14 +1,14 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "57637fccbd6eb2a7d7f9be2c5d06e77d"
+client_id = "e0fb79ff06716c490befee9e0faa4372"
 name = "wna"
-handle = "wna"
-application_url = "https://shelf-mention-yield-determination.trycloudflare.com"
+handle = "wna-1"
+application_url = "https://flashers-nc-salvation-machine.trycloudflare.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "aditya-ai.myshopify.com"
+dev_store_url = "testbase2brand.myshopify.com"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
@@ -16,9 +16,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://shelf-mention-yield-determination.trycloudflare.com/auth/callback",
-  "https://shelf-mention-yield-determination.trycloudflare.com/auth/shopify/callback",
-  "https://shelf-mention-yield-determination.trycloudflare.com/api/auth/callback"
+  "https://flashers-nc-salvation-machine.trycloudflare.com/auth/callback",
+  "https://flashers-nc-salvation-machine.trycloudflare.com/auth/shopify/callback",
+  "https://flashers-nc-salvation-machine.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

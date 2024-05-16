@@ -5,7 +5,7 @@ function PerfactPicture() {
     <div className='perfactpicture_conainer'>
        <div className='perfactpicture_row'>
          <div className='perfactpicture_col'>
-           <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Modal_2.png?v=1714723415"/>
+           <img src="https://cdn.shopify.com/s/files/1/0634/4225/6063/files/bannerImage.png?v=1715860900"/>
            <div className='perfactpicture_overlay_content'>
             <h2 className='perfactpicture_overlay_title'>Picture Perfect: Elevate Your Products with Expert Shots</h2>
             <button className='perfactpicture_overlay_btn'>
