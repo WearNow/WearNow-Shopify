@@ -39,9 +39,9 @@ label.form_content {
   margin: 5px 0px;
 }
 
-form#customizationForm div {
+/* form#customizationForm div {
   margin-bottom: 25px;
-}
+} */
 
 .form_content {
   display: flex;
@@ -116,9 +116,9 @@ footer {
 svg.back_btn {
   cursor: pointer;
 }
-form#customizationForm div {
+/* form#customizationForm div {
   margin-bottom: 15px;
-}
+} */
 
 form#customizationForm {
   display: flex;
@@ -135,8 +135,6 @@ form#customizationForm {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  overflow-y: scroll;
-  height: calc(100vh - 292px);
 }
 
 .button-container {
@@ -176,12 +174,12 @@ form#customizationForm {
   padding: 0px 0px 10px;
   border: 1px solid #888;
   width: auto;
-  min-width: 700px;
+  min-width: 650px;
 }
 .customization-panel h2 {
   color: #333;
   margin: 0px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   margin-top: 10px;
   font-size: 16px;
   font-weight: 400;
@@ -189,7 +187,13 @@ form#customizationForm {
   letter-spacing: -0.3199999928474426px;
   text-align: left;
 }
-
+.footer_model_title {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.40799999237060547px;
+  text-align: center;
+}
 div#myModal2 .form-group select {
   margin-bottom: 16px;
 }
@@ -217,7 +221,7 @@ div#myModal2 .form-group select {
   align-items: center;
   border-top: 1px solid #D9D9D9;
   margin-top: 20px;
-  padding: 0px 20px;
+  padding: 0px 13px 0px 40px;
 }
 
 .footer_model_text_with_icon {
@@ -322,10 +326,9 @@ button {
   gap: 8px;
   position: relative;
   min-width: 0;
-  padding: 10px 10px 10px 10px;
+  padding: 1px 2px 2px 7px;
   cursor: pointer;
   background: #ffffff;
-  border: 1px solid #d5dbe1;
   z-index: 2;
   color: #757a83;
   font-family: SF Pro Text, var(--default-font-family);
@@ -333,8 +336,9 @@ button {
   font-weight: 600;
   line-height: 18px;
   border-radius: 4px;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
   letter-spacing: 0px;
+  border: none;
+  height: 100%;
 }
 
 select option {
@@ -356,7 +360,7 @@ select option {
 
 .form_content label, .form-group label {
   color: #6f6f6f;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 16px;
   text-align: left;
@@ -370,7 +374,7 @@ select option {
   line-height: 16px;
   letter-spacing: 0.7px;
   text-align: left;
-  margin-bottom: 9px;
+  margin-bottom: 20px;
 }
 .button-container button {
   display: flex;
@@ -643,7 +647,7 @@ div#sizeResults>p {
   text-align: left;
   letter-spacing: -0.32px;
   margin: 0px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 div#sizeResults span {
   color: #303030;
@@ -662,7 +666,47 @@ div#sizeResults span {
 /* div#myModal4  .footer_model {
   display: none;
 } */
-
+.main_content_model select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.main_content_model .select_box>svg {
+  font: 17px "Consolas", monospace;
+  color: #333;
+  padding: 0 0 2px;
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9;
+  right: 5px;
+  height: 14px;
+  width: 14px;
+}
+ .main_content_model .select_box>select {
+  width: 100%;
+}
+label.title_label.upload_selfies {
+  margin-bottom: 10px;
+}
+ .main_content_model .select_box {
+  width: 240px;
+  max-width: 100%;
+  position: relative;
+  height: 26px;
+  border: 1px solid #D5DBE1;
+  box-shadow: 0px 2px 5px 0px #30313D14;
+  border-radius: 5px;
+  background: #FFFFFF;
+  margin-bottom: 20px;
+}
+@media (max-width: 1440px) {
+  .main_content_model  .modal-content {
+    overflow-y: scroll;
+    height: calc(100vh - 203px);
+}
+}
 @media (max-width: 1244px) {
  .main_content_model .form_content select,body .form-group select {
     padding: 5px 10px 5px 8px;
@@ -675,9 +719,9 @@ div#sizeResults span {
 .main_content_model .upload_photo_container {
   height: 67px;
 }
-.main_content_model form#customizationForm div {
+/* .main_content_model form#customizationForm div {
   margin-bottom: 24px;
-}
+} */
 .main_content_model .form-group {
   margin-bottom: 20px;
 }
@@ -703,6 +747,9 @@ div#sizeResults span {
   display: none;
 }
 @media (max-width: 667px) {
+body .main_content_model .select_box {
+    width: 100%;
+}
  body .modal-content_row {
     padding: 20px;
 }
@@ -756,7 +803,7 @@ h2.footer_model_title {
   justify-content: flex-end;
 }
 body .main_content_model .form_content select, body .form-group select {
-  padding: 10px 10px 10px 7px;
+  padding: 0px 9px 0px 7px;
 }
 body .main_content_model .upload_photo_container {
   height: 90px;
@@ -815,9 +862,9 @@ body .customization-panel2 {
 body .customization-panel2 {
   margin-bottom: 30px;
 }
-body .main_content_model form#customizationForm div {
+/* body .main_content_model form#customizationForm div {
   margin-bottom: 15px;
-}
+} */
 
 body .customization-panel1, .customization-panel2 {
   padding: 20px 20px 21px 20px;
@@ -833,7 +880,7 @@ body .main_content_model .upload_photo_container {
   height: 72px;
 }
 body .main_content_model .form_content select, body .form-group select {
-  padding: 7px 10px 7px 7px;
+  padding: 0px 9px 0px 7px;
 }
 body .main_content_model .customization-panel.customization-panel2 .button-container {
   margin-top: 16px !important;

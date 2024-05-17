@@ -1,9 +1,7 @@
 <head>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;600&display=swap">
   <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441">
-  <style>
-   
-  </style>
+  <style></style>
 </head>
 
 <!-- Button to open the first modal -->
@@ -43,7 +41,7 @@
     }, 3000);
   }
 
-  function back_btn(){
+  function back_btn() {
     document.getElementById('myModal').style.display = 'block';
     document.getElementById('myModal2').style.display = 'none';
   }
@@ -99,6 +97,11 @@
               <div class="form_content">
                 <label for="gender" class="title_label">Select Your Gender</label>
                 <label class="form_content" for="gender">Gender</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="gender" name="gender">
                   <option value="">Choose one</option>
                   <option value="male">Male</option>
@@ -106,10 +109,16 @@
                   <option value="other">Other</option>
                 </select>
               </div>
+              </div>
     
               <div class="form_content">
                 <label for="height" class="title_label">Select Your Height & Weight</label>
                 <label class="form_content" for="height">Height (Inches)</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="height" name="height">
                   <option value="">Choose one</option>
                   <option value="short">Short</option>
@@ -117,8 +126,14 @@
                   <option value="tall">Tall</option>
                 </select>
               </div>
+              </div>
               <div class="form_content">
                 <label class="form_content" for="weight"> Weight (Lbs)</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="weight" name="weight">
                   <option value="">Choose one</option>
                   <option value="thin">Thin</option>
@@ -126,9 +141,15 @@
                   <option value="overweight">Overweight</option>
                 </select>
               </div>
+              </div>
               <div class="form_content">
                 <label for="size"class="title_label">Select Your Size & Fit</label>
                 <label class="form_content" for="size">Size (Usual size you wear)</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="size" name="size">
                   <option value="">Choose one</option>
                   <option value="small">Small</option>
@@ -136,14 +157,21 @@
                   <option value="large">Large</option>
                 </select>
               </div>
+              </div>
               <div class="form_content">
                 <label class="form_content" for="size">Fitting</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="fit" name="fit">
                   <option value="">Choose one</option>
                   <option value="tight">Tight</option>
                   <option value="regular">Regular</option>
                   <option value="loose">Loose</option>
                 </select>
+              </div>
               </div>
               <div class="button-container">
                 <button type="submit">
@@ -184,6 +212,11 @@
                   Customize Your Fit
                 </h2>
                 <label for="shoulders">Shoulders</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="shoulders" name="shoulders">
                   <option value="">Choose one</option>
                   <option value="narrow">Narrow</option>
@@ -191,9 +224,15 @@
                   <option value="broad">Broad</option>
                 </select>
               </div>
+              </div>
     
               <div class="form-group">
                 <label for="waist">Waist</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="waist" name="waist">
                   <option value="">Choose one</option>
                   <option value="narrow">Narrow</option>
@@ -201,9 +240,15 @@
                   <option value="wide">Wide</option>
                 </select>
               </div>
+              </div>
     
               <div class="form-group">
                 <label for="hips">Hips</label>
+                <div class="select_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M6.00137 1.81262L8.69485 4.50611C8.98802 4.79927 9.46333 4.79927 9.75649 4.50611C10.0497 4.21294 10.0497 3.73763 9.75649 3.44447L6.5317 0.21967C6.2388 -0.0732233 5.76393 -0.0732233 5.47104 0.21967L2.24624 3.44447C1.95308 3.73763 1.95308 4.21294 2.24624 4.50611C2.5394 4.79927 3.01472 4.79927 3.30788 4.50611L6.00137 1.81262Z" fill="#6A7383"/>
+<path d="M9.75649 7.49389C9.46333 7.20073 8.98802 7.20073 8.69485 7.49389L6.00137 10.1874L3.30788 7.49389C3.01472 7.20073 2.5394 7.20073 2.24624 7.49389C1.95308 7.78706 1.95308 8.26237 2.24624 8.55553L5.47104 11.7803C5.76393 12.0732 6.2388 12.0732 6.5317 11.7803L9.75649 8.55553C10.0497 8.26237 10.0497 7.78706 9.75649 7.49389Z" fill="#6A7383"/>
+</svg>
                 <select id="hips" name="hips">
                   <option value="">Choose one</option>
                   <option value="narrow">Narrow</option>
@@ -211,9 +256,10 @@
                   <option value="wide">Wide</option>
                 </select>
               </div>
+              </div>
     
               <div class="form-group">
-                <label for="uploadPhoto"class="title_label">Upload Selfie</label>
+                <label for="uploadPhoto"class="title_label upload_selfies">Upload Selfie</label>
                 {% comment %} <input type="file" id="uploadPhoto" name="uploadPhoto" accept="image/*"> {% endcomment %}
                 <div class="upload_photo_container">
                   <button class="button"><span class="label">Add Photo</span></button
@@ -337,9 +383,9 @@
     document.getElementById('customizationForm').addEventListener('submit', function (event) {
       event.preventDefault(); // Prevent the default form submission
       closeModal();
-      openModal2(); 
+      openModal2();
     });
-  
+
     // Event listener for the second form submission
     document.getElementById('customizationForm2').addEventListener('submit', function (event) {
       event.preventDefault(); // Prevent the default form submission
