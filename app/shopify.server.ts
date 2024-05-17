@@ -76,7 +76,7 @@ async function saveSession(session: any) {
   console.log('Saving session', session);
   const shop_name = session.shop;
 
-
+if(shop_name && shop_name!=null){
   
   const MyMutation = gql`
     mutation MyMutation7($shop_name:String!) {
@@ -124,5 +124,6 @@ async function saveSession(session: any) {
 
   } catch (error) {
     console.error('Error executing mutation:', error);
+  }
   }
 }
