@@ -157,6 +157,9 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           setProducts(updatedStoreProducts);
           if(updatedStoreProducts.length > 0) {
           setStylehide({opacity:1,pointerEvents:"unset"});}
+          else{
+            setStylehide({opacity:0.3,pointerEvents:"none"});
+          }
           console.log("apollo client store id: :::",updatedStoreProducts);
         });
 
@@ -217,7 +220,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           toggleModal={toggleModal}
           sessionData={sessionData}
           inputData={inputData}
-          updateCheckedData={updateCheckedData}
+          fetchProducts={fetchProducts}
         />
       )}
       <div className="flex flex-col justify-center bg-white max-md:px-5">

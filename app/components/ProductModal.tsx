@@ -17,8 +17,8 @@ const ProdcutModal: React.FC<{
   toggleModal: () => void;
   sessionData: any;
   inputData: number;
-  updateCheckedData: (data: any[]) => void; 
-}> = ({ isOpen, toggleModal, sessionData, inputData,updateCheckedData }) => {
+  fetchProducts: any; 
+}> = ({ isOpen, toggleModal, sessionData, inputData,fetchProducts }) => {
   const [getproducts, setgetproducts] = useState([]);
   const [inputQueryValue, setInputQueryValue] = useState("");
   const [checkedProducts, setCheckedProducts] = useState<{
@@ -209,7 +209,7 @@ const ProdcutModal: React.FC<{
       (product) => checkedProducts[product.node.id]
     );
     console.log(checkedData, "selected data ");
-    updateCheckedData(checkedData);
+    fetchProducts();
   };
 
   return (
