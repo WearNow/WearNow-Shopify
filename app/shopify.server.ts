@@ -31,19 +31,19 @@ const shopify = shopifyApp({
       deliveryMethod: DeliveryMethod.Http,
       callbackUrl: "/webhooks",
     },
-    CUSTOMERS_REDACT:{
+    CUSTOMERS_REDACT: {
       deliveryMethod: DeliveryMethod.Http,
       callbackUrl: "/webhooks",
     },
-    SHOP_REDACT:{
+    SHOP_REDACT: {
       deliveryMethod: DeliveryMethod.Http,
       callbackUrl: "/webhooks",
     }
   },
   hooks: {
     afterAuth: async ({ session }) => {
-  
-       await saveSession(session);
+
+      await saveSession(session);
       // console.log("session in shopify.server", session);
       shopify.registerWebhooks({ session });
     },
@@ -76,9 +76,8 @@ async function saveSession(session: any) {
   console.log('Saving session', session);
   const shop_name = session.shop;
 
-if(shop_name && shop_name!=null){
-  
-  const MyMutation = gql`
+  if (shop_name && shop_name != null) {
+    const MyMutation7 = gql`
     mutation MyMutation7($shop_name:String!) {
       delete_session(where: {shop_id: {_eq: $shop_name}}) {
         returning {
@@ -86,15 +85,24 @@ if(shop_name && shop_name!=null){
           accessToken
         }
       }
-    }
-    mutation MyMutation(
+    }`;
+  const result = await client.mutate({
+    mutation: MyMutation7,
+    variables: {
+      shop_name: shop_name
+    },
+  });
+
+  console.log('Mutation result:', result);
+    const MyMutation = gql`
+   
+    
+mutation MyMutation(
       $shop_name: String!
       $store_id: String!
       $accessToken: String!
       $isOnline: Boolean!
       $scope: String!
-      $shop_id: uuid!
-      $state: String!
     ) {
           insert_session(objects: {store: {data: {name: $shop_name, onboarding_status: "pending", store_id: $store_id, virtual_enabled: false}}, accessToken: $accessToken, isOnline: $isOnline, scope: $scope, shop_id: $shop_name, state: "1234"}) 
         {
@@ -106,24 +114,24 @@ if(shop_name && shop_name!=null){
     }
   `;
 
-  try {
-    const result = await client.mutate({
-      mutation: MyMutation,
-      variables: {
-        shop_name: shop_name,
-        store_id: shop_name,
-        accessToken: session?.accessToken,
-        isOnline: session?.isOnline,
-        scope: session?.scope,
-        shop_id: session?.shop,
-        state: '1234',
-      },
-    });
+    try {
+      const result = await client.mutate({
+        mutation: MyMutation,
+        variables: {
+          shop_name: shop_name,
+          store_id: shop_name,
+          accessToken: session?.accessToken,
+          isOnline: session?.isOnline,
+          scope: session?.scope,
+          shop_id: session?.shop,
+          state: '1234'
+        },
+      });
 
-    console.log('Mutation result:', result);
+      console.log('Mutation result:', result);
 
-  } catch (error) {
-    console.error('Error executing mutation:', error);
-  }
+    } catch (error) {
+      console.error('Error executing mutation:', error);
+    }
   }
 }
