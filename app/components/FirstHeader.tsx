@@ -155,7 +155,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           });
            
           setProducts(updatedStoreProducts);
-          if(updatedStoreProducts > 0) {
+          if(updatedStoreProducts.length > 0) {
           setStylehide({opacity:1,pointerEvents:"unset"});}
           console.log("apollo client store id: :::",updatedStoreProducts);
         });
@@ -207,11 +207,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     }
   };
 
-  const style = `
-          opacity:"0.3",
-          pointer
-          
-          `
+  console.log(stylehide,"stylehidestylehidestylehide")
 
   return (
     <>
