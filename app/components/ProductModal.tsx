@@ -19,7 +19,8 @@ const ProdcutModal: React.FC<{
   sessionData: any;
   inputData: number;
   fetchProducts: any; 
-}> = ({ isOpen, toggleModal, sessionData, inputData,fetchProducts }) => {
+  products:any;
+}> = ({ isOpen, toggleModal, sessionData, inputData,fetchProducts,products }) => {
   const [getproducts, setgetproducts] = useState([]);
   const [inputQueryValue, setInputQueryValue] = useState("");
   const [checkedProducts, setCheckedProducts] = useState<{
@@ -29,6 +30,16 @@ const ProdcutModal: React.FC<{
   useEffect(() => {
     if (inputData || inputQueryValue) {
       fetchProductData();
+      products.map((product:any) =>{
+        setCheckedProducts((prevState) => ({
+          ...prevState,
+          [product.variant_id]: true,
+        }));
+        setCheckedProducts((prevState) => ({
+          ...prevState,
+          [product.product_id]: true,
+        }));
+      })
     }
   }, [inputData, inputQueryValue]);
 
@@ -97,6 +108,31 @@ const ProdcutModal: React.FC<{
         console.log(selectedVariants,"selectedProductsselectedProductsselectedProducts",selectedProducts);
         const collabProduct=[...selectedProducts,...selectedVariants];
         console.log(collabProduct,"selectedProductsselectedProducts");
+        const MY_MUTATIONDEL = gql`
+        mutation MyMutation4($storeId: uuid!) {
+          delete_store_products(where: {store_id: {_eq: $storeId}}) {
+            returning {
+              title
+              images
+              uuid
+            }
+          }
+        } `;
+          try {
+            collabProduct.map(async(cp) => {
+            const result = await client.mutate({
+              mutation: MY_MUTATIONDEL,
+              variables: {           
+                storeId: sessionData.authWithShop.store_id,
+              },
+            });
+            console.log('Mutation result dELETE:', result);
+            });
+            
+
+          } catch (error) {
+            console.error('Error executing mutation:', error);
+          }
         const MY_MUTATION = gql`
           mutation MyMutation($variantId: String!, $title: String!, $storeId: uuid!, $sku: String!, $productId: String!, $price: String!, $images: String!) {
             insert_store_products(objects: {variant_id: $variantId, title: $title, store_id: $storeId, sku: $sku, product_id: $productId, price: $price, images: $images}) {

@@ -24,6 +24,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
   const [tmpModel, setTmpModel] = useState<string>();
   const [tmpBackground, setTmpBackground] = useState<string>();
   const [tmpPose, setTmpPose] = useState<string>();
+  const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -189,6 +190,7 @@ useEffect(() => {
         break;
       case 'pose':
         setPose(id);
+        setStylehide({opacity:1,pointerEvents:"unset"});
         break;
     }
     
@@ -231,6 +233,49 @@ useEffect(() => {
       break;
     }
   };
+  const handleSave = async()=>{
+    const MyMutation = gql`
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: uuid!, $productId: String!, $price: String!, $images: String!){
+      onboardStore(input:{
+        background:$background,
+        model:$model,
+        pose:$pose,
+        store_id:$store_id,
+        products:[
+          {
+            photos:[{filename:"test.jpg",url:"https://api.mehala.et/media/stamps/pngwing.com_8Yzx46x.png"}],
+            price:123,
+            product_id:"prod_id2",
+            sku:"10001",
+            title:"Prod Title1",
+            variant_id:"variant_id1"
+          }
+        ]
+      }){
+        message
+        success
+      }
+    } `;
+
+try {
+  const result = await client.mutate({
+    mutation: MyMutation,
+    variables: {
+      background: background,
+      model: model,
+      pose: pose,
+      store_id: sessionData.authWithShop.store_id,
+      productId:checkedProduct
+    },
+  });
+
+  console.log('Mutation result:', result);
+
+} catch (error) {
+  console.error('Error executing mutation:', error);
+}
+    
+  }
   return (
     <div className="self-stretch second_header">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -455,7 +500,7 @@ useEffect(() => {
            
           
             <div className='flex w-[236px] h-[44px] gap-[20px] items-start shrink-0 flex-nowrap  top-[535px] left-0 z-[82]'>
-              <button className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
+              {/* <button className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
                     Next
@@ -463,6 +508,13 @@ useEffect(() => {
                   <div className='w-[5px] h-[9px] shrink-0 relative z-[86]'>
                     <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/91099684-9e2c-41ac-8500-9a0d3c52b427.png)] bg-[length:100%_100%] bg-no-repeat relative z-[87] mt-[0.5px] mr-0 mb-0 ml-0' />
                   </div>
+                </div>
+              </button> */}
+              <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' style={{opacity:stylehide.opacity,pointerEvents:stylehide.pointerEvents}}>
+                <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
+                  <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
+                    Save
+                  </span>
                 </div>
               </button>
               <Link to="/app/dashboard" className="flex justify-center items-end">
