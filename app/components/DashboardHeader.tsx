@@ -8,7 +8,7 @@ const DashboardHeader = () => {
   const matchProductpage = useMatch("/app/productpage");
 
   return (
-    <div className='main-container flex w-full pt-0 pr-[16px] pb-0 pl-[16px] justify-between items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
+    <div className='main-container flex w-full pt-0 pr-[20px] pb-0 pl-[20px] justify-between items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
       <div className='flex w-[515px] pt-[8px] pr-0 pb-[8px] pl-0 gap-[16px] items-center shrink-0 flex-nowrap relative'>
         <div className='flex w-[40px] gap-[3.2px] items-center shrink-0 flex-nowrap relative z-[1]'>
           <div className='w-[40px] h-[40px] shrink-0 relative overflow-hidden z-[2]'>

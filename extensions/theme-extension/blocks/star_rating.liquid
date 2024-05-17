@@ -1,8 +1,9 @@
+<link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441" />
 {% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
 <span style="color:{{ block.settings.colour }}">
   {% render 'themeAi', rating: avg_rating %}
 </span>
-{% if avg_rating >= 4 %}
+{% if avg_rating >= 4 %} 
   <br>
   <img src="{{ "thumbs-up.png" | asset_img_url: '15x' }}" height="15" width="15" loading="lazy">
   {{ 'ratings.home.recommendationText' | t }}

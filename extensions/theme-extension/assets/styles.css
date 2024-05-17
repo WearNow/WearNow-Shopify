@@ -1,7 +1,7 @@
-body {
-  font-family: 'Arial', sans-serif;
-}
 
+body {
+  font-family: 'SF Pro Display' !important;
+}
 .customization-panel {
   background-color: #f5f5f5;
   border-radius: 10px;
@@ -35,7 +35,7 @@ label.form_content {
   font-weight: 400;
   line-height: 16px;
   text-align: left;
-  color: #888e99;
+  color: #5e5e5f;
   margin: 5px 0px;
 }
 
@@ -91,7 +91,7 @@ footer {
 }
 
 /* Additional styles for hover effects, selected state, etc. */
-.modal {
+/* .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -99,11 +99,10 @@ footer {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* semi-transparent black overlay */
   z-index: 9999;
-  /* Ensure modal is on top of other content */
   overflow: auto;
-}
+
+} */
 
 .modal-content {
   background-color: #fff;
@@ -130,12 +129,12 @@ form#customizationForm {
   margin: 0;
 }
 
-.modal-content {
+/* .modal-content {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
+} */
 
 .button-container {
   margin: 0 !important;
@@ -165,6 +164,7 @@ form#customizationForm {
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
+  z-index: 9999999999;
 }
 
 .modal-content {
@@ -178,10 +178,18 @@ form#customizationForm {
 .customization-panel h2 {
   color: #333;
   margin: 0px;
-  margin-bottom: 15px;
+  margin-bottom: 6px;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.3199999928474426px;
+  text-align: left;
 }
 
-
+div#myModal2 .form-group select {
+  margin-bottom: 16px;
+}
 .form-group label {
   display: block;
   margin-bottom: 5px;
@@ -316,15 +324,14 @@ button {
   background: #ffffff;
   border: 1px solid #d5dbe1;
   z-index: 2;
-  overflow: hidden;
-  color: #6a7383;
+  color: #757a83;
   font-family: SF Pro Text, var(--default-font-family);
   font-size: 13px;
   font-weight: 600;
   line-height: 18px;
   border-radius: 4px;
-
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+  letter-spacing: 0px;
 }
 
 select option {
@@ -344,17 +351,24 @@ select option {
   z-index: 3;
 }
 
-.form_content label:first-child,.form-group label{
-  color: #303030 !important;
-  /* font-family: SF Pro Text, var(--default-font-family); */
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 21px;
-  letter-spacing: -0.3199999928474426px;
+.form_content label, .form-group label {
+  color: #6f6f6f;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
   text-align: left;
-
+  letter-spacing: 0.9px;
 }
-
+.title_label {
+  color: #333 !important;
+  font-family: "SF Pro Display" !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  line-height: 16px;
+  letter-spacing: 0.7px;
+  text-align: left;
+  margin-bottom: 9px;
+}
 .button-container button {
   display: flex;
   background: #046FB4;
@@ -619,7 +633,7 @@ button.add_to_cart_btn{
 div#sizeResults>p {
   position: relative;
   color: #303030;
-  font-family: SF Pro Text, var(--default-font-family);
+  font-family: 'SF Pro Display' !important;
   font-size: 16px;
   font-weight: 400;
   line-height: 21px;
@@ -630,13 +644,14 @@ div#sizeResults>p {
 }
 div#sizeResults span {
   color: #303030;
-  font-family: SF Pro Text, var(--default-font-family);
+  font-family: 'SF Pro Display' !important;
   font-size: 16px;
   font-weight: 900;
   line-height: 21px;
   text-align: center;
   letter-spacing: -0.32px;
   margin-left: 1px;
+  text-transform: capitalize;
 }
 .last_model_content .model_photo {
   display: block !important;

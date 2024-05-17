@@ -27,16 +27,16 @@ function UsageStatistics() {
                     <div className='h-[4px] self-stretch shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/rangeimage2.png?v=1714746194)] bg-cover bg-no-repeat rounded-[11px] relative z-10' />
                 </div>
             </div>
-            <div className='flex pr-[20px] pl-[20px] h-[23px] flex-col gap-[4px] items-start shrink-0 flex-nowrap z-[11]'>
-                <div className='flex justify-between items-start self-stretch shrink-0 flex-nowrap relative z-[12]'>
-                    <span className="h-[15px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[12px] font-medium leading-[15px] text-[#232934] relative text-left whitespace-nowrap z-[13]">
+            <div className='flex pr-[20px] pl-[20px] h-[23px] flex-col gap-[4px] items-start shrink-0 flex-nowrap '>
+                <div className='flex justify-between items-start self-stretch shrink-0 flex-nowrap relative '>
+                    <span className="h-[15px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[12px] font-medium leading-[15px] text-[#232934] relative text-left whitespace-nowrap">
                         Product Photos Created
                     </span>
-                    <span className="h-[15px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[12px] font-medium leading-[15px] text-[#232934] relative text-left whitespace-nowrap z-[14]">
+                    <span className="h-[15px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[12px] font-medium leading-[15px] text-[#232934] relative text-left whitespace-nowrap">
                         40/50
                     </span>
                 </div>
-                <div className='h-[4px] self-stretch shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/rangeimage.png?v=1714746194)] bg-cover bg-no-repeat rounded-[11px] relative z-[15]' />
+                <div className='h-[4px] self-stretch shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/rangeimage.png?v=1714746194)] bg-cover bg-no-repeat rounded-[11px] relative' />
             </div>
             <div className='pr-[20px] pl-[20px] flex w-[119px] h-[36px] pt-[5px] pr-[10px] pb-[5px] pl-[10px] gap-[8px] justify-center items-center flex-nowrap bg-[#fcedb9] rounded-[37px] relative my-0'style={{marginLeft:"20px"}}>
                 <span className="h-[16px] shrink-0 basis-auto font-['SF_Pro_Text'] text-[12px] font-medium leading-[16px] text-[#a82c00] relative text-left whitespace-nowrap">
