@@ -132,7 +132,7 @@ useEffect(() =>{
         // Map over store_products to create a new array with the added 'image' property
         const updatedStoreProducts = store_products.map((sp:any, index:number) => {
           // Assuming sp.images is already a JSON string that needs to be parsed
-          let images = sp.images;
+          let images = JSON.parse(sp.images);
           console.log("images: :::" , images.url);
           return {
             ...sp, // Spread the existing properties of the product
