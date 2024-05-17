@@ -14,9 +14,11 @@ import gql from 'graphql-tag';
 
 const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
   const [modals, setModals] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<string>("active");
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
+  const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [inputData, setInputData] = useState<number>(10);
-  const [checkedData, setCheckedData] = useState<any[]>([]);
+  const [updateCheckedData, setupdateCheckedData] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [try_on, setTry_on] = useState<boolean>(sessionData?.store?.virtual_enabled);
 
@@ -58,9 +60,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     }
   };
 
-  const updateCheckedData = (data: any[]) => {
-    setCheckedData(data);
-  };
+
 
   //delete checkedData  data
   const handleDeleteItem = async(idToDelete: string) => {
@@ -85,7 +85,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           uuid: idToDelete
         },
       });
-
+      await fetchProducts();
       console.log('Mutation result for delete:', result);
 
     } catch (error) {
@@ -136,17 +136,17 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
         sku
       }
     }
-    `,
+    `,fetchPolicy: "network-only",
           variables: {
             storeid: sessionData.authWithShop.store_id,
           },
         })
         .then((result) => {
-          var store_products = result.data.store_products;
+         var store_products = result.data.store_products;
           // Map over store_products to create a new array with the added 'image' property
           const updatedStoreProducts = store_products.map((sp:any, index:number) => {
             // Assuming sp.images is already a JSON string that needs to be parsed
-            let images = sp.images;
+            let images = JSON.parse(sp.images);
             console.log("images: :::" , images.url);
             return {
               ...sp, // Spread the existing properties of the product
@@ -155,6 +155,8 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           });
            
           setProducts(updatedStoreProducts);
+          if(updatedStoreProducts > 0) {
+          setStylehide({opacity:1,pointerEvents:"unset"});}
           console.log("apollo client store id: :::",updatedStoreProducts);
         });
 
@@ -163,7 +165,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   useEffect(() => {
     // Call the fetchProducts function when the component mounts
     fetchProducts();
-  }, []); // Empty dependency array ensures it only runs once on mount
+  }, [updateCheckedData]); // Empty dependency array ensures it only runs once on mount
 
   const handleChange = async (tryOn: boolean) => {
     let tt = false;
@@ -205,6 +207,12 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     }
   };
 
+  const style = `
+          opacity:"0.3",
+          pointer
+          
+          `
+
   return (
     <>
       {modals && (
@@ -245,6 +253,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     <div>Add</div>
                   </div>
                 </div>
+                
                 <div className=" flex w-full h-[50px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fff8f1] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex w-full flex-col gap-[6px] items-start shrink-0 flex-nowrap relative z-[1]">
@@ -299,7 +308,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                       </div>
                     )}
                   </div>
-
+                  {products.length > 0 && (
                   <div className="flex pt-[6px] pr-[8px] pb-[6px] pl-[12px] items-center self-stretch shrink-0 flex-nowrap bg-[#f7f7f7] relative z-[24]">
                     <div className="flex justify-end items-center grow shrink-0 basis-0 flex-nowrap relative z-[25]">
                       <div className="flex w-[28px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] items-start shrink-0 flex-nowrap rounded-tl-[8px] rounded-tr-none rounded-br-none rounded-bl-[8px] relative z-[26]">
@@ -319,9 +328,9 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> )}
                 </div>
-
+              <div style={{opacity:stylehide.opacity,pointerEvents:stylehide.pointerEvents}}>
                 <div className="flex gap-5 justify-between py-4 mt-5 max-md:flex-wrap max-md:max-w-full">
                   <div className="text-base font-medium leading-6 text-slate-800">
                     Enable Virtual Try-On for all of these products
@@ -426,8 +435,9 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     </div>
                   </div>
                 </div>
+                </div>
                 <div className="flex gap-5 justify-between self-start mt-5 text-base font-medium leading-6">
-                  <div
+                  <div style={{opacity:stylehide.opacity,pointerEvents:stylehide.pointerEvents}}
                     onClick={onActivate}
                     className="cursor-pointer flex gap-2 justify-center px-5 py-2.5 text-white whitespace-nowrap bg-sky-600 rounded-[999px]">
                     <div>Continue</div>

@@ -97,13 +97,14 @@ const ProdcutModal: React.FC<{
         const collabProduct=[...selectedProducts,...selectedVariants];
         console.log(collabProduct,"selectedProductsselectedProducts");
         const MY_MUTATION = gql`
-          mutation MyMutation($variantId: String!, $title: String!, $storeId: uuid!, $sku: String!, $productId: String!, $price: String!, $images: json!) {
+          mutation MyMutation($variantId: String!, $title: String!, $storeId: uuid!, $sku: String!, $productId: String!, $price: String!, $images: String!) {
             insert_store_products(objects: {variant_id: $variantId, title: $title, store_id: $storeId, sku: $sku, product_id: $productId, price: $price, images: $images}) {
               returning {
                 images
                 title
                 variant_id
                 product_id
+                uuid
               }
             }
           }
@@ -119,7 +120,7 @@ const ProdcutModal: React.FC<{
                 sku: "afsd",
                 productId: cp.pid,
                 price: "sadf",
-                images: `{"url":"${cp.image}"}`,
+                images: JSON.stringify({"url":cp.image}),
               },
             });
             console.log('Mutation result:', result);

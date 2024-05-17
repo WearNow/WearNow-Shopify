@@ -8,6 +8,62 @@ import PhotoToShow from "~/components/PhotoToShow";
 import ProductSelector from "~/components/ProductoSelector";
 import ThumbnailSelector from "~/components/ThumbnailSelector";
 import { useNotification } from '~/components/Notification';
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { authenticate } from "../shopify.server";
+import client from "~/services/ApolloClient";
+import gql from "graphql-tag";
+
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const  admin1  = await authenticate.admin(request);
+  const {shop}  =  admin1.session ?? null
+  // const auth_session = await db.session.findFirst({
+  //   where: { shop },
+  // });
+  let auth_session={};
+
+  console.log(shop,"hsop shop")
+  await client
+  .query({
+    query: gql`
+      query MyQuery2($shop: String!) {
+        session(limit: 10, where: {shop_id: {_eq: $shop}}) {
+          accessToken
+          shop_id
+          state
+          scope
+          isOnline
+          expires
+          store {
+            name
+            store_id
+            onboarding_status
+            uuid
+            virtual_enabled
+          }
+          store_id
+          uuid
+        }
+      }
+    `,
+    variables: {
+      shop: shop,
+    },
+  })
+  .then((result) => {
+    auth_session=result?.data.session[0] ?? result?.data.session;
+    console.log(result.data.session, "apollo client");
+  });
+  const authWithShop = {
+    ...auth_session,
+    shop: shop,
+    tryOn:false
+  };
+  console.log(authWithShop,"auth session");
+  
+    return {authWithShop}
+};
 
 const LeftTop: React.FC = () => {
   return (
@@ -33,6 +89,7 @@ interface CreateProductPhotosDataModel {
 }
 
 const App: React.FC = () => {
+  const sessionData = useLoaderData<typeof loader>();
   const [createProductPhotosData, setCreateProductPhotosData] =
     useState<CreateProductPhotosDataModel>({});
 
@@ -192,10 +249,10 @@ const App: React.FC = () => {
   const renderRight = () => {
     switch (currentStep) {
       case 0:
-        return <ProductSelector />;
+        return <ProductSelector sessionData={sessionData} />;
       case 1:
         return (
-          <ThumbnailSelector
+          <ThumbnailSelector 
             modelSelectId={modelSelectId}
             setSelectModelId={setSelectModelId}
             ModuleData={getModeleDate()}

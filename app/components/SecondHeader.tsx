@@ -145,7 +145,7 @@ useEffect(() =>{
       });
 
 
-};
+}; 
 useEffect(() => {
   // Call the fetchProducts function when the component mounts
   fetchProducts();

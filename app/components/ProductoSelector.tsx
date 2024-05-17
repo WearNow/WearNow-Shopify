@@ -1,60 +1,108 @@
 import { AutoSelection, Button, Card, EmptySearchResult, Listbox, Pagination, Scrollable, TextField } from '@shopify/polaris';
 import { SearchIcon } from '@shopify/polaris-icons';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import client from '~/services/ApolloClient';
+import gql from 'graphql-tag';
 
 const actionValue = '__ACTION__';
 
-const segments = [
-  {
-    label: 'Black Top',
-    id: 'gid://shopify/CustomerSegment/1',
-    value: '0',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_black.png?v=1715481859'
-  },
-  {
-    label: 'White Dress',
-    id: 'gid://shopify/CustomerSegment/2',
-    value: '1',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_white.png?v=1715481859'
-  },
-  {
-    label: 'Red Top',
-    id: 'gid://shopify/CustomerSegment/3',
-    value: '2',
-    img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_red.png?v=1715481859'
-  }
-];
+// const segments = [
+//   {
+//     label: 'Black Top',
+//     id: 'gid://shopify/CustomerSegment/1',
+//     value: '0',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_black.png?v=1715481859'
+//   },
+//   {
+//     label: 'White Dress',
+//     id: 'gid://shopify/CustomerSegment/2',
+//     value: '1',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_white.png?v=1715481859'
+//   },
+//   {
+//     label: 'Red Top',
+//     id: 'gid://shopify/CustomerSegment/3',
+//     value: '2',
+//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_red.png?v=1715481859'
+//   }
+// ];
 
-const lazyLoadSegments = Array.from(Array(100)).map((_, index) => {
-  let tmp = { ...segments[index % segments.length] };
-  tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
-  tmp.value = `${index + segments.length}`;
-  return tmp;
-});
+// const lazyLoadSegments = Array.from(Array(100)).map((_, index) => {
+//   let tmp = { ...segments[index % segments.length] };
+//   tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
+//   tmp.value = `${index + segments.length}`;
+//   return tmp;
+// });
 
-segments.push(...lazyLoadSegments);
+// segments.push(...lazyLoadSegments);
 
-// console.log(segments);
+// // console.log(segments);
 
 const interval = 25;
 
-const ProductSelector: React.FC = ({}) => {
+const ProductSelector: React.FC <{ sessionData: any }> = ({ sessionData }) => {
   const [showFooterAction, setShowFooterAction] = useState(true);
   const [query, setQuery] = useState<string>('');
   const [lazyLoading, setLazyLoading] = useState(false);
   const [willLoadMoreResults, setWillLoadMoreResults] = useState(true);
   const [visibleOptionIndex, setVisibleOptionIndex] = useState(12);
-  const [activeOptionId, setActiveOptionId] = useState(segments[0].id);
-  const [selectedSegmentIndex, setSelectedSegmentIndex] = useState(0);
+  const [activeOptionId, setActiveOptionId] = useState();
+  const [selectedSegmentIndex, setSelectedSegmentIndex] = useState("");
   const [filteredSegments, setFilteredSegments] = useState<(typeof segments)[number][]>([]);
+  const [products, setProducts] = useState<any[]>([]);
 
+  const fetchProducts = async () => {
+   
+    await client
+      .query({
+        query: gql`
+    query MyQuery3($storeid: uuid!) {
+    store_products(limit: 50, where: {store_id: {_eq: $storeid}}) {
+      store_id
+      title
+      uuid
+      variant_id
+      product_id
+      images
+      price
+      sku
+    }
+  }
+  `,
+        variables: {
+          storeid: sessionData.authWithShop.store_id,
+        },
+      })
+      .then((result) => {
+        var store_products = result.data.store_products;
+        // Map over store_products to create a new array with the added 'image' property
+        const updatedStoreProducts = store_products.map((sp:any, index:number) => {
+          // Assuming sp.images is already a JSON string that needs to be parsed
+          let images = sp.images;
+          console.log("images: :::" , images.url);
+          return {
+            ...sp, // Spread the existing properties of the product
+            image: images.url // Add the new image property
+          };
+        });
+        setActiveOptionId(updatedStoreProducts[0].uuid);
+        setProducts(updatedStoreProducts);
+        console.log("apollo client product store: :::",updatedStoreProducts);
+      });
+
+
+}; 
+useEffect(() => {
+  // Call the fetchProducts function when the component mounts
+  fetchProducts();
+}, []);
   const handleClickShowAll = () => {
     setShowFooterAction(false);
-    setVisibleOptionIndex(segments.length);
+    setVisibleOptionIndex(products.length);
   };
 
   const handleFilterSegments = (query: any) => {
-    const nextFilteredSegments = segments.filter(segment => {
+    const nextFilteredSegments = products.filter(segment => {
       return segment.label.toLocaleLowerCase().includes(query.toLocaleLowerCase().trim());
     });
 
@@ -72,14 +120,16 @@ const ProductSelector: React.FC = ({}) => {
   };
 
   const handleSegmentSelect = (segmentIndex: string) => {
+    console.log(segmentIndex,":::::::segment selected index");
     if (segmentIndex === actionValue) {
       return handleClickShowAll();
     }
 
-    setSelectedSegmentIndex(Number(segmentIndex));
+    setSelectedSegmentIndex(String(segmentIndex));
   };
 
   const handleActiveOptionChange = (_: string, domId: string) => {
+    console.log("domId: " + domId);
     setActiveOptionId(domId);
   };
 
@@ -87,7 +137,7 @@ const ProductSelector: React.FC = ({}) => {
     if (willLoadMoreResults && !showFooterAction) {
       setLazyLoading(true);
 
-      const options = query ? filteredSegments : segments;
+      const options = query ? filteredSegments : products;
 
       setTimeout(() => {
         const remainingOptionCount = options.length - visibleOptionIndex;
@@ -102,7 +152,10 @@ const ProductSelector: React.FC = ({}) => {
       }, 1000);
     }
   };
-
+  /*Saurab codes */
+  const handleProduct=()=>{
+    
+  }
   const listboxId = 'SearchableListbox';
 
   const textFieldMarkup = (
@@ -124,21 +177,22 @@ const ProductSelector: React.FC = ({}) => {
     </div>
   );
 
-  const segmentOptions = query ? filteredSegments : segments;
+  const segmentOptions = query ? filteredSegments : products;
 
   const segmentList =
     segmentOptions.length > 0
-      ? segmentOptions.slice(0, visibleOptionIndex).map(({ label, id, value, img }) => {
-          const selected = segments[selectedSegmentIndex].value === value;
+      ? segmentOptions.slice(0, visibleOptionIndex).map(({ title, uuid, images }) => {
+       // console.log(title, uuid, images,"segmentList",products[selectedSegmentIndex])
+          const selected = false;
 
           return (
             // <div className='border border-neutral-200'>
-            <div className="" key={id}>
-              <Listbox.Option  value={value} selected={selected}>
+            <div className="" key={uuid} onClick={handleProduct}>
+              <Listbox.Option  value={uuid} selected={selected} >
                 <Listbox.TextOption selected={selected}>
                   <div style={{ display: 'inline-flex' }}>
-                    <img className="w-10 h-10" src={img}></img>
-                    <div className="w-96 leading-10 px-2 ">{label}</div>
+                    <img className="w-10 h-10" src={images}></img>
+                    <div className="w-96 leading-10 px-2 ">{title}</div>
                   </div>
                 </Listbox.TextOption>
               </Listbox.Option>
