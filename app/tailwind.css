@@ -488,7 +488,9 @@ button.photo_created_btn {
   justify-content: flex-start;
   padding: 0px 20px;
 }
-
+.parent_model .modal {
+  width: 534px;
+}
 /*=================================  Dashboard end style code ============================== */
 
 
