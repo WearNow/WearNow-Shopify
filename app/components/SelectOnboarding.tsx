@@ -22,9 +22,9 @@ function SelectOnboarding(props:any) {
                         {selectLoop.map((model: any) => ( 
                  
         
-                            <div  onClick={() => handleSelection(model.id,type)}  className='flex w-[159px] h-[177px] flex-col items-start shrink-0 flex-nowrap bg-[#fff] rounded-[12px]  top-[50px] left-[47px] overflow-hidden shadow-[0_1px_0_0_rgba(26,26,26,0.07)] z-[34]'>
+                            <div  onClick={() => handleSelection(model.uuid,type)}  className='flex w-[159px] h-[177px] flex-col items-start shrink-0 flex-nowrap bg-[#fff] rounded-[12px]  top-[50px] left-[47px] overflow-hidden shadow-[0_1px_0_0_rgba(26,26,26,0.07)] z-[34]'>
                                 <div className=' self-stretch h-[81px]  grow shrink-0 basis-0  relative z-[35]' >
-                                    <img src={model.image} style={{height:"100%",width:"100%"}}/>
+                                    <img src={model.image?model.image:model.cover_image} style={{height:"100%",width:"100%"}}/>
                                 </div>
                                 <div className='flex pt-[16px] pr-[16px] pb-[16px] pl-[16px] flex-col gap-[8px] items-start self-stretch shrink-0 flex-nowrap relative z-[36]'>
                                     <div className='flex gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative z-[37]'>
