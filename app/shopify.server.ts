@@ -42,7 +42,8 @@ const shopify = shopifyApp({
   },
   hooks: {
     afterAuth: async ({ session }) => {
-       await saveSession({ session });
+  
+       await saveSession(session);
       // console.log("session in shopify.server", session);
       shopify.registerWebhooks({ session });
     },
@@ -73,14 +74,22 @@ export const sessionStorage = shopify.sessionStorage;
 
 async function saveSession(session: any) {
   console.log('Saving session', session);
-  const shop_name = session?.shop;
+  const shop_name = session.shop;
 
 
   
   const MyMutation = gql`
+    mutation MyMutation7($shop_name:String!) {
+      delete_session(where: {shop_id: {_eq: $shop_name}}) {
+        returning {
+          shop_id
+          accessToken
+        }
+      }
+    }
     mutation MyMutation(
       $shop_name: String!
-      $store_id: uuid!
+      $store_id: String!
       $accessToken: String!
       $isOnline: Boolean!
       $scope: String!
