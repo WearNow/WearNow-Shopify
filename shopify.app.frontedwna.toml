@@ -3,7 +3,7 @@
 client_id = "06484463f183cf50131478a9ca89c742"
 name = "frontedWNA"
 handle = "frontedwna"
-application_url = "https://psychological-springer-philadelphia-old.trycloudflare.com"
+application_url = "https://surrounding-tennessee-bend-visibility.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://psychological-springer-philadelphia-old.trycloudflare.com/auth/callback",
-  "https://psychological-springer-philadelphia-old.trycloudflare.com/auth/shopify/callback",
-  "https://psychological-springer-philadelphia-old.trycloudflare.com/api/auth/callback"
+  "https://surrounding-tennessee-bend-visibility.trycloudflare.com/auth/callback",
+  "https://surrounding-tennessee-bend-visibility.trycloudflare.com/auth/shopify/callback",
+  "https://surrounding-tennessee-bend-visibility.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

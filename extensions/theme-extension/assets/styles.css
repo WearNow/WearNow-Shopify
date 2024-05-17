@@ -91,7 +91,7 @@ footer {
 }
 
 /* Additional styles for hover effects, selected state, etc. */
-/* .modal {
+.modal {
   display: none;
   position: fixed;
   top: 0;
@@ -99,10 +99,11 @@ footer {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  /* semi-transparent black overlay */
   z-index: 9999;
   overflow: auto;
 
-} */
+}
 
 .modal-content {
   background-color: #fff;
@@ -129,12 +130,14 @@ form#customizationForm {
   margin: 0;
 }
 
-/* .modal-content {
+.modal-content {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-} */
+  overflow-y: scroll;
+  height: calc(100vh - 292px);
+}
 
 .button-container {
   margin: 0 !important;
@@ -659,6 +662,7 @@ div#sizeResults span {
 /* div#myModal4  .footer_model {
   display: none;
 } */
+
 @media (max-width: 1244px) {
  .main_content_model .form_content select,body .form-group select {
     padding: 5px 10px 5px 8px;
@@ -666,6 +670,7 @@ div#sizeResults span {
 .main_content_model .modal-content {
   height: 75vh;
   overflow-y: scroll;
+
 }
 .main_content_model .upload_photo_container {
   height: 67px;
