@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {Checkbox} from '@shopify/polaris';
 import axios from "axios";
  import {apiURL} from "../services/Services"
  import client from "../services/ApolloClient"
@@ -259,14 +260,12 @@ const ProdcutModal: React.FC<{
                 className="flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)] product_items"
               >
               <div className="product_item_content">  
-                <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                  <input
-                    type="checkbox"
-                    checked={checkedProducts[product.node.id]} // Check if the product is checked
+                  <Checkbox
+                      label=""
+                      checked={checkedProducts[product.node.id]} // Check if the product is checked
                     onChange={() => handleCheckboxChange(product.node.id)} // Handle checkbox change
-                  />
-                  <label htmlFor="checkbox"></label>
-                </div>
+                    />
+               
                <div >
                   <img src={product?.node?.images?.nodes[0]?.src ?product.node.images.nodes[0].src + "&height=20":null} /></div>
                     <div className="product_title">{sub_str(product.node.title,0,20)}</div>
@@ -279,14 +278,13 @@ const ProdcutModal: React.FC<{
                     key={index}
                     className="variant_item flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)]"
                     >
-                    <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                    <input
-                      type="checkbox"
+                   
+                    <Checkbox
+                      label=""
                       checked={checkedProducts[item.id]} // Check if the product is checked
                       onChange={() => handleVariantCheckboxChange(item.id)} // Handle checkbox change
                     />
-                    <label htmlFor="checkbox"></label>
-                    </div>
+                  
                     <div><img src={item?.image?.src ?item?.image?.src + "&height=20":null} /></div>
                     <div>{sub_str(item.title,0,20)}</div>
                     </div>

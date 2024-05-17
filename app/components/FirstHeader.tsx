@@ -31,32 +31,36 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     const newValue = parseInt(event.target.value);
     if (!isNaN(newValue)) {
       setInputData(newValue);
-      try {
-        // Prepare the data to send
-        const data = JSON.stringify({
-          queryfor: "tryOnPerProduct",
-          shop: sessionData.shop,
-          tryOnPerProduct: newValue,
-        });
+      const MyMutation = gql`
+    mutation MyMutation3 ($tryon_per_product:bigint!,$uuid:uuid!){
+        update_stores(where: {uuid: {_eq: $uuid}}, _set: {tryon_per_product: $tryon_per_product}) {
+          returning {
+            store_id
+            uuid
+            name
+            tryon_per_product
+          }
+        }
+      }
+   `;
 
-        // Define the request configuration
-        const config = {
-          method: "post",
-          maxBodyLength: Infinity,
-          url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: data,
-        };
+    try {
+      const result = await client.mutate({
+        mutation: MyMutation,
+        variables: {
+          tryon_per_product: newValue,
+          uuid: sessionData.authWithShop.store_id
+        },
+      });
 
-        // Send the request
-        const response = await axios.request(config);
-        console.log(response);
-        setProducts(response.data);
-      } catch (error) { console.log(error) }
+      console.log('Mutation result:', result);
+
+    } catch (error) {
+      console.error('Error executing mutation:', error);
+    }
+    
     } else {
-      setInputData(undefined);
+      setInputData(10);
     }
   };
 
@@ -210,7 +214,6 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     }
   };
 
-  console.log(stylehide,"stylehidestylehidestylehide")
 
   return (
     <>
@@ -252,7 +255,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     <div>Add</div>
                   </div>
                 </div>
-                {products.length > 0 && (
+                {products.length == 0 && (
                 <div className=" flex w-full h-[50px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fff8f1] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex w-full flex-col gap-[6px] items-start shrink-0 flex-nowrap relative z-[1]">
