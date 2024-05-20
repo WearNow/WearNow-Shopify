@@ -6,6 +6,7 @@ const DashboardHeader = () => {
   const matchVirtualTryon = useMatch("/app/virtualtryon");
   const matchPhotostudio = useMatch("/app/photostudio");
   const matchProductpage = useMatch("/app/productpage");
+  const matchHistorypage = useMatch("/app/history");
 
   return (
     <div className='ai_header_container flex w-full pt-0 pr-[20px] pb-0 pl-[20px] justify-between items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
@@ -45,11 +46,13 @@ const DashboardHeader = () => {
               </span>
             </div>
           </Link>
-          <div className='flex w-[66px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap rounded-[8px] relative z-[13]'>
-            <span className="flex w-[42px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-[14]">
-              History
-            </span>
-          </div>
+          <Link to="/app/history" className={matchHistorypage ? "active" : ""}>
+            <div className='flex w-[76px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap rounded-[8px] relative z-[11]'>
+              <span className="flex w-[52px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-[12]">
+                History
+              </span>
+            </div>
+          </Link>
         </div>
       </div>
       <div className='flex w-[316px] gap-[14px] justify-end items-center shrink-0 flex-nowrap relative '>
