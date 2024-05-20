@@ -249,7 +249,7 @@ const BackGroundSelector: React.FC<{
             <InlineStack blockAlign="start">
               <div style={{ height: "50px" }}>
                 <Text as="h2" variant="headingSm">
-                  BackGround Librayl
+                  BackGround Library
                 </Text>
                 <TabsDefaultExample></TabsDefaultExample>
               </div>
