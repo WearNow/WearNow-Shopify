@@ -30,7 +30,7 @@ async def handle_store_onboarding(request: Request):
         # T
         for prod in products:
             payload = {
-                "images": prod["photos"],
+                "images": str(prod["photos"]),
                 "price": str(prod["price"]),
                 "product_id": prod["product_id"],
                 "variant_id": prod["variant_id"],
