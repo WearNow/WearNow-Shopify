@@ -16,11 +16,11 @@ function SelectedOnbording(props:any) {
           <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left whitespace-nowrap z-10">
            {data}
           </span>
-          <button className='flex w-[61px] h-[28px] pt-[4px] pr-[8px] pb-[4px] pl-[6px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[rgba(0,0,0,0.06)] rounded-[8px] border-none  top-[4px] left-[517px] z-30 pointer'>
+          <button onClick={()=>handleEdit(step)}  className='flex w-[61px] h-[28px] pt-[4px] pr-[8px] pb-[4px] pl-[6px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[rgba(0,0,0,0.06)] rounded-[8px] border-none  top-[4px] left-[517px] z-30 pointer'>
           <div className='w-[20px] h-[20px] shrink-0 relative z-[31]'>
           <div className='w-[12.945px] h-[12.945px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Icon.png?v=1714574880)] bg-cover bg-no-repeat relative z-[32] mt-[3.555px] mr-0 mb-0 ml-[3.5px]' />
           </div>
-          <span onClick={()=>handleEdit(step)} className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#616161] relative text-left whitespace-nowrap z-[33]">
+          <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#616161] relative text-left whitespace-nowrap z-[33]">
           Edit
           </span>
           </button>
