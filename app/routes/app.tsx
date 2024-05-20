@@ -7,6 +7,7 @@ import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 
 import { authenticate } from "../shopify.server";
 import { NotificationProvider } from "~/components/Notification";
+import SidebarNavigation from "~/components/SidebarNavigation";
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
@@ -22,6 +23,7 @@ export default function App() {
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
       <NotificationProvider>
+        <SidebarNavigation/>
         <ui-nav-menu>
           <Link to="/app" rel="home">
             Home
