@@ -8,7 +8,7 @@ const DashboardHeader = () => {
   const matchProductpage = useMatch("/app/productpage");
 
   return (
-    <div className='main-container flex w-full pt-0 pr-[20px] pb-0 pl-[20px] justify-between items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
+    <div className='ai_header_container flex w-full pt-0 pr-[20px] pb-0 pl-[20px] justify-between items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
       <div className='flex w-[515px] pt-[8px] pr-0 pb-[8px] pl-0 gap-[16px] items-center shrink-0 flex-nowrap relative'>
         <div className='flex w-[40px] gap-[3.2px] items-center shrink-0 flex-nowrap relative z-[1]'>
           <div className='w-[40px] h-[40px] shrink-0 relative overflow-hidden z-[2]'>
@@ -24,13 +24,13 @@ const DashboardHeader = () => {
               </span>
             </button>
           </Link>
-          <Link to="/app/virtualtryon" className={matchVirtualTryon ? "active" : ""}>
+          {/* <Link to="/app/virtualtryon" className={matchVirtualTryon ? "active" : ""}>
             <div className='flex w-[107px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap rounded-[8px] relative z-[7]'>
               <span className="flex w-[83px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-[8]">
                 Virtual Try-On
               </span>
             </div>
-          </Link>
+          </Link> */}
           <Link to="/app/photostudio" className={matchPhotostudio ? "active" : ""}>
             <div className='flex w-[99px] h-[28px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] justify-center items-center shrink-0 flex-nowrap rounded-[8px] relative z-[9]'>
               <span className="flex w-[75px] h-[16px] justify-center items-center shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#303030] relative text-center whitespace-nowrap z-10">

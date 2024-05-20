@@ -6,7 +6,7 @@ import { apiURL } from "../services/Services";
 import client from "../services/ApolloClient";
 
 import { Link } from "@remix-run/react";
-import {Spinner} from '@shopify/polaris';
+
 import gql from 'graphql-tag';
 
 
@@ -21,8 +21,6 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   const [updateCheckedData, setupdateCheckedData] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [try_on, setTry_on] = useState<boolean>(sessionData?.store?.virtual_enabled);
-  const [usespinner, setUsespinner] = useState<boolean>(false);
-  const [usespinnerid, setUsespinnerid] = useState<string>("");
 
 
   const toggleModal = () => {
@@ -30,40 +28,35 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   };
 
   const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-
     const newValue = parseInt(event.target.value);
     if (!isNaN(newValue)) {
       setInputData(newValue);
-      const MyMutation = gql`
-    mutation MyMutation3 ($tryon_per_product:bigint!,$uuid:uuid!){
-        update_stores(where: {uuid: {_eq: $uuid}}, _set: {tryon_per_product: $tryon_per_product}) {
-          returning {
-            store_id
-            uuid
-            name
-            tryon_per_product
-          }
-        }
-      }
-   `;
+      try {
+        // Prepare the data to send
+        const data = JSON.stringify({
+          queryfor: "tryOnPerProduct",
+          shop: sessionData.shop,
+          tryOnPerProduct: newValue,
+        });
 
-    try {
-      const result = await client.mutate({
-        mutation: MyMutation,
-        variables: {
-          tryon_per_product: newValue,
-          uuid: sessionData.authWithShop.store_id
-        },
-      });
+        // Define the request configuration
+        const config = {
+          method: "post",
+          maxBodyLength: Infinity,
+          url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: data,
+        };
 
-      console.log('Mutation result:', result);
-
-    } catch (error) {
-      console.error('Error executing mutation:', error);
-    }
-    
+        // Send the request
+        const response = await axios.request(config);
+        console.log(response);
+        setProducts(response.data);
+      } catch (error) { console.log(error) }
     } else {
-      setInputData(10);
+      setInputData(undefined);
     }
   };
 
@@ -71,8 +64,6 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
 
   //delete checkedData  data
   const handleDeleteItem = async(idToDelete: string) => {
-    setUsespinner(true); 
-    setUsespinnerid(idToDelete);
     const MyMutation = gql`
     mutation ($uuid:uuid!){
    
@@ -96,8 +87,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
       });
       await fetchProducts();
       console.log('Mutation result for delete:', result);
-      setUsespinner(false); 
-      setUsespinnerid("idToDelete");
+
     } catch (error) {
       console.error('Error executing mutation:', error);
     }
@@ -220,6 +210,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     }
   };
 
+  console.log(stylehide,"stylehidestylehidestylehide")
 
   return (
     <>
@@ -230,7 +221,6 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           sessionData={sessionData}
           inputData={inputData}
           fetchProducts={fetchProducts}
-          products={products}
         />
       )}
       <div className="flex flex-col justify-center bg-white max-md:px-5">
@@ -262,7 +252,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     <div>Add</div>
                   </div>
                 </div>
-                {products.length == 0 && (
+                {products.length > 0 && (
                 <div className=" flex w-full h-[50px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fff8f1] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex w-full flex-col gap-[6px] items-start shrink-0 flex-nowrap relative z-[1]">
@@ -306,17 +296,12 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                               <span className="h-[20px] grow shrink-0 basis-auto font-['Inter'] text-[13px] font-[550] leading-[20px] text-[#303030] relative text-left whitespace-nowrap z-[13]">
                                 {item.title} {/* Display item title */}
                               </span>
-                              
-                              {usespinner && usespinnerid==item.uuid ?(
-                              <Spinner accessibilityLabel="Small spinner example" size="small" />
-                            ):(
                               <div className="w-[20px] h-[20px] shrink-0 relative z-[14] cursor-pointer">
                                 <div
                                   onClick={() => handleDeleteItem(item.uuid)}
                                   className="w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Delete.png?v=1714384615)] bg-cover bg-no-repeat relative z-[15]  mr-0 mb-0 ml-[3.5px]"
                                 />
                               </div>
-                            )}
                             </div>
                           ))}
                       </div>

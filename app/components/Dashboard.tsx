@@ -3,12 +3,14 @@ import PerfactPicture from './PerfactPicture'
 import CompleteOnBording from './CompleteOnBording'
 import VirtualTryOnWithStudio from './VirtualTryOnWithStudio'
 import DashboardHeader from './DashboardHeader'
+import SidebarNavigation from './SidebarNavigation'
 
 
 function Dashboard() {
     return (
         <>     
         <DashboardHeader/>
+        {/* <SidebarNavigation/> */}
         <div className='dashboard_content_container'>
         <div className='dashboard_content_row'>
               <PerfactPicture/>
