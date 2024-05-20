@@ -295,9 +295,9 @@ try {
     <div className="bg-white h-full">
       <DashboardHeader />
       <div className="lg:w-[1272px] lg:pl-10 lg:p min-h-[755px] lg:m-auto flex flex-wrap  ">
-      <div className="lg:w-1/2 max-lg:ml-0 max-lg:w-full max-lg:mt-10">
-      <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className='flex w-[768px] flex-col gap-[32px] items-start shrink-0 flex-nowrap relative'>
+      <div className="lg:w-full max-lg:ml-0 max-lg:w-full max-lg:mt-10">
+      <div className="flex max-md:flex-col max-md:gap-0">
+        <div className='flex w-[618px] flex-col gap-[32px] items-start shrink-0 flex-nowrap relative'>
           <div className='flex w-[768px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
             <span className="h-[45px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-left whitespace-nowrap z-[2]">
               Create Your First Product Photo

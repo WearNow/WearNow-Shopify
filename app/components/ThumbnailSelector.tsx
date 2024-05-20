@@ -36,7 +36,6 @@ function EmptyStateExample() {
   );
 }
 
-
 const ThumbnailSelector: React.FC<{
   modelSelectId: String;
   setSelectModelId: any;
@@ -94,9 +93,7 @@ const ThumbnailSelector: React.FC<{
       onClick={() => {
         onClickHandle(seg.uuid);
       }}
-      style={
-        isSelected(seg.uuid) ? listboxItemSelectedStyle : listboxItemStyle
-      }
+      style={isSelected(seg.uuid) ? listboxItemSelectedStyle : listboxItemStyle}
     >
       <Card>
         <Bleed marginInline="400" marginBlock="400">
@@ -119,7 +116,6 @@ const ThumbnailSelector: React.FC<{
                 {seg.name}
               </div>
             </div>
-            
           </Box>
         </Bleed>
       </Card>
@@ -154,29 +150,21 @@ const ThumbnailSelector: React.FC<{
         width: "100%",
         height: "100%",
         overflow: "hidden",
-        overflowY: "scroll",
+        padding: "20px",
       }}
     >
-      <Card background="bg-surface-secondary">
-        <div style={{ margin: 10 }}>
-          <InlineStack blockAlign="start">
+      <Card background="bg-surface-secondary" padding="500">
+        <div className="mx-auto my-2">
+          <div className="flex justify-start items-center">
             <div>
               <Text as="h2" variant="headingSm">
-                Model Library
+                  Model Library
               </Text>
             </div>
 
-            <div
-              style={{
-                display: "Flex",
-                justifyContent: "center",
-                alignItems: "center",
-                position: "absolute",
-                right: 60,
-              }}
-            >
+            <div className="flex justify-end items-center ml-auto">
               <Text as="h2" variant="headingSm">
-                Male Models
+                  Male Models
               </Text>
               <div className="w-[36px] h-[28px] shrink-0 bg-[url(../assets/images/3cd34978-eac0-4005-a003-a90c6014efaf.png)] bg-cover bg-no-repeat relative z-[22]">
                 <div className="enabled_vartual_try_on try_on_active flex flex-col justify-center items-start p-1 my-auto rounded-xl">
@@ -187,7 +175,7 @@ const ThumbnailSelector: React.FC<{
                 </div>
               </div>
             </div>
-          </InlineStack>
+          </div>
         </div>
         <div className="mt-4 mb-4">
           <Upload
@@ -198,7 +186,7 @@ const ThumbnailSelector: React.FC<{
                     Upload Your Own Model
                   </div>
                 </div>
-                <div className="w-96 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
+                <div className="w-96 mt-1 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
                   15 Photos | Clear Face, No Accessories | This may take more
                   time to create
                 </div>

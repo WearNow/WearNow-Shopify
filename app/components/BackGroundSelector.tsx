@@ -256,7 +256,7 @@ const BackGroundSelector: React.FC<{
             </InlineStack>
           </div>
 
-          <div className="mt-4 mb-4">
+          <div className="my-5">
             <Upload
               description={
                 <>
