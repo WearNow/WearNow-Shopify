@@ -36,58 +36,11 @@ function EmptyStateExample() {
   );
 }
 
-interface DataType {
-  label: string;
-  id: string;
-  value: string;
-  img: string;
-  tags: string[];
-}
-
-// const segments: DataType[] = [
-//   {
-//     label: 'Model 1',
-//     id: 'gid://shopify/CustomerSegment/1',
-//     value: '0',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_1.png?v=1715483175',
-//     tags: ['Dark skin', 'Small Size']
-//   },
-//   {
-//     label: 'Model 2',
-//     id: 'gid://shopify/CustomerSegment/2',
-//     value: '1',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_2.png?v=1715483175',
-//     tags: ['Pale skin', 'Medium Size']
-//   },
-//   {
-//     label: 'Model 3',
-//     id: 'gid://shopify/CustomerSegment/3',
-//     value: '2',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_3.png?v=1715483177',
-//     tags: ['Pale skin', 'Medium Size']
-//   },
-//   {
-//     label: 'Model 4',
-//     id: 'gid://shopify/CustomerSegment/4',
-//     value: '3',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/Model_4.png?v=1715483175',
-//     tags: ['Pale skin', 'Medium Size']
-//   }
-// ];
-
-// const lazyLoadSegments = Array.from(Array(10)).map((_, index) => {
-//   let tmp = { ...segments[index % segments.length] };
-//   tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
-//   tmp.value = `${index + segments.length}`;
-//   return tmp;
-// });
-
-// segments.push(...lazyLoadSegments);
 
 const ThumbnailSelector: React.FC<{
-  modelSelectId: string;
+  modelSelectId: String;
   setSelectModelId: any;
-  ModuleData: DataType[];
+  ModuleData: any;
 }> = ({ modelSelectId, setSelectModelId, ModuleData }) => {
   const isSelected = (index: string) => index === modelSelectId;
 
@@ -134,21 +87,21 @@ const ThumbnailSelector: React.FC<{
     borderColor: "rgba(4,111,180,1)",
   };
 
-  const listboxItemMarkup = (seg: DataType) => (
+  const listboxItemMarkup = (seg: any) => (
     <div
       className="w-56 flex"
-      key={seg.id}
+      key={seg.uuid}
       onClick={() => {
-        onClickHandle(seg.value);
+        onClickHandle(seg.uuid);
       }}
       style={
-        isSelected(seg.value) ? listboxItemSelectedStyle : listboxItemStyle
+        isSelected(seg.uuid) ? listboxItemSelectedStyle : listboxItemStyle
       }
     >
       <Card>
         <Bleed marginInline="400" marginBlock="400">
           <Image
-            source={seg.img}
+            source={seg.cover_image}
             alt="a sheet with purple and orange stripes"
           />
           <Box padding="400">
@@ -163,16 +116,10 @@ const ThumbnailSelector: React.FC<{
                   wordWrap: "break-word",
                 }}
               >
-                {seg.label}
+                {seg.name}
               </div>
             </div>
-            <div className="pt-2 gap-2 flex">
-              {seg.tags.map((tag, idx) => (
-                <Badge key={idx} size="large">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+            
           </Box>
         </Bleed>
       </Card>

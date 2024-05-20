@@ -122,6 +122,7 @@ const ProdcutModal: React.FC<{
             collabProduct.map(async(cp) => {
             const result = await client.mutate({
               mutation: MY_MUTATIONDEL,
+              fetchPolicy: "network-only",
               variables: {           
                 storeId: sessionData.authWithShop.store_id,
               },
@@ -150,6 +151,7 @@ const ProdcutModal: React.FC<{
             collabProduct.map(async(cp) => {
             const result = await client.mutate({
               mutation: MY_MUTATION,
+              fetchPolicy: "network-only",
               variables: {
                 variantId: cp.vid,
                 title: cp.title,

@@ -101,7 +101,7 @@ segments.push(...lazyLoadSegments);
 const BackGroundSelector: React.FC<{
   backgroundSelectId: string;
   setSelectBgId: any;
-  BgData: IDataType[];
+  BgData: any;
 }> = ({ backgroundSelectId, setSelectBgId, BgData }) => {
   const isSelected = (index: string) => index === backgroundSelectId;
 
@@ -127,20 +127,20 @@ const BackGroundSelector: React.FC<{
     borderColor: "rgba(4,111,180,1)",
   };
 
-  const listboxItemMarkup = (seg: IDataType) => (
+  const listboxItemMarkup = (seg: any) => (
     <div
-      key={seg.id}
+      key={seg.uuid}
       onClick={() => {
-        onClickHandle(seg.value);
+        onClickHandle(seg.uuid);
       }}
       style={
-        isSelected(seg.value) ? listboxItemSelectedStyle : listboxItemStyle
+        isSelected(seg.uuid) ? listboxItemSelectedStyle : listboxItemStyle
       }
     >
       <Card>
         <Bleed marginInline="400" marginBlock="400">
           <Image
-            source={seg.img}
+            source={seg.image}
             alt="a sheet with purple and orange stripes"
           />
           <Box padding="400">
@@ -155,7 +155,7 @@ const BackGroundSelector: React.FC<{
                   wordWrap: "break-word",
                 }}
               >
-                {seg.label}
+                {seg.name}
               </div>
             </div>
           </Box>
@@ -188,7 +188,7 @@ const BackGroundSelector: React.FC<{
       <div style={{ display: "flex", width: "100%" }}>
         <SpacingBackground>
           <InlineGrid gap="400" columns={2}>
-            {BgData.map((seg) => listboxItemMarkup(seg))}
+            {BgData?.map((seg:any) => listboxItemMarkup(seg))}
           </InlineGrid>
         </SpacingBackground>
       </div>

@@ -6,41 +6,11 @@ import gql from 'graphql-tag';
 
 const actionValue = '__ACTION__';
 
-// const segments = [
-//   {
-//     label: 'Black Top',
-//     id: 'gid://shopify/CustomerSegment/1',
-//     value: '0',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_black.png?v=1715481859'
-//   },
-//   {
-//     label: 'White Dress',
-//     id: 'gid://shopify/CustomerSegment/2',
-//     value: '1',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_white.png?v=1715481859'
-//   },
-//   {
-//     label: 'Red Top',
-//     id: 'gid://shopify/CustomerSegment/3',
-//     value: '2',
-//     img: 'https://cdn.shopify.com/s/files/1/0641/2268/3542/files/product_red.png?v=1715481859'
-//   }
-// ];
 
-// const lazyLoadSegments = Array.from(Array(100)).map((_, index) => {
-//   let tmp = { ...segments[index % segments.length] };
-//   tmp.id = `gid://shopify/CustomerSegment/${index + segments.length + 1}`;
-//   tmp.value = `${index + segments.length}`;
-//   return tmp;
-// });
-
-// segments.push(...lazyLoadSegments);
-
-// // console.log(segments);
 
 const interval = 25;
 
-const ProductSelector: React.FC <{ sessionData: any }> = ({ sessionData }) => {
+const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChange:any }> = ({ product,products,handleCheckboxChange }) => {
   const [showFooterAction, setShowFooterAction] = useState(true);
   const [query, setQuery] = useState<string>('');
   const [lazyLoading, setLazyLoading] = useState(false);
@@ -49,53 +19,8 @@ const ProductSelector: React.FC <{ sessionData: any }> = ({ sessionData }) => {
   const [activeOptionId, setActiveOptionId] = useState();
   const [selectedSegmentIndex, setSelectedSegmentIndex] = useState("");
   const [filteredSegments, setFilteredSegments] = useState<(typeof segments)[number][]>([]);
-  const [products, setProducts] = useState<any[]>([]);
-
-  const fetchProducts = async () => {
-   
-    await client
-      .query({
-        query: gql`
-    query MyQuery3($storeid: uuid!) {
-    store_products(limit: 50, where: {store_id: {_eq: $storeid}}) {
-      store_id
-      title
-      uuid
-      variant_id
-      product_id
-      images
-      price
-      sku
-    }
-  }
-  `,
-        variables: {
-          storeid: sessionData.authWithShop.store_id,
-        },
-      })
-      .then((result) => {
-        var store_products = result.data.store_products;
-        // Map over store_products to create a new array with the added 'image' property
-        const updatedStoreProducts = store_products.map((sp:any, index:number) => {
-          // Assuming sp.images is already a JSON string that needs to be parsed
-          let images = sp.images;
-          console.log("images: :::" , images.url);
-          return {
-            ...sp, // Spread the existing properties of the product
-            image: images.url // Add the new image property
-          };
-        });
-        setActiveOptionId(updatedStoreProducts[0].uuid);
-        setProducts(updatedStoreProducts);
-        console.log("apollo client product store: :::",updatedStoreProducts);
-      });
 
 
-}; 
-useEffect(() => {
-  // Call the fetchProducts function when the component mounts
-  fetchProducts();
-}, []);
   const handleClickShowAll = () => {
     setShowFooterAction(false);
     setVisibleOptionIndex(products.length);
@@ -152,10 +77,7 @@ useEffect(() => {
       }, 1000);
     }
   };
-  /*Saurab codes */
-  const handleProduct=()=>{
-    
-  }
+  
   const listboxId = 'SearchableListbox';
 
   const textFieldMarkup = (
@@ -181,17 +103,17 @@ useEffect(() => {
 
   const segmentList =
     segmentOptions.length > 0
-      ? segmentOptions.slice(0, visibleOptionIndex).map(({ title, uuid, images }) => {
+      ? segmentOptions.slice(0, visibleOptionIndex).map(({ title, uuid, image }) => {
        // console.log(title, uuid, images,"segmentList",products[selectedSegmentIndex])
-          const selected = false;
-
+          const selected = product==uuid?true:false;
+          console.log(uuid,"product in product Selector: " + product)
           return (
             // <div className='border border-neutral-200'>
-            <div className="" key={uuid} onClick={handleProduct}>
+            <div className="" key={uuid} onClick={handleCheckboxChange(uuid)}>
               <Listbox.Option  value={uuid} selected={selected} >
                 <Listbox.TextOption selected={selected}>
                   <div style={{ display: 'inline-flex' }}>
-                    <img className="w-10 h-10" src={images}></img>
+                    <img className="w-10 h-10" src={image}></img>
                     <div className="w-96 leading-10 px-2 ">{title}</div>
                   </div>
                 </Listbox.TextOption>
