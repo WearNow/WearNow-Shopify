@@ -133,11 +133,12 @@ useEffect(() =>{
         // Map over store_products to create a new array with the added 'image' property
         const updatedStoreProducts = store_products.map((sp:any, index:number) => {
           // Assuming sp.images is already a JSON string that needs to be parsed
-          let images = JSON.parse(sp.images);
-          console.log("images: :::" , images.url);
+          let images = sp.images.replace("[{'url': '",'');
+            images = images.replace("'}]",'');
+            console.log("images: :::" , images);
           return {
             ...sp, // Spread the existing properties of the product
-            image: images.url // Add the new image property
+            image: images // Add the new image property
           };
         });
          
@@ -151,10 +152,7 @@ useEffect(() => {
   // Call the fetchProducts function when the component mounts
   fetchProducts();
 }, []);
-  useEffect(() => {
-    // Call the fetchProducts function when the component mounts
-    fetchProducts();
-  }, []); // Empty dependency array ensures it only runs once on mount
+
   console.log(products, "Second Header products");
 
   const handleCheckboxChange = (productId: string) => {
@@ -174,7 +172,6 @@ useEffect(() => {
     if (dataLimit.end < products.length) {
       setDataLimit(prevLimit => ({
         start: prevLimit.start + 3,
-
         end: prevLimit.end + 3
       }));
     }
@@ -235,25 +232,16 @@ useEffect(() => {
   };
   const handleSave = async()=>{
     const MyMutation = gql`
-    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: uuid!, $productId: String!, $price: String!, $images: String!){
-      onboardStore(input:{
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
+      generateSingleStoreProduct(input:{
         background:$background,
         model:$model,
         pose:$pose,
         store_id:$store_id,
-        products:[
-          {
-            photos:[{filename:"test.jpg",url:"https://api.mehala.et/media/stamps/pngwing.com_8Yzx46x.png"}],
-            price:123,
-            product_id:"prod_id2",
-            sku:"10001",
-            title:"Prod Title1",
-            variant_id:"variant_id1"
-          }
-        ]
+        store_product_id: $productId
       }){
-        message
         success
+        tracking
       }
     } `;
 
