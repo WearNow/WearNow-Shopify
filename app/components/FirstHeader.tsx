@@ -27,7 +27,6 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   const toggleModal = () => {
     setModals(!modals);
   };
-
   const handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     if (!isNaN(newValue)) {

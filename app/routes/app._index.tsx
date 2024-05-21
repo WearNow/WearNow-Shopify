@@ -16,10 +16,39 @@ const {gql} = pkg;
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const  admin1  = await authenticate.admin(request);
+  const  {admin}  = await authenticate.admin(request);
   const {shop}  =  admin1.session ?? null
-  // const auth_session = await db.session.findFirst({
-  //   where: { shop },
-  // });
+
+  const response = await admin.graphql(
+    `#graphql
+     query {
+          products (first: 50) {
+          edges {
+            node { 
+              id
+              title 
+            images(first: 10) {
+              nodes {
+                src
+              }
+            }
+            variants(first: 10) {
+              nodes {
+                id
+                image {
+                  src
+                  id
+                }
+                title
+              }
+            }
+          }
+          }
+        }
+      }`
+  );
+  const responseJson = await response.json();
+
   let auth_session={};
   const client = new ApolloClient({
     uri: 'https://graphql.wearnow.ai/v1/graphql',
@@ -64,7 +93,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const authWithShop = {
     ...auth_session,
     shop: shop,
-    tryOn:false
+    tryOn:false,
+    products:responseJson
   };
   console.log(authWithShop,"auth session");
   
