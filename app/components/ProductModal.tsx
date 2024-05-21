@@ -30,6 +30,7 @@ const ProdcutModal: React.FC<{
 
   useEffect(() => {
     if (inputData || inputQueryValue) {
+      fetchProductData();
       products?.map((product:any) =>{
         setCheckedProducts((prevState) => ({
           ...prevState,
@@ -41,14 +42,40 @@ const ProdcutModal: React.FC<{
         }));
       })
     }
-
   }, [inputData, inputQueryValue]);
 
-
-  useEffect(() => {
-    const getproductsTitle = sessionData.authWithShop.products.data.products?.edges;
+  const fetchProductData = async () => {
+    try {
+      const data = JSON.stringify({
+        queryfor: "product",
+        first: 50,
+        fields: "id,title,",
+        pagination: "yes",
+        shop: sessionData.authWithShop.shop,
+        searchQuery: inputQueryValue,
+      });
+      console.log(data,"data sending for the quey");
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${apiURL}api/query`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(response.data,"response from graphql api");
+          const getproductsTitle = response.data.response.data.products?.edges;
           setgetproducts(getproductsTitle);
-  },[]);
+        })
+        .catch((error) => {
+          console.log(error);
+        }); 
+    } catch (error) {}
+  };
 
   const sendSelectedProdcut = async () => {
     try {
