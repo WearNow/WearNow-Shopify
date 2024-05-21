@@ -6,7 +6,7 @@ import { apiURL } from "../services/Services";
 import client from "../services/ApolloClient";
 
 import { Link } from "@remix-run/react";
-
+import {Spinner} from '@shopify/polaris';
 import gql from 'graphql-tag';
 
 
@@ -21,6 +21,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   const [updateCheckedData, setupdateCheckedData] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [try_on, setTry_on] = useState<boolean>(sessionData?.store?.virtual_enabled);
+  const [spinner, setSpinner] = useState<boolean>(false);
 
 
   const toggleModal = () => {
@@ -31,32 +32,30 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     const newValue = parseInt(event.target.value);
     if (!isNaN(newValue)) {
       setInputData(newValue);
-      try {
-        // Prepare the data to send
-        const data = JSON.stringify({
-          queryfor: "tryOnPerProduct",
-          shop: sessionData.shop,
-          tryOnPerProduct: newValue,
-        });
+      const MyMutationn = gql`
+    mutation MyMutation3 ($tryon_per_product:bigint!,$uuid:uuid!){
+        update_stores(where: {uuid: {_eq: $uuid}}, _set: {tryon_per_product: $tryon_per_product}) {
+          returning {
+            store_id
+            uuid
+            name
+            virtual_enabled
+          }
+        }
+      }
+   `;
 
-        // Define the request configuration
-        const config = {
-          method: "post",
-          maxBodyLength: Infinity,
-          url: `${apiURL}api/saveDataInDb`, // Use the apiURL constant
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: data,
-        };
+      const result = await client.mutate({
+        mutation: MyMutationn,
+        variables: {
+          tryon_per_product: newValue,
+          uuid: sessionData.authWithShop.store_id
+        },
+      });
 
-        // Send the request
-        const response = await axios.request(config);
-        console.log(response);
-        setProducts(response.data);
-      } catch (error) { console.log(error) }
+      console.log('Mutation result:', result);
     } else {
-      setInputData(undefined);
+      setInputData(10);
     }
   };
 
@@ -64,6 +63,8 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
 
   //delete checkedData  data
   const handleDeleteItem = async(idToDelete: string) => {
+    setDisabled(idToDelete);
+    setSpinner(true);
     const MyMutation = gql`
     mutation ($uuid:uuid!){
    
@@ -87,7 +88,8 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
       });
       await fetchProducts();
       console.log('Mutation result for delete:', result);
-
+      setSpinner(false);
+      setDisabled('active');
     } catch (error) {
       console.error('Error executing mutation:', error);
     }
@@ -146,11 +148,12 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           // Map over store_products to create a new array with the added 'image' property
           const updatedStoreProducts = store_products.map((sp:any, index:number) => {
             // Assuming sp.images is already a JSON string that needs to be parsed
-            let images = JSON.parse(sp.images);
-            console.log("images: :::" , images.url);
+            let images = sp.images.replace("[{'url': '",'');
+            images = images.replace("'}]",'');
+            console.log("images: :::" , images);
             return {
               ...sp, // Spread the existing properties of the product
-              image: images.url // Add the new image property
+              image: images // Add the new image property
             };
           });
            
@@ -180,7 +183,6 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
       setTry_on(false);
       tt = false;
     }
-    console.log(sessionData, "Trying to update via apollo client", sessionData.authWithShop.store_id)
     const MyMutation = gql`
     mutation MyMutation3 ($tryOn:Boolean!,$uuid:uuid!){
         update_stores(where: {uuid: {_eq: $uuid}}, _set: {virtual_enabled: $tryOn}) {
@@ -297,11 +299,16 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                                 {item.title} {/* Display item title */}
                               </span>
                               <div className="w-[20px] h-[20px] shrink-0 relative z-[14] cursor-pointer">
+                              {spinner && disabled==item.uuid ? (
+                              <Spinner accessibilityLabel="Small spinner example" size="small" />
+                            ):(
                                 <div
                                   onClick={() => handleDeleteItem(item.uuid)}
                                   className="w-[20px] h-[20px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Delete.png?v=1714384615)] bg-cover bg-no-repeat relative z-[15]  mr-0 mb-0 ml-[3.5px]"
                                 />
+                              )}
                               </div>
+                              
                             </div>
                           ))}
                       </div>

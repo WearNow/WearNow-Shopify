@@ -4,6 +4,7 @@ import axios from "axios";
  import {apiURL} from "../services/Services"
  import client from "../services/ApolloClient"
  import gql from "graphql-tag"
+ 
 
 
 
@@ -30,7 +31,7 @@ const ProdcutModal: React.FC<{
   useEffect(() => {
     if (inputData || inputQueryValue) {
       fetchProductData();
-      products.map((product:any) =>{
+      products?.map((product:any) =>{
         setCheckedProducts((prevState) => ({
           ...prevState,
           [product.variant_id]: true,
@@ -108,6 +109,23 @@ const ProdcutModal: React.FC<{
         console.log(selectedVariants,"selectedProductsselectedProductsselectedProducts",selectedProducts);
         const collabProduct=[...selectedProducts,...selectedVariants];
         console.log(collabProduct,"selectedProductsselectedProducts");
+        const sendProducts:any[]=[];
+        
+        collabProduct.map(async(cp) => {
+          if(cp.product_id!=''){
+         var sp= {
+            photos:[{url:cp.image?cp.image:"image"}],
+            price:123,
+            product_id:cp.pid,
+            sku:"10001",
+            title:cp.title,
+            variant_id:cp.vid
+          }
+          sendProducts.push(sp);
+          }
+        })
+        
+        
         const MY_MUTATIONDEL = gql`
         mutation MyMutation4($storeId: uuid!) {
           delete_store_products(where: {store_id: {_eq: $storeId}}) {
@@ -118,8 +136,8 @@ const ProdcutModal: React.FC<{
             }
           }
         } `;
+        
           try {
-            collabProduct.map(async(cp) => {
             const result = await client.mutate({
               mutation: MY_MUTATIONDEL,
               fetchPolicy: "network-only",
@@ -128,44 +146,36 @@ const ProdcutModal: React.FC<{
               },
             });
             console.log('Mutation result dELETE:', result);
-            });
-            
-
           } catch (error) {
             console.error('Error executing mutation:', error);
           }
+          const store_id = sessionData.authWithShop.store_id;
         const MY_MUTATION = gql`
-          mutation MyMutation($variantId: String!, $title: String!, $storeId: uuid!, $sku: String!, $productId: String!, $price: String!, $images: String!) {
-            insert_store_products(objects: {variant_id: $variantId, title: $title, store_id: $storeId, sku: $sku, product_id: $productId, price: $price, images: $images}) {
-              returning {
-                images
-                title
-                variant_id
-                product_id
-                uuid
+          mutation MyMutation($storeId:String!,$products:[Product]!) {
+              onboardStore(input:{
+                background:"background",
+                model:"model",
+                pose:"pose",
+                store_id:$storeId,
+                products:$products
+              }){
+                message
+                success
               }
-            }
           }
         `;
           try {
-            collabProduct.map(async(cp) => {
             const result = await client.mutate({
               mutation: MY_MUTATION,
               fetchPolicy: "network-only",
               variables: {
-                variantId: cp.vid,
-                title: cp.title,
-                storeId: sessionData.authWithShop.store_id,
-                sku: "afsd",
-                productId: cp.pid,
-                price: "sadf",
-                images: JSON.stringify({"url":cp.image}),
+                storeId: store_id,
+                products: sendProducts
               },
             });
             console.log('Mutation result:', result);
-            });
-            
 
+            fetchProducts();
           } catch (error) {
             console.error('Error executing mutation:', error);
           }
@@ -247,8 +257,7 @@ const ProdcutModal: React.FC<{
     const checkedData = getproducts.filter(
       (product) => checkedProducts[product.node.id]
     );
-    console.log(checkedData, "selected data ");
-    fetchProducts();
+   
   };
 
   return (
