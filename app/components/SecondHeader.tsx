@@ -220,6 +220,9 @@ useEffect(() => {
     switch(step) {
       case '01':
         setCurrentStep(1);
+        if(tmpModel){ setModel(tmpModel); }
+        if(tmpPose){ setPose(tmpPose); }
+        if(tmpBackground){ setBackground(tmpBackground); }
       break;
       case '02':
         console.log("we are in second step",model);
