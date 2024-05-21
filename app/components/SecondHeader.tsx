@@ -8,6 +8,7 @@ import SelectedOnbording from "./SelectedOnbording";
 import FadedOnboarding from "./FadedOnboarding";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
+import {Checkbox} from '@shopify/polaris';
 
 const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
   
@@ -25,6 +26,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
   const [tmpBackground, setTmpBackground] = useState<string>();
   const [tmpPose, setTmpPose] = useState<string>();
   const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
+  const [currentStep, setCurrentStep] = useState(1);
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -181,11 +183,14 @@ useEffect(() => {
     switch(type){
       case 'model':
         setModel(id);
+        setCurrentStep(2);
         break;
       case 'background':
         setBackground(id);
+        setCurrentStep(3);
         break;
-      case 'pose':
+      case 'pose': 
+        setCurrentStep(4);
         setPose(id);
         setStylehide({opacity:1,pointerEvents:"unset"});
         break;
@@ -193,40 +198,52 @@ useEffect(() => {
     
     console.log("model id: " + id)
   };
+  const handleButtonNext = async () => {
+    if(checkedProduct && currentStep==1){   
+        if(currentStep<4){
+        setCurrentStep(currentStep+1)
+        }
+    }
+    if(model && currentStep==2){
+        if(currentStep<4){
+        setCurrentStep(currentStep+1)
+        }
+    }
+    if(background && currentStep==3){
+        if(currentStep<4){
+        setCurrentStep(currentStep+1)
+        }
+    }
+  }
 
   const handleEdit = (step:string)=>{
     switch(step) {
       case '01':
-        console.log("we are in first step",checkedProduct);
-        setTmpCheckedProduct(checkedProduct);
-        setCheckedProduct(undefined);
-        if(tmpPose){ setPose(tmpPose); }
-        if(tmpModel){ setModel(tmpModel); }
-        if(tmpBackground){ setBackground(tmpBackground); }
+        setCurrentStep(1);
       break;
       case '02':
         console.log("we are in second step",model);
         setTmpModel(model);
         setModel(undefined);
-        if(tmpCheckedProduct){ setCheckedProduct(tmpCheckedProduct); }
         if(tmpPose){ setPose(tmpPose); }
         if(tmpBackground){ setBackground(tmpBackground); }
+        setCurrentStep(2);
       break;
       case '03':
         console.log("we are in third step",background);
         setTmpBackground(background);
         setBackground(undefined);
-        if(tmpCheckedProduct){ setCheckedProduct(tmpCheckedProduct); }
         if(tmpModel){ setModel(tmpModel); }
         if(tmpPose){ setPose(tmpPose); }
+        setCurrentStep(3);
       break;
       case '04':
         console.log("we are in forth step",pose);
         setTmpPose(pose);
         setPose(undefined);
-        if(tmpCheckedProduct){ setCheckedProduct(tmpCheckedProduct); }
         if(tmpModel){ setModel(tmpModel); }
         if(tmpBackground){ setBackground(tmpBackground); }
+        setCurrentStep(4);
       break;
     }
   };
@@ -264,6 +281,7 @@ try {
 }
     
   }
+  console.log(currentStep);
   return (
     <div className="self-stretch second_header">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -279,7 +297,7 @@ try {
 
 
           <div className='flex  flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
-            {!checkedProduct ? (
+            {currentStep==1 && (
               <>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>
                 <div className='after_border flex w-[530px]  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
@@ -300,18 +318,16 @@ try {
                         {products.slice(dataLimit.start, dataLimit.end).map((product, index) => (
                           <>
                             <div key={product.uuid} className='flex pt-[16px] gap-3 pr-[8px] pb-[16px] pl-[0px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[45]'>
-                              <div className='flex w-[29px] pt-[18px]  pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff] opacity-40  relative  z-[29]'>
+                              <div className='flex w-[29px] pt-[18px]  pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff]   relative  z-[29]'>
                                 <div className='flex w-[16px] flex-col justify-center items-start shrink-0 flex-nowrap relative z-30'>
                                   <div className='flex w-[16px] gap-[8px] items-center shrink-0 flex-nowrap relative z-[31]'>
                                     <div className='flex w-[16px] gap-[8px] items-start shrink-0 flex-nowrap rounded-[4px] relative z-[32]'>
-                                      <div className="product_import shrink-0 my-auto w-4 h-4 bg-white border border-solid border-zinc-500 rounded-[var(--p-border-radius-100)]">
-                                        <input id={product.uuid} name={product.uuid}
-                                          checked={tmpCheckedProduct==product.uuid?true:false}
-                                          onChange={() => handleCheckboxChange(product.uuid)}
-                                          type="checkbox" />
-                                        <label htmlFor="checkbox"></label>
-
-                                      </div>
+                                     
+                                        <Checkbox
+                                            label=""
+                                            checked={checkedProduct==product.uuid?true:false} // Check if the product is checked
+                                          onChange={() => handleCheckboxChange(product.uuid)} // Handle checkbox change
+                                          />
                                     </div>
                                   </div>
                                 </div>
@@ -403,15 +419,24 @@ try {
               
               
               </>
-            ) : (
+            )} 
+            {currentStep==2 && (
               <>
-                {products.filter((product: any) => checkedProduct.includes(product.uuid)).map((product, index) => (
+                {products.filter((product: any) => checkedProduct?.includes(product.uuid)).map((product, index) => (
 
                     <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
                 ))}
-                {!model && (
-                  <>
-                  <SelectOnboarding step={stepModel} value={tmpModel} selectLoop={models} handleSelection={handleSelection} type='model'/>
+                
+                 
+                  {!model ?
+                     <SelectOnboarding step={stepModel} value={tmpModel} selectLoop={models} handleSelection={handleSelection} type='model'/>
+                    :
+                    <>
+                    {models.filter((m:any)=>model==m.uuid).map((m:any)=>( 
+                    <SelectedOnbording step={stepModel} data={m.name} image={m.cover_image} handleEdit={handleEdit} />
+                  ))}
+                    </>
+                    }
                   {!background ?
                     <FadedOnboarding step={stepBackground} sectionText={textBackground} />
                     :
@@ -430,14 +455,31 @@ try {
                   ))}
                     </>
                     }
-                  </>
-                )}
-                {model && !background ? (
+                 
+              </>
+            )}
+           {currentStep==3 && (
               <>
+                {products.filter((product: any) => checkedProduct?.includes(product.uuid)).map((product, index) => (
+
+                    <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
+                ))}
+               
+       
+             
               {models.filter((m:any)=>model==m.uuid).map((m:any)=>( 
               <SelectedOnbording step={stepModel} data={m.name}  image={m.cover_image} handleEdit={handleEdit} />
             ))}
-              <SelectOnboarding step={stepBackground} value={tmpBackground} selectLoop={backgrounds} handleSelection={handleSelection} type='background'/>
+                  {!background ?
+                   <SelectOnboarding step={stepBackground} value={tmpBackground} selectLoop={backgrounds} handleSelection={handleSelection} type='background'/>
+                    :
+                    <>
+                    {backgrounds.filter((b:any)=>background==b.uuid).map((b:any)=>( 
+                    <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
+                  ))}
+                  </>
+                  }
+              
               {!pose ?
                     <FadedOnboarding step={stepPose} sectionText={textPose} />
                     :
@@ -447,9 +489,16 @@ try {
                   ))}
                     </>
                     }
+
               </>
-            ):(
+            )}
+            {currentStep==4 && (
               <>
+                {products.filter((product: any) => checkedProduct?.includes(product.uuid)).map((product, index) => (
+
+                    <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
+                ))}
+
               {model && background && !pose && (
                 <>
               {models.filter((m:any)=>model==m.uuid).map((m:any)=>( 
@@ -461,9 +510,7 @@ try {
               <SelectOnboarding step={stepPose} value={tmpPose} selectLoop={poses} handleSelection={handleSelection} type='pose'/>
               </>
               )}
-              </>
-            )}
-            {model && background && pose && (
+              {model && background && pose && (
                 <>
                 {models.filter((m:any)=>model==m.uuid).map((m:any)=>( 
               <SelectedOnbording step={stepModel} data={m.name}  image={m.cover_image} handleEdit={handleEdit} />
@@ -474,11 +521,12 @@ try {
              {poses.filter((p:any)=>pose==p.uuid).map((p:any)=>( 
               <SelectedOnbording step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
             ))}
-              </>
-              )}
+            
               </>
             )}
-           
+              </>
+            )}
+            
              
                 
              
@@ -488,7 +536,7 @@ try {
            
           
             <div className='flex w-[236px] h-[44px] gap-[20px] items-start shrink-0 flex-nowrap  top-[535px] left-0 z-[82]'>
-              {/* <button className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
+               <button onClick={handleButtonNext} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
                     Next
@@ -497,7 +545,7 @@ try {
                     <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/91099684-9e2c-41ac-8500-9a0d3c52b427.png)] bg-[length:100%_100%] bg-no-repeat relative z-[87] mt-[0.5px] mr-0 mb-0 ml-0' />
                   </div>
                 </div>
-              </button> */}
+              </button> 
               <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' style={{opacity:stylehide.opacity,pointerEvents:stylehide.pointerEvents}}>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
