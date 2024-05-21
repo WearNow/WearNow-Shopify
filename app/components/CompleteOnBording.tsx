@@ -2,11 +2,13 @@ import React from 'react'
 import UsageStatistics from './UsageStatistics'
 import DashboardHistory from './DashboardHistory'
 // import PhotoCreated from './PhotoCreated'
-
-function CompleteOnBording() {
+import  { useEffect, useState } from "react";
+function CompleteOnBording(sessionData:any) {
+    const [status,setStatus]=useState(sessionData.sessionData.sessionData.authWithShop.store.onboarding_status);
+    console.log(sessionData.sessionData.sessionData.authWithShop.store.onboarding_status);
     return (
         <>
-
+            {status!="completed" && (
             <div className='main-container flex w-full h-[299px] pt-[30px] pr-0 pb-[20px] pl-0 flex-col gap-[10px] items-center flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative mx-auto my-0'>
                 <div className='flex w-full h-[30px] flex-col gap-[-12px] justify-center items-center shrink-0 flex-nowrap'>
                     <div className='flex pt-0 pr-[20px] pb-0 pl-[20px] flex-col gap-[16px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[1]'>
@@ -38,6 +40,7 @@ function CompleteOnBording() {
                     </div>
                 </div>
             </div>
+            )}
          < UsageStatistics/>
          <DashboardHistory/>
         </>

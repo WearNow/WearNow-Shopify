@@ -6,7 +6,7 @@ import DashboardHeader from './DashboardHeader'
 import SidebarNavigation from './SidebarNavigation'
 
 
-function Dashboard() {
+function Dashboard(sessionData:any) {
     return (
         <>     
         <DashboardHeader/>
@@ -18,7 +18,7 @@ function Dashboard() {
             </div>
 
             <div className='dashboard_vartual_content_row'>
-              <CompleteOnBording/>
+              <CompleteOnBording sessionData={sessionData}/>
             </div>
         </div>
         </>

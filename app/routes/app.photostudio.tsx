@@ -164,12 +164,13 @@ useEffect(() =>{
         // Map over store_products to create a new array with the added 'image' property
         const updatedStoreProducts = store_products.map((sp:any, index:number) => {
           // Assuming sp.images is already a JSON string that needs to be parsed
-          let images = JSON.parse(sp.images);
-          console.log("images: :::" , images.url);
-          return {
-            ...sp, // Spread the existing properties of the product
-            image: images.url // Add the new image property
-          };
+          let images = sp.images.replace("[{'url': '",'');
+          images = images.replace("'}]",'');
+          console.log("images: :::" , images);
+        return {
+          ...sp, // Spread the existing properties of the product
+          image: images // Add the new image property
+        };
         });
          
         setProducts(updatedStoreProducts);
@@ -215,25 +216,16 @@ useEffect(() => {
   }
   const handleSave = async()=>{
     const MyMutation = gql`
-    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: uuid!, $productId: String!, $price: String!, $images: String!){
-      onboardStore(input:{
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
+      generateSingleStoreProduct(input:{
         background:$background,
         model:$model,
         pose:$pose,
         store_id:$store_id,
-        products:[
-          {
-            photos:[{filename:"test.jpg",url:"https://api.mehala.et/media/stamps/pngwing.com_8Yzx46x.png"}],
-            price:123,
-            product_id:"prod_id2",
-            sku:"10001",
-            title:"Prod Title1",
-            variant_id:"variant_id1"
-          }
-        ]
+        store_product_id: $productId
       }){
-        message
         success
+        tracking
       }
     } `;
 
@@ -306,13 +298,31 @@ try {
               Take your product photos to the next level in just 4 easy steps!
             </span>
           </div>
+          
 
-
-          <div className='flex  flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
+          <div className='flex  flex-col gap-[8px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
             {!checkedProduct ? (
               <>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>
+              <div className='after_border flex w-[530px]  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
+                  <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
+                    <div className='flex w-full flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
+                      <div className='flex w-[188px] gap-[12px] items-center shrink-0 flex-nowrap relative z-[8]'>
+                        <button className='flex w-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#fff] rounded-[100px] border-dashed border border-[#000] relative overflow-hidden z-[9] pointer'>
+                          <span className="flex w-[17px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#141718] relative text-center whitespace-nowrap z-10">
+                            01
+                          </span>
+                        </button>
+                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left whitespace-nowrap z-[11]">
+                          Select 1 Product
+                        </span>
+                      </div>
+                     
+                    </div>
+                  </div>
+
                 
+                </div>
                 <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px" }}>
                   <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
                     <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left whitespace-nowrap z-[61]">

@@ -9,7 +9,19 @@
   background-color: #ffff;
   margin-bottom: 40px;
 }
-
+.font-normal{
+  font-weight: 500 !important;
+}
+/* .product_page_table th:nth-child(3) {
+  width: 160px;
+  max-width: 213px;
+  display: flex;
+}
+.product_page_table th:nth-child(5){
+  width: 160px;
+  max-width: 213px;
+  display: flex;
+} */
 .onboarding_steps button {
   width: 50%;
   background: #f0eaea;
@@ -495,7 +507,7 @@ button.photo_created_btn {
 .product_page_row {
   display: flex;
   width: 100%;
-  padding: 0px 21px;
+  padding: 10px 36px 0px;
   gap: 20px;
 }
 
@@ -822,8 +834,11 @@ body .product_page_container {
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 0px 21px;
+  padding: 0px 36px;
   gap: 21px;
+}
+.product_page_table_content {
+  padding: 0px 36px;
 }
 }
 
@@ -848,5 +863,8 @@ body .product_page_container {
   margin-top: 10px;
   font-size: 13px;
   line-height: 22px;
+}
+.product_page_table_content {
+  padding: 0px 36px;
 }
 }
