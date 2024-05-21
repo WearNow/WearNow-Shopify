@@ -1,7 +1,7 @@
 import { FC, ReactNode, createContext, useContext, useState } from 'react';
 
 interface Notification {
-  type: string;
+  type: 'warning' | 'success' | 'default';
   message: string;
   duration?: number;
   clear: () => void;
@@ -42,14 +42,14 @@ const alertCircleSuccess = (
     <div className="w-5 h-5 left-[-1px] top-[-1px] absolute">
       {/* √ */}
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g id="check-circle" clip-path="url(#clip0_1684_17895)">
+        <g id="check-circle" clipPath="url(#clip0_1684_17895)">
           <path
             id="Icon"
             d="M6.24984 10.0003L8.74984 12.5003L13.7498 7.50033M18.3332 10.0003C18.3332 14.6027 14.6022 18.3337 9.99984 18.3337C5.39746 18.3337 1.6665 14.6027 1.6665 10.0003C1.6665 5.39795 5.39746 1.66699 9.99984 1.66699C14.6022 1.66699 18.3332 5.39795 18.3332 10.0003Z"
             stroke="#079455"
-            stroke-width="1.66667"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </g>
         <defs>
@@ -90,7 +90,7 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const renderNotification = () => {
     if (!notification) return null;
 
-    const getMassageRander = () => {
+    const getMassageRender = () => {
       switch (notification.type) {
         case 'warning':
           return alertCircleWarn;
@@ -103,11 +103,11 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     return (
       <div className="notification" onClick={notification.clear}>
-        <div className="fixed bottom-10 right-10 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
+        <div className="fixed z-20 bottom-10 right-10 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
           <div className="grow shrink basis-0 h-5 justify-start items-start gap-4 flex">
 
             {/* icon */}
-            {getMassageRender(notification.type)}
+            {getMassageRender()}
 
             {/* message */}
             <div className="grow shrink basis-0 pr-1 flex-col justify-start items-start gap-3 inline-flex">
@@ -119,7 +119,7 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
             {/* x icon */}
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="x-close">
-                <path id="Icon" d="M15 5L5 15M5 5L15 15" stroke="#98A2B3" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                <path id="Icon" d="M15 5L5 15M5 5L15 15" stroke="#98A2B3" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
               </g>
             </svg>
           </div>
@@ -151,7 +151,7 @@ const getMassageRender = (type: string) => {
 
 // 如果需要单独的Notification组件
 const NotificationComponent: FC<{ type: string; message: string; onClose: () => void }> = ({ type, message, onClose }) => (
-  <div style={{ zIndex: 9999, position: 'fixed' }} className="fixed bottom-0 right-0 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
+  <div className="fixed z-11 bottom-0 right-0 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
     <div className="fixed bottom-10 right-10 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
       <div className="grow shrink basis-0 h-5 justify-start items-start gap-4 flex">
         {getMassageRender(type)}
