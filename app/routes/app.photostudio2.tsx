@@ -291,7 +291,10 @@ const { showNotification } = useNotification();
             items={items}
             currentStep={currentStep}
             onNext={(step) => {
-              showNotification("下一步")
+              showNotification({
+                type: "warning",
+                message: '"Please upload [15-current amount] more images"'
+              })
               
               setCurrentStep(step + 1);
             }}

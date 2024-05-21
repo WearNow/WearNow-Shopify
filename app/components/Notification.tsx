@@ -1,31 +1,65 @@
 import { FC, ReactNode, createContext, useContext, useState } from 'react';
 
 interface Notification {
+  type: string;
   message: string;
   duration?: number;
   clear: () => void;
 }
 
-const NotificationContext = createContext<{ showNotification: (message: string, duration?: number) => void } | null>(null);
+const NotificationContext = createContext<{ showNotification: (prop: Notification) => void } | null>(null);
 
-const alertCircle = (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g id="alert-circle" clip-path="url(#clip0_1441_18948)">
-      <path
-        id="Icon"
-        d="M10 6.66602V9.99935M10 13.3327H10.0084M18.3334 9.99935C18.3334 14.6017 14.6024 18.3327 10 18.3327C5.39765 18.3327 1.66669 14.6017 1.66669 9.99935C1.66669 5.39698 5.39765 1.66602 10 1.66602C14.6024 1.66602 18.3334 5.39698 18.3334 9.99935Z"
-        stroke="#D92D20"
-        stroke-width="1.66667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_1441_18948">
-        <rect width="20" height="20" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
+const alertCircleWarn = (
+  <div className="w-5 h-5 relative rounded-2xl">
+    <div className="w-7 h-7 left-[-5px] top-[-5px] absolute opacity-30 rounded-3xl border-2 border-red-600" />
+    <div className="w-9 h-9 left-[-9px] top-[-9px] absolute opacity-10 rounded-3xl border-2 border-red-600" />
+    <div className="w-5 h-5 left-[-1px] top-[-1px] absolute">
+      {/* ！ */}
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="alert-circle" clipPath="url(#clip0_1441_18948)">
+          <path
+            id="Icon"
+            d="M10 6.66602V9.99935M10 13.3327H10.0084M18.3334 9.99935C18.3334 14.6017 14.6024 18.3327 10 18.3327C5.39765 18.3327 1.66669 14.6017 1.66669 9.99935C1.66669 5.39698 5.39765 1.66602 10 1.66602C14.6024 1.66602 18.3334 5.39698 18.3334 9.99935Z"
+            stroke="#D92D20"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_1441_18948">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  </div>
+);
+const alertCircleSuccess = (
+  <div className="w-5 h-5 relative rounded-2xl">
+    <div className="w-7 h-7 left-[-5px] top-[-5px] absolute opacity-30 rounded-3xl border-2 border-green-600" />
+    <div className="w-9 h-9 left-[-9px] top-[-9px] absolute opacity-10 rounded-3xl border-2 border-green-600" />
+    <div className="w-5 h-5 left-[-1px] top-[-1px] absolute">
+      {/* √ */}
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="check-circle" clip-path="url(#clip0_1684_17895)">
+          <path
+            id="Icon"
+            d="M6.24984 10.0003L8.74984 12.5003L13.7498 7.50033M18.3332 10.0003C18.3332 14.6027 14.6022 18.3337 9.99984 18.3337C5.39746 18.3337 1.6665 14.6027 1.6665 10.0003C1.6665 5.39795 5.39746 1.66699 9.99984 1.66699C14.6022 1.66699 18.3332 5.39795 18.3332 10.0003Z"
+            stroke="#079455"
+            stroke-width="1.66667"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_1684_17895">
+            <rect width="20" height="20" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  </div>
 );
 
 const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -37,8 +71,9 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   // 显示通知的函数
-  const showNotification = (message: string, duration: number = 5000) => {
-    setNotification({ message, duration, clear: clearNotification });
+  const showNotification = (prop: Notification) => {
+    const { type, message, duration = 3000 } = prop;
+    setNotification({ type: type, message, duration, clear: clearNotification });
 
     // 使用setTimeout来自动关闭通知
     const timer = setTimeout(() => {
@@ -51,26 +86,42 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
     };
   };
 
-  
-
   // 渲染通知
   const renderNotification = () => {
     if (!notification) return null;
+
+    const getMassageRander = () => {
+      switch (notification.type) {
+        case 'warning':
+          return alertCircleWarn;
+        case 'success':
+          return alertCircleSuccess;
+        case 'default':
+          return;
+      }
+    };
 
     return (
       <div className="notification" onClick={notification.clear}>
         <div className="fixed bottom-10 right-10 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
           <div className="grow shrink basis-0 h-5 justify-start items-start gap-4 flex">
-            <div className="w-5 h-5 relative rounded-2xl">
-              <div className="w-7 h-7 left-[-5px] top-[-5px] absolute opacity-30 rounded-3xl border-2 border-red-600" />
-              <div className="w-9 h-9 left-[-9px] top-[-9px] absolute opacity-10 rounded-3xl border-2 border-red-600" />
-              <div className="w-5 h-5 left-[-1px] top-[-1px] absolute">{alertCircle}</div>
-            </div>
+
+            {/* icon */}
+            {getMassageRender(notification.type)}
+
+            {/* message */}
             <div className="grow shrink basis-0 pr-1 flex-col justify-start items-start gap-3 inline-flex">
               <div className="self-stretch h-4 flex-col justify-start items-start gap-1 flex">
                 <div className="self-stretch text-gray-900 text-sm font-medium font-['SF Pro Display'] leading-none">{notification.message}</div>
               </div>
             </div>
+
+            {/* x icon */}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="x-close">
+                <path id="Icon" d="M15 5L5 15M5 5L15 15" stroke="#98A2B3" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+            </svg>
           </div>
         </div>
       </div>
@@ -87,24 +138,31 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
 const useNotification = () => useContext(NotificationContext);
 
+const getMassageRender = (type: string) => {
+  switch (type) {
+    case 'warning':
+      return alertCircleWarn;
+    case 'success':
+      return alertCircleSuccess;
+    case 'default':
+      return;
+  }
+};
+
 // 如果需要单独的Notification组件
-const NotificationComponent: FC<{ message: string; onClose: () => void }> = ({ message, onClose }) => (
+const NotificationComponent: FC<{ type: string; message: string; onClose: () => void }> = ({ type, message, onClose }) => (
   <div style={{ zIndex: 9999, position: 'fixed' }} className="fixed bottom-0 right-0 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
-     <div className="fixed bottom-10 right-10 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
-          <div className="grow shrink basis-0 h-5 justify-start items-start gap-4 flex">
-            <div className="w-5 h-5 relative rounded-2xl">
-              <div className="w-7 h-7 left-[-5px] top-[-5px] absolute opacity-30 rounded-3xl border-2 border-red-600" />
-              <div className="w-9 h-9 left-[-9px] top-[-9px] absolute opacity-10 rounded-3xl border-2 border-red-600" />
-              <div className="w-5 h-5 left-[-1px] top-[-1px] absolute">{alertCircle}</div>
-            </div>
-            <div className="grow shrink basis-0 pr-1 flex-col justify-start items-start gap-3 inline-flex">
-              <div className="self-stretch h-4 flex-col justify-start items-start gap-1 flex">
-                <div className="self-stretch text-gray-900 text-sm font-medium font-['SF Pro Display'] leading-none">{message}</div>
-              </div>
-            </div>
+    <div className="fixed bottom-10 right-10 w-96 h-12 p-4 bg-white rounded-xl shadow border border-gray-300">
+      <div className="grow shrink basis-0 h-5 justify-start items-start gap-4 flex">
+        {getMassageRender(type)}
+        <div className="grow shrink basis-0 pr-1 flex-col justify-start items-start gap-3 inline-flex">
+          <div className="self-stretch h-4 flex-col justify-start items-start gap-1 flex">
+            <div className="self-stretch text-gray-900 text-sm font-medium font-['SF Pro Display'] leading-none">{message}</div>
           </div>
         </div>
+      </div>
     </div>
+  </div>
 );
 
 export { NotificationComponent, NotificationProvider, useNotification };
