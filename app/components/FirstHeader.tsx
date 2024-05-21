@@ -253,7 +253,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     <div>Add</div>
                   </div>
                 </div>
-                {products.length > 0 && (
+                {products.length == 0 && (
                 <div className=" flex w-full h-[50px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fff8f1] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex w-full flex-col gap-[6px] items-start shrink-0 flex-nowrap relative z-[1]">
