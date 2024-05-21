@@ -23,7 +23,6 @@ export default function App() {
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
       <NotificationProvider>
-        <SidebarNavigation/>
         <ui-nav-menu>
           <Link to="/app" rel="home">
             Home

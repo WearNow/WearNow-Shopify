@@ -10,6 +10,7 @@ import {
 } from "@shopify/polaris";
 import DashboardHeader from "~/components/DashboardHeader";
 import MultipleSearchSelection from "~/components/MultipleSearchSelection";
+import SidebarNavigation from "~/components/SidebarNavigation";
 //   import Billing from "~/components/Billing";
 const options = ['Pose1', 'Pose2', 'Pose3'];
 const options1 = ['Background1', 'Background2', 'Background3'];
@@ -17,6 +18,7 @@ export default function VartualTryOnPage() {
     return (
         <>
             <DashboardHeader />
+            <SidebarNavigation/>
             <div className="vartualtryon_container mt-5">
                 <div className="vartualtryon_row">
                     <div className=' flex w-full flex-col gap-[20px] items-start flex-nowrap relative mx-auto my-0'>

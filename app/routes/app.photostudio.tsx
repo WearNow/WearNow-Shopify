@@ -13,6 +13,7 @@ import ThumbnailSelector from "~/components/ThumbnailSelector";
 import BackGroundSelector from "~/components/BackGroundSelector";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
+import SidebarNavigation from "~/components/SidebarNavigation";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const  admin1  = await authenticate.admin(request);
@@ -286,6 +287,7 @@ try {
   return (
     <div className="bg-white h-full">
       <DashboardHeader />
+      <SidebarNavigation/>
       <div className="lg:w-[1272px] lg:pl-10 lg:p min-h-[755px] lg:m-auto flex flex-wrap  ">
       <div className="lg:w-1/2 max-lg:ml-0 max-lg:w-full max-lg:mt-10">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
