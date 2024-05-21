@@ -103,7 +103,9 @@ const ProdcutModal: React.FC<{
               vid:item.id
             })).filter((item:any)=> selectedProductIds.includes(item.id));
             filteredVariants.forEach((variant:any) => {
+              if(variant.title!='Default Title'){
               selectedVariants.push(variant);
+              }
             });
           });
         console.log(selectedVariants,"selectedProductsselectedProductsselectedProducts",selectedProducts);
