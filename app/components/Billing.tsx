@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-const Billing = () => {
+const Billing = ({handlesubmit}:any) => {
   const [activeTab, setActiveTab] = useState(1);
   const [bgcolorTab, setBgcolorTab] = useState("black");
   const [bgcolorTab2, setBgcolorTab2] = useState("white");
@@ -19,7 +19,11 @@ const Billing = () => {
     setBgcolorTab2("black")
     setColorTab2("white")
   };
-
+ 
+  const handleBilling = async(amount:number) => {
+    console.log("Amount :::=>",amount);
+    await handlesubmit(amount);
+  }
   return (
     <>
       <div className='main-container flex w-full pt-[60px] pr-[10px] pb-[60px] pl-[10px] flex-col gap-[30px] items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
@@ -166,7 +170,7 @@ const Billing = () => {
                     </span>
                   </div>
                 </div>
-                <button className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
+                <button onClick={()=>handleBilling(49)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
                   <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
                     <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
                       Start 14-Day Free Trial

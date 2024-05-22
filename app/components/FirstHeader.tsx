@@ -224,19 +224,19 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           fetchProducts={fetchProducts}
         />
       )}
-      <div className="flex flex-col justify-center bg-white max-md:px-5">
+      <div className="cst_padding flex flex-col justify-center bg-white max-md:px-5">
         <div className="max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col max-md:mt-10 max-md:max-w-full">
-                <div className="text-4xl font-medium text-neutral-800 max-md:max-w-full">
+          <div className="flex max-md:flex-col max-md:gap-0">
+            <div className="virtual_try_on_content flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+              <div className=" flex flex-col max-md:mt-10 max-md:max-w-full">
+                <div className="virtual_try_on_title text-4xl font-medium text-neutral-800 max-md:max-w-full">
                   Enable Virtual Try-On
                 </div>
                 <div className="mt-4 text-base font-medium leading-6 text-zinc-600 max-md:max-w-full">
                   Add the products you want to activate virtual try-on for and
                   enable our widget on your store.
                 </div>
-                <div className="flex gap-5 justify-between py-2 mt-8 w-full font-medium max-md:flex-wrap max-md:max-w-full">
+                <div className="add_product_content flex gap-5 justify-between py-2 mt-8 w-full font-medium max-md:flex-wrap max-md:max-w-full">
                   <div className="my-auto text-base leading-6 text-slate-800">
                     Add your products
                   </div>
@@ -254,14 +254,14 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                   </div>
                 </div>
                 {products.length == 0 && (
-                <div className=" flex w-full h-[50px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fff8f1] rounded-[8px] relative mx-auto my-0">
+                <div className=" flex w-full h-full pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fff8f1] rounded-[8px] relative mx-auto my-0">
                   <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">
                     <div className="flex w-full flex-col gap-[6px] items-start shrink-0 flex-nowrap relative z-[1]">
                       <div className="flex gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative z-[2]">
                         <div className="w-[18px] h-[18px] shrink-0 relative overflow-hidden z-[3]">
                           <div className="w-[15px] h-[15px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/exclamation.png?v=1714397050)] bg-[length:100%_100%] bg-no-repeat relative z-[4] mt-[1.5px] mr-0 mb-0 ml-[1.5px]" />
                         </div>
-                        <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#8e4b10] relative text-left whitespace-nowrap z-[5]">
+                        <span className="onboarding_paragraph h-[24px] grow  font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#8e4b10] relative text-left z-[5]">
                           To proceed please add products from your store
                         </span>
                         <div className="w-[20px] h-[20px] shrink-0 relative overflow-hidden z-[6]">
@@ -336,7 +336,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                   </div> )}
                 </div>
               <div style={{opacity:stylehide.opacity,pointerEvents:stylehide.pointerEvents}}>
-                <div className="flex gap-5 justify-between py-4 mt-5 max-md:flex-wrap max-md:max-w-full">
+                <div className="enabled_virtual_try_on  flex gap-5 justify-between py-4 mt-5 max-md:flex-wrap max-md:max-w-full">
                   <div className="text-base font-medium leading-6 text-slate-800">
                     Enable Virtual Try-On for all of these products
                   </div>
@@ -352,11 +352,11 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-1 self-start px-0.5 py-1 mt-5 text-base font-medium">
+                <div className="default_number  flex gap-1 self-start px-0.5 py-1 mt-5 text-base font-medium">
                   <div className="leading-[150%] text-zinc-600">
                     Default Number of Try-On Experiences Per Product
                   </div>
-                  <div className="text-rose-500">*</div>
+                  <div className="default_number_star text-rose-500">*</div>
                 </div>
                 <div className="justify-center items-start p-3 mt-1 text-base leading-6 whitespace-nowrap bg-white rounded-md border border-gray-100 border-solid text-slate-800 max-md:pr-5 max-md:max-w-full">
                   <input
@@ -461,7 +461,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                 </div>
               </div>
             </div>
-            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+            <div className="custom_slider_content flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <CustomSlider images={images} />
             </div>
           </div>

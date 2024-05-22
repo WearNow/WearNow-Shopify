@@ -127,7 +127,7 @@ export default function Index() {
   
   return (
     <>
-  <div className="container w-full" style={{ maxWidth: "100%",background:"#fff",padding:"20px 50px" }}> 
+  <div className="onbording_step_container container w-full" style={{ maxWidth: "100%",background:"#fff",padding:"20px 50px" }}> 
      <h1 className="mb-2 onbording_step_title">Onboarding - {tabStep} of 2 steps</h1>
       <div className="onboarding_steps  w-ful">
         <button

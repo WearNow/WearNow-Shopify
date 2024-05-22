@@ -270,9 +270,9 @@ const ProdcutModal: React.FC<{
             Select products to import
           </div>
           <div className="flex flex-col items-start self-center px-5 pr-[0px] mt-4 w-full text-sm leading-5 rounded-xl max-w-[628px] max-md:max-w-full"style={{height:"50vh",overflowY:"scroll"}}>
-            <div className="flex gap-5 self-stretch max-md:flex-wrap">
+            <div className="search_model_content flex gap-5 self-stretch max-md:flex-wrap">
               <div
-                className="flex gap-1 px-3 py-1.5 whitespace-nowrap bg-white border border-solid border-zinc-500 font-[450] rounded-[var(--p-border-radius-button)] text-[color:var(--p-color-text-secondary)] max-md:flex-wrap"
+                className="search_model flex gap-1 px-3 py-1.5 whitespace-nowrap bg-white border border-solid border-zinc-500 font-[450] rounded-[var(--p-border-radius-button)] text-[color:var(--p-color-text-secondary)] max-md:flex-wrap"
                 style={{ width: "74%", borderRadius: "10px" }}
               >
                 <img

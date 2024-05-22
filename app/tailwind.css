@@ -32,7 +32,7 @@
 .modal {
   position: fixed;
   z-index: 999;
-  width: 45.3%;
+  width: 580px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -796,6 +796,9 @@ p.hover_effect_content {
   /* .perfactpicture_overlay_content{
     background-color: red;
   } */
+  .onbording_step_container {
+    padding: 20px 20px !important;
+}
   body .dashboard_content_container {
     display: flex;
     flex-direction: column;
@@ -848,10 +851,74 @@ body .product_page_container {
     grid-template-columns: repeat(3, 1fr); /* Creates 3 equal-width columns */
     grid-gap: 20px; /* Adjust the gap between items as needed */
   }
+  .cst_padding {
+    padding: 0px;
+}
+  .onboarding_paragraph {
+    font-size: 15px;
+    line-height: 16px;
+}
+.virtual_try_on_title {
+  font-size: 25px;
+}
+.onbording_step_container .virtual_try_on_content {
+margin-top: 0px;
+}
+.onbording_step_container .virtual_try_on_content, .onbording_step_container .virtual_try_on_content>div {
+  margin-top: 0px;
+}
+.onbording_step_container .onboarding_steps {
+margin-bottom: 10px;
+}
+.onbording_step_container .add_product_content {
+margin-top: 5px;
+}
+.default_number {
+  margin: 0px;
+}
+.enabled_virtual_try_on {
+  margin: 0;
+}
+.default_number>div {
+  width: 100%;
+  display: contents;
+}
+body .onbording_step_container  .custom_slider_content {
+  padding: 0px 0px 0px 0px;
+}
+.cst_padding {
+  padding: 0px !important;
+}
+.onbording_step_container .modal_input {
+  width:90% !important;
+  border: none;
+  outline: none;
+}
+.search_model {
+  width: 100% !important;
+}
+.search_model_content {
+  gap: 6px !important;
+}
+.onbording_step_container .modal {
+  position: fixed;
+  z-index: 999;
+  width: calc(100% - 30px) !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background: var(--p-color-bg-surface);
+  box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset, -1px 0px 0px 0px rgba(0, 0, 0, 0.17) inset, 0px -1px 0px 0px rgba(0, 0, 0, 0.17) inset, 0px 1px 0px 0px rgba(204, 204, 204, 0.50) inset, 0px 20px 20px -8px rgba(26, 26, 26, 0.28);
+}
 }
 @media (max-width: 567px) {
 .product_page_table_content{
   padding: 0px 20px;
+}
+.onboarding_paragraph {
+  font-size: 15px;
+  line-height: 25px;
 }
 .dashboard_content_row .perfactpicture_overlay_title {
   font-size: 15px;
