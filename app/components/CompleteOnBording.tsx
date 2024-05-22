@@ -4,8 +4,8 @@ import DashboardHistory from './DashboardHistory'
 // import PhotoCreated from './PhotoCreated'
 import  { useEffect, useState } from "react";
 function CompleteOnBording(sessionData:any) {
-    const [status,setStatus]=useState(sessionData.sessionData.sessionData.authWithShop.store.onboarding_status);
-    console.log(sessionData.sessionData.sessionData.authWithShop.store.onboarding_status);
+    const [status,setStatus]=useState(sessionData?.sessionData?.sessionData?.authWithShop?.store?.onboarding_status);
+    console.log(sessionData?.sessionData?.sessionData?.authWithShop?.store?.onboarding_status);
     return (
         <>
             {status!="completed" && (

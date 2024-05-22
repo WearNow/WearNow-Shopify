@@ -13,7 +13,6 @@ import ThumbnailSelector from "~/components/ThumbnailSelector";
 import BackGroundSelector from "~/components/BackGroundSelector";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
-import SidebarNavigation from "~/components/SidebarNavigation";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const  admin1  = await authenticate.admin(request);
@@ -166,12 +165,12 @@ useEffect(() =>{
         const updatedStoreProducts = store_products.map((sp:any, index:number) => {
           // Assuming sp.images is already a JSON string that needs to be parsed
           let images = sp.images.replace("[{'url': '",'');
-          images = images.replace("'}]",'');
-          console.log("images: :::" , images);
-        return {
-          ...sp, // Spread the existing properties of the product
-          image: images // Add the new image property
-        };
+            images = images.replace("'}]",'');
+            console.log("images: :::" , images);
+            return {
+              ...sp, // Spread the existing properties of the product
+              image: images // Add the new image property
+            };
         });
          
         setProducts(updatedStoreProducts);
@@ -217,16 +216,25 @@ useEffect(() => {
   }
   const handleSave = async()=>{
     const MyMutation = gql`
-    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
-      generateSingleStoreProduct(input:{
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: uuid!, $productId: String!, $price: String!, $images: String!){
+      onboardStore(input:{
         background:$background,
         model:$model,
         pose:$pose,
         store_id:$store_id,
-        store_product_id: $productId
+        products:[
+          {
+            photos:[{filename:"test.jpg",url:"https://api.mehala.et/media/stamps/pngwing.com_8Yzx46x.png"}],
+            price:123,
+            product_id:"prod_id2",
+            sku:"10001",
+            title:"Prod Title1",
+            variant_id:"variant_id1"
+          }
+        ]
       }){
+        message
         success
-        tracking
       }
     } `;
 
@@ -287,11 +295,10 @@ try {
   return (
     <div className="bg-white h-full">
       <DashboardHeader />
-      <SidebarNavigation/>
       <div className="lg:w-[1272px] lg:pl-10 lg:p min-h-[755px] lg:m-auto flex flex-wrap  ">
-      <div className="lg:w-1/2 max-lg:ml-0 max-lg:w-full max-lg:mt-10">
-      <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className='flex w-[768px] flex-col gap-[32px] items-start shrink-0 flex-nowrap relative'>
+      <div className="lg:w-full max-lg:ml-0 max-lg:w-full max-lg:mt-10">
+      <div className="flex max-md:flex-col max-md:gap-0">
+        <div className='flex w-[618px] flex-col gap-[32px] items-start shrink-0 flex-nowrap relative'>
           <div className='flex w-[768px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
             <span className="h-[45px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-left whitespace-nowrap z-[2]">
               Create Your First Product Photo
@@ -300,9 +307,9 @@ try {
               Take your product photos to the next level in just 4 easy steps!
             </span>
           </div>
-          
 
-          <div className='flex  flex-col gap-[8px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
+
+          <div className='flex  flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
             {!checkedProduct ? (
               <>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>

@@ -28,7 +28,7 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
 
   const handleFilterSegments = (query: any) => {
     const nextFilteredSegments = products.filter(segment => {
-      return segment.label.toLocaleLowerCase().includes(query.toLocaleLowerCase().trim());
+      return segment.title.toLocaleLowerCase().includes(query.toLocaleLowerCase().trim());
     });
 
     setFilteredSegments(nextFilteredSegments);
@@ -51,6 +51,8 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
     }
 
     setSelectedSegmentIndex(String(segmentIndex));
+
+    handleCheckboxChange(segmentIndex)
   };
 
   const handleActiveOptionChange = (_: string, domId: string) => {
@@ -109,8 +111,9 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
           console.log(uuid,"product in product Selector: " + product)
           return (
             // <div className='border border-neutral-200'>
-            <div className="" key={uuid} onClick={handleCheckboxChange(uuid)}>
-              <Listbox.Option  value={uuid} selected={selected} >
+            // <div className="my-2" key={uuid} onClick={handleCheckboxChange(uuid)}>
+            <div className="my-2" key={uuid}>
+              <Listbox.Option key={uuid} value={uuid} selected={selected} >
                 <Listbox.TextOption selected={selected}>
                   <div style={{ display: 'inline-flex' }}>
                     <img className="w-10 h-10" src={image}></img>
