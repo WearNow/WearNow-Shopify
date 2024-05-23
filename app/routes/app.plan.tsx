@@ -9,6 +9,7 @@ import { useSubmit } from "@remix-run/react";
 import db from "../db.server";
 import { redirect } from "@remix-run/node";
 import React, { useState, useEffect } from 'react';
+import { app_name } from "~/services/Services";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
@@ -39,7 +40,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
     variables: {
       name: "Basic",
-      returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/s-s-wna/app`,
+      returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app`,
       trialDays: 14,
       test: true,
       lineItems: [
@@ -89,8 +90,7 @@ export default function PlanPage() {
   if (actiondata?.confirmationUrl) {
     top.location.href = actiondata.confirmationUrl
   }
-
-
+ 
   const handlesubmit = async (value: string) => {
     submit({ value, shop }, { method: "post" });
 
