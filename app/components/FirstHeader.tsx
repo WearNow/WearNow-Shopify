@@ -15,6 +15,7 @@ import gql from 'graphql-tag';
 const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
   const [modals, setModals] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<string>("active");
+  const [border, setBorder] = useState<string>("");
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [inputData, setInputData] = useState<number>(10);
@@ -121,7 +122,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   ];
 
   const fetchProducts = async () => {
-   
+    
       await client
         .query({
           query: gql`
@@ -157,10 +158,13 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           });
            
           setProducts(updatedStoreProducts);
+          setBorder(products.length ? 'active' : '');
           if(updatedStoreProducts.length > 0) {
-          setStylehide({opacity:1,pointerEvents:"unset"});}
-          else{
+          setStylehide({opacity:1,pointerEvents:"unset"});
+          setBorder("active");
+          }else{
             setStylehide({opacity:0.3,pointerEvents:"none"});
+            setBorder("");
           }
           console.log("apollo client store id: :::",updatedStoreProducts);
         });
@@ -272,7 +276,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                   </div>
                 </div>
                 )}
-                <div className=" flex w-full	 flex-col items-start flex-nowrap rounded-[12px] relative overflow-hidden mx-auto my-0">
+                <div className={`border_onboarding_${border} flex w-full flex-col items-start flex-nowrap rounded-[12px] relative overflow-hidden mx-auto my-0`}>
                   <div className="flex items-start self-stretch shrink-0 flex-nowrap relative">
                     {products.length > 0 && (
                       <div className="flex w-full  flex-col items-start flex-nowrap rounded-[12px] relative overflow-hidden mx-auto my-0">
@@ -461,7 +465,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                 </div>
               </div>
             </div>
-            <div className="custom_slider_content flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+            <div className="custom_slider_content flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
               <CustomSlider images={images} />
             </div>
           </div>

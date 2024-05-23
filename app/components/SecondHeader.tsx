@@ -288,12 +288,12 @@ try {
   return (
     <div className="self-stretch second_header">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className='flex w-[768px] flex-col gap-[32px] items-start shrink-0 flex-nowrap relative'>
-          <div className='flex w-[768px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
-            <span className="h-[45px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-left whitespace-nowrap z-[2]">
+        <div className='flex flex-col w-6/12 max-md:ml-0 max-md:w-full'>
+          <div className='flex w-full flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
+            <span className="virtual_try_on_title h-[45px]  font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-left  z-[2]">
               Create Your First Product Photo
             </span>
-            <span className="flex w-[434px] h-[24px] justify-start items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-left whitespace-nowrap z-[3]">
+            <span className="flex w-full h-full justify-start items-start font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-left z-[3]">
               Take your product photos to the next level in just 4 easy steps!
             </span>
           </div>
@@ -303,7 +303,7 @@ try {
             {currentStep==1 && (
               <>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>
-                <div className='after_border flex w-[530px]  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
+                <div className='after_border flex w-full  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
                   <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
                     <div className='flex w-full flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
                       <div className='flex w-[188px] gap-[12px] items-center shrink-0 flex-nowrap relative z-[8]'>
@@ -316,11 +316,11 @@ try {
                           Select 1 Product
                         </span>
                       </div>
-                      <div style={{ position: "relative", left: "50px", top: "22px", width: "100%" }}>
+                      <div style={{ position: "relative", left: "50px", top: "22px", width: "calc(100% - 50px)" }} className="border_onboarding">
 
                         {products.slice(dataLimit.start, dataLimit.end).map((product, index) => (
                           <>
-                            <div key={product.uuid} className='flex pt-[16px] gap-3 pr-[8px] pb-[16px] pl-[0px] items-center self-stretch shrink-0 flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[45]'>
+                            <div key={product.uuid} className='flex gap-3 pr-[8px]  pl-[0px] items-center self-stretch shrink-0  flex-nowrap bg-[#fff] border-solid border-t border-t-[#ebebeb] relative overflow-hidden z-[45]'>
                               <div className='flex w-[29px] pt-[18px]  pb-[18px] pl-[12px] items-center shrink-0 flex-nowrap bg-[#fff]   relative  z-[29]'>
                                 <div className='flex w-[16px] flex-col justify-center items-start shrink-0 flex-nowrap relative z-30'>
                                   <div className='flex w-[16px] gap-[8px] items-center shrink-0 flex-nowrap relative z-[31]'>
@@ -336,7 +336,7 @@ try {
                                 </div>
                               </div>
 
-                              <div className='w-[40px] h-[40px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Image.png?v=1714052433)] bg-cover bg-no-repeat relative z-[43]' >
+                              <div className='w-[40px] h-[40px] shrink-0  bg-cover bg-no-repeat relative z-[43]' >
                                 <img
                                   src={product.image!=undefined?product.image + "&height=40":''}
                                 />
@@ -349,11 +349,7 @@ try {
                             </div>
                           </>
                         ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className='flex pt-[6px] pr-[8px] pb-[6px] pl-[12px] items-center self-stretch shrink-0 flex-nowrap bg-[#f7f7f7] relative z-[51]' style={{ top: "20px", left: "50px" }}>
+                        <div className='flex pt-[6px] pr-[8px] pb-[6px] pl-[12px] items-center self-stretch shrink-0 flex-nowrap bg-[#f7f7f7] relative z-[51]'>
                     <div className='flex justify-end items-center grow shrink-0 basis-0 flex-nowrap relative z-[52]'>
                       <div className='flex w-[28px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] items-start shrink-0 flex-nowrap rounded-tl-[8px] rounded-tr-none rounded-br-none rounded-bl-[8px] relative z-[53]'>
                         <div className='w-[20px] h-[20px] shrink-0 relative z-[54]'>
@@ -367,16 +363,20 @@ try {
                       </div>
                     </div>
                   </div>
+                    </div>
+                  </div>
+                      </div>
+
                 </div>
-                <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px" }}>
-                  <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
-                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left whitespace-nowrap z-[61]">
+                <div className='flex w-full h-full flex-col gap-[6px] items-start ' style={{ marginLeft: "50px", marginTop: "20px",width: "calc(100% - 50px)" }}>
+                  <div className='flex flex-col gap-[6px] items-start self-stretch  relative z-[60]'>
+                    <span className="h-full  font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left z-[61]">
                       Please select the number of photos you would like to create
                     </span>
-                    <div className='flex items-start self-stretch shrink-0 flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#cfd4dc] relative shadow-[0_1px_2px_0_rgba(16,24,40,0.05)] z-[62]'>
+                    <div className='flex items-start self-stretch bg-[#fff] rounded-[8px] border-solid border border-[#cfd4dc] relative shadow-[0_1px_2px_0_rgba(16,24,40,0.05)] z-[62]'>
                       <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] gap-[8px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[63]'>
                         <div className='flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative z-[64]'>
-                          <select className="cstm_select h-[24px] grow shrink-0 basis-auto font-['Inter'] text-[16px] font-normal leading-[24px] text-[#667084] relative text-left overflow-hidden whitespace-nowrap z-[65]">
+                          <select className="cstm_select h-[24px]  w-full font-['Inter'] text-[16px] font-normal leading-[24px] text-[#667084] relative text-left  z-[65]">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -386,7 +386,7 @@ try {
                       </div>
                     </div>
                   </div>
-                  <span className="h-[18px] self-stretch shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-normal leading-[17.5px] text-[#475466] relative text-left whitespace-nowrap z-[69]">
+                  <span className="h-[18px] self-stretch font-['SF_Pro_Display'] text-[14px] font-normal leading-[17.5px] text-[#475466] relative text-left  z-[69]">
                     All the photos in a creation request will have very minor
                     changes between them
                   </span>
@@ -571,7 +571,7 @@ try {
         
 
         </div>
-        <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+        <div className="custom_slider_content flex flex-col  w-6/12 max-md:ml-0 max-md:w-full">
           <CustomSlider images={images} />
         </div>	
       </div>

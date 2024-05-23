@@ -11,12 +11,11 @@ import {
   import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
 import { authenticate } from "../shopify.server";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData,useNavigate } from "@remix-run/react";
+import  { useEffect, useState } from "react";
 import Dashboard from "~/components/Dashboard";
-import {InMemoryCache} from '@apollo/client/cache';
-import {ApolloClient} from '@apollo/client/core';
-import pkg from '@apollo/client';
-const {gql} = pkg;
+import client from "../services/ApolloClient"
+import gql from "graphql-tag"
   
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const  admin1  = await authenticate.admin(request);
@@ -24,14 +23,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 
   let auth_session={};
-  const client = new ApolloClient({
-    uri: 'https://graphql.wearnow.ai/v1/graphql',
-    cache: new InMemoryCache(),
-    headers: {
-      'Content-Type': 'application/json',
-      'x-hasura-admin-secret': 'sau1XI9_2o0',
-    },
-  });
   console.log(shop,"hsop shop")
   await client
   .query({
@@ -75,6 +66,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
   export default function DashboardPage() {
     const sessionData = useLoaderData<typeof loader>();
+    const Naviagte = useNavigate()
+    useEffect(() =>{
+      console.log(sessionData,"session data in main Index session");
+          if(sessionData.authWithShop?.state!='active')
+          {
+            Naviagte('plan',{replace: true});
+          }
+        },[sessionData]);
     return (
       <>
       <Dashboard sessionData={sessionData}/>
