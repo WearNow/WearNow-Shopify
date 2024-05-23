@@ -13,6 +13,7 @@ import ThumbnailSelector from "~/components/ThumbnailSelector";
 import BackGroundSelector from "~/components/BackGroundSelector";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
+import SidebarNavigation from "~/components/SidebarNavigation";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const  admin1  = await authenticate.admin(request);
@@ -81,6 +82,7 @@ const SecondHeader: React.FC = () => {
   const [tmpPose, setTmpPose] = useState<string>();
   const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [currentStep, setCurrentStep] = useState(0);
+  const [editProduct, setEditProduct] = useState<Boolean>(false);
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -189,9 +191,13 @@ useEffect(() => {
   const handleCheckboxChange = (productId: string) => {
     console.log(productId,":::::is the product checked");
     setCheckedProduct(productId);
+    setEditProduct(true);
   };
 
-
+  const handleProductEdit = (step:string)=>{
+    setCurrentStep(parseInt(step)-1)
+    setEditProduct(false);
+  }
 
   const handleEdit = (step:string)=>{
     setCurrentStep(parseInt(step)-1)
@@ -293,36 +299,37 @@ try {
   console.log("crrent Index: " +currentStep)
   console.log("products: " ,products)
   return (
-    <div className="bg-white h-full">
+    <div className="photo_studio_container bg-white h-full">
       <DashboardHeader />
-      <div className="lg:w-[1272px] lg:pl-10 lg:p min-h-[755px] lg:m-auto flex flex-wrap  ">
-      <div className="lg:w-full max-lg:ml-0 max-lg:w-full max-lg:mt-10">
-      <div className="flex max-md:flex-col max-md:gap-0">
-        <div className='flex w-[618px] flex-col gap-[32px] items-start shrink-0 flex-nowrap relative'>
-          <div className='flex w-[768px] flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
-            <span className="h-[45px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-left whitespace-nowrap z-[2]">
+      <SidebarNavigation/>
+      <div className="position_top lg:w-full  min-h-[755px] lg:m-auto flex flex-wrap  ">
+      <div className="lg:w-full max-lg:ml-0 max-lg:w-full">
+      <div className="photo_studio_content flex max-md:flex-col max-md:gap-0">
+        <div className='flex flex-col w-6/12 max-md:ml-0 max-md:w-full'>
+          <div className='photo_studio_title_content flex w-full flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
+            <span className="virtual_try_on_title shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[31px] text-[#1d2127] relative text-left z-[2]">
               Create Your First Product Photo
             </span>
-            <span className="flex w-[434px] h-[24px] justify-start items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-left whitespace-nowrap z-[3]">
+            <span className="flex w-full h-full justify-start items-start  font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-left z-[3]">
               Take your product photos to the next level in just 4 easy steps!
             </span>
           </div>
 
 
           <div className='flex  flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
-            {!checkedProduct ? (
+            {!checkedProduct  || editProduct==false ? (
               <>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>
-              <div className='after_border flex w-[530px]  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
+              <div className='after_border flex w-full  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
                   <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
                     <div className='flex w-full flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
                       <div className='flex w-[188px] gap-[12px] items-center shrink-0 flex-nowrap relative z-[8]'>
                         <button className='flex w-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#fff] rounded-[100px] border-dashed border border-[#000] relative overflow-hidden z-[9] pointer'>
-                          <span className="flex w-[17px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#141718] relative text-center whitespace-nowrap z-10">
+                          <span className="flex w-[17px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#141718] relative text-center z-10">
                             01
                           </span>
                         </button>
-                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left whitespace-nowrap z-[11]">
+                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left z-[11]">
                           Select 1 Product
                         </span>
                       </div>
@@ -332,15 +339,15 @@ try {
 
                 
                 </div>
-                <div className='flex w-[530px] h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px" }}>
+                <div className='flex w-full h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px",width:"calc(100% - 50px)" }}>
                   <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
-                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left whitespace-nowrap z-[61]">
+                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left z-[61]">
                       Please select the number of photos you would like to create
                     </span>
                     <div className='flex items-start self-stretch shrink-0 flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#cfd4dc] relative shadow-[0_1px_2px_0_rgba(16,24,40,0.05)] z-[62]'>
                       <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] gap-[8px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[63]'>
                         <div className='flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative z-[64]'>
-                          <select className="cstm_select h-[24px] grow shrink-0 basis-auto font-['Inter'] text-[16px] font-normal leading-[24px] text-[#667084] relative text-left overflow-hidden whitespace-nowrap z-[65]">
+                          <select className="cstm_select h-[24px] grow shrink-0 basis-auto font-['Inter'] text-[16px] font-normal leading-[24px] text-[#667084] relative text-left overflow-hidden z-[65]">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -387,7 +394,7 @@ try {
               <>
                 {products.filter((product: any) => checkedProduct.includes(product.uuid)).map((product, index) => (
 
-                    <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
+                    <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleProductEdit} />
                 ))}
                 {!model && (
                   <>
@@ -473,7 +480,7 @@ try {
                 {!pose ?(
                <button onClick={handleNext} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]' >
-                  <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
+                  <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
                     Next
                   </span>
                   <div className='w-[5px] h-[9px] shrink-0 relative z-[86]'>
@@ -484,7 +491,7 @@ try {
               ):(
               <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' >
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
-                  <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
+                  <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
                     Save
                   </span>
                 </div>
@@ -496,7 +503,7 @@ try {
         
 
         </div>
-        <div className="lg:w-[528px] lg:h-[715px] max-lg:ml-0 max-lg:w-full max-lg:mt-10">
+        <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
          {/** right side will show here **/}
          {renderRight()}
         </div>	
