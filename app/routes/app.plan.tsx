@@ -69,13 +69,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const newres = await res.json();
   const confirmationUrl = newres.data.appSubscriptionCreate.confirmationUrl;
   const appSubscription = newres.data.appSubscriptionCreate.appSubscription;
-  // const updated = await db.session.update({
-  //   where: { id: auth_session?.id },
-  //   data: { /* pass the new car informations here */
-  //     userId: appSubscription.id
-  //   },
-  // })
-  // console.log(updated, "updatedupdatedupdatedupdated")
+  const updated = await db.session.update({
+    where: { id: auth_session?.id },
+    data: { /* pass the new car informations here */
+      userId: appSubscription.id
+    },
+  })
+  console.log(updated, "updatedupdatedupdatedupdated")
   return { confirmationUrl };
 };
 
@@ -105,9 +105,9 @@ export default function PlanPage() {
   };
 
   return (
-    <>
+  
       <Billing handlesubmit={handlesubmit} />
-    </>
+    
   );
 }
 
