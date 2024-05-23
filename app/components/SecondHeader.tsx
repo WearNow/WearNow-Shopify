@@ -184,10 +184,14 @@ useEffect(() => {
       case 'model':
         setModel(id);
         setCurrentStep(2);
+        if(pose){
+        setStylehide({opacity:1,pointerEvents:"unset"});}
         break;
       case 'background':
         setBackground(id);
         setCurrentStep(3);
+        if(pose){
+        setStylehide({opacity:1,pointerEvents:"unset"});}
         break;
       case 'pose': 
         setCurrentStep(4);
@@ -214,6 +218,10 @@ useEffect(() => {
         setCurrentStep(currentStep+1)
         }
     }
+    if(tmpModel){ setModel(tmpModel); }
+        if(tmpPose){ setPose(tmpPose); }
+        if(tmpBackground){ setBackground(tmpBackground); }
+        setStylehide({opacity:1,pointerEvents:"unset"});
   }
 
   const handleEdit = (step:string)=>{
@@ -223,6 +231,7 @@ useEffect(() => {
         if(tmpModel){ setModel(tmpModel); }
         if(tmpPose){ setPose(tmpPose); }
         if(tmpBackground){ setBackground(tmpBackground); }
+        setStylehide({opacity:0.3,pointerEvents:"none"});
       break;
       case '02':
         console.log("we are in second step",model);
@@ -231,6 +240,7 @@ useEffect(() => {
         if(tmpPose){ setPose(tmpPose); }
         if(tmpBackground){ setBackground(tmpBackground); }
         setCurrentStep(2);
+        setStylehide({opacity:0.3,pointerEvents:"none"});
       break;
       case '03':
         console.log("we are in third step",background);
@@ -239,6 +249,7 @@ useEffect(() => {
         if(tmpModel){ setModel(tmpModel); }
         if(tmpPose){ setPose(tmpPose); }
         setCurrentStep(3);
+        setStylehide({opacity:0.3,pointerEvents:"none"});
       break;
       case '04':
         console.log("we are in forth step",pose);
@@ -247,6 +258,7 @@ useEffect(() => {
         if(tmpModel){ setModel(tmpModel); }
         if(tmpBackground){ setBackground(tmpBackground); }
         setCurrentStep(4);
+        setStylehide({opacity:0.3,pointerEvents:"none"});
       break;
     }
   };
@@ -539,6 +551,7 @@ try {
            
           
             <div className='flex w-[236px] h-[44px] gap-[20px] items-start shrink-0 flex-nowrap  top-[535px] left-0 z-[82]'>
+            {stylehide.opacity != 1 ?(
                <button onClick={handleButtonNext} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
@@ -549,6 +562,7 @@ try {
                   </div>
                 </div>
               </button> 
+              ):(
               <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' style={{opacity:stylehide.opacity,pointerEvents:stylehide.pointerEvents}}>
                 <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left whitespace-nowrap z-[85]">
@@ -556,6 +570,7 @@ try {
                   </span>
                 </div>
               </button>
+              )}
               <Link to="/app/dashboard" className="flex justify-center items-end">
               <div className='flex w-[134px] justify-center items-end shrink-0 flex-nowrap relative z-[88]'>
                 <div className='flex w-[134px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[999px] relative overflow-hidden z-[89]'>
