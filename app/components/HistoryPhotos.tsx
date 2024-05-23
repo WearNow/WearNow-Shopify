@@ -21,12 +21,16 @@ type CardProps = {
 };
 
 const Card: FC<CardProps> = ({ src, name, photos, date, time, aspect, onClick }) => (
-  <div onClick={onClick} className={`cursor-pointer flex-shrink-0 flex overflow-hidden relative flex-col justify-center rounded-lg p-2.5 ${aspect === 'square' ? 'aspect-square' : 'aspect-[1.34]'}`}>
-    <ImageWithAlt src={src} alt={name} className="flex-shrink-0 object-cover absolute inset-0 " />
-    <div style={{ height: '238px' }} className="flex relative flex-col items-start py-5 px-5 rounded-lg border border-white border-solid shadow-lg backdrop-blur-[6px] max-md:pr-5">
-      <div className="text-base font-semibold">{name}</div>
-      <div className="text-sm mt-[100px]">{photos} Photos</div>
-      <div className="mt-2.5 text-xs">
+  <div
+    // style={{ width: '238px', height: '238px' }}
+    onClick={onClick}
+    className={`cursor-pointer flex-shrink-0 flex overflow-hidden relative flex-col justify-center rounded-lg p-2.5 ${aspect === 'square' ? 'aspect-square' : 'aspect-[1.34]'}`}
+  >
+    <ImageWithAlt src={src} alt={name} className=" object-cover absolute inset-0 size-full" />
+    <div className="flex flex-col h-full items-start py-5 px-5 rounded-lg border border-white border-solid shadow-lg backdrop-blur-[6px] max-md:pr-5">
+      <div className="text-xl sm:text-lg font-semibold">{name}</div>
+      <div className="text-base mt-[75%] sm:text-sm sm:mt-[50%] md:text-lg md:mt-[50%]">{photos} Photos</div>
+      <div className="text-base sm:text-sm md:text-lg mt-2.5">
         {date} | {time}
       </div>
     </div>
@@ -44,7 +48,6 @@ const Card: FC<CardProps> = ({ src, name, photos, date, time, aspect, onClick })
 // );
 
 const HistoryPhotos: FC = () => {
-
   // const images = [
   //   { src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328", alt: "Image 3" },
   //   { src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-2.jpg?v=1716110328", alt: "Image 4" },
@@ -161,16 +164,20 @@ const HistoryPhotos: FC = () => {
   });
 
   return (
-    <div className="flex flex-col bg-white mt-10">
+    <div className="flex flex-col bg-white">
       <HistoryModal images={images} isOpen={isOpen} onClose={() => setIsOpen(false)} />
-
-      <main className="flex flex-col ml-5 w-[1230px] max-md:ml-0 max-md:w-full">
-        <div className=" text-white grid grid-flow-row-dense grid-cols-5 gap-2">
-          {cards.map((card, index) => (
-            <Card key={index} {...card} aspect="square" onClick={() => setIsOpen(true)} />
-          ))}
+      <div className=" flex gap-2 items-center mx-7 mt-10 text-sm font-semibold leading-5 text-slate-700 max-md:flex-wrap max-md:mt-10 max-md:mr-2.5">
+          <div className="flex-1 shrink-0 self-stretch my-auto h-px bg-gray-200" />
+          <div className="justify-center self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-300 border-solid shadow-sm">Created Photos</div>
+          <div className="flex-1 shrink-0 self-stretch my-auto h-px bg-gray-200" />
         </div>
-      </main>
+      <div className="w-full max-md:max-w-full">
+          <main className="grid sm:grid-cols-2 md:grid-cols-5 items-center gap-2.5 mx-5 pt-8 font-medium text-white flex-wrap max-md:mr-2.5 max-md:max-w-full">
+            {cards.map((card, index) => (
+              <Card key={index} {...card} aspect="square" onClick={() => setIsOpen(true)} />
+            ))}
+          </main>
+        </div>
     </div>
   );
 };

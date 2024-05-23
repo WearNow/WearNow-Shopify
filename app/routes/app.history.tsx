@@ -4,7 +4,7 @@ import HistoryQueue from "~/components/HistoryQueue";
 
 export default function () {
   return (
-    <div className="bg-white">
+    <div className="bg-white py-10">
       <DashboardHeader></DashboardHeader>
       <HistoryQueue></HistoryQueue>
       <HistoryPhotos></HistoryPhotos>
