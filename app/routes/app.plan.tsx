@@ -30,7 +30,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const auth_session = await db.session.findFirst({
     where: { shop },
   });
-
+  const newshop = shop;
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
@@ -39,7 +39,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
     variables: {
       name: "Basic",
-      returnUrl: "https://admin.shopify.com/store/quickstart-f077c9e4/apps/s-s-wna/app",
+      returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/s-s-wna/app`,
       trialDays: 14,
       test: true,
       lineItems: [
@@ -87,14 +87,7 @@ export default function PlanPage() {
   const actiondata = useActionData();
   console.log(actiondata, "actiondata  updated");
   if (actiondata?.confirmationUrl) {
-    // window.location.href= actiondata.confirmationUrl;
-    // Naviagte(actiondata?.confirmationUrl)
-    // Naviagte(actiondata?.confirmationUrl)
-   // window.open(actiondata?.confirmationUrl, '_blank');
-    //window.close();
-   // Naviagte(actiondata?.confirmationUrl.replace('https://quickstart-f077c9e4.myshopify.com/admin/',''),{ replace: true });
     top.location.href = actiondata.confirmationUrl
-
   }
 
 
@@ -105,9 +98,9 @@ export default function PlanPage() {
   };
 
   return (
-  
+    <>
       <Billing handlesubmit={handlesubmit} />
-    
+    </>
   );
 }
 
