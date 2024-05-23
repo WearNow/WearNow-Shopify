@@ -160,6 +160,8 @@ useEffect(() => {
   const handleCheckboxChange = (productId: string) => {
     console.log(productId,":::::is the product checked");
     setCheckedProduct(productId);
+    if(pose){
+      setStylehide({opacity:1,pointerEvents:"unset"});}
   };
   const handlePrev = () => {
     if (dataLimit.start > 0) {
@@ -221,7 +223,8 @@ useEffect(() => {
     if(tmpModel){ setModel(tmpModel); }
         if(tmpPose){ setPose(tmpPose); }
         if(tmpBackground){ setBackground(tmpBackground); }
-        setStylehide({opacity:1,pointerEvents:"unset"});
+        if(pose){
+          setStylehide({opacity:1,pointerEvents:"unset"});}
   }
 
   const handleEdit = (step:string)=>{
