@@ -82,7 +82,6 @@ const SecondHeader: React.FC = () => {
   const [tmpPose, setTmpPose] = useState<string>();
   const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [currentStep, setCurrentStep] = useState(0);
-  const [editProduct, setEditProduct] = useState<Boolean>(false);
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -191,13 +190,9 @@ useEffect(() => {
   const handleCheckboxChange = (productId: string) => {
     console.log(productId,":::::is the product checked");
     setCheckedProduct(productId);
-    setEditProduct(true);
   };
 
-  const handleProductEdit = (step:string)=>{
-    setCurrentStep(parseInt(step)-1)
-    setEditProduct(false);
-  }
+
 
   const handleEdit = (step:string)=>{
     setCurrentStep(parseInt(step)-1)
@@ -317,7 +312,7 @@ try {
 
 
           <div className='flex  flex-col gap-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
-            {!checkedProduct  || editProduct==false ? (
+            {!checkedProduct ? (
               <>
               <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[5]'>
               <div className='after_border flex w-full  flex-col items-start shrink-0 flex-nowrap rounded-[12px]  top-[56px] left-[48px]  z-[14]'>
@@ -336,8 +331,6 @@ try {
                      
                     </div>
                   </div>
-
-                
                 </div>
                 <div className='flex w-full h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px",width:"calc(100% - 50px)" }}>
                   <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
@@ -394,7 +387,7 @@ try {
               <>
                 {products.filter((product: any) => checkedProduct.includes(product.uuid)).map((product, index) => (
 
-                    <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleProductEdit} />
+                    <SelectedOnbording step="01"  value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
                 ))}
                 {!model && (
                   <>
