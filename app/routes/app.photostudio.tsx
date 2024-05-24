@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@remix-run/react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData,useNavigate } from "@remix-run/react";
 import { authenticate } from "../shopify.server";
 import axios from "axios";
 import DashboardHeader from "~/components/DashboardHeader";
@@ -67,6 +67,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 const SecondHeader: React.FC = () => {
     const sessionData = useLoaderData<typeof loader>();
+    const Naviagte = useNavigate()
+    useEffect(() =>{
+      console.log(sessionData,"session data in main Index session");
+          if(sessionData.authWithShop?.state!='active')
+          {
+            Naviagte('/app/plan',{replace: true});
+          }
+        },[sessionData]);
   const [products, setProducts] = useState<any[]>([]);
   const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [checkedProduct, setCheckedProduct] = useState<string>();

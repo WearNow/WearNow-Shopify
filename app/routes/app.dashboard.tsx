@@ -71,7 +71,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       console.log(sessionData,"session data in main Index session");
           if(sessionData.authWithShop?.state!='active')
           {
-            Naviagte('plan',{replace: true});
+            Naviagte('/app/plan',{replace: true});
           }
         },[sessionData]);
     return (

@@ -26,6 +26,21 @@ model Session {
   tryOnPerProduct Int @default(10)
 }
 
+model Billing {
+  id                      String    @id
+  title                   String
+  tag                     String?
+  amount                  Int
+  strike_amount           Int?
+  products S              tring
+  try_on_experiencces     String
+  product_phots           String
+  pro_models              Int
+  support_text            String
+  upload_your_own_model   Boolean   @default(false)
+  hd_photos               Boolean   @default(false)
+  type                     String
+}
 model selectProdcutData {
   id          String @id
   productId   String 
