@@ -111,7 +111,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         }
       }
     `,
-    ,fetchPolicy: "network-only",
+    fetchPolicy: "network-only",
     variables: {
       shop: shop,
     },
