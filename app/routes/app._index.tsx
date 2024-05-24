@@ -23,7 +23,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });  
   console.log("charge_id ---->>>===>>>",charge_id);
   if (charge_id) {
-    console.log("charge_id2 ---->>>===>>>",charge_id);
     if(authSession?.state!='active' && authSession?.userId=='gid://shopify/AppSubscription/'+charge_id){
       console.log("authSession?.userId ---->>>===>>>",authSession?.userId);
       const updated = await db.session.update({
@@ -112,6 +111,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         }
       }
     `,
+    ,fetchPolicy: "network-only",
     variables: {
       shop: shop,
     },
