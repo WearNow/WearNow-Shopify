@@ -968,6 +968,13 @@ body .onbording_step_container  .custom_slider_content {
 }
 }
 @media (max-width: 567px) {
+.listboxItemSelectedStyle{
+  width: 106px !important;
+  height: 200px !important;
+}
+.listboxItemSelectedStyle>div {
+  border-radius: 15px;
+}
 .product_page_table_content{
   padding: 0px 20px;
 }

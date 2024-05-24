@@ -88,7 +88,7 @@ const ThumbnailSelector: React.FC<{
 
   const listboxItemMarkup = (seg: any) => (
     <div
-      className="w-56 flex"
+      className="w-56 flex listboxItemSelectedStyle"
       key={seg.uuid}
       onClick={() => {
         onClickHandle(seg.uuid);
@@ -186,7 +186,7 @@ const ThumbnailSelector: React.FC<{
                     Upload Your Own Model
                   </div>
                 </div>
-                <div className="w-96 mt-1 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
+                <div className="w-full mt-1 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
                   15 Photos | Clear Face, No Accessories | This may take more
                   time to create
                 </div>
