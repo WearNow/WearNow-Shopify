@@ -92,6 +92,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
   const shop = formData.get("shop");
   const plan = formData.get("plan");
+  const packageID = formData.get("packageID");
 
   const auth_session = await db.session.findFirst({
     where: { shop },
@@ -105,7 +106,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
     variables: {
       name: "Basic",
-      returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app`,
+      returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
       trialDays: 14,
       test: true,
       lineItems: [
@@ -161,52 +162,6 @@ export default function PlanPage() {
   }
  
   const handlesubmit = async (uuid: any,cycle:string) => {
-    const Query = gql`query MyQuery6($package_id:uuid,$store_id:uuid) {
-      store_subscription(where: {store_id: {_eq: $store_id}, package_id: {_eq: $package_id}}) {
-        store {
-          name
-        }
-        package {
-          name
-        }
-        status
-        created_at
-      }
-    }`;
-    const fetch_subscription=await client.query({query:Query,variables:{ package_id: uuid,store_id: store_id}});
-    console.log(fetch_subscription);
-    if(fetch_subscription?.data?.store_subscription==undefined || fetch_subscription.data.store_subscription.length <=0){
-    const MY_MUTATIONDEL = gql`
-   mutation ($package_id:uuid,$store_id:uuid){
-      insert_store_subscription(objects:{
-        package_id:$package_id,
-        store_id:$store_id
-      }){
-        returning{
-          created_at
-          package{
-            name
-          }
-          store_id
-          status
-        }
-      }
-    }`;
-     
-       try {
-         const result = await client.mutate({
-           mutation: MY_MUTATIONDEL,
-           variables: {           
-             package_id: uuid,
-             store_id: store_id
-           },
-         });
-         console.log('Mutation result Update:', result);
-       } catch (error) {
-         console.error('Error executing mutation:', error);
-       }
-    
-      }
     packages.filter((item:any)=>uuid.includes(item.uuid)).map((item:any)=>{
       let price =0;
       let plan= 'EVERY_30_DAYS';
@@ -218,8 +173,9 @@ export default function PlanPage() {
         price = item.price;
         plan= 'EVERY_30_DAYS';
       }
+      let packageID=uuid;
       
-      submit({ price, shop, plan }, { method: "post" })
+      submit({ price, shop, plan, packageID }, { method: "post" })
   });
     
 
@@ -228,7 +184,7 @@ export default function PlanPage() {
 
   return (
     <>
-      <Billing handlesubmit={handlesubmit} packageData={packages} />
+      <Billing handlesubmit={handlesubmit} packageData={packages} store_id={store_id} />
     </>
   );
 }

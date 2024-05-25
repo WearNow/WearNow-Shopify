@@ -19,6 +19,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const {shop}  =  admin1.session ?? null
 
   const charge_id = new URL(request.url).searchParams.get('charge_id');
+  const packageID = new URL(request.url).searchParams.get('packageID');
   const authSession = await db.session.findFirst({
     where: { shop },
   });  
@@ -131,10 +132,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     products:responseJson
   };
   console.log(authWithShop,"auth session");
-  if(auth_session?.state =='active') {
+  if(auth_session?.state =='active' && packageID !=undefined && packageID !=null) {
     console.log(auth_session?.store_id,"auth_session?.store_id");
     const MY_MUTATIONSUB = gql`mutation MyMutation9($store_id:uuid) {
-      update_store_subscription(where: {store_id: {_eq: $store_id}}, _set: {status: "active"}) {
+      update_store_subscription(where: {store_id: {_eq: $store_id},status:{_eq:"active"}}, _set: {status: "archive"}) {
         returning {
           status
           package {
@@ -155,6 +156,76 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   } catch (error) {
     console.error('Error executing mutation:', error);
   }
+  const Query = gql`query MyQuery6($package_id:uuid,$store_id:uuid) {
+    store_subscription(where: {store_id: {_eq: $store_id}, package_id: {_eq: $package_id}}) {
+      store {
+        name
+      }
+      package {
+        name
+      }
+      status
+      created_at
+    }
+  }`;
+  const fetch_subscription=await client.query({query:Query,variables:{ package_id: packageID,store_id: auth_session?.store_id}});
+  console.log(fetch_subscription);
+  if(fetch_subscription?.data?.store_subscription==undefined || fetch_subscription.data.store_subscription.length <=0){
+  const MY_MUTATIOND = gql`
+   mutation ($package_id:uuid,$store_id:uuid){
+      insert_store_subscription(objects:{
+        package_id:$package_id,
+        store_id:$store_id,
+        status:"active"
+      }){
+        returning{
+          created_at
+          package{
+            name
+          }
+          store_id
+          status
+        }
+      }
+    }`;
+       try {
+         const result = await client.mutate({
+           mutation: MY_MUTATIOND,
+           variables: {           
+             package_id: packageID,
+             store_id: auth_session?.store_id
+           },
+         });
+         console.log('Mutation result Update:', result);
+       } catch (error) {
+         console.error('Error executing mutation:', error);
+       }
+      }else{
+        const MY_MUTATIONSUB = gql`mutation MyMutation9($store_id:uuid,$package_id:uuid) {
+          update_store_subscription(where: {store_id: {_eq: $store_id},package_id:{_eq:$package_id}}, _set: {status: "active"}) {
+            returning {
+              status
+              package {
+                uuid
+                name
+                price
+              }
+            }
+          }
+        }`;
+        try {
+        const resultsub = await client.mutate({
+          mutation: MY_MUTATIONSUB,
+          variables: {           
+            store_id: auth_session?.store_id,
+            package_id: packageID,
+          },
+        });
+        console.log('Mutation result Update:', resultsub);
+      } catch (error) {
+        console.error('Error executing mutation:', error);
+      }
+      }
   }
   
     return {authWithShop}
