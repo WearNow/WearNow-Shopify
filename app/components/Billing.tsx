@@ -26,9 +26,9 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any }> = ({ handlesubm
     setColorTab2("white")
   };
  
-  const handleBilling = async(uuid:any) => {
+  const handleBilling = async(uuid:any,cycle:string) => {
     console.log("Amount :::=>",uuid);
-    await handlesubmit(uuid);
+    await handlesubmit(uuid,cycle);
   }
   return (
     <>
@@ -224,7 +224,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any }> = ({ handlesubm
                    
                   </div>
                 </div>
-                <button onClick={()=>handleBilling(item.uuid)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
+                <button onClick={()=>handleBilling(item.uuid,item.cycle)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
                   <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
                     <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
                       Start 14-Day Free Trial
@@ -672,7 +672,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any }> = ({ handlesubm
                   
                  </div>
                </div>
-               <button onClick={()=>handleBilling(item.uuid)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
+               <button onClick={()=>handleBilling(item.uuid,item.cycle)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
                  <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
                      Start 14-Day Free Trial

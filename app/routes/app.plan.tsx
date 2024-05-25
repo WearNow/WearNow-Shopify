@@ -91,6 +91,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return false;
   }
   const shop = formData.get("shop");
+  const plan = formData.get("plan");
 
   const auth_session = await db.session.findFirst({
     where: { shop },
@@ -115,7 +116,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
                 amount: amount,
                 currencyCode: "USD",
               },
-              interval: "EVERY_30_DAYS",
+              interval: plan,
             },
           },
         },
@@ -159,7 +160,7 @@ export default function PlanPage() {
     top.location.href = actiondata.confirmationUrl
   }
  
-  const handlesubmit = async (uuid: any) => {
+  const handlesubmit = async (uuid: any,cycle:string) => {
     const Query = gql`query MyQuery6($package_id:uuid,$store_id:uuid) {
       store_subscription(where: {store_id: {_eq: $store_id}, package_id: {_eq: $package_id}}) {
         store {
@@ -207,8 +208,18 @@ export default function PlanPage() {
     
       }
     packages.filter((item:any)=>uuid.includes(item.uuid)).map((item:any)=>{
-      const price = item.price;
-      submit({ price, shop }, { method: "post" })
+      let price =0;
+      let plan= 'EVERY_30_DAYS';
+      if(cycle === 'yearly'){  
+        price = item.price*12;
+        plan = 'ANNUAL';
+      }
+      else{  
+        price = item.price;
+        plan= 'EVERY_30_DAYS';
+      }
+      
+      submit({ price, shop, plan }, { method: "post" })
   });
     
 
