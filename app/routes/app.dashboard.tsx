@@ -7,6 +7,7 @@ import {
     Page,
     Text,
     BlockStack,
+    ProgressBar
   } from "@shopify/polaris";
   import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
@@ -76,7 +77,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         },[sessionData]);
     return (
       <>
+      {sessionData.authWithShop?.state!='active' ?(
+       <div style={{width: "100%"}}>
+      <ProgressBar progress={99} size="small" />
+    </div>
+    ):(
       <Dashboard sessionData={sessionData}/>
+    )}
       </>
     );
   }

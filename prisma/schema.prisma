@@ -32,7 +32,7 @@ model Billing {
   tag                     String?
   amount                  Int
   strike_amount           Int?
-  products S              tring
+  products 		  String
   try_on_experiencces     String
   product_phots           String
   pro_models              Int

@@ -10,19 +10,83 @@ import db from "../db.server";
 import { redirect } from "@remix-run/node";
 import React, { useState, useEffect } from 'react';
 import { app_name } from "~/services/Services";
+import client from "../services/ApolloClient";
+import gql from "graphql-tag";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
   const { admin } = await authenticate.admin(request);
   const { shop } = admin1.session ?? null;
+  let packages:any =[];    
+    await client
+      .query({
+        query: gql`
+            query MyQuery5 {
+          packages(limit: 10,order_by: {price: asc}) {
+            created_at
+            customized_models
+            cycle
+            description
+            hd_photos
+            name
+            number_of_products
+            price
+            pro_models
+            product_photo_limit
+            strike_amount
+            support_text
+            uuid
+            vto_limit
+          }
+        }`,
+        fetchPolicy: "network-only",
+      })
+      .then((result) => {
+        packages = result.data.packages;
+      });
 
-  return { shop };
+      let auth_session={};
+      await client
+      .query({
+        query: gql`
+          query MyQuery2($shop: String!) {
+            session(limit: 10, where: {shop_id: {_eq: $shop}}) {
+              accessToken
+              shop_id
+              state
+              scope
+              isOnline
+              expires
+              store {
+                name
+                store_id
+                onboarding_status
+                uuid
+                virtual_enabled
+              }
+              store_id
+              uuid
+            }
+          }
+        `,
+        fetchPolicy: "network-only",
+        variables: {
+          shop: shop,
+        },
+      })
+      .then((result) => {
+        auth_session=result?.data.session[0] ?? result?.data.session;
+        console.log(result.data.session, "apollo client");
+      });
+
+
+  return { shop,packages,auth_session };
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   let formData = await request.formData();
 
-  let amount = formData.get("value");
+  let amount = formData.get("price");
   if (amount == null || amount == '' || amount == undefined) {
     return false;
   }
@@ -83,7 +147,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function PlanPage() {
   const Naviagte = useNavigate()
   const load = useLoaderData<typeof loader>();
+  console.log(load, "load");
   const shop = load.shop;
+  const packages = load.packages;
+  const store_id = load.auth_session.store_id;
+  console.log(packages,"packages from loader");
   const submit = useSubmit();
   const actiondata = useActionData();
   console.log(actiondata, "actiondata  updated");
@@ -91,15 +159,65 @@ export default function PlanPage() {
     top.location.href = actiondata.confirmationUrl
   }
  
-  const handlesubmit = async (value: string) => {
-    submit({ value, shop }, { method: "post" });
+  const handlesubmit = async (uuid: any) => {
+    const Query = gql`query MyQuery6($package_id:uuid,$store_id:uuid) {
+      store_subscription(where: {store_id: {_eq: $store_id}, package_id: {_eq: $package_id}}) {
+        store {
+          name
+        }
+        package {
+          name
+        }
+        status
+        created_at
+      }
+    }`;
+    const fetch_subscription=await client.query({query:Query,variables:{ package_id: uuid,store_id: store_id}});
+    console.log(fetch_subscription);
+    if(fetch_subscription?.data?.store_subscription==undefined || fetch_subscription.data.store_subscription.length <=0){
+    const MY_MUTATIONDEL = gql`
+   mutation ($package_id:uuid,$store_id:uuid){
+      insert_store_subscription(objects:{
+        package_id:$package_id,
+        store_id:$store_id
+      }){
+        returning{
+          created_at
+          package{
+            name
+          }
+          store_id
+          status
+        }
+      }
+    }`;
+     
+       try {
+         const result = await client.mutate({
+           mutation: MY_MUTATIONDEL,
+           variables: {           
+             package_id: uuid,
+             store_id: store_id
+           },
+         });
+         console.log('Mutation result Update:', result);
+       } catch (error) {
+         console.error('Error executing mutation:', error);
+       }
+    
+      }
+    packages.filter((item:any)=>uuid.includes(item.uuid)).map((item:any)=>{
+      const price = item.price;
+      submit({ price, shop }, { method: "post" })
+  });
+    
 
-    //console.log(auth_session,"auth_sessionauth_sessionauth_sessionauth_sessionauth_session");
+    console.log(auth_session,"auth_sessionauth_sessionauth_sessionauth_sessionauth_session");
   };
 
   return (
     <>
-      <Billing handlesubmit={handlesubmit} />
+      <Billing handlesubmit={handlesubmit} packageData={packages} />
     </>
   );
 }

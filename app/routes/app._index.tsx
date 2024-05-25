@@ -9,6 +9,7 @@ import { useLoaderData, useNavigate } from "@remix-run/react";
 import db from "../db.server";
 import client from "../services/ApolloClient"
 import gql from "graphql-tag"
+import {ProgressBar} from '@shopify/polaris';
 
 
 
@@ -32,6 +33,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         },
       })
       console.log(updated, "updatedupdatedupdatedupdated")
+      
       const MY_MUTATIONDEL = gql`
        mutation MyMutation6($shop:String!) {
         update_session(where: {shop_id: {_eq: $shop}}, _set: {state: "active"}) {
@@ -53,7 +55,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
           } catch (error) {
             console.error('Error executing mutation:', error);
           }
-      
+          
+          
     }
   }
   
@@ -118,6 +121,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   })
   .then((result) => {
     auth_session=result?.data.session[0] ?? result?.data.session;
+  
     console.log(result.data.session, "apollo client");
   });
   const authWithShop = {
@@ -127,6 +131,31 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     products:responseJson
   };
   console.log(authWithShop,"auth session");
+  if(auth_session?.state =='active') {
+    console.log(auth_session?.store_id,"auth_session?.store_id");
+    const MY_MUTATIONSUB = gql`mutation MyMutation9($store_id:uuid) {
+      update_store_subscription(where: {store_id: {_eq: $store_id}}, _set: {status: "active"}) {
+        returning {
+          status
+          package {
+            name
+            price
+          }
+        }
+      }
+    }`;
+    try {
+    const resultsub = await client.mutate({
+      mutation: MY_MUTATIONSUB,
+      variables: {           
+        store_id: auth_session?.store_id
+      },
+    });
+    console.log('Mutation result Update:', resultsub);
+  } catch (error) {
+    console.error('Error executing mutation:', error);
+  }
+  }
   
     return {authWithShop}
 };
@@ -166,14 +195,9 @@ export default function Index() {
   return (
     <>
   {sessionData.authWithShop?.state!='active' ?(
-    <div className='main-container flex w-full pt-[60px] pr-[10px] pb-[60px] pl-[10px] flex-col gap-[30px] items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
-    <div className='billing_content flex w-full h-[85px] flex-col gap-[16px] items-center shrink-0 flex-nowrap  top-[38px] left-[134.5px]'>
-      <span className="flex w-[325px] h-[45px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[45px] text-[#1d2127] relative text-center ">
-        Redirecting to Billing Page, You need to choose a plan to use our services
-      </span>
-      
-    </div>
-    </div>
+     <div style={{width: "100%"}}>
+     <ProgressBar progress={99} size="small" />
+   </div>
   ):(
   <div className="onbording_step_container container w-full" style={{ maxWidth: "100%",background:"#fff",padding:"20px 50px" }}> 
      <h1 className="mb-2 onbording_step_title">Onboarding - {tabStep} of 2 steps</h1>
