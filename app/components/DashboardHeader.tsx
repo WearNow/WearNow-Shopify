@@ -7,6 +7,7 @@ const DashboardHeader = () => {
   const matchPhotostudio = useMatch("/app/photostudio");
   const matchProductpage = useMatch("/app/productpage");
   const matchHistorypage = useMatch("/app/history");
+  const matchSettingsPage = useMatch("/app/settings");
 
   return (
     <div className='ai_header_container flex w-full pt-0 pr-[20px] pb-0 pl-[20px] justify-between items-center flex-nowrap bg-[#fff] relative mx-auto my-0'>
@@ -80,9 +81,12 @@ const DashboardHeader = () => {
             </div>
           </div>
         </div>
-        <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#414552] relative text-left whitespace-nowrap z-[23]">
+        <Link to="/app/settings" className={matchSettingsPage ? "text-[#0570de]" : "text-[#414552]"}>
+        <span className="settings h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px]  relative text-left whitespace-nowrap z-[23]">
           Settings
         </span>
+        </Link>
+        
       </div>
     </div>
   )
