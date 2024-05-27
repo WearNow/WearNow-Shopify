@@ -399,9 +399,25 @@ try {
                 ))}
                 {!model && (
                   <>
-                  
-                  
-                    <FadedOnboarding step={stepModel} sectionText={textModel} />
+                  {currentStep ==1 ? (
+                  <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
+                    <div className='flex w-full flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
+                      <div className='flex w-[188px] gap-[12px] items-center shrink-0 flex-nowrap relative z-[8]'>
+                        <button className='flex w-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#fff] rounded-[100px] border-dashed border border-[#000] relative overflow-hidden z-[9] pointer'>
+                          <span className="flex w-[17px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#141718] relative text-center z-10">
+                            02
+                          </span>
+                        </button>
+                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left z-[11]">
+                          Select  Model
+                        </span>
+                      </div>
+                     
+                    </div>
+                  </div>
+                ):(
+                    <FadedOnboarding step={stepModel} sectionText={textModel} /> 
+                  )}
                   {!background ?
                     <FadedOnboarding step={stepBackground} sectionText={textBackground} />
                     :
@@ -427,7 +443,26 @@ try {
               {models.filter((m:any)=>model==m.uuid).map((m:any)=>( 
               <SelectedOnbording step={stepModel} data={m.name}  image={m.cover_image} handleEdit={handleEdit} />
             ))}
-               <FadedOnboarding step={stepBackground} sectionText={textBackground} />
+            {currentStep==2 ?(
+                  <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
+                    <div className='flex w-full flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
+                      <div className='flex w-[188px] gap-[12px] items-center shrink-0 flex-nowrap relative z-[8]'>
+                        <button className='flex w-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#fff] rounded-[100px] border-dashed border border-[#000] relative overflow-hidden z-[9] pointer'>
+                          <span className="flex w-[17px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#141718] relative text-center z-10">
+                            03
+                          </span>
+                        </button>
+                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left z-[11]">
+                          Select Background
+                        </span>
+                      </div>
+                     
+                    </div>
+                  </div>
+              
+            ):(
+              <FadedOnboarding step={stepBackground} sectionText={textBackground} />
+            )}
               {!pose ?
                     <FadedOnboarding step={stepPose} sectionText={textPose} />
                     :
@@ -448,7 +483,25 @@ try {
              {backgrounds.filter((b:any)=>background==b.uuid).map((b:any)=>( 
               <SelectedOnbording step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
             ))}
-              <FadedOnboarding step={stepPose} sectionText={textPose} />
+            {currentStep==3 ?(
+                  <div className='flex items-start self-stretch shrink-0 flex-nowrap relative z-[15]'>
+                    <div className='flex w-full flex-col items-start grow shrink-0 basis-0 flex-nowrap relative z-[44]'>
+                      <div className='flex w-[188px] gap-[12px] items-center shrink-0 flex-nowrap relative z-[8]'>
+                        <button className='flex w-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#fff] rounded-[100px] border-dashed border border-[#000] relative overflow-hidden z-[9] pointer'>
+                          <span className="flex w-[17px] h-[20px] justify-center items-start shrink-0 basis-auto font-['SF_Pro'] text-[14px] font-bold leading-[20px] text-[#141718] relative text-center z-10">
+                            04
+                          </span>
+                        </button>
+                        <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left z-[11]">
+                          Select Pose
+                        </span>
+                      </div>
+                     
+                    </div>
+                  </div>
+                ):(
+                  <FadedOnboarding step={stepPose} sectionText={textPose} />
+                )}
               </>
               )}
               </>
