@@ -4,9 +4,6 @@ import axios from "axios";
  import {apiURL} from "../services/Services"
  import client from "../services/ApolloClient"
  import gql from "graphql-tag"
- 
-
-
 
  export const sub_str = (str:string, start:number, length:number) => {
   // Implementation of the sub_str function
@@ -23,10 +20,52 @@ const ProdcutModal: React.FC<{
   products:any;
 }> = ({ isOpen, toggleModal, sessionData, inputData,fetchProducts,products }) => {
   const [getproducts, setgetproducts] = useState([]);
+  const [active,setActive] = useState([]);
   const [inputQueryValue, setInputQueryValue] = useState("");
   const [checkedProducts, setCheckedProducts] = useState<{
     [key: string]: boolean;
   }>({});
+
+  useEffect(()=>{
+    client
+   .query({
+     query: gql`
+         query MyQuery6($store_id:uuid) {
+         store_subscription(where: {store_id: {_eq: $store_id},status:{_eq:"active"}}) {
+           store {
+             name
+             uuid
+           }
+           package {
+            created_at
+            customized_models
+            cycle
+            description
+            hd_photos
+            name
+            number_of_products
+            price
+            pro_models
+            product_photo_limit
+            strike_amount
+            support_text
+            uuid
+            vto_limit
+           }
+           status
+           created_at
+         }
+       }`,
+     fetchPolicy: "network-only",
+     variables:{
+       store_id: sessionData.authWithShop.store_id,
+     }
+   })
+   .then((result) => {
+     const store_subscription = result.data.store_subscription;
+         setActive(store_subscription[0].package);
+   });
+ },[]);
 
   useEffect(() => {
     if (inputData || inputQueryValue) {
@@ -123,7 +162,9 @@ const ProdcutModal: React.FC<{
             title:cp.title,
             variant_id:cp.vid
           }
+          if(!active?.number_of_products && active?.number_of_products<=sendProducts.length) {
           sendProducts.push(sp);
+          }
           }
         })
         

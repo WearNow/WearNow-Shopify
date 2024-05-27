@@ -90,6 +90,7 @@ const SecondHeader: React.FC = () => {
   const [tmpPose, setTmpPose] = useState<string>();
   const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [currentStep, setCurrentStep] = useState(0);
+  const [active, setActive] = useState();
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -97,13 +98,52 @@ const SecondHeader: React.FC = () => {
   const stepPose = "04";
   const textPose = "Select a Pose";
 
- 
+  useEffect(()=>{
+    client
+   .query({
+     query: gql`
+         query MyQuery6($store_id:uuid) {
+         store_subscription(where: {store_id: {_eq: $store_id},status:{_eq:"active"}}) {
+           store {
+             name
+             uuid
+           }
+           package {
+            created_at
+            customized_models
+            cycle
+            description
+            hd_photos
+            name
+            number_of_products
+            price
+            pro_models
+            product_photo_limit
+            strike_amount
+            support_text
+            uuid
+            vto_limit
+           }
+           status
+           created_at
+         }
+       }`,
+     fetchPolicy: "network-only",
+     variables:{
+       store_id: sessionData?.authWithShop?.store_id,
+     }
+   })
+   .then((result) => {
+     const store_subscription = result.data.store_subscription;
+         setActive(store_subscription[0].package);
+   });
+ },[]);
 
   async function getAllImages(){
     await client
     .query({
       query: gql`
-      query MyQuery4 {
+      query MyQuery4 ($models:Int){
         default_pose(limit: 10) {
           name
           image
@@ -120,7 +160,7 @@ const SecondHeader: React.FC = () => {
           name
           uuid
         }
-        pretrained_models(limit: 10) {
+        pretrained_models(limit: $models) {
           cover_image
           created_at
           description
@@ -131,6 +171,7 @@ const SecondHeader: React.FC = () => {
       }`,
       variables: {
         storeid: sessionData.authWithShop.store_id,
+        models: active?.pro_models
       },
     })
     .then((result) => {
@@ -223,27 +264,41 @@ useEffect(() => {
         }
     }
   }
-  const handleSave = async()=>{
-    const MyMutation = gql`
-    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: uuid!, $productId: String!, $price: String!, $images: String!){
-      onboardStore(input:{
+  const handleSave = async () => {
+    let count = 0;
+    const query = gql`query MyQuery7 ($storeID:uuid!) {
+      store_products_aggregate(limit: 10, where: {store_id: {_eq: $storeID}}) {
+        aggregate {
+          count(columns: product_id)
+        }
+      }
+    }`;
+    try {
+      const result = await client.query({
+        query: query,
+        variables: {
+          storeID: sessionData.authWithShop.store_id,
+        },
+      });
+
+      console.log('Mutation result:', result);
+      count = result?.data?.store_products_aggregate?.aggregate?.count ? result?.data?.store_products_aggregate?.aggregate?.count : 0;
+    } catch (error) {
+      console.error('Error executing mutation:', error);
+    }
+    console.log(active?.product_photo_limit,"count",count);
+    if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
+      const MyMutation = gql`
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
+      generateSingleStoreProduct(input:{
         background:$background,
         model:$model,
         pose:$pose,
         store_id:$store_id,
-        products:[
-          {
-            photos:[{filename:"test.jpg",url:"https://api.mehala.et/media/stamps/pngwing.com_8Yzx46x.png"}],
-            price:123,
-            product_id:"prod_id2",
-            sku:"10001",
-            title:"Prod Title1",
-            variant_id:"variant_id1"
-          }
-        ]
+        store_product_id: $productId
       }){
-        message
         success
+        tracking
       }
     } `;
 
@@ -261,10 +316,11 @@ try {
 
   console.log('Mutation result:', result);
 
-} catch (error) {
-  console.error('Error executing mutation:', error);
-}
-    
+      } catch (error) {
+        console.error('Error executing mutation:', error);
+      }
+    }
+
   }
 
   const renderRight = () => {
@@ -277,6 +333,7 @@ try {
             modelSelectId={model}
             setSelectModelId={setModel}
             ModuleData={models}
+            active={active}
           />
         );
       case 2:

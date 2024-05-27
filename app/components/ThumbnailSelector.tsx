@@ -40,7 +40,8 @@ const ThumbnailSelector: React.FC<{
   modelSelectId: String;
   setSelectModelId: any;
   ModuleData: any;
-}> = ({ modelSelectId, setSelectModelId, ModuleData }) => {
+  active: any;
+}> = ({ modelSelectId, setSelectModelId, ModuleData, active }) => {
   const isSelected = (index: string) => index === modelSelectId;
 
   // const segments = ModuleData
@@ -177,6 +178,7 @@ const ThumbnailSelector: React.FC<{
             </div>
           </div>
         </div>
+        {active.customized_models && (
         <div className="mt-4 mb-4">
           <Upload
             description={
@@ -197,6 +199,7 @@ const ThumbnailSelector: React.FC<{
             }}
           ></Upload>
         </div>
+        )}
 
         <Scrollable
           style={{
