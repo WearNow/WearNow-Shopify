@@ -49,7 +49,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
 
   useEffect(() => { 
     const MyMutationn = gql`
-    mutation MyMutation3 ($photo_per_product:int!,$uuid:uuid!){
+    mutation MyMutation3 ($photo_per_product:String!,$uuid:uuid!){
         update_stores(where: {uuid: {_eq: $uuid}}, _set: {photo_per_product: $photo_per_product}) {
           returning {
             store_id
@@ -64,7 +64,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       const result = client.mutate({
         mutation: MyMutationn,
         variables: {
-          photo_per_product: parseInt(selected),
+          photo_per_product: selected,
           uuid: sessionData.authWithShop.store_id
         },
       });

@@ -109,7 +109,7 @@ const SecondHeader: React.FC = () => {
 
   useEffect(() => { 
     const MyMutationn = gql`
-    mutation MyMutation3 ($photo_per_product:int!,$uuid:uuid!){
+    mutation MyMutation3 ($photo_per_product:String!,$uuid:uuid!){
         update_stores(where: {uuid: {_eq: $uuid}}, _set: {photo_per_product: $photo_per_product}) {
           returning {
             store_id
@@ -124,7 +124,7 @@ const SecondHeader: React.FC = () => {
       const result = client.mutate({
         mutation: MyMutationn,
         variables: {
-          photo_per_product: parseInt(selected),
+          photo_per_product: selected,
           uuid: sessionData.authWithShop.store_id
         },
       });
@@ -625,7 +625,9 @@ try {
                     Next
                   </span>
                   <div className='w-[5px] h-[9px] shrink-0 relative z-[86]'>
-                    <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/91099684-9e2c-41ac-8500-9a0d3c52b427.png)] bg-[length:100%_100%] bg-no-repeat relative z-[87] mt-[0.5px] mr-0 mb-0 ml-0' />
+                    <div className='w-[5.308px] h-[16px]  bg-[length:100%_100%] bg-no-repeat relative z-[87] mt-[0.5px] mr-0 mb-0 ml-0' >
+                    <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.293164 2.40888C-0.0977214 2.018 -0.0977214 1.38425 0.293164 0.99336C0.68405 0.602474 1.3178 0.602474 1.70869 0.99336L8.00842 7.29309C8.39894 7.68361 8.39894 8.31678 8.00842 8.7073L1.70869 15.007C1.3178 15.3979 0.68405 15.3979 0.293164 15.007C-0.0977214 14.6161 -0.0977214 13.9824 0.293164 13.5915L5.88448 8.0002L0.293164 2.40888Z" fill="white"></path></svg>
+                      </div>
                   </div>
                 </div>
               </button> 
