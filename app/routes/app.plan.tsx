@@ -93,6 +93,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const shop = formData.get("shop");
   const plan = formData.get("plan");
   const packageID = formData.get("packageID");
+  const trial = formData.get("trial");
 
   const auth_session = await db.session.findFirst({
     where: { shop },
@@ -101,13 +102,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
-
-  const raw = JSON.stringify({
+  let raw = '';
+  if(trial>0){
+   raw = JSON.stringify({
     query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
     variables: {
       name: "Basic",
       returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
-      trialDays: 14,
+      trialDays: trial,
       test: true,
       lineItems: [
         {
@@ -124,7 +126,29 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       ],
     },
   });
-
+  }else{
+     raw = JSON.stringify({
+      query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!,  $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
+      variables: {
+        name: "Basic",
+        returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
+        test: true,
+        lineItems: [
+          {
+            plan: {
+              appRecurringPricingDetails: {
+                price: {
+                  amount: amount,
+                  currencyCode: "USD",
+                },
+                interval: plan,
+              },
+            },
+          },
+        ],
+      },
+    });
+  }
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
@@ -161,7 +185,7 @@ export default function PlanPage() {
     top.location.href = actiondata.confirmationUrl
   }
  
-  const handlesubmit = async (uuid: any,cycle:string) => {
+  const handlesubmit = async (uuid: any,cycle:string,active:any) => {
     packages.filter((item:any)=>uuid.includes(item.uuid)).map((item:any)=>{
       let price =0;
       let plan= 'EVERY_30_DAYS';
@@ -174,8 +198,9 @@ export default function PlanPage() {
         plan= 'EVERY_30_DAYS';
       }
       let packageID=uuid;
+      let trial=active==undefined?14:0;
       
-      submit({ price, shop, plan, packageID }, { method: "post" })
+      submit({ price, shop, plan, packageID, trial }, { method: "post" })
   });
     
 
