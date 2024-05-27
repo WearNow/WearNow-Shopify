@@ -1,7 +1,14 @@
 import React from 'react'
+import { Select } from '@shopify/polaris';
 
 function SelectedOnbording(props:any) {
-    const { step, data, image, handleEdit } = props;
+    const { step, data, image, handleEdit, handleSelectChange, selected } = props;
+    const options = [
+      {label: '1', value: '1'},
+      {label: '2', value: '2'},
+      {label: '3', value: '3'},
+      {label: '4', value: '4'},
+    ];
   return (
     <div className='flex pt-[8px] pr-0 pb-[8px] pl-0 flex-col gap-[24px] justify-center items-start self-stretch shrink-0 flex-nowrap relative z-[4]'>
     <div className='flex w-full h-full flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[5]'>
@@ -58,21 +65,12 @@ function SelectedOnbording(props:any) {
         {step == 1 && (
         <div className='flex w-full h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px", width: "calc(100% - 50px)" }}>
                 <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
-                  <span className=" shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left z-[61]">
-                    Please select the number of photos you would like to create
-                  </span>
-                  <div className='flex items-start self-stretch shrink-0 flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#cfd4dc] relative shadow-[0_1px_2px_0_rgba(16,24,40,0.05)] z-[62]'>
-                    <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] gap-[8px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[63]'>
-                      <div className='flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative z-[64]'>
-                        <select className="cstm_select h-[24px] grow shrink-0 basis-auto font-['Inter'] text-[16px] font-normal leading-[24px] text-[#667084] relative text-left overflow-hidden z-[65]">
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+                <Select
+                          label="Please select the number of photos you would like to create"
+                          options={options}
+                          onChange={handleSelectChange}
+                          value={selected}
+                        />
                 </div>
 
               </div>

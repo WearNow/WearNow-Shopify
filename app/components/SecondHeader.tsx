@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "@remix-run/react";
 import CustomSlider from "./CustomSilder";
 import axios from "axios";
@@ -8,7 +8,7 @@ import SelectedOnbording from "./SelectedOnbording";
 import FadedOnboarding from "./FadedOnboarding";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
-import { Checkbox } from '@shopify/polaris';
+import { Checkbox,Select } from '@shopify/polaris';
 
 const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
 
@@ -39,11 +39,38 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107",
     "https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106",
   ];
+  const [selected, setSelected] = useState('1');
 
-  useEffect(() => {
-    console.log("dataLimit.start ::", dataLimit.start);
-    console.log("dataLimit.start ::", dataLimit.end);
-  }, [dataLimit.start, dataLimit.end])
+  const handleSelectChange = useCallback(
+    (value: string) => setSelected(value),
+    [],
+  );
+
+
+  useEffect(() => { 
+    const MyMutationn = gql`
+    mutation MyMutation3 ($photo_per_product:int!,$uuid:uuid!){
+        update_stores(where: {uuid: {_eq: $uuid}}, _set: {photo_per_product: $photo_per_product}) {
+          returning {
+            store_id
+            uuid
+            name
+            virtual_enabled
+          }
+        }
+      }
+   `;
+
+      const result = client.mutate({
+        mutation: MyMutationn,
+        variables: {
+          photo_per_product: parseInt(selected),
+          uuid: sessionData.authWithShop.store_id
+        },
+      });
+
+      console.log('Mutation result:', result);
+    }, [selected])
 
   useEffect(() => {
     client
@@ -351,6 +378,12 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
 
   }
   console.log(currentStep);
+  const options = [
+    {label: '1', value: '1'},
+    {label: '2', value: '2'},
+    {label: '3', value: '3'},
+    {label: '4', value: '4'},
+  ];
   return (
     <div className="self-stretch second_header">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -435,23 +468,14 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
 
                   </div>
                   <div className='flex w-full h-full flex-col gap-[6px] items-start ' style={{ marginLeft: "50px", marginTop: "20px", width: "calc(100% - 50px)" }}>
-                    <div className='flex flex-col gap-[6px] items-start self-stretch  relative z-[60]'>
-                      <span className="h-full  font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#344053] relative text-left z-[61]">
-                        Please select the number of photos you would like to create
-                      </span>
-                      <div className='flex items-start self-stretch bg-[#fff] rounded-[8px] border-solid border border-[#cfd4dc] relative shadow-[0_1px_2px_0_rgba(16,24,40,0.05)] z-[62]'>
-                        <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] gap-[8px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[63]'>
-                          <div className='flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative z-[64]'>
-                            <select className="cstm_select h-[24px]  w-full font-['Inter'] text-[16px] font-normal leading-[24px] text-[#667084] relative text-left  z-[65]">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                     
+                      <Select
+                          label="Please select the number of photos you would like to create"
+                          options={options}
+                          onChange={handleSelectChange}
+                          value={selected}
+                        />
+                   
                     <span className="h-[18px] self-stretch font-['SF_Pro_Display'] text-[14px] font-normal leading-[17.5px] text-[#475466] relative text-left  z-[69]">
                       All the photos in a creation request will have very minor
                       changes between them
@@ -493,7 +517,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
               <>
                 {products.filter((product: any) => checkedProduct?.includes(product.uuid)).map((product, index) => (
 
-                  <SelectedOnbording step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
+                  <SelectedOnbording step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} handleSelectChange={handleSelectChange} selected={selected} />
                 ))}
 
 
@@ -531,7 +555,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
               <>
                 {products.filter((product: any) => checkedProduct?.includes(product.uuid)).map((product, index) => (
 
-                  <SelectedOnbording step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
+                  <SelectedOnbording step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} handleSelectChange={handleSelectChange} selected={selected} />
                 ))}
 
 
@@ -565,7 +589,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
               <>
                 {products.filter((product: any) => checkedProduct?.includes(product.uuid)).map((product, index) => (
 
-                  <SelectedOnbording step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} />
+                  <SelectedOnbording step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} handleSelectChange={handleSelectChange} selected={selected} />
                 ))}
 
                 {model && background && !pose && (
