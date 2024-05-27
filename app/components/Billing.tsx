@@ -25,6 +25,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
             package {
               name
               uuid
+              price
             }
             status
             created_at
@@ -39,8 +40,8 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
       const store_subscription = result.data.store_subscription;
       if(store_subscription.length>0 && store_subscription[0]?.package.uuid)
         {
-          setActive(store_subscription[0].package.uuid);
-          console.log(store_subscription[0].package.uuid,'subscription');
+          setActive(store_subscription[0].package);
+          console.log(store_subscription[0].package,'subscription');
         }
       
     });
@@ -98,7 +99,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
           <div className='biling_container flex  h-[550px] gap-px items-end shrink-0 flex-nowrap rounded-[16px]   top-[235px] z-[9]'>
             {packages?.filter((item:any) => item.cycle === "monthly").map((item:any,index:number)=> (
               <>
-            {active && active==item.uuid ?(
+            {active?.uuid && active.uuid==item.uuid ?(
               <div className='flex biling_item pt-[35px] pr-[32px] pb-[32px] pl-[32px] items-start shrink-0 flex-nowrap bg-[#023353] relative shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] z-[52]'>
               <div className='flex flex-col gap-[28px] items-center grow shrink-0 basis-0 flex-nowrap relative z-[53]'>
                 <div className='flex flex-col gap-[16px] items-start self-stretch shrink-0 flex-nowrap relative z-[54]'>
@@ -430,9 +431,15 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
                 </div>
                 <button onClick={()=>handleBilling(item.uuid,item.cycle)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
                   <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
+                    {active?.price ?(
                     <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
-                      Start 14-Day Free Trial
+                      {active.price>item.price ? "Downgrade":"Upgrade"}
                     </span>
+                    ):(
+                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
+                        Start 14-Day Free Trial
+                    </span>
+                    )}
                     <div className='w-[5px] h-[9px] shrink-0 relative z-50'>
                       <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/1b104d68-1f14-4cf9-948b-3013641a3038.png)] bg-[length:100%_100%] bg-no-repeat relative z-[51] mt-[0.5px] mr-0 mb-0 ml-0' />
                     </div>

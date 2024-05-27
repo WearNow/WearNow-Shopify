@@ -14,6 +14,8 @@ import {
 import React, { useState } from "react";
 
 import { EmptyState } from "@shopify/polaris";
+import client from "../services/ApolloClient";
+import gql from "graphql-tag";
 
 import Upload from "./Upload";
 
@@ -48,6 +50,33 @@ const ThumbnailSelector: React.FC<{
 
   const onClickHandle = (e: any) => {
     setSelectModelId(e);
+  };
+  const onUpload = async(e: any) => {
+    console.log(e,"s3 upload complete");
+    const MyMutation = gql`
+    mutation($image_url:String!,$filename:String!) {
+      insert_pretrained_models(objects: {cover_image: $image_url, description:"s3", name: $filename}) {
+        returning {
+          cover_image
+        }
+      }
+    }`;
+
+      try {
+        const result = await client.mutate({
+          variables: {
+            image_url: e.imageUrl,
+            filename: e.fileName,
+          },
+          mutation: MyMutation
+        });
+
+        console.log('Mutation result:', result);
+
+      } catch (error) {
+        console.error('Error executing mutation:', error);
+      }
+    
   };
 
   const SpacingBackground = ({
@@ -194,9 +223,7 @@ const ThumbnailSelector: React.FC<{
                 </div>
               </>
             }
-            onUpload={() => {
-              console.log("module upload success");
-            }}
+            onUpload={onUpload}
           ></Upload>
         </div>
         )}
