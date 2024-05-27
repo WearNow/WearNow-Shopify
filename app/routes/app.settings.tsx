@@ -40,7 +40,7 @@ function Settings() {
     <div className="flex flex-col bg-white">
       <DashboardHeader></DashboardHeader>
 
-      <div className="w-full max-md:max-w-full mt-4">
+      <div className="w-full max-md:max-w-full mt-14">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
 
           <main className="flex flex-col mx-5 w-full max-md:ml-0 max-md:w-full">
