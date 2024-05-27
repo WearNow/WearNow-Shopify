@@ -162,7 +162,7 @@ const ProdcutModal: React.FC<{
             title:cp.title,
             variant_id:cp.vid
           }
-          if(!active?.number_of_products && active?.number_of_products<=sendProducts.length) {
+          if(!active?.number_of_products && active?.number_of_products>=sendProducts.length) {
           sendProducts.push(sp);
           }
           }
