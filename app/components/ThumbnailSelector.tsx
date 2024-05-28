@@ -43,7 +43,8 @@ const ThumbnailSelector: React.FC<{
   setSelectModelId: any;
   ModuleData: any;
   active: any;
-}> = ({ modelSelectId, setSelectModelId, ModuleData, active }) => {
+  handleChange:any;
+}> = ({ modelSelectId, setSelectModelId, ModuleData, active, handleChange }) => {
   const isSelected = (index: string) => index === modelSelectId;
 
   // const segments = ModuleData
@@ -51,31 +52,36 @@ const ThumbnailSelector: React.FC<{
   const onClickHandle = (e: any) => {
     setSelectModelId(e);
   };
-  const onUpload = async(e: any) => {
-    console.log(e,"s3 upload complete");
+  const onUpload = async(event: any) => {
+    console.log(event,"s3 upload complete");
+    const e=JSON.parse(event);
+    if(e.imageUrl && e.fileName){
     const MyMutation = gql`
-    mutation($image_url:String!,$filename:String!) {
-      insert_pretrained_models(objects: {cover_image: $image_url, description:"s3", name: $filename}) {
+    mutation MyMutation($imageurl: String!, $filename: String!){
+      insert_pretrained_models(objects: {cover_image: $imageurl, description:"s3", name: $filename}) {
         returning {
           cover_image
         }
       }
-    }`;
+    } `;
 
       try {
         const result = await client.mutate({
+          mutation: MyMutation,
           variables: {
-            image_url: e.imageUrl,
-            filename: e.fileName,
+            imageurl: e.imageUrl??"imageurl",
+            filename: e.fileName??"fileName",
           },
-          mutation: MyMutation
         });
-
+        handleChange();
         console.log('Mutation result:', result);
 
       } catch (error) {
         console.error('Error executing mutation:', error);
       }
+    
+
+    }
     
   };
 

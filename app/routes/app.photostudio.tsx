@@ -92,6 +92,7 @@ const SecondHeader: React.FC = () => {
   const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [currentStep, setCurrentStep] = useState(0);
   const [active, setActive] = useState();
+  const [change, setChange] = useState("no");
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -218,9 +219,7 @@ const SecondHeader: React.FC = () => {
   }
 useEffect(() =>{
   getAllImages();
-
-  
-},[]);
+},[change]);
   const fetchProducts = async () => {
    
     await client
@@ -356,7 +355,10 @@ try {
     }
 
   }
-
+  const handleChange = ()=>{
+    console.log('Under Handle Change');
+    setChange("yes");
+  }
   const renderRight = () => {
     switch (currentStep) {
       case 0:
@@ -368,6 +370,7 @@ try {
             setSelectModelId={setModel}
             ModuleData={models}
             active={active}
+            handleChange={handleChange}
           />
         );
       case 2:
