@@ -63,6 +63,7 @@ const ThumbnailSelector: React.FC<{
       insert_pretrained_models(objects: {cover_image: $imageurl, description:"s3", name: $filename}) {
         returning {
           cover_image
+          uuid
         }
       }
     } `;
@@ -76,6 +77,7 @@ const ThumbnailSelector: React.FC<{
           },
         });
         handleChange(filename);
+        setSelectModelId(result.data.pretrained_models.uuid);
         console.log('Mutation result:', result);
 
       } catch (error) {

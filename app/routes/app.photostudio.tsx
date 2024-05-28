@@ -187,7 +187,7 @@ const SecondHeader: React.FC = () => {
     .query({
       query: gql`
       query MyQuery4 ($models:Int){
-        default_pose(limit: 10) {
+        default_pose(limit: 10,order_by: {created_at: desc}) {
           name
           image
           featured
@@ -195,7 +195,7 @@ const SecondHeader: React.FC = () => {
           created_at
           uuid
         }
-        default_background(limit: 10) {
+        default_background(limit: 10,order_by: {created_at: desc}) {
           active
           created_at
           featured
@@ -203,7 +203,7 @@ const SecondHeader: React.FC = () => {
           name
           uuid
         }
-        pretrained_models(limit: $models) {
+        pretrained_models(limit: $models,order_by: {created_at: desc}) {
           cover_image
           created_at
           description
@@ -691,7 +691,7 @@ try {
                 <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' >
                   <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
                     <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
-                      Save
+                      Create
                     </span>
                   </div>
                 </button>
