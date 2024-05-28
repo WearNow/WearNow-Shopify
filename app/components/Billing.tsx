@@ -2,6 +2,7 @@ import React, { useState,useEffect} from 'react';
 import {apiURL,app_name} from "../services/Services"
 import client from "../services/ApolloClient"
 import gql from "graphql-tag"
+import { Spinner } from '@shopify/polaris';
 
 const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> = ({ handlesubmit, packageData, store_id }) => {
   const [activeTab, setActiveTab] = useState(1);
@@ -10,6 +11,8 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
   const [bgcolorTab2, setBgcolorTab2] = useState("white");
   const [colorTab, setColorTab] = useState("white");
   const [colorTab2, setColorTab2] = useState("black");
+  const [loader, setLoader] = useState("no");
+  const [package_id, setPackageId] = useState("");
   const packages=packageData;
   console.log("Packages", packages);
   useEffect(()=>{
@@ -69,6 +72,8 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
   };
  
   const handleBilling = async(uuid:any,cycle:string) => {
+    setPackageId(uuid);
+    setLoader("yes");
     console.log("Amount :::=>",uuid);
     await handlesubmit(uuid,cycle,active?.uuid);
   }
@@ -462,6 +467,21 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
                   </div>
                 </button>
                 ):(
+                  <>
+                  {loader=='yes' && item.uuid==package_id ?(
+                    <button style={{pointerEvents:"unset",opacity:0.3}} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
+                    <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
+                      
+                      <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
+                      <Spinner accessibilityLabel="Small spinner example" size="small" />
+                      </span>
+                     
+                      <div className='w-[5px] h-[9px] shrink-0 relative z-50'>
+                        <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/1b104d68-1f14-4cf9-948b-3013641a3038.png)] bg-[length:100%_100%] bg-no-repeat relative z-[51] mt-[0.5px] mr-0 mb-0 ml-0' />
+                      </div>
+                    </div>
+                  </button>
+                  ):(
                 <button onClick={()=>handleBilling(item.uuid,item.cycle)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
                   <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
                     {active?.price ?(
@@ -478,6 +498,8 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
                     </div>
                   </div>
                 </button>
+                )}
+                </>
                 )}
               </div>
             </div>
@@ -1102,11 +1124,26 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
                 </div>
               </button>
               ):(
+                <>
+                {loader=='yes' && item.uuid==package_id ?(
+                  <button style={{pointerEvents:"unset",opacity:0.3}} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
+                  <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
+                    
+                    <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
+                    <Spinner accessibilityLabel="Small spinner example" size="small" />
+                    </span>
+                   
+                    <div className='w-[5px] h-[9px] shrink-0 relative z-50'>
+                      <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/1b104d68-1f14-4cf9-948b-3013641a3038.png)] bg-[length:100%_100%] bg-no-repeat relative z-[51] mt-[0.5px] mr-0 mb-0 ml-0' />
+                    </div>
+                  </div>
+                </button>
+                ):(
               <button onClick={()=>handleBilling(item.uuid,item.cycle)} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
                 <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
                   {active?.price ?(
                   <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
-                    {active?.cycle=='yearly' && active.price>item.price ? "Downgrade":"Upgrade"}
+                    {active.price>item.price ? "Downgrade":"Upgrade"}
                   </span>
                   ):(
                   <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
@@ -1118,6 +1155,8 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
                   </div>
                 </div>
               </button>
+              )}
+              </>
               )}
             </div>
           </div>

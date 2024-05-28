@@ -659,6 +659,7 @@ try {
                       </span>
                     </div>
                   </div>
+                  <Link to="/app/dashboard" className="w-full">
                   <button className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap rounded-[24px] border-none relative z-[6] pointer'>
                     <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] justify-between items-center grow shrink-0 basis-0 flex-nowrap bg-[#10741b] rounded-[999px] relative overflow-hidden z-[7]'>
                       <span className="h-[18px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap z-[8]">
@@ -673,6 +674,7 @@ try {
                       </div>
                     </div>
                   </button>
+                  </Link>
                 </div>
               </div>
               ):(
