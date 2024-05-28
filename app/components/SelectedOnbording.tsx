@@ -2,7 +2,7 @@ import React from 'react'
 import { Select } from '@shopify/polaris';
 
 function SelectedOnbording(props:any) {
-    const { step, data, image, handleEdit, handleSelectChange, selected } = props;
+    const { step, data, image, handleEdit, handleSelectChange, selected, save } = props;
     const options = [
       {label: '1', value: '1'},
       {label: '2', value: '2'},
@@ -23,6 +23,7 @@ function SelectedOnbording(props:any) {
           <span className="h-[30px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[20px] font-medium leading-[30px] text-[rgba(0,0,0)] relative text-left whitespace-nowrap z-10">
            {data}
           </span>
+          {save !='saved' && (
           <button onClick={()=>handleEdit(step)}  className='flex w-[61px] h-[28px] pt-[4px] pr-[8px] pb-[4px] pl-[6px] gap-[4px] justify-center items-center shrink-0 flex-nowrap bg-[rgba(0,0,0,0.06)] rounded-[8px] border-none  top-[4px] left-[517px] z-30 pointer'>
           <div className='w-[20px] h-[20px] shrink-0 relative z-[31]'>
           <div className='w-[12.945px] h-[12.945px] bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Icon.png?v=1714574880)] bg-cover bg-no-repeat relative z-[32] mt-[3.555px] mr-0 mb-0 ml-[3.5px]' />
@@ -31,6 +32,7 @@ function SelectedOnbording(props:any) {
           Edit
           </span>
           </button>
+          )}
           </div>
         </div>
         <div className='flex h-[80px] pt-0 pr-0 pb-0 pl-[17px] gap-[30px] items-end self-stretch shrink-0 flex-nowrap relative z-[11]'>
@@ -63,8 +65,8 @@ function SelectedOnbording(props:any) {
           </div>
         </div>
         {step == 1 && (
-        <div className='flex w-full h-[88px] flex-col gap-[6px] items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px", width: "calc(100% - 50px)" }}>
-                <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
+        <div className='flex w-full  flex-col  items-start shrink-0 flex-nowrap' style={{ marginLeft: "50px", marginTop: "20px", width: "calc(100% - 50px)" }}>
+                <div className='flex flex-col  items-start self-stretch shrink-0 flex-nowrap relative z-[60]'>
                 <Select
                           label="Please select the number of photos you would like to create"
                           options={options}

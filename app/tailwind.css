@@ -711,6 +711,10 @@ p.hover_effect_content {
   top: 0;
   z-index: 99999;
 }
+.thumbnail_selector_item>div {
+  width: 100%;
+  border-radius: 10px;
+}
 /* ================================ Sidebar Navigation style code ===================================== */
 
 @media (max-width: 1350px) {
@@ -943,6 +947,9 @@ body .onbording_step_container  .custom_slider_content {
 }
 .search_model {
   width: 100% !important;
+}
+.listboxItemSelectedStyle {
+  width: 100%;
 }
 .search_model_content {
   gap: 6px !important;

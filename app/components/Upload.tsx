@@ -27,11 +27,13 @@ const UploadComponent: React.FC<{
 }> = ({ onUpload, description }) => {
   const [percent, setPercent] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
+  const [fileError,setFileError]=useState();
 
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
       const file = selectedFiles[0];
+      if (file.type.startsWith('image/')) {      
       setFiles(Array.from(selectedFiles));
 
       const formdata = new FormData();
@@ -47,15 +49,27 @@ const UploadComponent: React.FC<{
         .then((response) => response.text())
         .then((result) => {
           console.log(result);
+          let pcstart = 0;
+          const timer = setInterval(() => {
+            setPercent((pcstart += 20));
+            if (pcstart > 80) {
+              clearInterval(timer);
+              onUpload(result);
+            }
+          }, 300);
           // Call onUpload function if needed
           onUpload(result);
         })
         .catch((error) => console.error(error));
+      } else {
+        setFileError('Please select an image file');
+      }
     }
   };
   return (
     <div>
       {files.length < 1 ? (
+       
         <div
           style={{
             width: "100%",
@@ -70,6 +84,7 @@ const UploadComponent: React.FC<{
             alignItems: "center",
           }}
         >
+          <span style={{color:"red"}}> {fileError}</span>
           <input
             style={{
               position: "absolute",
@@ -79,6 +94,7 @@ const UploadComponent: React.FC<{
               cursor: "pointer",
             }}
             type="file"
+            accept="image/*"
             multiple
             onChange={handleInput}
           />
@@ -164,6 +180,7 @@ const UploadComponent: React.FC<{
                   backgroundColor: "#2196f3",
                   borderRadius: "4px",
                   transition: "width 0.5s ease",
+                  height: "10px"
                 }}
               />
               <div style={{ paddingLeft: "15px" }}>{percent + "%"}</div>

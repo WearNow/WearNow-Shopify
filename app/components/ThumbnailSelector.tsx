@@ -56,6 +56,8 @@ const ThumbnailSelector: React.FC<{
     console.log(event,"s3 upload complete");
     const e=JSON.parse(event);
     if(e.imageUrl && e.fileName){
+      const lastDotIndex = e.fileName.lastIndexOf('.');
+    const filename= e.fileName.substring(0, lastDotIndex);
     const MyMutation = gql`
     mutation MyMutation($imageurl: String!, $filename: String!){
       insert_pretrained_models(objects: {cover_image: $imageurl, description:"s3", name: $filename}) {
@@ -70,10 +72,10 @@ const ThumbnailSelector: React.FC<{
           mutation: MyMutation,
           variables: {
             imageurl: e.imageUrl??"imageurl",
-            filename: e.fileName??"fileName",
+            filename: filename??"fileName",
           },
         });
-        handleChange();
+        handleChange(filename);
         console.log('Mutation result:', result);
 
       } catch (error) {
@@ -124,7 +126,7 @@ const ThumbnailSelector: React.FC<{
 
   const listboxItemMarkup = (seg: any) => (
     <div
-      className="w-56 flex listboxItemSelectedStyle"
+      className="flex listboxItemSelectedStyle"
       key={seg.uuid}
       onClick={() => {
         onClickHandle(seg.uuid);

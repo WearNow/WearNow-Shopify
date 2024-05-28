@@ -5,7 +5,7 @@ function SelectOnboarding(props:any) {
    
     return (
         <>
-            <div className='w-full h-[220px] shrink-0 rounded-[100px] relative z-[26]'>
+            <div className='w-full shrink-0 rounded-[100px] relative z-[26]' style={{marginBottom:"20px"}}>
                 <div className="second_select after_border_next">
                     <div className="flex  items-center gap-2">
                         <div className='flex w-[36px] h-[36px] pt-[8px] pr-[8px] pb-[8px] pl-[8px] gap-[8px] justify-center items-center flex-nowrap bg-[#fff] rounded-[100px] border-dashed border border-[#232934]  top-0 left-0 overflow-hidden z-[28]'>
