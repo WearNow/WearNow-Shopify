@@ -103,13 +103,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
   let raw = '';
+  console.log(trial,"trial");
   if(trial>0){
    raw = JSON.stringify({
     query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
     variables: {
       name: "Basic",
       returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
-      trialDays: trial,
+      trialDays: parseInt(trial),
       test: true,
       lineItems: [
         {
@@ -158,12 +159,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const res = await fetch(`https://${auth_session.shop}/admin/api/2024-04/graphql.json`, requestOptions);
   const newres = await res.json();
-  const confirmationUrl = newres.data.appSubscriptionCreate.confirmationUrl;
-  const appSubscription = newres.data.appSubscriptionCreate.appSubscription;
+  console.log(newres,"newres");
+  const confirmationUrl = newres?.data?.appSubscriptionCreate?.confirmationUrl;
+  const appSubscription = newres?.data?.appSubscriptionCreate?.appSubscription;
   const updated = await db.session.update({
     where: { id: auth_session?.id },
     data: { /* pass the new car informations here */
-      userId: appSubscription.id
+      userId: appSubscription?.id
     },
   })
   console.log(updated, "updatedupdatedupdatedupdated")
