@@ -16,6 +16,7 @@ import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import SidebarNavigation from "~/components/SidebarNavigation";
 import { Checkbox,Select,Spinner } from '@shopify/polaris';
+import { M } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const  admin1  = await authenticate.admin(request);
@@ -25,7 +26,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     // });
     let auth_session={};
   
-    console.log(shop,"hsop shop")
+    //console.log(shop,"hsop shop")
     await client
     .query({
       query: gql`
@@ -55,23 +56,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     })
     .then((result) => {
       auth_session=result?.data.session[0] ?? result?.data.session;
-      console.log(result.data.session, "apollo client");
+      //console.log(result.data.session, "apollo client");
     });
     const authWithShop = {
       ...auth_session,
       shop: shop,
       tryOn:false
     };
-    console.log(authWithShop,"auth session");
+    //console.log(authWithShop,"auth session");
     
       return {authWithShop}
   };
 
-const SecondHeader: React.FC = () => {
+const PhotoStudio: React.FC = () => {
     const sessionData = useLoaderData<typeof loader>();
     const Naviagte = useNavigate()
     useEffect(() =>{
-      console.log(sessionData,"session data in main Index session");
+      //console.log(sessionData,"session data in main Index session");
           if(sessionData.authWithShop?.state!='active')
           {
             Naviagte('/app/plan',{replace: true});
@@ -138,7 +139,7 @@ const SecondHeader: React.FC = () => {
         },
       });
 
-      console.log('Mutation result:', result);
+      //console.log('Mutation result:', result);
     }, [selected])
 
   useEffect(()=>{
@@ -212,6 +213,7 @@ const SecondHeader: React.FC = () => {
           uuid
         }
       }`,
+      fetchPolicy:"network-only",
       variables: {
         storeid: sessionData.authWithShop.store_id,
         models: active?.pro_models
@@ -219,7 +221,7 @@ const SecondHeader: React.FC = () => {
     })
     .then((result) => {
       
-        console.log("Result images: model,background,pose :::" , result);
+        //console.log("Result images: model,background,pose :::" , result);
         setModels(result.data.pretrained_models);
         setBackgrounds(result.data.default_background);
         setPoses(result.data.default_pose);
@@ -227,7 +229,7 @@ const SecondHeader: React.FC = () => {
   }
 useEffect(() =>{
   getAllImages();
-},[change]);
+},[]);
   const fetchProducts = async () => {
    
     await client
@@ -257,7 +259,7 @@ useEffect(() =>{
           // Assuming sp.images is already a JSON string that needs to be parsed
           let images = sp.images.replace("[{'url': '",'');
             images = images.replace("'}]",'');
-            console.log("images: :::" , images);
+            //console.log("images: :::" , images);
             return {
               ...sp, // Spread the existing properties of the product
               image: images // Add the new image property
@@ -265,7 +267,7 @@ useEffect(() =>{
         });
          
         setProducts(updatedStoreProducts);
-        console.log("apollo client store id: :::",updatedStoreProducts);
+        //console.log("apollo client store id: :::",updatedStoreProducts);
       });
 
 
@@ -275,16 +277,17 @@ useEffect(() => {
   fetchProducts();
 }, []);
 
-  console.log(products, "Second Header products");
+  //console.log(products, "Second Header products");
 
   const handleCheckboxChange = (productId: string) => {
-    console.log(productId,":::::is the product checked");
+    //console.log(productId,":::::is the product checked");
     setCheckedProduct(productId);
   };
 
 
 
   const handleEdit = (step:string)=>{
+    getAllImages();
     setCurrentStep(parseInt(step)-1)
    
   };
@@ -323,12 +326,12 @@ useEffect(() => {
         },
       });
 
-      console.log('Mutation result:', result);
+      //console.log('Mutation result:', result);
       count = result?.data?.store_products_aggregate?.aggregate?.count ? result?.data?.store_products_aggregate?.aggregate?.count : 0;
     } catch (error) {
-      console.error('Error executing mutation:', error);
+      //console.error('Error executing mutation:', error);
     }
-    console.log(active?.product_photo_limit,"count",count);
+    //console.log(active?.product_photo_limit,"count",count);
     if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
       const MyMutation = gql`
     mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
@@ -357,17 +360,16 @@ try {
   });
   setSave("saved");
   setCurrentStep(9);
-  console.log('Mutation result:', result);
+  //console.log('Mutation result:', result);
 
       } catch (error) {
-        console.error('Error executing mutation:', error);
+        //console.error('Error executing mutation:', error);
       }
     }
 
   }
   const handleChange = (message:string)=>{
-    console.log('Under Handle Change');
-    setChange(message);
+    getAllImages();
   }
   const renderRight = () => {
     switch (currentStep) {
@@ -381,23 +383,40 @@ try {
             ModuleData={models}
             active={active}
             handleChange={handleChange}
+            title="Model"
           />
         );
       case 2:
         return (
-          <BackGroundSelector
-            backgroundSelectId={background}
-            setSelectBgId={setBackground}
-            BgData={backgrounds}
+          <ThumbnailSelector 
+            modelSelectId={background}
+            setSelectModelId={setBackground}
+            ModuleData={backgrounds}
+            active={active}
+            handleChange={handleChange}
+            title="Background"
           />
+          // <BackGroundSelector
+          //   backgroundSelectId={background}
+          //   setSelectBgId={setBackground}
+          //   BgData={backgrounds}
+          // />
         );
       case 3:
         return (
-          <BackGroundSelector
-            backgroundSelectId={pose}
-            setSelectBgId={setPose}
-            BgData={poses}
+          <ThumbnailSelector 
+            modelSelectId={pose}
+            setSelectModelId={setPose}
+            ModuleData={poses}
+            active={active}
+            handleChange={handleChange}
+            title="Pose"
           />
+          // <BackGroundSelector
+          //   backgroundSelectId={pose}
+          //   setSelectBgId={setPose}
+          //   BgData={poses}
+          // />
         );
       default:
         return <PhotoToShow photos={photos} />;
@@ -409,7 +428,7 @@ try {
     {label: '3', value: '3'},
     {label: '4', value: '4'},
   ];
-
+  //console.log(model);
   return (
     <div className="photo_studio_container bg-white h-full">
       <DashboardHeader />
@@ -420,7 +439,7 @@ try {
         <div className='flex flex-col w-6/12 max-md:ml-0 max-md:w-full'>
           <div className='photo_studio_title_content flex w-full flex-col gap-[16px] items-start shrink-0 flex-nowrap relative z-[1]'>
             <span className="virtual_try_on_title shrink-0 basis-auto font-['SF_Pro_Display'] text-[36px] font-medium leading-[31px] text-[#1d2127] relative text-left z-[2]">
-              Create Your First Product Photo
+              Create Your  Product Photo
             </span>
             <span className="flex w-full h-full justify-start items-start  font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#52575d] relative text-left z-[3]">
               Take your product photos to the next level in just 4 easy steps!
@@ -631,8 +650,8 @@ try {
                   <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
                     Next
                   </span>
-                  <div className='w-[5px] h-[9px] shrink-0 relative z-[86]'>
-                    <div className='w-[5.308px] h-[16px]  bg-[length:100%_100%] bg-no-repeat relative z-[87] mt-[0.5px] mr-0 mb-0 ml-0' >
+                  <div className='w-[5px] h-[16px] shrink-0 relative z-[86]'>
+                    <div className='w-[5.308px] h-[16px]  bg-[length:100%_100%] bg-no-repeat relative z-[87] mr-0 mb-0 ml-0' >
                     <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.293164 2.40888C-0.0977214 2.018 -0.0977214 1.38425 0.293164 0.99336C0.68405 0.602474 1.3178 0.602474 1.70869 0.99336L8.00842 7.29309C8.39894 7.68361 8.39894 8.31678 8.00842 8.7073L1.70869 15.007C1.3178 15.3979 0.68405 15.3979 0.293164 15.007C-0.0977214 14.6161 -0.0977214 13.9824 0.293164 13.5915L5.88448 8.0002L0.293164 2.40888Z" fill="white"></path></svg>
                       </div>
                   </div>
@@ -717,4 +736,4 @@ try {
   );
 };
 
-export default SecondHeader;
+export default PhotoStudio;

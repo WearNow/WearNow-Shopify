@@ -76,7 +76,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       })
       .then((result) => {
         auth_session=result?.data.session[0] ?? result?.data.session;
-        console.log(result.data.session, "apollo client");
+        //console.log(result.data.session, "apollo client");
       });
 
 
@@ -103,7 +103,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
   let raw = '';
-  console.log(trial,"trial");
+  //console.log(trial,"trial");
   if(trial>0){
    raw = JSON.stringify({
     query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
@@ -159,7 +159,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const res = await fetch(`https://${auth_session.shop}/admin/api/2024-04/graphql.json`, requestOptions);
   const newres = await res.json();
-  console.log(newres,"newres");
+  //console.log(newres,"newres");
   const confirmationUrl = newres?.data?.appSubscriptionCreate?.confirmationUrl;
   const appSubscription = newres?.data?.appSubscriptionCreate?.appSubscription;
   const updated = await db.session.update({
@@ -168,21 +168,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       userId: appSubscription?.id
     },
   })
-  console.log(updated, "updatedupdatedupdatedupdated")
+  //console.log(updated, "updatedupdatedupdatedupdated")
   return { confirmationUrl };
 };
 
 export default function PlanPage() {
   const Naviagte = useNavigate()
   const load = useLoaderData<typeof loader>();
-  console.log(load, "load");
+  //console.log(load, "load");
   const shop = load.shop;
   const packages = load.packages;
   const store_id = load.auth_session.store_id;
-  console.log(packages,"packages from loader");
+  //console.log(packages,"packages from loader");
   const submit = useSubmit();
   const actiondata = useActionData();
-  console.log(actiondata, "actiondata  updated");
+  //console.log(actiondata, "actiondata  updated");
   if (actiondata?.confirmationUrl) {
     top.location.href = actiondata.confirmationUrl
   }
@@ -206,7 +206,7 @@ export default function PlanPage() {
   });
     
 
-    console.log(auth_session,"auth_sessionauth_sessionauth_sessionauth_sessionauth_session");
+    //console.log(auth_session,"auth_sessionauth_sessionauth_sessionauth_sessionauth_session");
   };
 
   return (

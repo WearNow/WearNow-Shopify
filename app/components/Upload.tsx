@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {apiURL} from "../services/Services"
 
 const checkSvg = (
@@ -24,10 +24,13 @@ const checkSvg = (
 const UploadComponent: React.FC<{
   onUpload: Function;
   description: React.ReactNode | string | undefined;
-}> = ({ onUpload, description }) => {
+  show: String;
+}> = ({ onUpload, description, show }) => {
   const [percent, setPercent] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
   const [fileError,setFileError]=useState();
+
+
 
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -48,7 +51,7 @@ const UploadComponent: React.FC<{
       fetch(`${apiURL}api/s3`, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log(result);
+          //console.log(result);
           let pcstart = 0;
           const timer = setInterval(() => {
             setPercent((pcstart += 20));
@@ -57,8 +60,12 @@ const UploadComponent: React.FC<{
               onUpload(result);
             }
           }, 300);
+          setTimeout(() =>{
+            setFiles([]);
+            setPercent(0);
+          },5000);
           // Call onUpload function if needed
-          onUpload(result);
+          //onUpload(result);
         })
         .catch((error) => console.error(error));
       } else {
@@ -170,8 +177,8 @@ const UploadComponent: React.FC<{
                 width: "95%",
                 height: "50px",
                 display: "flex ",
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: "left",
+                alignItems: "left",
               }}
             >
               <div
@@ -180,7 +187,8 @@ const UploadComponent: React.FC<{
                   backgroundColor: "#2196f3",
                   borderRadius: "4px",
                   transition: "width 0.5s ease",
-                  height: "10px"
+                  height: "10px",
+                  marginTop:"10px"
                 }}
               />
               <div style={{ paddingLeft: "15px" }}>{percent + "%"}</div>

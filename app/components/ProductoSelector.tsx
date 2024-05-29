@@ -45,7 +45,7 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
   };
 
   const handleSegmentSelect = (segmentIndex: string) => {
-    console.log(segmentIndex,":::::::segment selected index");
+    //console.log(segmentIndex,":::::::segment selected index");
     if (segmentIndex === actionValue) {
       return handleClickShowAll();
     }
@@ -56,7 +56,7 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
   };
 
   const handleActiveOptionChange = (_: string, domId: string) => {
-    console.log("domId: " + domId);
+    //console.log("domId: " + domId);
     setActiveOptionId(domId);
   };
 
@@ -106,9 +106,9 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
   const segmentList =
     segmentOptions.length > 0
       ? segmentOptions.slice(0, visibleOptionIndex).map(({ title, uuid, image }) => {
-       // console.log(title, uuid, images,"segmentList",products[selectedSegmentIndex])
+       // //console.log(title, uuid, images,"segmentList",products[selectedSegmentIndex])
           const selected = product==uuid?true:false;
-          console.log(uuid,"product in product Selector: " + product)
+          //console.log(uuid,"product in product Selector: " + product)
           return (
             // <div className='border border-neutral-200'>
             // <div className="my-2" key={uuid} onClick={handleCheckboxChange(uuid)}>
@@ -161,11 +161,11 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
         <Pagination
           hasPrevious
           onPrevious={() => {
-            console.log('Previous');
+            //console.log('Previous');
           }}
           hasNext
           onNext={() => {
-            console.log('Next');
+            //console.log('Next');
           }}
         />
       </div>

@@ -7,11 +7,11 @@ import {
   Image,
   InlineGrid,
   InlineStack,
-  Pagination,
+  Tabs,
   Scrollable,
   Text,
 } from "@shopify/polaris";
-import React, { useState } from "react";
+import React, { useState,useCallback } from "react";
 
 import { EmptyState } from "@shopify/polaris";
 import client from "../services/ApolloClient";
@@ -19,36 +19,18 @@ import gql from "graphql-tag";
 
 import Upload from "./Upload";
 
-function EmptyStateExample() {
-  return (
-    <EmptyState
-      heading="Upload Your Own model"
-      action={{ content: "Add transfer" }}
-      secondaryAction={{
-        content: "Learn more",
-        url: "https://help.shopify.com",
-      }}
-      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-    >
-      <p>
-        15 Photos | Clear Face,No Accessories | this may take more time to
-        create
-      </p>
-    </EmptyState>
-  );
-}
-
 const ThumbnailSelector: React.FC<{
   modelSelectId: String;
   setSelectModelId: any;
   ModuleData: any;
   active: any;
   handleChange:any;
-}> = ({ modelSelectId, setSelectModelId, ModuleData, active, handleChange }) => {
+  title: String;
+}> = ({ modelSelectId, setSelectModelId, ModuleData, active, handleChange, title }) => {
   const isSelected = (index: string) => index === modelSelectId;
 
   // const segments = ModuleData
-
+  console.log("module Data: =>", ModuleData);
   const onClickHandle = (e: any) => {
     setSelectModelId(e);
   };
@@ -58,28 +40,72 @@ const ThumbnailSelector: React.FC<{
     if(e.imageUrl && e.fileName){
       const lastDotIndex = e.fileName.lastIndexOf('.');
     const filename= e.fileName.substring(0, lastDotIndex);
-    const MyMutation = gql`
-    mutation MyMutation($imageurl: String!, $filename: String!){
-      insert_pretrained_models(objects: {cover_image: $imageurl, description:"s3", name: $filename}) {
-        returning {
-          cover_image
-          uuid
-        }
-      }
-    } `;
+    let MyMutation:any;
+    switch(title){
+      case "Model":
+        MyMutation = gql`
+          mutation MyMutation($imageurl: String!, $filename: String!){
+            insert_pretrained_models(objects: {cover_image: $imageurl, description:"s3", name: $filename}) {
+              returning {
+                cover_image
+                uuid
+              }
+            }
+          } `;
+        break;
+      case "Background":
+         MyMutation = gql`
+        mutation MyMutation($imageurl: String!, $filename: name!){
+            insert_default_background(objects: {image: $imageurl, name: $filename}) {
+              returning {
+                uuid
+                name
+                image
+              }
+            }
+        } `;
+        break;
+      case "Pose":
+        MyMutation = gql`
+        mutation MyMutation($imageurl: String!, $filename: name!){
+            insert_default_pose(objects: {image: $imageurl, name: $filename}) {
+              returning {
+                uuid
+                name
+                image
+              }
+            }
+        } `;
+        break;
+    }
+
 
       try {
         const result = await client.mutate({
           mutation: MyMutation,
+          fetchPolicy: "network-only",
           variables: {
             imageurl: e.imageUrl??"imageurl",
             filename: filename??"fileName",
           },
         });
+        console.log("database result: =>" ,result)
         handleChange(filename);
-        setSelectModelId(result.data.pretrained_models.uuid);
-        console.log('Mutation result:', result);
-
+        setTimeout(() =>{
+        console.log(ModuleData,"ModuleDataModuleData  ")
+        switch(title){
+            case "Model":
+              onClickHandle(result.data.insert_pretrained_models.returning[0].uuid);
+          break;
+          case "Background":
+            onClickHandle(result.data.insert_default_background.returning[0].uuid);
+            break;
+          case "Pose":
+            onClickHandle(result.data.insert_default_pose.returning[0].uuid);
+            break;
+        }
+        
+      },1000)
       } catch (error) {
         console.error('Error executing mutation:', error);
       }
@@ -138,7 +164,7 @@ const ThumbnailSelector: React.FC<{
       <Card>
         <Bleed marginInline="400" marginBlock="400">
           <Image
-            source={seg.cover_image}
+            source={seg.cover_image?seg.cover_image:seg.image}
             alt="a sheet with purple and orange stripes"
           />
           <Box padding="400">
@@ -178,7 +204,50 @@ const ThumbnailSelector: React.FC<{
   const switchTryOn = () => {
     setTryOn((tryOn) => !tryOn);
   };
+  const tabsData: ITabProps[] = [
+    {
+      id: "all-customers-1",
+      content: "All",
+      accessibilityLabel: "All customers",
+      panelID: "all-customers-content-1",
+    },
+    {
+      id: "recent",
+      content: "Recent",
+      panelID: "accepts-recent",
+    },
+    {
+      id: "repeat-customers-1",
+      content: "Gradient",
+      panelID: "repeat-customers-content-1",
+    },
+    {
+      id: "prospects-1",
+      content: "Solid color",
+      panelID: "prospects-content-1",
+    },
+    {
+      id: "prospects-11",
+      content: "City",
+      panelID: "prospects-content-1",
+    },
+  ];
+  function TabsDefaultExample() {
+    const [selected, setSelected] = useState(0);
 
+    const handleTabChange = useCallback(
+      (selectedTabIndex: number) => setSelected(selectedTabIndex),
+      []
+    );
+
+    return (
+      <Tabs
+        tabs={tabsData}
+        selected={selected}
+        onSelect={handleTabChange}
+      ></Tabs>
+    );
+  }
   return (
     <div
       style={{
@@ -198,14 +267,18 @@ const ThumbnailSelector: React.FC<{
           <div className="flex justify-start items-center">
             <div>
               <Text as="h2" variant="headingSm">
-                  Model Library
+                  {title} Library
               </Text>
+              {title!="Model" && (
+                <TabsDefaultExample></TabsDefaultExample>
+              )}
             </div>
-
+            {title=="Model" && (
             <div className="flex justify-end items-center ml-auto">
               <Text as="h2" variant="headingSm">
                   Male Models
               </Text>
+             
               <div className="w-[36px] h-[28px] shrink-0 bg-[url(../assets/images/3cd34978-eac0-4005-a003-a90c6014efaf.png)] bg-cover bg-no-repeat relative z-[22]">
                 <div className="enabled_vartual_try_on try_on_active flex flex-col justify-center items-start p-1 my-auto rounded-xl">
                   <div className="switch">
@@ -214,26 +287,31 @@ const ThumbnailSelector: React.FC<{
                   </div>
                 </div>
               </div>
+             
             </div>
+             )}
           </div>
         </div>
         {active.customized_models && (
-        <div className="mt-4 mb-4">
+        <div className="mt-4 mb-4 PPPPP">
           <Upload
             description={
               <>
                 <div className="w-full h-5 justify-center items-center gap-1.5 inline-flex">
                   <div className="text-sky-700 text-sm font-semibold font-['Inter'] leading-tight">
-                    Upload Your Own Model
+                    Upload Your Own {title}
                   </div>
                 </div>
+                {title=="Model" && (
                 <div className="w-full mt-1 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
                   15 Photos | Clear Face, No Accessories | This may take more
                   time to create
                 </div>
+                )}
               </>
             }
             onUpload={onUpload}
+            show="yes"
           ></Upload>
         </div>
         )}
