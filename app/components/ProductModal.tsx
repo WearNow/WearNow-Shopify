@@ -301,7 +301,10 @@ const ProductModal: React.FC<{
     );
    
   };
-
+  getproducts.map((product, index) => {
+   
+    console.log(products?.filter((sp:any) =>product.node.id.includes(sp.product_id)),product.node.title,"product.node.id=>"+product.node.id);
+  });
   return (
     <div className="parent_model">
       <div className={`modal ${isOpen ? "open" : "closed"}`}>
@@ -346,19 +349,26 @@ const ProductModal: React.FC<{
             {getproducts.map((product, index) => (
               <>
               {product?.node?.images?.nodes[0]?.src && (
-               
+               <>
               <div
                 key={index}
                 className="flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)] product_items"
               >
               <div className="product_item_content">  
+              {products?.some((sp: any) => product.node.id.includes(sp.product_id)) ? (
                   <Checkbox
                       label=""
                       checked={checkedProducts[product.node.id]} // Check if the product is checked
                       disabled={checkedProducts[product.node.id]}
                     onChange={() => handleCheckboxChange(product.node.id)} // Handle checkbox change
                     />
-               
+                  ):(
+                    <Checkbox
+                      label=""
+                      checked={checkedProducts[product.node.id]} // Check if the product is checked
+                    onChange={() => handleCheckboxChange(product.node.id)} // Handle checkbox change
+                    />
+                  )}
                <div >
                   <img src={product?.node?.images?.nodes[0]?.src ?product.node.images.nodes[0].src + "&height=20":null} /></div>
                     <div className="product_title">{sub_str(product.node.title,0,20)}</div>
@@ -371,14 +381,20 @@ const ProductModal: React.FC<{
                     key={index}
                     className="variant_item flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)]"
                     >
-                   
+                   {products?.some((sp:any) =>item.id.includes(sp.variant_id)) ? (
                     <Checkbox
                       label=""
                       checked={checkedProducts[item.id]} // Check if the product is checked
                       disabled={checkedProducts[item.id]}
                       onChange={() => handleVariantCheckboxChange(item.id)} // Handle checkbox change
                     />
-                  
+                   ):(
+                    <Checkbox
+                      label=""
+                      checked={checkedProducts[item.id]} // Check if the product is checked
+                      onChange={() => handleVariantCheckboxChange(item.id)} // Handle checkbox change
+                    />
+                   )}
                     <div><img src={item?.image?.src ?item?.image?.src + "&height=20":null} /></div>
                     <div>{sub_str(item.title,0,20)}</div>
                     </div>
@@ -387,7 +403,7 @@ const ProductModal: React.FC<{
                     ))}
                 </div>
               </div>
-             
+              </>
             )}
             </>
             ))}
