@@ -2,6 +2,14 @@
 body {
   font-family: 'SF Pro Display' !important;
 }
+/* ===================== style code for new theme extension =========================== */
+.pagination_model_content{
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* ===================== style code for new theme extension =========================== */
 .customization-panel {
   background-color: #f5f5f5;
   border-radius: 10px;
@@ -839,3 +847,5 @@ body .main_content_model .customization-panel.customization-panel2 .button-conta
   margin-top: 16px !important;
 }
 }
+
+
