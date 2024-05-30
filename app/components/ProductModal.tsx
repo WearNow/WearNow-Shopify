@@ -11,14 +11,13 @@ import axios from "axios";
 };
 
 
-const ProdcutModal: React.FC<{
+const ProductModal: React.FC<{
   isOpen: boolean;
   toggleModal: () => void;
   sessionData: any;
-  inputData: number;
   fetchProducts: any; 
   products:any;
-}> = ({ isOpen, toggleModal, sessionData, inputData,fetchProducts,products }) => {
+}> = ({ isOpen, toggleModal, sessionData,fetchProducts,products }) => {
   const [getproducts, setgetproducts] = useState([]);
   const [active,setActive] = useState([]);
   const [inputQueryValue, setInputQueryValue] = useState("");
@@ -68,7 +67,7 @@ const ProdcutModal: React.FC<{
  },[]);
 
   useEffect(() => {
-    if (inputData || inputQueryValue) {
+   
       fetchProductData();
       products?.map((product:any) =>{
         setCheckedProducts((prevState) => ({
@@ -80,14 +79,14 @@ const ProdcutModal: React.FC<{
           [product.product_id]: true,
         }));
       })
-    }
-  }, [inputData, inputQueryValue]);
+    
+  }, [inputQueryValue]);
 
   const fetchProductData = async () => {
     try {
       const data = JSON.stringify({
         queryfor: "product",
-        first: 50,
+        first: 250,
         fields: "id,title,",
         pagination: "yes",
         shop: sessionData.authWithShop.shop,
@@ -345,6 +344,9 @@ const ProdcutModal: React.FC<{
             </div>
             {/* Mapping through productTitles array */}
             {getproducts.map((product, index) => (
+              <>
+              {product?.node?.images?.nodes[0]?.src && (
+               
               <div
                 key={index}
                 className="flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)] product_items"
@@ -353,6 +355,7 @@ const ProdcutModal: React.FC<{
                   <Checkbox
                       label=""
                       checked={checkedProducts[product.node.id]} // Check if the product is checked
+                      disabled={checkedProducts[product.node.id]}
                     onChange={() => handleCheckboxChange(product.node.id)} // Handle checkbox change
                     />
                
@@ -363,7 +366,7 @@ const ProdcutModal: React.FC<{
                <div className="variant_item_content">
                     {product?.node?.variants?.nodes.map((item, index) => (
                       <>
-                    {item.title!="Default Title" && (
+                    {item?.image?.src && item.title!="Default Title" && (
                     <div
                     key={index}
                     className="variant_item flex gap-2 py-1 font-[450] text-[color:var(--p-color-text)]"
@@ -372,6 +375,7 @@ const ProdcutModal: React.FC<{
                     <Checkbox
                       label=""
                       checked={checkedProducts[item.id]} // Check if the product is checked
+                      disabled={checkedProducts[item.id]}
                       onChange={() => handleVariantCheckboxChange(item.id)} // Handle checkbox change
                     />
                   
@@ -383,6 +387,9 @@ const ProdcutModal: React.FC<{
                     ))}
                 </div>
               </div>
+             
+            )}
+            </>
             ))}
           </div>
           <div className="modal_control_btn flex gap-2 p-4 mt-4 w-full border-t border-solid bg-[color:var(--p-color-bg-surface)] border-neutral-200 max-md:flex-wrap max-md:pl-5 max-md:max-w-full">
@@ -416,4 +423,4 @@ const ProdcutModal: React.FC<{
   );
 };
 
-export default ProdcutModal;
+export default ProductModal;

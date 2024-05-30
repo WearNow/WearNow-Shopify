@@ -7,6 +7,7 @@ import SidebarNavigation from './SidebarNavigation'
 
 
 function Dashboard(sessionData:any) {
+  const session=sessionData;
     return (
         <>     
         <DashboardHeader/>
@@ -14,7 +15,7 @@ function Dashboard(sessionData:any) {
         <div className='dashboard_content_container'>
         <div className='dashboard_content_row'>
               <PerfactPicture/>
-              <VirtualTryOnWithStudio/>
+              <VirtualTryOnWithStudio sessionData={session}/>
             </div>
 
             <div className='dashboard_vartual_content_row'>

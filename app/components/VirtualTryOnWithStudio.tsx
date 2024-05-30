@@ -1,9 +1,74 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import { Link } from "@remix-run/react";
+import ProductModal from "./ProductModal";
+import client from "../services/ApolloClient";
+import gql from 'graphql-tag';
 
-const VartualTryOnWithStudio = () => {
+const VirtualTryOnWithStudio: React.FC<{sessionData:any}> = (sessionData) => {
+  const [modals, setModals] = useState<boolean>(false);
+  const [products, setProducts] = useState<any[]>([]);
+  const session=sessionData.sessionData.sessionData;
+  //console.log("sessionData:::=>",sessionData.sessionData.sessionData);
+  const toggleModal = () => {
+    setModals(!modals);
+  };
+  const fetchProducts = async () => {
+    
+    await client
+      .query({
+        query: gql`
+    query MyQuery3($storeid: uuid!) {
+    store_products(limit: 50, where: {store_id: {_eq: $storeid}}) {
+      store_id
+      title
+      uuid
+      variant_id
+      product_id
+      images
+      price
+      sku
+    }
+  }
+  `,fetchPolicy: "network-only",
+        variables: {
+          storeid: session.authWithShop.store_id,
+        },
+      })
+      .then((result:any) => {
+       var store_products = result.data.store_products;
+        // Map over store_products to create a new array with the added 'image' property
+        const updatedStoreProducts = store_products.map((sp:any, index:number) => {
+          // Assuming sp.images is already a JSON string that needs to be parsed
+          let images = sp.images.replace("[{'url': '",'');
+          images = images.replace("'}]",'');
+          console.log("images: :::" , images);
+          return {
+            ...sp, // Spread the existing properties of the product
+            image: images // Add the new image property
+          };
+        });
+         
+        setProducts(updatedStoreProducts);
+        console.log("apollo client store id: :::",updatedStoreProducts);
+      });
+
+
+};
+useEffect(() => {
+  // Call the fetchProducts function when the component mounts
+  fetchProducts();
+}, []);
   return (
     <>
+    {modals && (
+        <ProductModal
+          isOpen={modals}
+          toggleModal={toggleModal}
+          sessionData={session}
+          fetchProducts={fetchProducts}
+          products={products}
+        />
+      )} 
     <div className='virtual_tryon_with_studio  flex w-full gap-[10px] items-start flex-nowrap bg-[#fff] rounded-[16px] relative mx-auto '>
       <div className='flex w-full pt-[30px] pr-0 pb-[20px] pl-0 flex-col gap-[24px] items-center shrink-0 flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative'style={{display:""}}>
         <div className='flex flex-col gap-[-12px] justify-center items-center self-stretch shrink-0 flex-nowrap relative z-[1]'>
@@ -55,7 +120,7 @@ const VartualTryOnWithStudio = () => {
             </div>
           </button>
           </Link>
-          <div className='flex w-[126px] h-[40px] pt-[6px] pr-[16px] pb-[6px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[4px] relative z-[19]'>
+          <div onClick={toggleModal} style={{cursor: "pointer"}} className='flex w-[126px] h-[40px] pt-[6px] pr-[16px] pb-[6px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[4px] relative z-[19]'>
             <span className="h-[20px] shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-normal leading-[20px] text-[#323338] tracking-[-0.24px] relative text-left whitespace-nowrap z-20">
               Add Products
             </span>
@@ -165,4 +230,4 @@ const VartualTryOnWithStudio = () => {
   )
 }
 
-export default VartualTryOnWithStudio
+export default VirtualTryOnWithStudio
