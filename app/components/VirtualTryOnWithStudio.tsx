@@ -163,10 +163,23 @@ useEffect(() => {
               <button className='w-[94px] h-[24px] shrink-0 border-none relative z-[39] pointer'>
                 <div className='w-[94px] h-[24px] absolute top-0 left-0 z-40'>
                   <div className='w-full h-full text-[0px] absolute top-0 left-0 overflow-hidden z-[41]'>
+                    
+                    {session.authWithShop?.store?.onboarding_status=='completed' ?(
+                      <>
                     <span className="flex w-[90.385px] h-[16px] justify-center items-start font-['SF_Pro_Text'] text-[12px] font-normal leading-[16px] text-[#0e6518] relative text-center whitespace-nowrap z-[43] mt-[5px] mr-0 mb-0 ml-0">
                       Online
                     </span>
                     <div className='w-full h-full bg-[#e8f6e9] rounded-[6px] absolute top-0 left-0 z-[42]' />
+                    </>
+                    ):(
+                      <>
+                      <span className="flex w-[90.385px] h-[16px] justify-center items-start font-['SF_Pro_Text'] text-[12px] font-normal leading-[16px] text-[#e2897b] relative text-center whitespace-nowrap z-[43] mt-[5px] mr-0 mb-0 ml-0">
+                      Offline
+                    </span>
+                    <div className='w-full h-full bg-[#e8f6e9] rounded-[6px] absolute top-0 left-0 z-[42]' />
+                    </>
+                    )}
+                    
                   </div>
                 </div>
               </button>
