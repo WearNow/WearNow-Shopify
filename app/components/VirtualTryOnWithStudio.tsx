@@ -176,7 +176,7 @@ useEffect(() => {
                       <span className="flex w-[90.385px] h-[16px] justify-center items-start font-['SF_Pro_Text'] text-[12px] font-normal leading-[16px] text-[#e2897b] relative text-center whitespace-nowrap z-[43] mt-[5px] mr-0 mb-0 ml-0">
                       Offline
                     </span>
-                    <div className='w-full h-full bg-[#e8f6e9] rounded-[6px] absolute top-0 left-0 z-[42]' />
+                    <div className='w-full h-full bg-[#fff1f0] rounded-[6px] absolute top-0 left-0 z-[42]' />
                     </>
                     )}
                     
