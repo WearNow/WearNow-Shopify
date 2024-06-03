@@ -57,7 +57,7 @@ const DashboardHeader = () => {
         </div>
       </div>
       <div className='flex w-[316px] gap-[14px] justify-end items-center shrink-0 flex-nowrap relative '>
-        <button className='flex w-[104px] pt-[4px] pr-[10px] pb-[4px] pl-[10px] gap-[4px] justify-center items-center shrink-0 flex-nowrap rounded-[40px] border-solid border border-[#0570de] relative  pointer'>
+      {/**<button className='flex w-[104px] pt-[4px] pr-[10px] pb-[4px] pl-[10px] gap-[4px] justify-center items-center shrink-0 flex-nowrap rounded-[40px] border-solid border border-[#0570de] relative  pointer'>
           <span className="h-[16px] shrink-0 basis-auto font-['SF_Pro_Text'] text-[12px] font-medium leading-[16px] text-[#0570de] relative text-left whitespace-nowrap z-[17]">
             Create New
           </span>
@@ -81,6 +81,7 @@ const DashboardHeader = () => {
             </div>
           </div>
         </div>
+         */}  
         <Link to="/app/settings" className={matchSettingsPage ? "text-[#0570de]" : "text-[#414552]"}>
         <span className="settings h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px]  relative text-left whitespace-nowrap z-[23]">
           Settings
