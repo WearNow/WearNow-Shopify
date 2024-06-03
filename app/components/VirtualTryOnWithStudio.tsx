@@ -106,8 +106,7 @@ useEffect(() => {
           </div>
         </div>
         <div className='flex pt-0 pr-[20px] pb-0 pl-[20px] gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden '>
-          <Link to='/app/virtualtryon'>
-          <button className='flex w-[172px] h-[40px] pt-[8px] pr-[16px] pb-[8px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[28px] border-solid border border-[#2d9cdb] relative overflow-hidden shadow-[0_2px_5px_0_rgba(60,66,87,0.08)] pointer'>
+          <Link to='/app/virtualtryon' className='flex w-[172px] h-[40px] pt-[8px] pr-[16px] pb-[8px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[28px] border-solid border border-[#2d9cdb] relative overflow-hidden shadow-[0_2px_5px_0_rgba(60,66,87,0.08)] pointer'>
             <span className="flex w-[116px] h-[20px] justify-center items-center shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-semibold leading-[20px] text-[#fff] tracking-[-0.5px] relative text-center whitespace-nowrap ">
               Change Settings
             </span>
@@ -118,7 +117,6 @@ useEffect(() => {
               </svg>
               </div>
             </div>
-          </button>
           </Link>
           <div onClick={toggleModal} style={{cursor: "pointer"}} className='flex w-[126px] h-[40px] pt-[6px] pr-[16px] pb-[6px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[4px] relative z-[19]'>
             <span className="h-[20px] shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-normal leading-[20px] text-[#323338] tracking-[-0.24px] relative text-left whitespace-nowrap z-20">
@@ -193,8 +191,8 @@ useEffect(() => {
           </div>
         </div>
         <div className='flex pt-0 pr-[20px] pb-0 pl-[20px] gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative overflow-hidden z-[46]'>
-          <Link to='/app/photostudio'>
-          <button className='flex w-[147px] h-[40px] pt-[8px] pr-[16px] pb-[8px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[28px] border-solid border border-[#2d9cdb] relative overflow-hidden shadow-[0_2px_5px_0_rgba(60,66,87,0.08)] z-[47] pointer'>
+          <Link to='/app/photostudio' className='flex w-[147px] h-[40px] pt-[8px] pr-[16px] pb-[8px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[28px] border-solid border border-[#2d9cdb] relative overflow-hidden shadow-[0_2px_5px_0_rgba(60,66,87,0.08)] z-[47] pointer'>
+          
             <span className="flex w-[91px] h-[20px] justify-center items-center shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-semibold leading-[20px] text-[#fff] tracking-[-0.5px] relative text-center whitespace-nowrap z-[48]">
               Create Photo
             </span>
@@ -205,7 +203,7 @@ useEffect(() => {
                 </svg>
               </div>
             </div>
-          </button>
+          
           </Link>
         </div>
       </div>
