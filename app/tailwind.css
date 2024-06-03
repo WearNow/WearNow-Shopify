@@ -627,7 +627,7 @@ select::-ms-expand {
 
 svg.search_icon {
   position: absolute;
-  top: 11px;
+  top: 5px;
   left: 12px;
 }
 
@@ -690,6 +690,9 @@ p.hover_effect_content {
 }
 /* ================================ Vartual try on  Page end style code  ================================ */
 /* ================================ Sidebar Navigation style code ===================================== */
+.select_option_polaries>div {
+  width: 100%;
+}
 .side_bar_navigation {
   position: fixed;
   top: 0;
@@ -840,6 +843,9 @@ select.cstm_select {
   /* .perfactpicture_overlay_content{
     background-color: red;
   } */
+  .vto_page {
+    width: 100%;
+    } 
   .photo_studio_container .position_top {
     margin-top: 70px !important;
     padding: 0px 20px;
