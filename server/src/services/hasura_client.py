@@ -18,7 +18,7 @@ class Client:
         return request.json()
 
     def get_store_product(self, uuid): return self.run_query(
-                """
+        """
                     query store_products_by_pk($uuid: uuid!){
                         store_products_by_pk(uuid:$uuid){
                             created_at
@@ -32,6 +32,7 @@ class Client:
                     }
                 """, {"uuid": uuid}
     )
+
     def add_store_products(self, objects): return self.run_query(
         """
             mutation AddStoreProducts($objects: [store_products_insert_input!]!) {
@@ -52,4 +53,54 @@ class Client:
         }
         """,
         {"store_id": store_id, "_set": _set}
+    )
+
+    def create_store_settings(self, _set): return self.run_query(
+        """
+                mutation insert_store_setting_one($object: store_setting_insert_input!) {
+                    insert_store_setting_one(object: $object) {
+                        created_at
+                        uuid
+                    }
+                }
+                """,
+        {"object": _set},
+    )
+
+    def get_store_setting_existence(self, store_id): return self.run_query(
+        """
+                query get_store_setting($store_id: uuid!) {
+                    store_setting_aggregate(where: {store_id: {_eq: $store_id}}) {
+                        aggregate {
+                            count
+                        }
+                    }
+                }
+                """,
+        {"store_id": store_id}
+    )
+
+    def get_notification_setting_existence(self, store_id): return self.run_query(
+        """
+            query get_notification_setting($store_id: uuid!) {
+                notification_setting_aggregate(where: {store_id: {_eq: $store_id}}) {
+                    aggregate {
+                        count
+                    }
+                }
+            }
+            """,
+        {"store_id": store_id}
+    )
+
+    def create_notification_settings(self, _set): return self.run_query(
+        """
+        mutation insert_notification_setting_one($object: notification_setting_insert_input!) {
+            insert_notification_setting_one(object: $object) {
+                created_at
+                store_id
+            }
+        }
+        """,
+        {"object": _set},
     )
