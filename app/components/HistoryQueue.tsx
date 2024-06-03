@@ -68,24 +68,25 @@ const HistoryQueue: React.FC = () => {
     await client
       .query({
         query: gql`
-          query MyQuery {
-            product_photo_history {
-              generated_image
-              created_at
-              uuid
+          {
+            product_image_generation_request(where: {status: {_eq: "PENDING"}}) {
               store_product {
-                images
-                product_id
                 title
+                variant_id
+                uuid
               }
+              status
+              results
+              created_at
             }
           }
+
         `,
         fetchPolicy: "network-only",
       })
       .then((result) => {
         console.log("apollo client result: :::", result);
-        var product_photo_history = result.data.product_photo_history;
+        var product_photo_history = result.data.product_image_generation_request;
         // Map over store_products to create a new array with the added 'image' property
         function formatTimeWithAMPM(dateTimeString:string) {  
           // 解析日期时间字符串  

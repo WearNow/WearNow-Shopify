@@ -75,11 +75,7 @@ const Image: React.FC<ImageProps> = ({ src, alt, className, onClick }) => {
   return <img src={src} alt={alt} className={className} onClick={onClick} />;
 };
 
-interface HistoryModalProps {
-  images: { src: string; alt: string }[];
-  isOpen: boolean;
-  onClose?: () => void;
-}
+
 
 const downloadImage = (imageUrl: string, fileName?: string) => {
   fetch(imageUrl)
@@ -108,12 +104,40 @@ const downloadImage = (imageUrl: string, fileName?: string) => {
     });
 };
 
+interface HistoryModalProps {
+  name: string;
+  images: { src: string; alt: string }[];
+  isOpen: boolean;
+  model: {
+    name: string;
+    image: string;
+  }
+  background: {
+    name: string;
+    image: string;
+  }
+  pose: {
+    name: string;
+    image: string;
+  }
+  photos: string;
+  onClose?: () => void;
+}
+
 export const HistoryModal: React.FC<HistoryModalProps> = ({
   images,
   isOpen,
+  photos,
+  name,
+  model,
+  background,
+  pose,
   onClose,
 }) => {
   if (!isOpen) return null;
+
+  console.log(images, ":::images");
+  console.log(background, ":::background");
 
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const { showNotification } = useNotification();
@@ -161,7 +185,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
               <header className="flex flex-col pl-3 pb-6 font-medium max-md:px-5">
                 <div className="inline-flex items-center">
                   <span className="text-lg leading-7 text-gray-900">
-                    [Product Name]
+                    {name}
                   </span>
                   {/* close icon */}
                   <img
@@ -171,7 +195,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                     onClick={onClose}
                   />
                 </div>
-                <p className="mt-1 text-sm text-slate-600">4 Photos</p>
+                <p className="mt-1 text-sm text-slate-600">{photos} Photos</p>
               </header>
               <div className="flex z-10 flex-col pl-3 max-md:px-5">
                 <h2 className="text-base font-medium leading-6 text-slate-700">
@@ -181,12 +205,13 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                   <div className="h-6 pl-1 pr-2 py-0.5 bg-white rounded-md border border-gray-300 items-center gap-0.5 inline-flex">
                     <div className="justify-start items-center gap-1 flex">
                       <Image
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ea476f537d9f7067223dfc7d5e3bfe2bc22c2eb64df1f2672df209917bbddd0?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&"
+                        // src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ea476f537d9f7067223dfc7d5e3bfe2bc22c2eb64df1f2672df209917bbddd0?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&"
+                        src={model?.image}
                         alt="Model Image"
                         className="w-4 h-4"
                       />
                       <div className="text-center text-slate-700 text-sm font-medium font-['Inter'] leading-tight">
-                        Olivia 1
+                        {model?.name}
                       </div>
                     </div>
                   </div>
@@ -198,12 +223,14 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                   <div className="h-6 pl-1 pr-2 py-0.5 bg-white rounded-md border border-gray-300 items-center gap-0.5 inline-flex">
                     <div className="justify-start items-center gap-1 flex">
                       <Image
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ea476f537d9f7067223dfc7d5e3bfe2bc22c2eb64df1f2672df209917bbddd0?apiKey=f33f54c3e98c47d08e772cdbeee9d64d"
+                        // src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ea476f537d9f7067223dfc7d5e3bfe2bc22c2eb64df1f2672df209917bbddd0?apiKey=f33f54c3e98c47d08e772cdbeee9d64d"
+                        src={background?.image}
                         alt="Model Image"
                         className="w-4 h-4"
                       />
                       <div className="text-center text-slate-700 text-sm font-medium font-['Inter'] leading-tight">
-                        Background 1
+                      {background?.name}
+
                       </div>
                     </div>
                   </div>
@@ -215,12 +242,13 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                   <div className="h-6 pl-1 pr-2 py-0.5 bg-white rounded-md border border-gray-300 items-center gap-0.5 inline-flex">
                     <div className="justify-start items-center gap-1 flex">
                       <Image
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ea476f537d9f7067223dfc7d5e3bfe2bc22c2eb64df1f2672df209917bbddd0?apiKey=f33f54c3e98c47d08e772cdbeee9d64d"
+                        // src="https://cdn.builder.io/api/v1/image/assets/TEMP/8ea476f537d9f7067223dfc7d5e3bfe2bc22c2eb64df1f2672df209917bbddd0?apiKey=f33f54c3e98c47d08e772cdbeee9d64d"
+                        src={pose?.image}
                         alt="Model Image"
                         className="w-4 h-4"
                       />
                       <div className="text-center text-slate-700 text-sm font-medium font-['Inter'] leading-tight">
-                        Pose 1
+                      {pose?.name}
                       </div>
                     </div>
                   </div>

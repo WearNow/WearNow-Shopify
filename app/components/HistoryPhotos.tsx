@@ -66,23 +66,35 @@ const Card: FC<CardProps> = ({
 const HistoryPhotos: FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [historyData, setHistoryData] = React.useState([]);
+  const [historyModalProp, setHistoryModalProp] = React.useState({});
 
   const fetchHistoryData = async () => {
     await client
       .query({
-        query: gql`
-          query MyQuery {
-            product_photo_history {
-              generated_image
-              created_at
-              uuid
-              store_product {
-                images
-                product_id
-                title
+        query: gql`{
+          product_photo_history {
+            generated_image
+            created_at
+            uuid
+            store_product {
+              images
+              product_id
+              title
+            }
+            request {
+              background {
+                name
+                image
               }
+              pose {
+                name
+                image
+              }
+              model_id
             }
           }
+        }
+        
         `,
         fetchPolicy: "network-only",
       })
@@ -103,7 +115,7 @@ const HistoryPhotos: FC = () => {
           const formattedHours = hours % 12 || 12; // 将24小时制转换为12小时制，并处理午夜的情况  
         
           // 格式化时间并返回  
-          return `${formattedHours}:${minutes} ${ampm}`;  
+          return `${formattedHours}:${minutes} ${ampm}`;   
       }  
         const updatedStoreProducts = product_photo_history.map(
           (pph: any, index: number) => {
@@ -112,8 +124,18 @@ const HistoryPhotos: FC = () => {
               src: JSON.parse(pph.generated_image).images[0],
               name: pph.store_product.title,
               photos: JSON.parse(pph.generated_image).images.length,
+              images: JSON.parse(pph.generated_image).images.map((image: any) => {
+                return {
+                  src: image,
+                  alt: pph.store_product.title,
+                };
+              }),
               date: pph.created_at.split("T")[0],
-              time: formatTimeWithAMPM(pph.created_at)
+              time: formatTimeWithAMPM(pph.created_at),
+              background: pph.request?.background,
+              pose: pph.request?.pose,
+              model_: pph.request?.model,
+              // model_id: pph.request.model_id,
             };
           }
         );
@@ -244,8 +266,8 @@ const HistoryPhotos: FC = () => {
   return (
     <div className="flex flex-col bg-white">
       <HistoryModal
-        images={images}
         isOpen={isOpen}
+        {...historyModalProp}
         onClose={() => setIsOpen(false)}
       />
       <div className=" flex gap-2 items-center mx-7 mt-10 text-sm font-semibold leading-5 text-slate-700 max-md:flex-wrap max-md:mt-10 max-md:mr-2.5">
@@ -260,9 +282,13 @@ const HistoryPhotos: FC = () => {
           {cards.map((card, index) => (
             <Card
               key={index}
-              {...card}
+              {...card} 
               aspect="square"
-              onClick={() => setIsOpen(true)}
+              onClick={() => {
+                setIsOpen(true);
+                setHistoryModalProp({...card})
+              }
+              }
             />
           ))}
         </main>
