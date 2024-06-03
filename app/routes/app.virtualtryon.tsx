@@ -12,11 +12,19 @@ export default function VartualTryOnPage() {
       [],
     );
   
-    const optiondata = [
-      {label: 'Today', value: 'today'},
-      {label: 'Yesterday', value: 'yesterday'},
-      {label: 'Last 7 days', value: 'lastWeek'},
-    ];
+    const optiondata1 = [
+        {label: '1 Selfies', value: '1 Selfies'},
+        {label: '2 Selfies', value: '2 Selfies'},
+        {label: '3 Selfies', value: '3 Selfies'},
+      ];
+      const optiondata2 = [
+        {label: 'Standard Definition', value: 'Standard Definition'},
+        {label: 'HD', value: 'HD'},
+      ];
+      const optiondata3 = [
+        {label: 'No', value: 'no'},
+        {label: 'Yes', value: 'yes'},
+      ];
     return (
         <>
             <DashboardHeader />
@@ -52,7 +60,7 @@ export default function VartualTryOnPage() {
                                                 <div className='select_option_polaries flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative overflow-hidden z-[8]'>
                                                 <Select
                                                 label=""
-                                                options={optiondata}
+                                                options={optiondata1}
                                                 onChange={handleSelectChange}   
                                                 value={selected}
                                                 />
@@ -82,7 +90,7 @@ export default function VartualTryOnPage() {
                                     <div className='select_option_polaries flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative z-[6]'>
                                    <Select
                                         label=""
-                                        options={optiondata}
+                                        options={optiondata2}
                                         onChange={handleSelectChange}   
                                         value={selected}
                                         />
@@ -110,7 +118,7 @@ export default function VartualTryOnPage() {
                                     <div className='select_option_polaries flex gap-[8px] items-start grow shrink-0 basis-0 flex-nowrap relative overflow-hidden z-[6]'>
                                       <Select
                                         label=""
-                                        options={optiondata}
+                                        options={optiondata3}
                                         onChange={handleSelectChange}   
                                         value={selected}
                                         />
