@@ -61,9 +61,21 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
       setInputData(10);
     }
   };
+  function getShop(){
+  const myHeaders = new Headers();
+      myHeaders.append("X-Shopify-Access-Token", sessionData.authWithShop.accessToken);
 
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
 
-
+      fetch(`https://${sessionData.authWithShop.shop}/admin/api/2024-04/shop.json`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => console.log(result.shop.plan_name,"shop data returned"))
+        .catch((error) => console.error(error));
+  }
   //delete checkedData  data
   const handleDeleteItem = async (idToDelete: string) => {
     setDisabled(idToDelete);

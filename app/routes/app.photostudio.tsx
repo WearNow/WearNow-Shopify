@@ -3,20 +3,17 @@ import { Link } from "@remix-run/react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData,useNavigate } from "@remix-run/react";
 import { authenticate } from "../shopify.server";
-import axios from "axios";
 import DashboardHeader from "~/components/DashboardHeader";
 import SelectOnboarding from "~/components/SelectOnboarding";
 import SelectedOnbording from "~/components/SelectedOnbording";
 import FadedOnboarding from "~/components/FadedOnboarding";
 import ProductSelector from "~/components/ProductoSelector";
 import ThumbnailSelector from "~/components/ThumbnailSelector";
-import BackGroundSelector from "~/components/BackGroundSelector";
 import PhotoToShow from "~/components/PhotoToShow";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import SidebarNavigation from "~/components/SidebarNavigation";
-import { Checkbox,Select,Spinner } from '@shopify/polaris';
-import { M } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+import { Select,Spinner } from '@shopify/polaris';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const  admin1  = await authenticate.admin(request);

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 
-interface Props {
-    options: string[];
-}
 
-const MultipleSearchSelection: React.FC<Props> = ({ options }) => {
+const MultipleSearchSelection: React.FC<{options:any}> = ({ options }) => {
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
+    console.log(options,"options");
     const handleSelectOption = (option: string) => {
         setSelectedOptions([...selectedOptions, option]);
         setSearchTerm(''); // Clear search term after selection
@@ -16,14 +14,10 @@ const MultipleSearchSelection: React.FC<Props> = ({ options }) => {
     };
 
     const handleRemoveOption = (option: string) => {
-        setSelectedOptions(selectedOptions.filter((item) => item !== option));
+        setSelectedOptions(selectedOptions.filter((item) => item.uuid !== option));
     };
 
-    const filteredOptions = options.filter(
-        (option) =>
-            option.toLowerCase().includes(searchTerm.toLowerCase()) &&
-            !selectedOptions.includes(option)
-    );
+    const filteredOptions = options;
 
     return (
         <div className="flex flex-col w-full ">
@@ -62,11 +56,11 @@ const MultipleSearchSelection: React.FC<Props> = ({ options }) => {
                     <ul className="absolute z-10 bg-white w-full border border-gray-300 rounded mt-1 overflow-y-auto max-h-48">
                         {filteredOptions.map((option) => (
                             <li
-                                key={option}
-                                onClick={() => handleSelectOption(option)}
+                                key={option?.uuid}
+                                onClick={() => handleSelectOption(option.uuid)}
                                 className="px-3 py-2 cursor-pointer hover:bg-gray-100"
                             >
-                                {option}
+                                {option?.name}
                             </li>
                         ))}
                     </ul>

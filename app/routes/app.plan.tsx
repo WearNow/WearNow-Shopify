@@ -79,9 +79,26 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         //console.log(result.data.session, "apollo client");
       });
 
+      const myHeaders = new Headers();
+      myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
 
-  return { shop,packages,auth_session };
-};
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+      
+
+fetch(`https://${shop}/admin/api/2024-01/themes.json`, requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result,"themes data returned"))
+  .catch((error) => console.error(error));
+      fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => console.log(result.shop.plan_name,"shop data returned"))
+        .catch((error) => console.error(error));
+        return { shop,packages,auth_session };
+      };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   let formData = await request.formData();
@@ -213,22 +230,5 @@ export default function PlanPage() {
     <>
       <Billing handlesubmit={handlesubmit} packageData={packages} store_id={store_id} />
     </>
-  );
-}
-
-function Code({ children }: { children: React.ReactNode }) {
-  return (
-    <Box
-      as="span"
-      padding="025"
-      paddingInlineStart="100"
-      paddingInlineEnd="100"
-      background="bg-surface-active"
-      borderWidth="025"
-      borderColor="border"
-      borderRadius="100"
-    >
-      <code>{children}</code>
-    </Box>
   );
 }
