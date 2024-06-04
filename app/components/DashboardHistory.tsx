@@ -1,6 +1,22 @@
 import React from 'react'
 import DashboardModel from './DashboardModel';
+import { fetchHistoryData } from '~/apis/history';
+import { HistoryModal } from './HistoryModal';
 const DashboardHistory = () => {
+    
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [historyData, setHistoryData] = React.useState([]);
+    const [historyModalProp, setHistoryModalProp] = React.useState({});
+
+    React.useEffect(() => {
+        // Call the fetchProducts function when the component mounts
+        console.log("apollo useEffect :::");
+        fetchHistoryData().then((updatedStoreProducts) => {
+          console.log("fetchHistoryData result: :::", updatedStoreProducts);
+          setHistoryData(updatedStoreProducts);
+        });
+      }, []);
+
     return (
         <div className='main-container flex w-full pr-0 pb-[20px] pl-0 flex-col gap-[24px] items-left flex-nowrap bg-[#fff] rounded-[8px] border-solid border border-[#d8dbdf] relative mx-auto my-0'>
             <div className='flex h-[64px] flex-col gap-[-12px] mt-5 justify-start items-left shrink-0 flex-nowrap '>
@@ -28,8 +44,22 @@ const DashboardHistory = () => {
                 </button>
             </div> */}
             < DashboardModel/>
+            <HistoryModal
+                isOpen={isOpen}
+                {...historyModalProp}
+                onClose={() => setIsOpen(false)}
+            />
             <div className='product_create_select'>
-                <div className='product_create_select_item'>
+                {historyData?.length > 0 && historyData.map((item, index) => (
+                    <div className='product_create_select_item cursor-pointer' onClick={() => {
+                        setIsOpen(true);
+                        setHistoryModalProp({...item})
+                    }} key={index}>
+                        <img  src={item?.src} />
+                        <span>{item?.photos}+</span>
+                    </div>
+                ))}
+                {/* <div className='product_create_select_item'>
                     <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div>
@@ -52,7 +82,7 @@ const DashboardHistory = () => {
                 <div className='product_create_select_item'>
                     <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
-                </div>
+                </div> */}
             </div>
         </div>
     )
