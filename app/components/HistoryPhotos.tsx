@@ -90,7 +90,10 @@ const HistoryPhotos: FC = () => {
                 name
                 image
               }
-              model_id
+              model {
+                name
+                cover_image
+              }
             }
           }
         }
@@ -134,7 +137,10 @@ const HistoryPhotos: FC = () => {
               time: formatTimeWithAMPM(pph.created_at),
               background: pph.request?.background,
               pose: pph.request?.pose,
-              model_: pph.request?.model,
+              model: {
+                name: pph.request?.model?.name,
+                image: pph.request?.model?.cover_image,
+              }
               // model_id: pph.request.model_id,
             };
           }

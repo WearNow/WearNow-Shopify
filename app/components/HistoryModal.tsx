@@ -75,8 +75,6 @@ const Image: React.FC<ImageProps> = ({ src, alt, className, onClick }) => {
   return <img src={src} alt={alt} className={className} onClick={onClick} />;
 };
 
-
-
 const downloadImage = (imageUrl: string, fileName?: string) => {
   fetch(imageUrl)
     .then((response) => response.blob())
@@ -111,15 +109,15 @@ interface HistoryModalProps {
   model: {
     name: string;
     image: string;
-  }
+  };
   background: {
     name: string;
     image: string;
-  }
+  };
   pose: {
     name: string;
     image: string;
-  }
+  };
   photos: string;
   onClose?: () => void;
 }
@@ -138,14 +136,13 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
 
   console.log(images, ":::images");
   console.log(background, ":::background");
+  console.log(model, ":::model");
 
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const { showNotification } = useNotification();
   return (
     <section
-      className={
-        `fixed z-10 flex w-full h-full top-0 left-0 justify-center items-center px-16 py-20 bg-zinc-800 bg-opacity-20 `
-      }
+      className={`fixed z-10 flex w-full h-full top-0 left-0 justify-center items-center px-16 py-20 bg-zinc-800 bg-opacity-20 `}
     >
       <div className="max-w-full bg-white rounded-xl shadow-xl w-[669px] max-md:pl-5 max-md:overflow-scroll max-md:h-[98%]">
         <div className="flex max-md:flex-col max-md:gap-0 p-4">
@@ -229,8 +226,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                         className="w-4 h-4"
                       />
                       <div className="text-center text-slate-700 text-sm font-medium font-['Inter'] leading-tight">
-                      {background?.name}
-
+                        {background?.name}
                       </div>
                     </div>
                   </div>
@@ -248,7 +244,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                         className="w-4 h-4"
                       />
                       <div className="text-center text-slate-700 text-sm font-medium font-['Inter'] leading-tight">
-                      {pose?.name}
+                        {pose?.name}
                       </div>
                     </div>
                   </div>
@@ -267,24 +263,27 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                 >
                   Add to product listing
                 </button>
-                <button className="flex gap-1.5 justify-center px-4 py-2.5 mt-3 bg-white border border-gray-300 shadow-sm rounded-[99px] text-slate-700 max-md:px-5">
+                <button
+                  className="flex gap-1.5 justify-center px-4 py-2.5 mt-3 bg-white border border-gray-300 shadow-sm rounded-[99px] text-slate-700 max-md:px-5"
+                  onClick={() => {
+                    console.log("下载所有图片", ":::images");
+                    // 下载所有图片
+                    images.forEach((image) => {
+                      downloadImage(image.src, image.alt);
+                    });
+
+                    showNotification({
+                      message: "Successfully downloaded photo",
+                      type: "success",
+                      duration: 5000,
+                    });
+                  }}
+                >
                   <span>Download all photos</span>
                   <Image
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3abb265c89c53e97de8c35861fde19d319d5c56cd7176b7e07a1ac880e4b6fd?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&"
                     alt="Download Icon"
                     className="shrink-0 my-auto w-5 aspect-square"
-                    onClick={() => {
-                      // 下载所有图片
-                      images.forEach((image) => {
-                        downloadImage(image.src, image.alt);
-                      });
-
-                      showNotification({
-                        message: "Successfully downloaded photo",
-                        type: "success",
-                        duration: 5000,
-                      });
-                    }}
                   />
                 </button>
               </footer>
