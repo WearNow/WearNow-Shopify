@@ -624,7 +624,11 @@ select::-ms-expand {
   top: 8px;
   gap: 7px;
 }
-
+.vartualtryon_row span.Polaris-Tag__Text {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
 svg.search_icon {
   position: absolute;
   top: 5px;

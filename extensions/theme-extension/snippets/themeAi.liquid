@@ -1,664 +1,108 @@
-<head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;600&display=swap">
-  <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .pagination_model_content{
-      display: flex;
-      font-size: 18px;
-      font-weight: 500;
-    }
-    .model_btn {
-      background: #047AC6;
-      color: white;
-  }
-  .main_model_wna {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999999;
-    background-color: rgba(0, 0, 0, .5);
-}
-  </style>
-</head>
-{% comment %}
-  <!-- Button to open the first modal -->
-  <button onclick="openModal()">Open Modal</button>
-
-  <script>
-    var selectedData = {};
-    function openModal() {
-      document.getElementById('myModal').style.display = 'block';
-    }
-    function closeModal() {
-      selectedData.gender = document.getElementById('gender').value;
-      selectedData.height = document.getElementById('height').value;
-      selectedData.weight = document.getElementById('weight').value;
-      selectedData.size = document.getElementById('size').value;
-      selectedData.fit = document.getElementById('fit').value;
-      document.getElementById('myModal').style.display = 'none';
-    }
-    function openModal2() {
-      document.getElementById('myModal2').style.display = 'block';
-    }
-
-    function closeModal2() {
-      selectedData.shoulders = document.getElementById('shoulders').value;
-      selectedData.waist = document.getElementById('waist').value;
-      selectedData.hips = document.getElementById('hips').value;
-      document.getElementById('myModal2').style.display = 'none';
-    }
-
-    function openModal3() {
-      document.getElementById('myModal3').style.display = 'block';
-      // Set a timeout to close the third modal and open the fourth after 5 seconds
-      setTimeout(function () {
-        closeModal3();
-        openModal4();
-        displaySelectedData(); // Display the data in the fourth modal
-      }, 3000);
-    }
-
-    function back_btn(){
-      document.getElementById('myModal').style.display = 'block';
-      document.getElementById('myModal2').style.display = 'none';
-    }
-
-    function closeModal3() {
-      document.getElementById('myModal3').style.display = 'none';
-    }
-
-    function openModal4() {
-      document.getElementById('myModal4').style.display = 'block';
-    }
-
-    function closeModal4() {
-      document.getElementById('myModal4').style.display = 'none';
-    }
-    function displaySelectedData() {
-      var resultsContainer = document.getElementById('sizeResults');
-      resultsContainer.innerHTML =
-        '<p>Gender: <span>' +
-        selectedData.gender +
-        '</span> </p>' +
-        '<p>Height: <span> ' +
-        selectedData.height +
-        '</span></p>' +
-        '<p>Weight: <span> ' +
-        selectedData.weight +
-        '</span></p>' +
-        '<p>Size: <span> ' +
-        selectedData.size +
-        '</span></p>' +
-        '<p>Fit: <span> ' +
-        selectedData.fit +
-        '</span></p>' +
-        '<p>Shoulders: <span> ' +
-        selectedData.shoulders +
-        '</span></p>' +
-        '<p>Waist: <span> ' +
-        selectedData.waist +
-        '</span></p>' +
-        '<p>Hips: <span> ' +
-        selectedData.hips +
-        '</span></p>';
-    }
-  </script>
-  <script>
-    function onPageLoadComplete() {
-      var content = `<div class="main_content_model">
-        <div id="myModal" class="modal">
-          <div class="modal-content">
-            <div class="customization-panel customization-panel1">
-              <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Rectangle_10188_1.png?v=1714996067">
-              <form id="customizationForm">
-                <div class="form_content">
-                  <label for="gender" class="title_label">Select Your Gender</label>
-                  <label class="form_content" for="gender">Gender</label>
-                  <select id="gender" name="gender">
-                    <option value="">Choose one</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div class="form_content">
-                  <label for="height" class="title_label">Select Your Height & Weight</label>
-                  <label class="form_content" for="height">Height (Inches)</label>
-                  <select id="height" name="height">
-                    <option value="">Choose one</option>
-                    <option value="short">Short</option>
-                    <option value="average">Average</option>
-                    <option value="tall">Tall</option>
-                  </select>
-                </div>
-                <div class="form_content">
-                  <label class="form_content" for="weight"> Weight (Lbs)</label>
-                  <select id="weight" name="weight">
-                    <option value="">Choose one</option>
-                    <option value="thin">Thin</option>
-                    <option value="average">Average</option>
-                    <option value="overweight">Overweight</option>
-                  </select>
-                </div>
-                <div class="form_content">
-                  <label for="size"class="title_label">Select Your Size & Fit</label>
-                  <label class="form_content" for="size">Size (Usual size you wear)</label>
-                  <select id="size" name="size">
-                    <option value="">Choose one</option>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                  </select>
-                </div>
-                <div class="form_content">
-                  <label class="form_content" for="size">Fitting</label>
-                  <select id="fit" name="fit">
-                    <option value="">Choose one</option>
-                    <option value="tight">Tight</option>
-                    <option value="regular">Regular</option>
-                    <option value="loose">Loose</option>
-                  </select>
-                </div>
-                <div class="button-container">
-                  <button type="submit">
-                    Continue (1/2)
-                    <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ArrowRight.svg?v=1715009315" alt="">
-                  </button>
-                  {% comment %} <button onclick="closeModal()">Close</button> {% endcomment %}
-                </div>
-              </form>
-            </div>
-            <div class="footer_model">
-              <h2 class="footer_model_title">Try-On This Look</h2>
-              <div class="footer_model_text_with_icon">
-                <h3 class="footer_model_title_pow">Powered By</h3>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/footer_icon_7a9b7dbc-edf2-4484-a878-4600ac40d704.png?v=1715009086"
-                  alt=""
-                >
-                <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/WearNow.png?v=1715009086" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Second Modal -->
-        <div id="myModal2" class="modal">
-          <div class="modal-content">
-            <div class="customization-panel customization-panel2">
-              <div class="model_photo">
-              <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Rectangle_10188_1.png?v=1714996067">
-              </div>
-              <form id="customizationForm2">
-                <div class="form-group">
-                  <h2 class="custmize_your_fit title_label">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="back_btn" onclick="back_btn();" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.752 9C15.752 9.41421 15.4162 9.75 15.002 9.75L5.31274 9.75L8.03265 12.4696C8.32556 12.7625 8.32558 13.2374 8.03271 13.5303C7.73983 13.8232 7.26495 13.8232 6.97205 13.5304L2.97165 9.53036C2.83098 9.3897 2.75195 9.19892 2.75195 9C2.75195 8.80107 2.83098 8.6103 2.97165 8.46964L6.97205 4.46964C7.26495 4.17676 7.73983 4.17679 8.03271 4.4697C8.32558 4.7626 8.32556 5.23748 8.03265 5.53036L5.31274 8.25L15.002 8.25C15.4162 8.25 15.752 8.58579 15.752 9Z" fill="#25272C"/>
-                    </svg>
-                    Customize Your Fit
-                  </h2>
-                  <label for="shoulders">Shoulders</label>
-                  <select id="shoulders" name="shoulders">
-                    <option value="">Choose one</option>
-                    <option value="narrow">Narrow</option>
-                    <option value="average">Average</option>
-                    <option value="broad">Broad</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="waist">Waist</label>
-                  <select id="waist" name="waist">
-                    <option value="">Choose one</option>
-                    <option value="narrow">Narrow</option>
-                    <option value="average">Average</option>
-                    <option value="wide">Wide</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="hips">Hips</label>
-                  <select id="hips" name="hips">
-                    <option value="">Choose one</option>
-                    <option value="narrow">Narrow</option>
-                    <option value="average">Average</option>
-                    <option value="wide">Wide</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="uploadPhoto"class="title_label">Upload Selfie</label>
-                  {% comment %} <input type="file" id="uploadPhoto" name="uploadPhoto" accept="image/*"> {% endcomment %}
-                  <div class="upload_photo_container">
-                    <button class="button"><span class="label">Add Photo</span></button
-                    ><span class="action-hint">Accepts .jpeg, .jpg, and .png</span>
+<!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="./style.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;600&display=swap">
+      <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441">
+  </head>
+  
+  <body>
+      <div class="model_container"style="display:none;">
+          <div class="model_row">
+              <div class="model_col">
+                  <div class="model_img_conten">
+                      <img src="{{ "newmodel1.png" | asset_img_url: '' }}" alt="" class="model_img">
+                      <img src="{{ "power_by_wna.png" | asset_img_url: '' }}" alt="" class="model_power_by">
+                      <div class="close_btn_model_content">
+                          <svg class="close_btn_model" xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                              viewBox="0 0 12 12" fill="none">
+                              <path
+                                  d="M0.323144 11.677C0.462882 11.8167 0.628821 11.9127 0.820961 11.9651C1.01892 12.0116 1.21397 12.0116 1.40611 11.9651C1.60408 11.9127 1.77293 11.8196 1.91266 11.6857L6 7.59112L10.0961 11.677C10.2358 11.8225 10.3988 11.9185 10.5852 11.9651C10.7773 12.0116 10.9694 12.0116 11.1616 11.9651C11.3595 11.9127 11.5284 11.8138 11.6681 11.6682C11.8195 11.5286 11.9185 11.3627 11.9651 11.1706C12.0116 10.9727 12.0116 10.7777 11.9651 10.5857C11.9185 10.3936 11.8224 10.2277 11.6769 10.088L7.59825 5.99345L11.6769 1.9076C11.8224 1.76792 11.9185 1.60204 11.9651 1.40997C12.0116 1.2179 12.0116 1.02583 11.9651 0.833758C11.9185 0.635868 11.8195 0.467079 11.6681 0.327392C11.5284 0.181884 11.3595 0.0858494 11.1616 0.039287C10.9694 -0.0130957 10.7773 -0.0130957 10.5852 0.039287C10.3988 0.0858494 10.2358 0.178974 10.0961 0.318661L6 4.40451L1.91266 0.309931C1.77293 0.176064 1.60408 0.0858494 1.40611 0.039287C1.21397 -0.0130957 1.01892 -0.0130957 0.820961 0.039287C0.628821 0.0858494 0.462882 0.178974 0.323144 0.318661C0.177584 0.464169 0.0815138 0.635868 0.0349345 0.833758C-0.0116448 1.02583 -0.0116448 1.2179 0.0349345 1.40997C0.0815138 1.60204 0.174672 1.76792 0.31441 1.9076L4.41048 5.99345L0.31441 10.088C0.174672 10.2277 0.0815138 10.3936 0.0349345 10.5857C-0.0116448 10.7777 -0.0116448 10.9727 0.0349345 11.1706C0.0815138 11.3627 0.177584 11.5315 0.323144 11.677Z"
+                                  fill="#8E8E93" />
+                          </svg>
+                      </div>
                   </div>
-                  <div class="upload_photo_best_practice">
-                    <div class="text">
-                      <span class="link-text">Photo Upload Best Practices</span>
-                    </div>
-                    <div class="glyph">
-                      <svg xmlns="http://www.w3.org/2000/svg"viewBox="0 0 12 13" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 3.5V11H9V8.75C9 8.33579 9.33579 8 9.75 8C10.1642 8 10.5 8.33579 10.5 8.75V11.75C10.5 12.1642 10.1642 12.5 9.75 12.5H0.75C0.335786 12.5 0 12.1642 0 11.75V2.75C0 2.33579 0.335786 2 0.75 2H3.75C4.16421 2 4.5 2.33579 4.5 2.75C4.5 3.16421 4.16421 3.5 3.75 3.5H1.5ZM5.78033 7.78033C5.48744 8.07322 5.01256 8.07322 4.71967 7.78033C4.42678 7.48744 4.42678 7.01256 4.71967 6.71967L9.44524 1.99654H6.7621C6.34884 1.99654 6.01383 1.66153 6.01383 1.24827C6.01383 0.835013 6.34884 0.5 6.7621 0.5L11.2517 0.5C11.4432 0.5 11.6347 0.573055 11.7808 0.719164C11.9269 0.865273 12 1.05677 12 1.24827V5.7379C12 6.15116 11.665 6.48617 11.2517 6.48617C10.8385 6.48617 10.5035 6.15116 10.5035 5.7379V3.05476L5.78033 7.78033Z" fill="black"/>
-                        </svg>
-                    </div>
+                  <div class="select_gender">
+                      <h2 class="gender_title">Select your gender </h2>
+                      <div class="gender_btn">
+                          <button class="female_btn">Female</button>
+                          <button class="male_btn">Male</button>
+                      </div>
                   </div>
-                </div>
-                <div class="sample_photo">
-                 <h2 class="simple_photo_title">Or Use a Sample Photo</h2>
-                 <div class="simple_photo_content">
-                  <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/simple_phot01.png?v=1715067436"/>
-                  <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/simple_phot02.png?v=1715067436"/>
-                  <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/simple_phot03.png?v=1715067436"/>
-                  <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/simple_phot04.png?v=1715067437"/>
-                 </div>
-                </div>
-                <div class="button-container">
-                  <button type="submit">
-                    Continue (2/2)
-                    <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ArrowRight.svg?v=1715009315" alt="">
-                  </button>
-                  {% comment %} <button onclick="closeModal()">Close</button> {% endcomment %}
-                </div>
-                {% comment %} <button onclick="closeModal2()">Close</button> {% endcomment %}
-              </form>
-            </div>
-            <div class="footer_model">
-              <h2 class="footer_model_title">Try-On This Look</h2>
-              <div class="footer_model_text_with_icon">
-                <h3 class="footer_model_title_pow">Powered By</h3>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/footer_icon_7a9b7dbc-edf2-4484-a878-4600ac40d704.png?v=1715009086"
-                  alt=""
-                >
-                <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/WearNow.png?v=1715009086" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Third Modal -->
-        <div id="myModal3" class="modal">
-          <div class="modal-content">
-            <div class="customization-panel">
-              <h2>We're creating your look!</h2>
-              <p>Please wait...</p>
-              <!-- Add any additional content you want here -->
-            </div>
-          </div>
-        </div>
-
-        <!-- Fourth Modal -->
-        <div id="myModal4" class="modal">
-          <div class="modal-content last_model_content">
-            <div class="modal-content_row">
-            <div class="model_photo">
-             <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Rectangle_10188_1.png?v=1714996067">
-            </div>
-            <div class="customization-panel last_model_customization_panel">
-              <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
-              <circle cx="50.002" cy="50" r="50" fill="#046FB4"/>
-              <path d="M37.0645 72V26.9062H42.6895V66.9375H64.4395V72H37.0645Z" fill="white"/>
-              </svg>
-              <h2>Your Suggested Size</h2>
-              <!-- Display the data here -->
-              <div id="sizeResults"></div>
-              <div class="add_to_cart_container">
-                <button class="add_to_cart_btn">
-                   Add to cart
-                  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.50439 9.5C2.50439 9.08579 2.84018 8.75 3.25439 8.75L12.944 8.75L10.2241 6.03036C9.93118 5.73748 9.93116 5.2626 10.224 4.9697C10.5169 4.67679 10.9918 4.67676 11.2847 4.96964L15.2851 8.96964C15.4258 9.1103 15.5048 9.30107 15.5048 9.5C15.5048 9.69893 15.4258 9.8897 15.2851 10.0304L11.2847 14.0304C10.9918 14.3232 10.5169 14.3232 10.224 14.0303C9.93116 13.7374 9.93118 13.2625 10.2241 12.9696L12.944 10.25L3.25439 10.25C2.84018 10.25 2.50439 9.91421 2.50439 9.5Z" fill="white"/>
-                    </svg>
-                </button>
-                <button class="try_something_btn">
-                  Try something else
-                 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                   <path fill-rule="evenodd" clip-rule="evenodd" d="M2.50439 9.5C2.50439 9.08579 2.84018 8.75 3.25439 8.75L12.944 8.75L10.2241 6.03036C9.93118 5.73748 9.93116 5.2626 10.224 4.9697C10.5169 4.67679 10.9918 4.67676 11.2847 4.96964L15.2851 8.96964C15.4258 9.1103 15.5048 9.30107 15.5048 9.5C15.5048 9.69893 15.4258 9.8897 15.2851 10.0304L11.2847 14.0304C10.9918 14.3232 10.5169 14.3232 10.224 14.0303C9.93116 13.7374 9.93118 13.2625 10.2241 12.9696L12.944 10.25L3.25439 10.25C2.84018 10.25 2.50439 9.91421 2.50439 9.5Z" fill="white"/>
-                   </svg>
-               </button>
-              </div>
-              {% comment %} <button onclick="closeModal4()">Close</button> {% endcomment %}
-            </div>
-        </div>
-            <div class=" mobile_view add_to_cart_container">
-              <button class="add_to_cart_btn">
-                 Add to cart
-                <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M2.50439 9.5C2.50439 9.08579 2.84018 8.75 3.25439 8.75L12.944 8.75L10.2241 6.03036C9.93118 5.73748 9.93116 5.2626 10.224 4.9697C10.5169 4.67679 10.9918 4.67676 11.2847 4.96964L15.2851 8.96964C15.4258 9.1103 15.5048 9.30107 15.5048 9.5C15.5048 9.69893 15.4258 9.8897 15.2851 10.0304L11.2847 14.0304C10.9918 14.3232 10.5169 14.3232 10.224 14.0303C9.93116 13.7374 9.93118 13.2625 10.2241 12.9696L12.944 10.25L3.25439 10.25C2.84018 10.25 2.50439 9.91421 2.50439 9.5Z" fill="white"/>
-                  </svg>
-              </button>
-              <button class="try_something_btn">
-                Try something else
-               <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path fill-rule="evenodd" clip-rule="evenodd" d="M2.50439 9.5C2.50439 9.08579 2.84018 8.75 3.25439 8.75L12.944 8.75L10.2241 6.03036C9.93118 5.73748 9.93116 5.2626 10.224 4.9697C10.5169 4.67679 10.9918 4.67676 11.2847 4.96964L15.2851 8.96964C15.4258 9.1103 15.5048 9.30107 15.5048 9.5C15.5048 9.69893 15.4258 9.8897 15.2851 10.0304L11.2847 14.0304C10.9918 14.3232 10.5169 14.3232 10.224 14.0303C9.93116 13.7374 9.93118 13.2625 10.2241 12.9696L12.944 10.25L3.25439 10.25C2.84018 10.25 2.50439 9.91421 2.50439 9.5Z" fill="white"/>
-                 </svg>
-             </button>
-            </div>
-            <div class="footer_model">
-              <h2 class="footer_model_title">Try-On This Look</h2>
-              <div class="footer_model_text_with_icon">
-                <h3 class="footer_model_title_pow">Powered By</h3>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/footer_icon_7a9b7dbc-edf2-4484-a878-4600ac40d704.png?v=1715009086"
-                  alt=""
-                >
-                <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/WearNow.png?v=1715009086" alt="">
-              </div>
-            </div>
-          </div>
-        </div>`;
-      document.body.insertAdjacentHTML('beforeend', content);
-      document.getElementById('customizationForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-        closeModal();
-        openModal2();
-      });
-
-      // Event listener for the second form submission
-      document.getElementById('customizationForm2').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-        closeModal2();
-        openModal3(); // Transition to the third modal
-      });
-    }
-    window.addEventListener('load', onPageLoadComplete);
-  </script>
-{% endcomment %}
-<div class="main_model_wna">
-<div
-  class="bg-[#ffffff] flex flex-col gap-0 items-center justify-start h-[844px] relative overflow-hidden"
->
-  <div
-    class="pt-4 pb-4 flex flex-col gap-0 items-center justify-center self-stretch shrink-0 h-[509px] relative"
-    style="
-            background: radial-gradient(
-        closest-side,
-        rgba(3, 186, 175, 0.2) 0%,
-        rgba(255, 255, 255, 0) 100%
-      ),
-      linear-gradient(to left, #ffffff, #ffffff);
-    "
-  >
-    <div
-      class="bg-[rgba(199,248,255,0.37)] rounded-[999px] flex-1 w-[260px] relative overflow-hidden"
-    >
-      <img
-        class="w-[79.65%] h-[97.34%] absolute right-[20.35%] left-[0%] bottom-[-12.93%] top-[15.59%] overflow-visible"
-        src="https://cdn.shopify.com/s/files/1/0641/2268/3542/files/newmodal1.png?v=1717051987"
-      >
-    </div>
-    <div
-      style="height:30px;width:30px;background:#E5E5EA;border-radius: 20px;cursor:pointer"
-      class="flex flex-row gap-2.5 items-center justify-center shrink-0 h-[auto] absolute right-[12px] top-[12px] overflow-visible"
-    >
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.323144 11.677C0.462882 11.8167 0.628821 11.9127 0.820961 11.9651C1.01892 12.0116 1.21397 12.0116 1.40611 11.9651C1.60408 11.9127 1.77293 11.8196 1.91266 11.6857L6 7.59112L10.0961 11.677C10.2358 11.8225 10.3988 11.9185 10.5852 11.9651C10.7773 12.0116 10.9694 12.0116 11.1616 11.9651C11.3595 11.9127 11.5284 11.8138 11.6681 11.6682C11.8195 11.5286 11.9185 11.3627 11.9651 11.1706C12.0116 10.9727 12.0116 10.7777 11.9651 10.5857C11.9185 10.3936 11.8224 10.2277 11.6769 10.088L7.59825 5.99345L11.6769 1.9076C11.8224 1.76792 11.9185 1.60204 11.9651 1.40997C12.0116 1.2179 12.0116 1.02583 11.9651 0.833758C11.9185 0.635868 11.8195 0.467079 11.6681 0.327392C11.5284 0.181884 11.3595 0.0858494 11.1616 0.039287C10.9694 -0.0130957 10.7773 -0.0130957 10.5852 0.039287C10.3988 0.0858494 10.2358 0.178974 10.0961 0.318661L6 4.40451L1.91266 0.309931C1.77293 0.176064 1.60408 0.0858494 1.40611 0.039287C1.21397 -0.0130957 1.01892 -0.0130957 0.820961 0.039287C0.628821 0.0858494 0.462882 0.178974 0.323144 0.318661C0.177584 0.464169 0.0815138 0.635868 0.0349345 0.833758C-0.0116448 1.02583 -0.0116448 1.2179 0.0349345 1.40997C0.0815138 1.60204 0.174672 1.76792 0.31441 1.9076L4.41048 5.99345L0.31441 10.088C0.174672 10.2277 0.0815138 10.3936 0.0349345 10.5857C-0.0116448 10.7777 -0.0116448 10.9727 0.0349345 11.1706C0.0815138 11.3627 0.177584 11.5315 0.323144 11.677Z" fill="#8E8E93"/>
-      </svg>
-    </div>
-    <div
-      class="flex flex-col gap-0 items-center justify-center self-stretch shrink-0 relative"
-    >
-      <div
-        class="pt-4 pr-6 pl-6 flex flex-col gap-5 items-center justify-center self-stretch shrink-0 relative"
-      >
-        <div
-          class="p-space-200 flex gap-2 flex-row gap-space-200 items-start justify-center self-stretch shrink-0 relative overflow-hidden"
-        >
-          <div
-            class="flex flex-row gap-2 items-start justify-start self-stretch shrink-0 relative"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z" fill="#079455"/>
-            </svg>
-          </div>
-          <div
-            class="pr-7 flex flex-col gap-space-200 items-start justify-center self-stretch flex-1 relative"
-          >
-            <div
-              class="flex flex-row gap-2 items-center justify-start flex-wrap self-stretch shrink-0 relative"
-            >
-              <div
-                class="text-colors-gray-light-mode-600 text-left font-body-body-md-default-font-family text-body-body-md-default-font-size leading-body-body-md-default-line-height font-body-body-md-default-font-weight relative flex-1"
-              >
-                Make sure you’re looking at the camera
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="p-space-200 flex gap-2 flex-row gap-space-200 items-start justify-start self-stretch shrink-0 relative overflow-hidden"
-        >
-          <div
-            class="flex flex-row gap-2 items-start justify-start self-stretch shrink-0 relative"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z" fill="#079455"/>
-            </svg>
-          </div>
-          <div
-            class="pr-7 flex flex-col gap-space-200 items-start justify-center self-stretch flex-1 relative"
-          >
-            <div
-              class="flex flex-row gap-2 items-center justify-start flex-wrap self-stretch shrink-0 relative"
-            >
-              <div
-                class="text-colors-gray-light-mode-600 text-left font-body-body-md-default-font-family text-body-body-md-default-font-size leading-body-body-md-default-line-height font-body-body-md-default-font-weight relative flex-1"
-              >
-                Choose a photo with a well lit backgroung
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="p-space-200 flex gap-2 flex-row gap-space-200 items-start justify-start self-stretch shrink-0 relative overflow-hidden"
-        >
-          <div
-            class="flex flex-row gap-2 items-start justify-start self-stretch shrink-0 relative"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.99997 6.75C10.4142 6.75 10.75 7.08579 10.75 7.5V11C10.75 11.4142 10.4142 11.75 9.99997 11.75C9.58576 11.75 9.24997 11.4142 9.24997 11V7.5C9.24997 7.08579 9.58576 6.75 9.99997 6.75Z" fill="#B54708"/>
-              <path d="M11 13.5C11 14.0523 10.5523 14.5 10 14.5C9.44775 14.5 9.00003 14.0523 9.00003 13.5C9.00003 12.9477 9.44775 12.5 10 12.5C10.5523 12.5 11 12.9477 11 13.5Z" fill="#B54708"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0001 3.5C8.95474 3.5 8.21619 4.20232 7.84765 4.94672C7.65568 5.33448 6.75987 7.0441 5.84308 8.79353L5.81534 8.84646C4.92293 10.5493 4.01717 12.2777 3.80719 12.702C3.43513 13.4537 3.32934 14.4519 3.89956 15.316C4.46914 16.1791 5.44225 16.5 6.3636 16.5L13.6364 16.5C14.5577 16.5 15.5309 16.1791 16.1005 15.316C16.6707 14.4519 16.5649 13.4537 16.1928 12.702C15.9832 12.2784 15.08 10.555 14.189 8.85476L14.1569 8.79352C13.24 7.044 12.3443 5.33454 12.1525 4.94693C11.784 4.20242 11.0455 3.5 10.0001 3.5ZM9.19193 5.61225C9.59608 4.79592 10.4041 4.79592 10.8081 5.61225C11.0102 6.02061 11.9201 7.75686 12.8297 9.49243C13.7383 11.2262 14.6466 12.9594 14.8485 13.3673C15.2525 14.1837 14.8485 15 13.6364 15L6.3636 15C5.15153 15 4.74749 14.1837 5.15153 13.3673C5.35379 12.9587 6.26471 11.2205 7.17483 9.4838C8.08286 7.75111 8.99008 6.01994 9.19193 5.61225Z" fill="#B54708"/>
-            </svg>
-          </div>
-          <div
-            class="pr-7 flex flex-col gap-space-200 items-start justify-center self-stretch flex-1 relative"
-          >
-            <div
-              class="flex flex-row gap-2 items-center justify-start flex-wrap self-stretch shrink-0 relative"
-            >
-              <div
-                class="text-colors-gray-light-mode-600 text-left font-body-body-md-default-font-family text-body-body-md-default-font-size leading-body-body-md-default-line-height font-body-body-md-default-font-weight relative flex-1"
-              >
-                Avoid using group photos  
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="flex flex-col gap-5 items-center justify-center self-stretch shrink-0 relative"
-        style="margin-top:20px;padding:0px 20px;"
-      >
-        <div
-          class="rounded-radius-xl pt-spacing-xl pr-spacing-3xl pb-spacing-xl pl-spacing-3xl flex flex-col gap-2.5 items-center justify-center self-stretch shrink-0 relative"
-        >
-          <div
-            class="flex flex-col gap-[19px] items-center justify-start self-stretch shrink-0 relative"
-            >
-            <div
-              class="flex flex-col gap-3 items-center justify-start self-stretch shrink-0 relative"
-            >
-              <div
-                class="flex flex-row gap-spacing-xs items-start justify-center self-stretch shrink-0 relative"
-              >
-            {% comment %} <div
-                  class="bg-wearnow-color-primary-primary-500 rounded-[999px] border-solid border-wearnow-color-primary-primary-500 border pt-2.5 pr-3.5 pb-2.5 pl-3.5 flex flex-row gap-spacing-sm items-center justify-center flex-1 relative overflow-hidden"
-                  style="
-                    box-shadow: var(
-                      --shadows-shadow-xs-box-shadow,
-                      0px 1px 2px 0px rgba(16, 24, 40, 0.05)
-                    );
-                  "
-                >
-                  <div
-                    class="pr-spacing-xxs pl-spacing-xxs flex flex-row gap-0 items-center justify-center shrink-0 relative"
-                  >
-                    <div
-                      class="text-wearnow-color-grey-g0 text-left font-['SfProDisplay-Semibold',_sans-serif] text-sm leading-5 font-semibold relative"
-                    >
-                      Upload Photo
-                    </div>
+                  <div class="select_skin_comosition">
+                      <h2 class="select_skin_title">Select your skin composition </h2>
+                      <div class="select_skin_comosition_img">
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatar1.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">Dark</span>
+                          </div>
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatar2.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">Brown</span>
+                          </div>
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatar3.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">Fair</span>
+                          </div>
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatar5.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">White</span>
+                          </div>
+                      </div>
                   </div>
-                </div> {% endcomment %}
-                <div class="flex items-center justify-center w-full">
-                  <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-10 bg-wearnow-color-primary-primary-500 rounded-[999px] border-solid border-wearnow-color-primary-primary-500 border pt-2.5 pr-3.5 pb-2.5 pl-3.5 flex flex-row gap-spacing-sm items-center justify-center flex-1 relative overflow-hidden cursor-pointer ">
-                    <div
-                      class="text-wearnow-color-grey-g0 text-left font-['SfProDisplay-Semibold',_sans-serif] text-sm leading-5 font-semibold relative"
-                    >
-                      Upload Photo
-                    </div>
-                    <input id="dropzone-file" type="file" class="hidden" />
-                  </label>
-                  </div> 
+                  <div class="select_skin_comosition">
+                      <h2 class="select_skin_title">Select your skin composition </h2>
+                      <div class="select_skin_comosition_img">
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">XS</span>
+                          </div>
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">S</span>
+                          </div>
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">M</span>
+                          </div>
+                          <div class="select_skin_comosition_img_item">
+                              <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt="">
+                              <span class="select_skin_comosition_img_title">L</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="footer_model">
+                      <div class="footer_content_model">
+                          <button class="customise_try_on_btn">
+                              Customise Try-On
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                  fill="none">
+                                  <path
+                                      d="M10.2562 7.06305L6.45555 3.51238C6.18689 3.26171 5.76422 3.27504 5.51356 3.54438C5.26222 3.81371 5.27622 4.23571 5.54489 4.48704L9.30556 7.99971L5.54489 11.5124C5.27622 11.7637 5.26156 12.1857 5.51289 12.455C5.64422 12.5957 5.82156 12.6664 6.00022 12.6664C6.16356 12.6664 6.32689 12.607 6.45555 12.487L10.2562 8.93638C10.5209 8.68838 10.6669 8.35638 10.6669 7.99971C10.6669 7.64304 10.5209 7.31105 10.2562 7.06305Z"
+                                      fill="#047AC6" />
+                              </svg>
+                          </button>
+                          <form method="post" action="/cart/add">
+                            <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                            {% comment %} <input min="1" type="number" id="quantity" name="quantity" value="1"/> {% endcomment %}
+                            <button type="submit" class="add_to_cart_btn">
+                              Add to cart
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                  fill="none">
+                                  <path
+                                      d="M10.2562 7.06305L6.45555 3.51238C6.18689 3.26171 5.76422 3.27504 5.51356 3.54438C5.26222 3.81371 5.27622 4.23571 5.54489 4.48704L9.30556 7.99971L5.54489 11.5124C5.27622 11.7637 5.26156 12.1857 5.51289 12.455C5.64422 12.5957 5.82156 12.6664 6.00022 12.6664C6.16356 12.6664 6.32689 12.607 6.45555 12.487L10.2562 8.93638C10.5209 8.68838 10.6669 8.35638 10.6669 7.99971C10.6669 7.64304 10.5209 7.31105 10.2562 7.06305Z"
+                                      fill="white" />
+                              </svg>
+                          </button>
+                          </form>
+                      </div>
+                  </div>
               </div>
-              <div
-                class="text-colors-text-text-tertiary-600 text-center font-text-xs-regular-font-family text-text-xs-regular-font-size leading-text-xs-regular-line-height font-text-xs-regular-font-weight relative self-stretch"
-              >
-                PNG, JPG or GIF (max. 5MB)
-              </div>
-            </div>
           </div>
-        </div>
       </div>
-    </div>
-  </div>
-  <div
-    class="border-solid border-colors-border-border-secondary border-t border-r-[0] border-b-[0] border-l-[0] self-stretch shrink-0 h-0 relative"
-  ></div>
-  <div
-    class="pt-6 pb-3 flex flex-col gap-4 items-center justify-start flex-1 w-[390px] relative"
-  >
-    <div
-      class="pr-4 pl-4 flex flex-row gap-6 items-center justify-center self-stretch shrink-0 relative"
-    >
-      <div
-        class="text-colors-text-text-secondary-700 text-center font-sf-pro-display-medium-sm-font-family text-sf-pro-display-medium-sm-font-size leading-sf-pro-display-medium-sm-line-height font-sf-pro-display-medium-sm-font-weight relative"
-      >
-        Or use a sample selfie
-      </div>
-    </div>
-    <div
-      class="pl-4 flex flex-row gap-[9px] items-start justify-start self-stretch shrink-0 relative overflow-hidden"
-    >
-      <div
-        class="selfies_img flex flex-row gap-2 items-start justify-start shrink-0 w-[520px] relative"
-      >
-        <div
-          class="rounded-radius-sm flex flex-col gap-2.5 items-start justify-start shrink-0 w-[124px] h-[126px] relative"
-        >
-          <img
-            class="rounded-rounded self-stretch flex-1 relative"
-            style="
-              background: url(avatar0.png) center;
-              background-size: cover;
-              background-repeat: no-repeat;
-            "
-            src="https://cdn.shopify.com/s/files/1/0641/2268/3542/files/model1.png?v=1717056253"
-          >
-          <div
-            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
-          ></div>
-        </div>
-        <div
-          class="rounded-radius-sm flex flex-col gap-2.5 items-start justify-start shrink-0 w-[124px] h-[126px] relative"
-        >
-          <img
-            class="rounded-rounded  self-stretch flex-1 relative"
-          
-            src="https://cdn.shopify.com/s/files/1/0641/2268/3542/files/modeldata.jpg?v=1717060606"
-          >
-          <div
-            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
-          ></div>
-        </div>
-        <div
-          class="rounded-radius-sm flex flex-col gap-2.5 items-start justify-start shrink-0 w-[124px] h-[126px] relative"
-        >
-          <img
-            class="rounded-rounded self-stretch flex-1 relative"
-            style="
-              background: url(avatar2.png) center;
-              background-size: cover;
-              background-repeat: no-repeat;
-            "
-            src="https://cdn.shopify.com/s/files/1/0641/2268/3542/files/model3.png?v=1717056240"
-          >
-          <div
-            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
-          ></div>
-        </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="p-4 flex flex-row items-start justify-between self-stretch shrink-0 relative"
-    >
-      <div
-        class="rounded-3xl flex flex-row gap-0 items-center justify-center shrink-0 relative overflow-hidden"
-        style="opacity: 0"
-      >
-        <div
-          class="rounded-[999px] pt-2.5 pr-[18px] pb-2.5 pl-[18px] flex flex-row gap-2 items-center justify-start shrink-0 relative overflow-hidden"
-        >
-          <img
-            class="shrink-0 w-4 h-4 relative overflow-visible"
-            src="angle-left-outline0.svg"
-          />
-          <div
-            class="text-wearnow-color-primary-primary-500 text-left font-sf-pro-display-medium-base-font-family text-sf-pro-display-medium-base-font-size leading-sf-pro-display-medium-base-line-height font-sf-pro-display-medium-base-font-weight relative"
-          >
-            Back
-          </div>
-        </div>
-      </div>
-      <div
-        class="flex flex-row items-center justify-between self-stretch shrink-0 w-20 relative"
-      >
-        <div
-          class="text-center font-['SfProDisplay-Medium',_sans-serif] text-sm leading-5 font-medium relative"
-        >
-          <span class="pagination_model_content">
-            <span class="text-span">1/</span>
-            <span class="text-span2">4</span>
-          </span>
-        </div>
-      </div>
-      <div
-        class="rounded-3xl border-solid border-wearnow-color-primary-primary-500 border flex flex-row gap-0 items-center justify-center shrink-0 relative overflow-hidden"
-        style="opacity: 0.25"
-      >
-        <div
-          class="model_btn rounded-[999px] border-solid border-wearnow-color-primary-primary-500 border-2 pt-2.5 pr-[18px] pb-2.5 pl-[18px] flex flex-row gap-2 items-center justify-start shrink-0 relative overflow-hidden"
-        >
-          <div
-            class="text-wearnow-color-grey-g0 text-left font-sf-pro-display-medium-base-font-family text-sf-pro-display-medium-base-font-size leading-sf-pro-display-medium-base-line-height font-sf-pro-display-medium-base-font-weight relative"
-          >
-            Next
-          </div>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.2562 7.06402L6.45555 3.51335C6.18689 3.26269 5.76422 3.27602 5.51356 3.54535C5.26222 3.81469 5.27622 4.23669 5.54489 4.48802L9.30556 8.00069L5.54489 11.5134C5.27622 11.7647 5.26156 12.1867 5.51289 12.456C5.64422 12.5967 5.82156 12.6674 6.00022 12.6674C6.16356 12.6674 6.32689 12.608 6.45555 12.488L10.2562 8.93735C10.5209 8.68935 10.6669 8.35736 10.6669 8.00069C10.6669 7.64402 10.5209 7.31202 10.2562 7.06402Z" fill="white"/>
-            </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+  </body>
+  
+  </html>
