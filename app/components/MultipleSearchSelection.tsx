@@ -14,7 +14,7 @@ const MultipleSearchSelection: React.FC<{options:any}> = ({ options }) => {
     };
 
     const handleRemoveOption = (option: string) => {
-        setSelectedOptions(selectedOptions.filter((item) => item.uuid !== option));
+        setSelectedOptions(selectedOptions.filter((item) => item?.uuid !== option));
     };
 
     const filteredOptions = options;
@@ -33,7 +33,7 @@ const MultipleSearchSelection: React.FC<{options:any}> = ({ options }) => {
                                 {option}
                             </span>
                             <button
-                                onClick={() => handleRemoveOption(option)}
+                                onClick={() => handleRemoveOption(option.uuid)}
                                 className="text-gray-500 hover:text-gray-700 focus:outline-none"
                             >
                                 &times;
@@ -56,8 +56,8 @@ const MultipleSearchSelection: React.FC<{options:any}> = ({ options }) => {
                     <ul className="absolute z-10 bg-white w-full border border-gray-300 rounded mt-1 overflow-y-auto max-h-48">
                         {filteredOptions.map((option) => (
                             <li
-                                key={option?.uuid}
-                                onClick={() => handleSelectOption(option.uuid)}
+                                key={option?.name}
+                                onClick={() => handleSelectOption(option.name)}
                                 className="px-3 py-2 cursor-pointer hover:bg-gray-100"
                             >
                                 {option?.name}

@@ -3,11 +3,13 @@ import MultipleSearchSelection from "~/components/MultipleSearchSelection";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import SidebarNavigation from "~/components/SidebarNavigation";
 import { Select } from '@shopify/polaris';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
+import {LegacyStack, Tag, Autocomplete,Icon} from '@shopify/polaris';
+import {SearchIcon} from '@shopify/polaris-icons';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const admin1 = await authenticate.admin(request);
@@ -87,7 +89,239 @@ export default function VirtualTryOnPage() {
     const [models, setModels] = useState<any>();
     const [backgrounds, setBackgrounds] = useState<any>();
     const [poses, setPoses] = useState<any>();
+    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const [selectedOptionsPose, setSelectedOptionsPose] = useState<string[]>([]);
+    const deselectedOptions = useMemo(
+        () =>{
+            const opt: any[]=[];
+            const backb: any[] | ((prevState: string[]) => string[])=[];
+            backgrounds?.map((back:any)=>{
+                var backg={value:back.uuid,label:back.name}
+                opt.push(backg);
+                if(back.featured==true){
+                backb.push(back.uuid);
+                }
+            })
+            setSelectedOptions(backb);
+            console.log(selectedOptions,"selectedOptionsselectedOptionsselectedOptionsselectedOptions");
+            return opt;
+            },
+        [backgrounds],
+      );
+      const deselectedOptionsPose = useMemo(
+        () =>{
+            const opt: any[]=[];
+            const posep: any[] | ((prevState: string[]) => string[])=[];
+            poses?.map((pp:any)=>{
+                var ppp={value:pp.uuid,label:pp.name}
+                opt.push(ppp);
+                if(pp.featured==true){
+                    posep.push(pp.uuid);
+                   
+                    }
+            })
+            setSelectedOptionsPose(posep);
+            return opt;
+            },
+        [poses],
+      );
+    
+    
+    const [inputValue, setInputValue] = useState('');
+    const [inputValuePose, setInputValuePose] = useState('');
+    const [options, setOptions] = useState(deselectedOptions);
+    const [optionsPose, setOptionsPose] = useState(deselectedOptionsPose);
 
+    useEffect(() =>{
+        setOptions(deselectedOptions);
+        setOptionsPose(deselectedOptionsPose);
+    },[deselectedOptions, deselectedOptionsPose]);
+    const updateText = useCallback(
+        (value: string) => {
+          setInputValue(value);
+    
+          if (value === '') {
+            setOptions(deselectedOptions);
+            return;
+          }
+    
+          const filterRegex = new RegExp(value, 'i');
+          const resultOptions = deselectedOptions.filter((option) =>
+            option.label.match(filterRegex),
+          );
+    
+          setOptions(resultOptions);
+        },
+        [deselectedOptions],
+      );
+      const updateTextPose = useCallback(
+        (value: string) => {
+          setInputValuePose(value);
+    
+          if (value === '') {
+            setOptionsPose(deselectedOptionsPose);
+            return;
+          }
+    
+          const filterRegex = new RegExp(value, 'i');
+          const resultOptions = deselectedOptionsPose.filter((option) =>
+            option.label.match(filterRegex),
+          );
+    
+          setOptionsPose(resultOptions);
+        },
+        [deselectedOptionsPose],
+      );
+    
+      const removeTag = useCallback(
+        (tag: string) => async() => {
+          const options = [...selectedOptions];
+          options.splice(options.indexOf(tag), 1);
+          setSelectedOptions(options);
+          const Update_background = gql` mutation ($uuid:uuid!){
+            update_default_background(where: {uuid: {_eq: $uuid}}, _set: {featured: false}) {
+             returning {
+               name
+               uuid
+             }
+           }
+          }`;
+
+        const result = await client.mutate({
+            mutation: Update_background,
+            variables: {
+                uuid: tag,
+            },
+        });
+        console.log(result,"Featured background updated");
+        },
+        [selectedOptions],
+      );
+      const handleSelect = async(selected:string[]) => {
+        console.log(selected,"selected");
+        if (selected.length <= 3) {
+            setSelectedOptions(selected);
+            const Update_background = gql` mutation ($uuid:[uuid!]){
+                update_default_background(where: {uuid: {_in: $uuid}}, _set: {featured: true, active: true}) {
+                 returning {
+                   name
+                   uuid
+                 }
+               }
+              }`;
+        
+            const result = await client.mutate({
+                mutation: Update_background,
+                variables: {
+                    uuid: selected,
+                },
+            });
+            console.log(result,"Featured background updated");
+        }
+    };
+    const handleSelectPose = async(selected:string[]) => {
+        if(selected.length <=3){
+            setSelectedOptionsPose(selected);
+            const Update_pose = gql` mutation ($uuid:[uuid!]){
+                update_default_pose(where: {uuid: {_in: $uuid}}, _set: {featured: true, active: true}) {
+                 returning {
+                   name
+                   uuid
+                 }
+               }
+              }`;
+        
+            const result = await client.mutate({
+                mutation: Update_pose,
+                variables: {
+                    uuid: selected,
+                },
+            });
+            console.log(result,"Featured background updated");
+        }
+    }
+
+      const removeTagPose = useCallback(
+        (tag: string) => async() => {
+            console.log("tag: " , tag);
+          const optionsPose = [...selectedOptionsPose];
+          optionsPose.splice(optionsPose.indexOf(tag), 1);
+          setSelectedOptionsPose(optionsPose);
+          const Update_pose = gql` mutation ($uuid:uuid!){
+            update_default_pose(where: {uuid: {_eq: $uuid}}, _set: {featured: false}) {
+             returning {
+               name
+               uuid
+             }
+           }
+          }`;
+
+        const result = await client.mutate({
+            mutation: Update_pose,
+            variables: {
+                uuid: tag,
+            },
+        });
+        console.log(result,"Featured background updated");
+        },
+        [selectedOptionsPose],
+      );
+    
+      const verticalContentMarkup =
+        selectedOptions.length > 0 ? (
+          <LegacyStack spacing="extraTight" alignment="center">
+            {selectedOptions?.map((option) => {
+              let tagLabel = '';
+              tagLabel = option.replace('_', ' ');
+              tagLabel = titleCase(tagLabel);
+              return (
+                <Tag key={`option${option}`} onRemove={removeTag(option)}>
+                  {tagLabel}
+                </Tag>
+              );
+            })}
+          </LegacyStack>
+        ) : null;
+
+        const verticalContentMarkupPose =
+        selectedOptionsPose.length > 0 ? (
+          <LegacyStack spacing="extraTight" alignment="center">
+            {selectedOptionsPose?.map((option) => {
+              let tagLabel = '';
+              tagLabel = option.replace('_', ' ');
+              tagLabel = titleCase(tagLabel);
+              return (
+                <Tag key={`option${option}`} onRemove={removeTagPose(option)}>
+                  {tagLabel}
+                </Tag>
+              );
+            })}
+          </LegacyStack>
+        ) : null;
+    
+      const textField = (
+        <Autocomplete.TextField
+          onChange={updateText}
+          label="Background"
+          value={inputValue}
+          prefix={<Icon source={SearchIcon} tone="base" />}
+          placeholder="Select Background"
+          verticalContent={verticalContentMarkup}
+          autoComplete="off"
+        />
+      );
+    
+      const textFieldPose = (
+        <Autocomplete.TextField
+          onChange={updateTextPose}
+          label="Pose"
+          value={inputValuePose}
+          prefix={<Icon source={SearchIcon} tone="base" />}
+          placeholder="Select Pose"
+          verticalContent={verticalContentMarkupPose}
+          autoComplete="off"
+        />
+      );
     
 
     const store_setting = async()=>{
@@ -141,7 +375,7 @@ export default function VirtualTryOnPage() {
           .query({
             query: gql`
           query MyQuery4 {
-            default_pose(limit: 3) {
+            default_pose(limit: 50) {
               name
               image
               featured
@@ -149,7 +383,7 @@ export default function VirtualTryOnPage() {
               created_at
               uuid
             }
-            default_background(limit: 3) {
+            default_background(limit: 50) {
               active
               created_at
               featured
@@ -157,7 +391,7 @@ export default function VirtualTryOnPage() {
               name
               uuid
             }
-            pretrained_models(limit: 3) {
+            pretrained_models(limit: 50) {
               cover_image
               created_at
               description
@@ -175,11 +409,11 @@ export default function VirtualTryOnPage() {
             setPoses(result.data.default_pose);
           });
       }
-    useEffect(()=>{
+    useEffect(() => {
         store_setting();
         getAllImages();
     },[]);
-
+    
     const handleSelfies = useCallback(async(value: number) =>{
         setSelectedSelfie(value);
         const Update_store = gql` mutation ($selfies_count_per_user:bigint,$uuid:uuid){
@@ -244,20 +478,23 @@ export default function VirtualTryOnPage() {
         console.log(result);
     },[]);
 
-    const optiondata1 = [
+    const optiondata1 =useMemo(
+        () => [
         { label: '1 Selfies', value: "1" },
         { label: '2 Selfies', value: "2" },
         { label: '3 Selfies', value: "3" },
         { label: '4 Selfies', value: "4" },
-    ];
-    const optiondata2 = [
+    ],[]);
+    const optiondata2 = useMemo(
+        () =>[
         { label: 'Standard Definition', value: 'Standard Definition' },
         { label: 'HD', value: 'HD' },
-    ];
-    const optiondata3 = [
+    ],[]);
+    const optiondata3 = useMemo(
+        () =>[
         { label: 'No', value: "false" },
         { label: 'Yes', value: "true" },
-    ];
+    ],[]);
     return (
         <>
             <DashboardHeader />
@@ -373,7 +610,15 @@ export default function VirtualTryOnPage() {
                             </span>
                         </div>
                         <div className='flex w-[480px] vto_page flex-col gap-[8px] items-start flex-nowrap relative '>
-                            <MultipleSearchSelection options={poses} />
+                            
+                            <Autocomplete
+                                    allowMultiple
+                                    options={optionsPose}
+                                    selected={selectedOptionsPose}
+                                    textField={textFieldPose}
+                                    onSelect={handleSelectPose}
+                                    listTitle="Suggested Pose"
+                                />
                             <span className="h-[20px] self-stretch shrink-0 basis-auto font-['Inter'] text-[14px] font-normal leading-[20px] text-[#475467] relative text-left  ">
                                 Depending on the number of photos created, poses will be randomised
                             </span>
@@ -388,7 +633,14 @@ export default function VirtualTryOnPage() {
                             </span>
                         </div>
                         <div className='flex w-[480px] vto_page flex-col gap-[8px] items-start flex-nowrap relative '>
-                            <MultipleSearchSelection options={backgrounds} />
+                        <Autocomplete
+                                allowMultiple
+                                options={options}
+                                selected={selectedOptions}
+                                textField={textField}
+                                onSelect={handleSelect}
+                                listTitle="Suggested Background"
+                            />
                             <span className="flex w-[480px] vto_page h-[40px] justify-start items-start self-stretch shrink-0 font-['Inter'] text-[14px] font-normal leading-[20px] text-[#475467] relative text-left ">
                                 Depending on the number of photos created, backgrounds will be
                                 randomised
@@ -400,4 +652,11 @@ export default function VirtualTryOnPage() {
 
         </>
     );
+    function titleCase(string: string) {
+        return string
+          .toLowerCase()
+          .split(' ')
+          .map((word) => word.replace(word[0], word[0].toUpperCase()))
+          .join('');
+      }
 }
