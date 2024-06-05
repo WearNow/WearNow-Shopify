@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "@remix-run/react";
 import CustomSlider from "./CustomSilder";
-import axios from "axios";
-import { apiURL } from "../services/Services";
 import SelectOnboarding from "./SelectOnboarding";
 import SelectedOnbording from "./SelectedOnbording";
 import FadedOnboarding from "./FadedOnboarding";
@@ -21,7 +19,6 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
   const [model, setModel] = useState<string>();
   const [background, setBackground] = useState<string>();
   const [pose, setPose] = useState<string>();
-  const [tmpCheckedProduct, setTmpCheckedProduct] = useState<string>();
   const [tmpModel, setTmpModel] = useState<string>();
   const [tmpBackground, setTmpBackground] = useState<string>();
   const [tmpPose, setTmpPose] = useState<string>();
@@ -110,8 +107,29 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         }
       })
       .then((result) => {
-        const store_subscription = result.data.store_subscription;
-        setActive(store_subscription[0].package);
+        let planname="partner_test"
+    const myHeader = new Headers();
+        myHeader.append("X-Shopify-Access-Token", sessionData.authWithShop?.accessToken);
+  
+        const requestOption = {
+          method: "GET",
+          headers: myHeader,
+          redirect: "follow"
+        };
+  
+        fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption)
+          .then((response) => response.json())
+          .then((result) => {planname=result.shop.plan_name})
+          .catch((error) => console.error(error));
+        let store_subscription = result.data.store_subscription;
+        if(planname=="partner_test"){
+          store_subscription[0].package.number_of_products=5;
+          store_subscription[0].package.pro_models=5;
+          store_subscription[0].package.product_photo_limit=5;
+          //store_subscription[0].package.vto_limit=5;
+          store_subscription[0].package.vto_limit=5;
+        }
+         setActive(store_subscription[0].package);
       });
   }, []);
   async function getAllImages() {
