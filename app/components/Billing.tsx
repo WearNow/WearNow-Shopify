@@ -14,7 +14,6 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
   const [loader, setLoader] = useState("no");
   const [package_id, setPackageId] = useState("");
   const packages=packageData;
-  console.log("Packages", packages);
   useEffect(()=>{
      client
     .query({

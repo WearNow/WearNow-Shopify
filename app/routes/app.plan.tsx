@@ -88,16 +88,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         redirect: "follow"
       };
       
-
-fetch(`https://${shop}/admin/api/2024-01/themes.json`, requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result,"themes data returned"))
-  .catch((error) => console.error(error));
+      let planname="partner_test"
+// fetch(`https://${shop}/admin/api/2024-01/themes.json`, requestOptions)
+//   .then((response) => response.text())
+//   .then((result) => console.log(result,"themes data returned"))
+//   .catch((error) => console.error(error));
       fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOptions)
         .then((response) => response.json())
-        .then((result) => console.log(result.shop.plan_name,"shop data returned"))
+        .then((result) => {planname=result.shop.plan_name})
         .catch((error) => console.error(error));
-        return { shop,packages,auth_session };
+        return { shop,packages,auth_session,planname };
       };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -115,58 +115,68 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const auth_session = await db.session.findFirst({
     where: { shop },
   });
+  let planname="partner_test"
+  const myHeader = new Headers();
+      myHeader.append("X-Shopify-Access-Token", auth_session?.accessToken);
+
+      const requestOption = {
+        method: "GET",
+        headers: myHeader,
+        redirect: "follow"
+      };
+
+      fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption)
+        .then((response) => response.json())
+        .then((result) => {planname=result.shop.plan_name})
+        .catch((error) => console.error(error));
   const newshop = shop;
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
   let raw = '';
   //console.log(trial,"trial");
-  if(trial>0){
-   raw = JSON.stringify({
-    query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
-    variables: {
+  
+    let variables = {
       name: "Basic",
       returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
-      trialDays: parseInt(trial),
-      test: true,
       lineItems: [
-        {
-          plan: {
-            appRecurringPricingDetails: {
-              price: {
-                amount: amount,
-                currencyCode: "USD",
-              },
-              interval: plan,
-            },
-          },
-        },
-      ],
-    },
-  });
-  }else{
-     raw = JSON.stringify({
-      query: "mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!,  $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }",
-      variables: {
-        name: "Basic",
-        returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
-        test: true,
-        lineItems: [
           {
-            plan: {
-              appRecurringPricingDetails: {
-                price: {
-                  amount: amount,
-                  currencyCode: "USD",
-                },
-                interval: plan,
+              plan: {
+                  appRecurringPricingDetails: {
+                      price: {
+                          amount: amount,
+                          currencyCode: "USD",
+                      },
+                      interval: plan,
+                  },
               },
-            },
           },
-        ],
-      },
-    });
+      ],
+  };
+  let query="mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $trialDays: Int!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, trialDays: $trialDays, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }";
+  if(trial!=null && trial>0){
+  let trialDays = { trialDays: parseInt(trial)};
+  // Merge trialDays into variables
+  variables = { ...variables, ...trialDays };
   }
+  else{
+    query="mutation AppSubscriptionCreate($name: String!, $lineItems: [AppSubscriptionLineItemInput!]!, $returnUrl: URL!, $test: Boolean!) { appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems, test:$test) { userErrors { field message } appSubscription { id } confirmationUrl } }";
+  }
+  let test = { test: true };
+  if(planname!="partner_test"){
+    test={test:false};
+  }
+    // Merge trialDays into variables
+    variables = { ...variables, ...test };
+  
+  console.log(variables,"variables");
+  
+    
+   raw = JSON.stringify({
+    query: query,
+    variables: variables,
+  });
+ 
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
@@ -176,7 +186,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const res = await fetch(`https://${auth_session.shop}/admin/api/2024-04/graphql.json`, requestOptions);
   const newres = await res.json();
-  //console.log(newres,"newres");
+  console.log(newres,"newres");
   const confirmationUrl = newres?.data?.appSubscriptionCreate?.confirmationUrl;
   const appSubscription = newres?.data?.appSubscriptionCreate?.appSubscription;
   const updated = await db.session.update({
