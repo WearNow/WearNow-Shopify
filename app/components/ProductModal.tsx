@@ -61,7 +61,28 @@ const ProductModal: React.FC<{
      }
    })
    .then((result) => {
-     const store_subscription = result.data.store_subscription;
+    let planname="partner_test"
+    const myHeader = new Headers();
+        myHeader.append("X-Shopify-Access-Token", sessionData.authWithShop?.accessToken);
+  
+        const requestOption = {
+          method: "GET",
+          headers: myHeader,
+          redirect: "follow"
+        };
+  
+        fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption)
+          .then((response) => response.json())
+          .then((result) => {planname=result.shop.plan_name})
+          .catch((error) => console.error(error));
+     let store_subscription = result.data.store_subscription;
+     if(planname=="partner_test"){
+      store_subscription[0].package.number_of_products=5;
+      store_subscription[0].package.pro_models=5;
+      store_subscription[0].package.product_photo_limit=5;
+      //store_subscription[0].package.vto_limit=5;
+      store_subscription[0].package.vto_limit=5;
+     }
          setActive(store_subscription[0].package);
    });
  },[]);

@@ -1,0 +1,256 @@
+* {
+    font-family: "SF Pro Display" !important;
+}
+
+.model_container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 1.5);
+    /* transform: scale(1.1); */
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.model_row {
+    width: 390px;
+    height: auto;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    background: #fff;
+    text-align: center;
+}
+
+.model_img {
+    width: 100%;
+    height: 100%;
+}
+
+.model_img_conten {
+    position: relative;
+}
+
+img.model_power_by {
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    width: 53%;
+}
+
+.close_btn_model_content {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #d7d7d7;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+svg.close_btn_model {
+    height: 12px;
+    width: 12px;
+}
+
+.select_gender {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+h2.gender_title {
+    margin: 0;
+    text-align: center;
+    font-family: "SF Pro Display";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 125%;
+}
+
+.gender_btn {
+    display: flex;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-full, 9999px);
+    background: var(--gray-200, #E5E7EB);
+}
+
+.gender_btn>button {
+    border: none;
+    outline: none;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+    background: transparent;
+    cursor: pointer;
+}
+
+.select_skin_comosition_img_title {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+button.female_btn {
+    display: flex;
+    width: 53px;
+    padding: 6px 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 999px;
+    background: var(--Color-Item-Card-Surface-primary, #FFF);
+    color: #046FB4;
+}
+
+button.female_btn {
+    display: flex;
+    width: 53px;
+    padding: 6px 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 999px;
+    background: var(--Color-Item-Card-Surface-primary, #FFF);
+}
+
+.select_skin_comosition_img {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.select_skin_comosition_img_item>img {
+    width: 100%;
+}
+
+.select_skin_comosition {
+    padding: 0px 20px;
+}
+
+.select_skin_comosition_img {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.select_skin_title {
+    font-size: 14px;
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 125%;
+    text-align: left;
+}
+
+.select_skin_comosition_img {
+    margin: 10px 0px 15px;
+}
+
+.footer_content_model {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px 15px;
+    background: transparent;
+}
+
+.footer_content_model>button {
+    border: none;
+    outline: none;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+button.customise_try_on_btn {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    color: #047AC6;
+}
+
+button.add_to_cart_btn {
+    border-radius: 999px;
+    border: var(--size-050, 2px) solid var(--WearNow-Color-Primary-primary-500, #047AC6);
+    background: var(--WearNow-Color-Primary-primary-500, #047AC6);
+    color: #fff;
+    display: flex;
+    padding: 10px 18px;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+}
+@media only screen and (max-width: 1450px) {
+.model_row {
+    height: calc(100vh - 80px) !important;
+    overflow: auto;
+}
+}
+@media only screen and (max-width: 567px) {
+    .model_container .model_row {
+        height: calc(100vh - 80px);
+        overflow: auto;
+        width: 370px;
+    }
+    .model_container .footer_content_model {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .model_container  .footer_content_model>button {
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .model_container .model_row {
+        height: calc(100vh - 80px);
+        overflow: auto;
+        width: 300px;
+    }
+}
+
+
+
+/* ================== 2nd  model design ==================*/
+.select_skin_comosition_size {
+    width: 150px;
+}
+.select_skin_comosition_size>div {
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-radius: var(--rounded-full, 9999px);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* =================== 3rd model Design ================= */
+.new_select_skin_comosition {
+    width: 200px;
+}
+.new_select_skin_comosition img {
+    border-radius: 50px;
+}

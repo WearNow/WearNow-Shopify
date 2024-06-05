@@ -76,7 +76,6 @@ const PhotoStudio: React.FC = () => {
           }
         },[sessionData]);
   const [products, setProducts] = useState<any[]>([]);
-  const [dataLimit, setDataLimit] = useState({ start: 0, end: 3 });
   const [checkedProduct, setCheckedProduct] = useState<string>();
   const [models, setModels] = useState<any>();
   const [backgrounds, setBackgrounds] = useState<any>();
@@ -84,14 +83,8 @@ const PhotoStudio: React.FC = () => {
   const [model, setModel] = useState<string>();
   const [background, setBackground] = useState<string>();
   const [pose, setPose] = useState<string>();
-  const [tmpCheckedProduct, setTmpCheckedProduct] = useState<string>();
-  const [tmpModel, setTmpModel] = useState<string>();
-  const [tmpBackground, setTmpBackground] = useState<string>();
-  const [tmpPose, setTmpPose] = useState<string>();
-  const [stylehide, setStylehide] = useState({ opacity: 0.3, pointerEvents: "none" });
   const [currentStep, setCurrentStep] = useState(0);
   const [active, setActive] = useState();
-  const [change, setChange] = useState("no");
   const [save, setSave] = useState<string>("yes");
   const [loader, setLoader] = useState("no");
   const stepModel = "02";
@@ -175,7 +168,28 @@ const PhotoStudio: React.FC = () => {
      }
    })
    .then((result) => {
-     const store_subscription = result.data.store_subscription;
+    let planname="partner_test"
+    const myHeader = new Headers();
+        myHeader.append("X-Shopify-Access-Token", auth_session?.accessToken);
+  
+        const requestOption = {
+          method: "GET",
+          headers: myHeader,
+          redirect: "follow"
+        };
+  
+        fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption)
+          .then((response) => response.json())
+          .then((result) => {planname=result.shop.plan_name})
+          .catch((error) => console.error(error));
+     let store_subscription = result.data.store_subscription;
+     if(planname=="partner_test"){
+      store_subscription[0].package.number_of_products=5;
+      store_subscription[0].package.pro_models=5;
+      store_subscription[0].package.product_photo_limit=5;
+      //store_subscription[0].package.vto_limit=5;
+      store_subscription[0].package.vto_limit=5;
+     }
          setActive(store_subscription[0].package);
    });
  },[]);
