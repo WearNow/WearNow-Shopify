@@ -1,17 +1,15 @@
 import gql from "graphql-tag";
 import client from "~/services/ApolloClient";
 
-export const fetchNotificationSettings = async (store_id: string) => {
+export const fetchUsage = async (store_id: string) => {
    return await client
       .query({
         query: gql`query MyQuery($store_id:uuid){
-          notification_setting(where: {store_id: {_eq: $store_id} } ) {
-            product_photo_updates
-            renewal_due
-            tryonusage_update
+          service_usage_activity(where: {store_id: {_eq: $store_id}}) {
+              product_photos_usage_count
+              vto_usage_count
           }
         }
-        
         `,
         fetchPolicy: "network-only",
         variables: {
@@ -20,6 +18,6 @@ export const fetchNotificationSettings = async (store_id: string) => {
       })
       .then((result) => {
         console.log("apollo client result: :::", result);
-        return result.data.notification_setting[0];
+        return result.data.service_usage_activity[0];
       });
   };

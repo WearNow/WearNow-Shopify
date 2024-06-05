@@ -1,6 +1,13 @@
 import * as React from "react";
 import DashboardHeader from "~/components/DashboardHeader";
-import { fetchData } from "~/apis/notification";
+import { fetchNotificationSettings } from "~/apis/notification";
+import { fetchActivePlan } from "~/apis/plan";
+import { Link, useLoaderData } from "@remix-run/react";
+import { SessionLoader } from "~/services/SessionLoader";
+import { fetchUsage } from "~/apis/usage";
+import UsageComponent from "~/components/Usage";
+
+export const loader = SessionLoader;
 
 type ImageProps = {
   src: string;
@@ -13,76 +20,47 @@ const Image: React.FC<ImageProps> = ({ src, alt, className, loading }) => (
   <img loading={loading} src={src} alt={alt} className={className} />
 );
 
-type SwitchProps = {
-  enabled: boolean;
-};
-
-const Switch: React.FC<SwitchProps> = ({ enabled }) => (
-  <div
-    className={`flex flex-col justify-center p-0.5 rounded-full ${enabled ? "bg-sky-600" : "bg-gray-100"}`}
-  >
-    <div
-      className={`shrink-0 h-4 w-4 rounded-full shadow ${enabled ? "bg-white" : "bg-gray-200"}`}
-    />
-  </div>
-);
-
 const Settings = () => {
-
   const [noticeOne, setNoticeOne] = React.useState(false);
   const [noticeTwo, setNoticeTwo] = React.useState(false);
   const [noticeThree, setNoticeThree] = React.useState(false);
 
-  const onJumpTo = () => {
-    console.log("jumpto");
-  };
+  const [progress1, setProgress1] = React.useState(0);
+  const [progressMax1, setProgressMax1] = React.useState(0);
+  const [progress2, setProgress2] = React.useState(0);
+  const [progressMax2, setProgressMax2] = React.useState(0);
 
-  const [progress1, setProgress1] = React.useState(300);
-  const [progressMax1, setProgressMax1] = React.useState(3000);
-  const [progress2, setProgress2] = React.useState(40);
-  const [progressMax2, setProgressMax2] = React.useState(50);
+  const [activePlan, setActivePlan] = React.useState<any>();
 
-  const getWidth1 = (progress: number, progressMax: number) => {
-    const str =
-      progress / progressMax > 1 ? 100 : (progress / progressMax) * 100;
-    return str;
-  };
-
-  const [procent1, setProcent1] = React.useState(
-    getWidth1(progress1, progressMax1)
-  );
-  const [procent2, setProcent2] = React.useState(
-    getWidth1(progress2, progressMax2)
-  );
-
+  const sessionData = useLoaderData<typeof loader>();
   React.useEffect(() => {
-    fetchData().then((res) => {
-      console.log(res, ":::notification");
+    console.log(sessionData, "session data");
+    console.log(sessionData.authWithShop.store_id, "store_id");
+    const store_id = sessionData.authWithShop.store_id;
+
+    fetchNotificationSettings(store_id).then((res) => {
+      console.log(res, ":::notification settings");
       setNoticeOne(res.product_photo_updates);
       setNoticeTwo(res.tryonusage_update);
       setNoticeThree(res.renewal_due);
     });
+
+    const fetchData = async () => {
+      const activePlan = await fetchActivePlan(store_id);
+      const usage = await fetchUsage(store_id);
+      console.log(activePlan, ":::activePlan");
+      console.log(usage, ":::usage");
+      // 使用获取到的数据
+      setActivePlan(activePlan);
+      setProgressMax1(activePlan.package.vto_limit);
+      setProgressMax2(activePlan.package.product_photo_limit);
+      setProgress1(usage.vto_usage_count);
+      setProgress2(usage.product_photos_usage_count);
+    };
+
+    fetchData();
   }, []);
 
-  type Offset = {
-    offset: number | string | undefined;
-  };
-
-  const StopComponent: React.FC<Offset> = ({ offset }) => {
-    let stepColor = "#EBEBEB";
-    const numericOffset =
-      typeof offset === "string" ? parseFloat(offset) : (offset as number);
-    console.log(numericOffset);
-    if (numericOffset == undefined || numericOffset <= 70) {
-      //
-    } else if (numericOffset > 70) {
-      stepColor = "#E8A21A";
-    } else {
-      stepColor = "#B54708";
-    }
-
-    return <stop offset={`${offset}%`} stopColor={stepColor} />;
-  };
 
   return (
     <div className="flex flex-col bg-white">
@@ -95,7 +73,7 @@ const Settings = () => {
                 <div className="flex gap-2.5  items-center p-5 font-medium   bg-white rounded-lg border border-gray-300 border-solid max-md:flex-wrap">
                   <div className="flex flex-col self-stretch ">
                     <div className="text-lg leading-7 text-gray-800">
-                      Basic Plan
+                      {activePlan?.package?.name || 'No active'} Plan
                     </div>
                     <div className="mt-2.5 text-xs text-ellipsis text-slate-600">
                       Quota resets on 24/05/2014
@@ -113,33 +91,7 @@ const Settings = () => {
                           {progress1}/{progressMax1}
                         </span>
                       </div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="100%"
-                        height="4"
-                        viewBox="0 0 100% 4"
-                        fill="none"
-                      >
-                        <rect
-                          width="100%"
-                          height="4"
-                          rx="2"
-                          fill="url(#paint0_linear_686_58186)"
-                        />
-                        <defs>
-                          <linearGradient
-                            id="paint0_linear_686_58186"
-                            x1="0"
-                            y1="2"
-                            x2="800"
-                            y2="2"
-                            gradientUnits="userSpaceOnUse"
-                          >
-                            <stop offset="0.08" stopColor="#047AC6" />
-                            <StopComponent offset={procent1} />
-                          </linearGradient>
-                        </defs>
-                      </svg>
+                      <UsageComponent progress={progress1} progressMax={progressMax1} />
                     </div>
                     <div className="product_page_row_content w-full">
                       <div className="flex w-full justify-between items-start flex-nowrap relative mx-auto my-0 mb-2">
@@ -147,43 +99,17 @@ const Settings = () => {
                           Product Photos Created
                         </span>
                         <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                          40/50
+                          {progress2}/{progressMax2}
                         </span>
                       </div>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="100%"
-                        height="4"
-                        viewBox="0 0 100% 4"
-                        fill="none"
-                      >
-                        <rect
-                          width="100%"
-                          height="4"
-                          rx="2"
-                          fill="url(#paint0_linear_686_58191)"
-                        />
-                        <defs>
-                          <linearGradient
-                            id="paint0_linear_686_58191"
-                            x1="0"
-                            y1="2"
-                            x2="800"
-                            y2="2"
-                            gradientUnits="userSpaceOnUse"
-                          >
-                            <stop offset="0.76" stopColor="#047AC6" />
-                            <StopComponent offset={procent2} />
-                          </linearGradient>
-                        </defs>
-                      </svg>
+                      <UsageComponent progress={progress2} progressMax={progressMax2} />
                     </div>
                   </div>
 
                   <div className="shrink-0 mx-4 w-px h-full bg-gray-200 max-md:max-h-full" />
 
+                  <Link to="/app/plan">
                   <div
-                    onClick={onJumpTo}
                     className="cursor-pointer flex shrink-0 flex-col justify-center self-stretch my-auto h-[40px] text-sm text-white rounded-3xl border border-sky-600 border-solid"
                   >
                     <div className="flex gap-2 px-3 py-2 bg-sky-600 border-2 border-sky-600 border-solid rounded-[999px]">
@@ -196,6 +122,7 @@ const Settings = () => {
                       />
                     </div>
                   </div>
+                  </Link>
                 </div>
 
                 <div className="flex flex-col p-5 mt-6 rounded-lg border border-gray-300 border-solid max-md:max-w-full">
