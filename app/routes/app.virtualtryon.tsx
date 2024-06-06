@@ -8,7 +8,7 @@ import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
-import {LegacyStack, Tag, Autocomplete,Icon} from '@shopify/polaris';
+import {LegacyStack, Tag, Autocomplete,Icon,Thumbnail} from '@shopify/polaris';
 import {SearchIcon} from '@shopify/polaris-icons';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -96,7 +96,9 @@ export default function VirtualTryOnPage() {
             const opt: any[]=[];
             const backb: any[] | ((prevState: string[]) => string[])=[];
             backgrounds?.map((back:any)=>{
-                var backg={value:back.uuid,label:`${back.name}`}
+        
+                var backg={value:back.uuid,label:`${back.name}`, media: <Thumbnail source={back.image} alt={back.name} size="small" />,
+              }
                 opt.push(backg);
                 if(back.featured==true){
                 backb.push(back.uuid);
@@ -113,7 +115,7 @@ export default function VirtualTryOnPage() {
             const opt: any[]=[];
             const posep: any[] | ((prevState: string[]) => string[])=[];
             poses?.map((pp:any)=>{
-                var ppp={value:pp.uuid,label:pp.name}
+                var ppp={value:pp.uuid,label:pp.name, media: <Thumbnail source={pp.image} alt={pp.name} size="small" />,}
                 opt.push(ppp);
                 if(pp.featured==true){
                     posep.push(pp.uuid);
@@ -283,7 +285,7 @@ export default function VirtualTryOnPage() {
               tagLabel = titleCase(tagLabel);
               return (
                 <Tag key={`option${option}`} onRemove={removeTag(option)}>
-                 <img style={{height:"40px", width:"40px"}} src={image[0].image} /> {tagLabel}
+                 <img className="rounded_img" style={{height:"40px", width:"40px"}} src={image[0].image} /> {tagLabel}
                 </Tag>
               );
             })}
@@ -305,8 +307,8 @@ export default function VirtualTryOnPage() {
               tagLabel = option.replace('_', ' ');
               tagLabel = titleCase(tagLabel);
               return (
-                <Tag key={`option${option}`} onRemove={removeTagPose(option)}>
-                 <img style={{height:"40px", width:"40px"}} src={image[0].image} /> {tagLabel}
+                <Tag key={`option${option}`} onRemove={removeTagPose(option)}   className="custom-tag">
+                 <img className="rounded_img" style={{height:"40px", width:"40px"}} src={image[0].image} /> {tagLabel}
                 </Tag>
               );
             })}

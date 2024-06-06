@@ -22,7 +22,26 @@
   max-width: 213px;
   display: flex;
 } */
-
+.vartualtryon_container span.Polaris-Tag__Text {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+img.rounded_img {
+  border-radius: 50px;
+  padding: 2px;
+  object-fit: cover;
+  height: 50px !important;
+  width: 50px !important;
+  border: 1px solid var(--Colors-Border-border-primary, #D0D5DD) !important;
+  margin: 2px;
+}
+.vartualtryon_container span.Polaris-Tag.Polaris-Tag--removable {
+  border-radius: var(--radius-sm, 6px) !important;
+  border: 1px solid var(--Colors-Border-border-primary, #D0D5DD) !important;
+  background: var(--Colors-Background-bg-primary, #FFF) !important;
+}
 .custom_slider_content {
   padding-left: 40px;
 }
