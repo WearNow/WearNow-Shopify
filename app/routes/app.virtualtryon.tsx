@@ -273,19 +273,14 @@ export default function VirtualTryOnPage() {
         selectedOptions.length > 0 ? (
           <LegacyStack spacing="extraTight" alignment="center">
             {selectedOptions?.map((option) => {
-               const image= backgrounds.filter((back:any)=>{
-                    if(back.uuid==option)
-                    {
-                        return back.image
-                    }
-                })
+               const image= backgrounds.filter((back:any)=>back.uuid==option)
                 console.log(image,"image in background");
               let tagLabel = '';
               tagLabel = option.replace('_', ' ');
               tagLabel = titleCase(tagLabel);
               return (
                 <Tag key={`option${option}`} onRemove={removeTag(option)}>
-                 <img className="rounded_img" style={{height:"40px", width:"40px"}} src={image[0].image} /> {tagLabel}
+                 <img className="rounded_img" style={{height:"40px", width:"40px"}} src={image[0].image} /> {image[0].name}
                 </Tag>
               );
             })}
@@ -296,19 +291,14 @@ export default function VirtualTryOnPage() {
         selectedOptionsPose.length > 0 ? (
           <LegacyStack spacing="extraTight" alignment="center">
             {selectedOptionsPose?.map((option) => {
-                const image= poses.filter((pose:any)=>{
-                    if(pose.uuid==option)
-                    {
-                        return pose.image
-                    }
-                })
+                const image= poses.filter((pose:any)=>pose.uuid==option)
                 console.log(image,"image in background");
               let tagLabel = '';
               tagLabel = option.replace('_', ' ');
               tagLabel = titleCase(tagLabel);
               return (
                 <Tag key={`option${option}`} onRemove={removeTagPose(option)}   className="custom-tag">
-                 <img className="rounded_img" style={{height:"40px", width:"40px"}} src={image[0].image} /> {tagLabel}
+                 <img className="rounded_img" style={{height:"40px", width:"40px"}} src={image[0].image} /> {image[0].name}
                 </Tag>
               );
             })}
