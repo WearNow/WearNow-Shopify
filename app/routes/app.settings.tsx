@@ -9,6 +9,25 @@ import UsageComponent from "~/components/Usage";
 
 export const loader = SessionLoader;
 
+function formatDateToDMY(dateTimeString: string) {  
+  // 尝试将输入的字符串转换为Date对象  
+  const dateTime = new Date(dateTimeString);  
+
+  // 检查Date对象是否有效  
+  if (isNaN(dateTime.getTime())) {  
+      // throw new Error('Invalid date time string');  
+      return '--/--/--'
+  }  
+
+  // 提取日期的日、月、年部分  
+  const day = String(dateTime.getDate()).padStart(2, '0'); // 日  
+  const month = String(dateTime.getMonth() + 1).padStart(2, '0'); // JavaScript中月份是从0开始的，因此需要+1  
+  const year = dateTime.getFullYear(); // 年  
+
+  // 返回日/月/年的格式化字符串  
+  return `${day}/${month}/${year}`;  
+} 
+
 type ImageProps = {
   src: string;
   alt: string;
@@ -73,10 +92,10 @@ const Settings = () => {
                 <div className="flex gap-2.5  items-center p-5 font-medium   bg-white rounded-lg border border-gray-300 border-solid max-md:flex-wrap">
                   <div className="flex flex-col self-stretch ">
                     <div className="text-lg leading-7 text-gray-800">
-                      {activePlan?.package?.name || 'No active'} Plan
+                      {activePlan?.package?.name || '--'} Plan
                     </div>
                     <div className="mt-2.5 text-xs text-ellipsis text-slate-600">
-                      Quota resets on 24/05/2014
+                      Quota resets on {formatDateToDMY(activePlan?.reset_date)}
                     </div>
                   </div>
 
@@ -88,7 +107,7 @@ const Settings = () => {
                           Virtual Try-On Experiences Used
                         </span>
                         <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                          {progress1}/{progressMax1}
+                          {progress1}/{progressMax1 || '∞'}
                         </span>
                       </div>
                       <UsageComponent progress={progress1} progressMax={progressMax1} />
@@ -99,7 +118,7 @@ const Settings = () => {
                           Product Photos Created
                         </span>
                         <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                          {progress2}/{progressMax2}
+                          {progress2}/{progressMax2 || '∞'}
                         </span>
                       </div>
                       <UsageComponent progress={progress2} progressMax={progressMax2} />

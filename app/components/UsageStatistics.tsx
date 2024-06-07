@@ -53,7 +53,7 @@ function UsageStatistics(sessionData:any) {
                             Virtual Try-On Experiences Used
                         </span>
                         <span className="h-[15px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[12px] font-medium leading-[15px] text-[#232934] relative text-left whitespace-nowrap z-[9]">
-                            {progress1}/{progressMax1}
+                            {progress1}/{progressMax1 || ' ∞'}
                         </span>
                     </div>
                     <UsageComponent progress={progress1} progressMax={progressMax1} />
@@ -65,7 +65,7 @@ function UsageStatistics(sessionData:any) {
                         Product Photos Created
                     </span>
                     <span className="h-[15px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[12px] font-medium leading-[15px] text-[#232934] relative text-left whitespace-nowrap">
-                        {progress2}/{progressMax2}
+                        {progress2}/{progressMax2|| ' ∞'}
                     </span>
                 </div>
                 <UsageComponent progress={progress2} progressMax={progressMax2} />

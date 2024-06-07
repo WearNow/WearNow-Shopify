@@ -28,6 +28,7 @@ export const fetchActivePlan = async (store_id: string) => {
                 }
                 status
                 created_at
+                reset_date
             }
         }
         `,
