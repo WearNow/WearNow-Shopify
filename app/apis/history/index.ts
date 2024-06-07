@@ -17,11 +17,11 @@ function formatTimeWithAMPM(dateTimeString:string) {
     return `${formattedHours}:${minutes} ${ampm}`;   
 }  
 
-export const fetchHistoryData = async () => {
+export const fetchHistoryData = async (store_id: string) => {
    return await client
       .query({
-        query: gql`{
-          product_photo_history {
+        query: gql`query MyQuery($store_id:uuid){
+          product_photo_history(where: {request: {store_id: {_eq: $store_id}}}) {
             generated_image
             created_at
             uuid
@@ -49,6 +49,9 @@ export const fetchHistoryData = async () => {
         
         `,
         fetchPolicy: "network-only",
+        variables: {
+          store_id: store_id
+        },
       })
       .then((result) => {
         console.log("apollo client result: :::", result);
@@ -83,4 +86,45 @@ export const fetchHistoryData = async () => {
 
         return updatedStoreProducts;
       });
-  };
+};
+
+export const fetchHistoryQueueData = async (store_id: string) => {
+  return await client
+    .query({
+      query: gql`query MyQuery($store_id:uuid){
+        product_image_generation_request(where: {store_id: {_eq: $store_id}, status: {_eq: "PENDING"}}) {
+          store_product {
+            title
+            variant_id
+            uuid
+          }
+          status
+          results
+          created_at
+        }
+      }
+      `,
+      fetchPolicy: "network-only",
+      variables: {
+        store_id: store_id
+      },
+    })
+    .then((result) => {
+      console.log("apollo client result: :::", result);
+      var product_photo_history = result.data.product_image_generation_request;
+
+      return product_photo_history.map(
+        (pph: any, index: number) => {
+          //   // Assuming sp.images is already a JSON string that needs to be parsed
+          return {
+            src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/41393cd4cd5332521a6a76c7311cd6bf12859d641f3850f2f131af1897cc1406?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&',
+            name: pph.store_product.title,
+            photos: 'Creating',
+            date: pph.created_at.split("T")[0],
+            time: formatTimeWithAMPM(pph.created_at)
+          };
+        }
+      );
+
+    });
+};

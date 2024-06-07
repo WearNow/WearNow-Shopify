@@ -1,17 +1,20 @@
-import React from 'react'
+import React  from 'react'
 import DashboardModel from './DashboardModel';
 import { fetchHistoryData } from '~/apis/history';
 import { HistoryModal } from './HistoryModal';
-const DashboardHistory = () => {
+
+const DashboardHistory = (sessionData:any) => {
     
     const [isOpen, setIsOpen] = React.useState(false);
     const [historyData, setHistoryData] = React.useState([]);
     const [historyModalProp, setHistoryModalProp] = React.useState({});
 
+    console.log("sessionData: :::", sessionData);
+
     React.useEffect(() => {
         // Call the fetchProducts function when the component mounts
         console.log("apollo useEffect :::");
-        fetchHistoryData().then((updatedStoreProducts) => {
+        fetchHistoryData(sessionData?.authWithShop?.store_id).then((updatedStoreProducts) => {
           console.log("fetchHistoryData result: :::", updatedStoreProducts);
           setHistoryData(updatedStoreProducts);
         });

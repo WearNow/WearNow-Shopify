@@ -1,8 +1,6 @@
-import gql from "graphql-tag";
 import * as React from "react";
 import { FC } from "react";
 import { HistoryModal } from "~/components/HistoryModal";
-import client from "~/services/ApolloClient";
 import {fetchHistoryData} from '~/apis/history'
 
 type ImageWithAltProps = {
@@ -64,7 +62,7 @@ const Card: FC<CardProps> = ({
   </div>
 );
 
-const HistoryPhotos: FC = () => {
+const HistoryPhotos: FC = (sessionData:any) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [historyData, setHistoryData] = React.useState([]);
   const [historyModalProp, setHistoryModalProp] = React.useState({});
@@ -72,120 +70,13 @@ const HistoryPhotos: FC = () => {
   React.useEffect(() => {
     // Call the fetchProducts function when the component mounts
     console.log("apollo useEffect :::");
-    fetchHistoryData().then((updatedStoreProducts) => {
+    fetchHistoryData(sessionData.authWithShop.store_id).then((updatedStoreProducts) => {
       console.log("fetchHistoryData result: :::", updatedStoreProducts);
       setHistoryData(updatedStoreProducts);
     });
   }, []);
 
-  const demoCards = [
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name]",
-      photos: 4,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "square",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-2.jpg?v=1716110328",
-      name: "[Product Name 2]",
-      photos: 10,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "square",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 3]",
-      photos: 10,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "square",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 4]",
-      photos: 2,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "square",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 5]",
-      photos: 1,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "square",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 6]",
-      photos: 4,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 7]",
-      photos: 10,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 8]",
-      photos: 10,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 9]",
-      photos: 2,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 10]",
-      photos: 1,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 10]",
-      photos: 1,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-    {
-      src: "https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328",
-      name: "[Product Name 10]",
-      photos: 1,
-      date: "23/04/24",
-      time: "3.00 PM",
-      aspect: "rectangle",
-    },
-  ];
-
   const cards = historyData
-  // const cards = demoCards;
-
-  const images = cards.map((card) => {
-    return {
-      src: card.src,
-      alt: card.name,
-    };
-  });
 
   return (
     <div className="flex flex-col bg-white">

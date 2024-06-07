@@ -1,6 +1,5 @@
-import gql from "graphql-tag";
 import React, { FC } from "react";
-import client from "~/services/ApolloClient";
+import {fetchHistoryQueueData} from '~/apis/history'
 
 type ImageWithAltProps = {
   src: string;
@@ -61,74 +60,18 @@ const Card: FC<CardProps> = ({
   </div>
 );
 
-const HistoryQueue: React.FC = () => {
+const HistoryQueue: React.FC = (sessionData:any) => {
   const [historyData, setHistoryData] = React.useState([]);
 
-  const fetchHistoryData = async () => {
-    await client
-      .query({
-        query: gql`
-          {
-            product_image_generation_request(where: {status: {_eq: "PENDING"}}) {
-              store_product {
-                title
-                variant_id
-                uuid
-              }
-              status
-              results
-              created_at
-            }
-          }
-
-        `,
-        fetchPolicy: "network-only",
-      })
-      .then((result) => {
-        console.log("apollo client result: :::", result);
-        var product_photo_history = result.data.product_image_generation_request;
-        // Map over store_products to create a new array with the added 'image' property
-        function formatTimeWithAMPM(dateTimeString:string) {  
-          // 解析日期时间字符串  
-          const dateTime = new Date(dateTimeString);  
-        
-          // 提取小时和分钟  
-          const hours = dateTime.getHours();  
-          const minutes = dateTime.getMinutes().toString().padStart(2, '0');  
-        
-          // 判断AM/PM并添加标记  
-          const ampm = hours >= 12 ? 'PM' : 'AM';  
-          const formattedHours = hours % 12 || 12; // 将24小时制转换为12小时制，并处理午夜的情况  
-        
-          // 格式化时间并返回  
-          return `${formattedHours}:${minutes} ${ampm}`;  
-      }  
-        const updatedStoreProducts = product_photo_history.map(
-          (pph: any, index: number) => {
-            //   // Assuming sp.images is already a JSON string that needs to be parsed
-            return {
-              src: 'https://cdn.builder.io/api/v1/image/assets/TEMP/41393cd4cd5332521a6a76c7311cd6bf12859d641f3850f2f131af1897cc1406?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&',
-              name: pph.store_product.title,
-              photos: 'Creating',
-              date: pph.created_at.split("T")[0],
-              time: formatTimeWithAMPM(pph.created_at)
-            };
-          }
-        );
-
-        setHistoryData(updatedStoreProducts);
-        console.log(
-          "apollo client updatedStoreProductQueues: :::",
-          updatedStoreProducts
-        );
-      });
-  };
-
-  
   React.useEffect(() => {
     // Call the fetchProducts function when the component mounts
     console.log("apollo useEffect :::");
-    fetchHistoryData();
+    fetchHistoryQueueData(sessionData.authWithShop.store_id).then((data) => {
+      console.log("fetchHistoryQueueData result: :::", data);
+      if(data){
+        setHistoryData(data);
+      }
+    });
   }, []);
 
   const cards = historyData.slice(0, 4);

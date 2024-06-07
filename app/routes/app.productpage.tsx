@@ -110,10 +110,10 @@ export default function ProductPage() {
       console.log(activePlan, ":::activePlan");
       console.log(usage, ":::usage");
       // 使用获取到的数据
-      setProgressMax1(activePlan.package.vto_limit);
-      setProgressMax2(activePlan.package.product_photo_limit);
-      setProgress1(usage.vto_usage_count);
-      setProgress2(usage.product_photos_usage_count);
+      setProgressMax1(activePlan.package?.vto_limit);
+      setProgressMax2(activePlan.package?.product_photo_limit);
+      setProgress1(usage?.vto_usage_count);
+      setProgress2(usage?.product_photos_usage_count);
     };
 
     fetchData();
@@ -131,7 +131,7 @@ export default function ProductPage() {
                 Virtual Try-On Experiences Used
               </span>
               <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                {progress1}/{progressMax1}
+                {progress1}/{progressMax1 || ' ∞'}
               </span>
             </div>
             <UsageComponent progress={progress1} progressMax={progressMax1} />
@@ -142,7 +142,7 @@ export default function ProductPage() {
                 Product Photos Created
               </span>
               <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                {progress2}/{progressMax2}
+                {progress2}/{progressMax2|| ' ∞'}
               </span>
             </div>
             <UsageComponent progress={progress2} progressMax={progressMax2} />

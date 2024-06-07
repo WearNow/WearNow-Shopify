@@ -42,7 +42,7 @@ function CompleteOnBording(sessionData:any) {
             </div>
             )}
          <UsageStatistics {...sessionData?.sessionData.sessionData}/>
-         <DashboardHistory/>
+         <DashboardHistory {...sessionData?.sessionData.sessionData}/>
         </>
     )
 }
