@@ -138,12 +138,10 @@ export default function ProductPage() {
   //   []
   // );
   const handleChange = useCallback((productId:string) => {
-    products.filter((product:any) => productId.includes(product.uuid)).forEach((product:any, index:number) => {
         setCheckedItems((prevState) => ({
           ...prevState,
           [productId]: !prevState[productId],
         }));
-    });
   }, []);
   const [value, setValue] = useState("200");
 
