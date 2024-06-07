@@ -1,8 +1,8 @@
 {% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
-  <button class="theme_ai_model">
-    <img src="{{ "wna.png" | asset_img_url: '30px' }}" height="30" width="30" loading="lazy">
-      AI MODEL
-  </button>
+<button class="theme_ai_model">
+  <img src="{{ "wna.png" | asset_img_url: '30px' }}" height="30" width="30" loading="lazy">
+  AI MODEL
+</button>
 <span style="color:{{ block.settings.colour }}">
   {% render 'themeAi', rating: avg_rating %}
 </span>
@@ -12,17 +12,29 @@
   {{ 'ratings.home.recommendationText' | t }}
 {% endif %}
 
+<div class="main_model_wna" style="display:none;">
+  <div>
+    {% render 'custmizetryonmodel1' %}
+    {% render 'custmizetryonmodel2' %}
+    {% comment %} {% render 'custmizetryonmodel3' %}
+    {% render 'custmizetryonmodel4' %}
+    {% render 'custmizetryonmodel5' %}
+    {% render 'custmizetryonmodel6' %} {% endcomment %}
+    {% render 'footermodel' %}
+  </div>
+ 
+</div>
+
 {% schema %}
 {
   "name": "Theme AI",
   "target": "section",
-  "class":"model_ai",
+  "class": "model_ai",
   "stylesheet": "newstyles.css",
-  "javascript": "themeai.js", 
+  "javascript": "themeai.js",
   "settings": [
     { "type": "product", "id": "product", "label": "product", "autofill": true },
     { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
   ]
 }
 {% endschema %}
-

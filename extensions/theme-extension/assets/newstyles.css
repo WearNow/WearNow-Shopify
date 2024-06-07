@@ -14,8 +14,9 @@
 }
 
 button.theme_ai_model {
-    width: 92%;
+    width: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     font-size: 17px;
@@ -24,14 +25,26 @@ button.theme_ai_model {
     color: white;
     border: none;
     outline: none;
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 10px;
     cursor: pointer;
     height: 45px;
-    justify-content: center;
 }
-
-.model_row {
+.upload_photo>div {
+    font-size: 14px !important;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+.upload_photo {
+    border-radius: 999px;
+    border: 1px solid var(--WearNow-Color-Primary-primary-500, #047AC6);
+    background: var(--WearNow-Color-Primary-primary-500, #047AC6);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    color: #fff;
+    height: 50px !important;
+}
+.model_row,.main_model_wna>div {
     height: calc(100vh - 180px) !important;
     overflow: auto;
 }
@@ -284,3 +297,61 @@ button.add_to_cart_btn {
 .new_select_skin_comosition img {
     border-radius: 50px;
 }
+
+
+
+
+/* ======================== custmize try on style code ==================================== */
+.pagination_model_content {
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+}
+.model_btn,#backBtn{
+    cursor: pointer;
+}
+.model_btn,.addtocart_btn {
+    background: #047ac6;
+    color: white;
+    cursor: pointer;
+}
+
+.footer_model {
+    width: auto;
+    margin: 0 auto;
+    background: white;
+}
+div#model1 {
+    margin-bottom: 50px;
+}
+.main_model_wna {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+    z-index: 99;
+}
+.main_model_wna>div {
+    width: 390px;
+    height: auto;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    background: #fff;
+    text-align: center;
+}
+img.lokking_image {
+    position: absolute;
+    top: 58%;
+    left: 44%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+/* ======================== custmize try on style code ==================================== */
