@@ -79,19 +79,72 @@ export default function ProductPage() {
   const [progressMax1, setProgressMax1] = React.useState(0);
   const [progress2, setProgress2] = React.useState(0);
   const [progressMax2, setProgressMax2] = React.useState(0);
-
+  const [products, setProducts] = React.useState<any>([]);
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
   const Naviagte = useNavigate();
+
+  const fetchProducts = async () => {
+
+    await client
+      .query({
+        query: gql`
+    query MyQuery3($storeid: uuid!) {
+    store_products(limit: 50, where: {store_id: {_eq: $storeid}}) {
+      store_id
+      title
+      uuid
+      variant_id
+      product_id
+      images
+      price
+      sku
+    }
+  }
+  `,
+        variables: {
+          storeid: sessionData.authWithShop.store_id,
+        },
+      })
+      .then((result) => {
+        var store_products = result.data.store_products;
+        // Map over store_products to create a new array with the added 'image' property
+        const updatedStoreProducts = store_products.map((sp: any, index: number) => {
+          // Assuming sp.images is already a JSON string that needs to be parsed
+          let images = sp.images.replace("[{'url': '", '');
+          images = images.replace("'}]", '');
+          console.log("images: :::", images);
+          return {
+            ...sp, // Spread the existing properties of the product
+            image: images // Add the new image property
+          };
+        });
+
+        setProducts(updatedStoreProducts);
+        console.log("apollo client store id: :::", updatedStoreProducts);
+      });
+
+
+  };
   useEffect(() => {
     console.log(sessionData, "session data in main Index session");
     if (sessionData.authWithShop?.state != "active") {
       Naviagte("/app/plan", { replace: true });
     }
+    fetchProducts();
   }, [sessionData]);
   const [checked, setChecked] = useState(false);
-  const handleChange = useCallback(
-    (newChecked: boolean) => setChecked(newChecked),
-    []
-  );
+  // const handleChange = useCallback(
+  //   (newChecked: boolean) => setChecked(newChecked),
+  //   []
+  // );
+  const handleChange = useCallback((productId:string) => {
+    products.filter((product:any) => productId.includes(product.uuid)).forEach((product:any, index:number) => {
+        setCheckedItems((prevState) => ({
+          ...prevState,
+          [productId]: !prevState[productId],
+        }));
+    });
+  }, []);
   const [value, setValue] = useState("200");
 
   const handleChangeData = useCallback(
@@ -238,6 +291,8 @@ export default function ProductPage() {
                       className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                       style={{ background: "#fffcfc" }}
                     >
+                      {products!=undefined && products?.map((product:any) =>(
+                        <>
                       <tr
                         style={{
                           background: "#FFFFFF",
@@ -248,18 +303,19 @@ export default function ProductPage() {
                           <div className="inline-flex items-center gap-x-3">
                             <Checkbox
                               label=""
-                              checked={checked}
-                              onChange={handleChange}
+                              value={product.uuid}
+                              checked={checkedItems[product.uuid]}
+                              onChange={() => handleChange(product.uuid)}
                             />
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt=""
+                                src={product.image}
+                                alt={product.title}
                               />
                               <div>
                                 <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table">
-                                  [Product Name]
+                                 {product.title}
                                 </h2>
                               </div>
                             </div>
@@ -275,8 +331,9 @@ export default function ProductPage() {
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <Checkbox
                             label=""
-                            checked={checked}
-                            onChange={handleChange}
+                            value={`virtual${product.uuid}`}
+                            checked={checkedItems[`virtual${product.uuid}`]}
+                            onChange={() => handleChange(`virtual${product.uuid}`)}
                           />
                         </td>
                         <td
@@ -295,291 +352,8 @@ export default function ProductPage() {
                           <span>20</span>
                         </td>
                       </tr>
-                      <tr
-                        style={{
-                          background: "#FFFFFF",
-                          borderTop: "1px solid #bebcbf",
-                        }}
-                      >
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <Checkbox
-                              label=""
-                              checked={checked}
-                              onChange={handleChange}
-                            />
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt=""
-                              />
-                              <div>
-                                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table ">
-                                  [Product Name]
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-[#0c5132] ">
-                          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
-                            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
-                              Ready to create
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <Checkbox
-                            label=""
-                            checked={checked}
-                            onChange={handleChange}
-                          />
-                        </td>
-                        <td
-                          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                          style={{ position: "relative", zIndex: "0" }}
-                        >
-                          <TextField
-                            label=""
-                            type="number"
-                            value={value}
-                            onChange={handleChangeData}
-                            autoComplete="off"
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span>0</span>
-                        </td>
-                      </tr>
-                      <tr
-                        style={{
-                          background: "#FFFFFF",
-                          borderTop: "1px solid #bebcbf",
-                        }}
-                      >
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <Checkbox
-                              label=""
-                              checked={checked}
-                              onChange={handleChange}
-                            />
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt=""
-                              />
-                              <div>
-                                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table ">
-                                  [Product Name]
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-[#0c5132] ">
-                          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
-                            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
-                              Ready to create
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <Checkbox
-                            label=""
-                            checked={checked}
-                            onChange={handleChange}
-                          />
-                        </td>
-                        <td
-                          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                          style={{ position: "relative", zIndex: "0" }}
-                        >
-                          <TextField
-                            label=""
-                            type="number"
-                            value={value}
-                            onChange={handleChangeData}
-                            autoComplete="off"
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span>20</span>
-                        </td>
-                      </tr>
-                      <tr
-                        style={{
-                          background: "#FFFFFF",
-                          borderTop: "1px solid #bebcbf",
-                        }}
-                      >
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <Checkbox
-                              label=""
-                              checked={checked}
-                              onChange={handleChange}
-                            />
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt=""
-                              />
-                              <div>
-                                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table ">
-                                  [Product Name]
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-[#0c5132] ">
-                          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
-                            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
-                              Ready to create
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <Checkbox
-                            label=""
-                            checked={checked}
-                            onChange={handleChange}
-                          />
-                        </td>
-                        <td
-                          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                          style={{ position: "relative", zIndex: "0" }}
-                        >
-                          <TextField
-                            label=""
-                            type="number"
-                            value={value}
-                            onChange={handleChangeData}
-                            autoComplete="off"
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span>0</span>
-                        </td>
-                      </tr>
-                      <tr
-                        style={{
-                          background: "#FFFFFF",
-                          borderTop: "1px solid #bebcbf",
-                        }}
-                      >
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <Checkbox
-                              label=""
-                              checked={checked}
-                              onChange={handleChange}
-                            />
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt=""
-                              />
-                              <div>
-                                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table ">
-                                  [Product Name]
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-[#0c5132] ">
-                          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
-                            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
-                              Ready to create
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <Checkbox
-                            label=""
-                            checked={checked}
-                            onChange={handleChange}
-                          />
-                        </td>
-                        <td
-                          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                          style={{ position: "relative", zIndex: "0" }}
-                        >
-                          <TextField
-                            label=""
-                            type="number"
-                            value={value}
-                            onChange={handleChangeData}
-                            autoComplete="off"
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span>20</span>
-                        </td>
-                      </tr>
-                      <tr
-                        style={{
-                          background: "#FFFFFF",
-                          borderTop: "1px solid #bebcbf",
-                        }}
-                      >
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <Checkbox
-                              label=""
-                              checked={checked}
-                              onChange={handleChange}
-                            />
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                alt=""
-                              />
-                              <div>
-                                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table ">
-                                  [Product Name]
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-[#0c5132] ">
-                          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
-                            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
-                              Ready to create
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <Checkbox
-                            label=""
-                            checked={checked}
-                            onChange={handleChange}
-                          />
-                        </td>
-                        <td
-                          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                          style={{ position: "relative", zIndex: "0" }}
-                        >
-                          <TextField
-                            label=""
-                            type="number"
-                            value={value}
-                            onChange={handleChangeData}
-                            autoComplete="off"
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span>0</span>
-                        </td>
-                      </tr>
+                      </>
+                      ))}
                     </tbody>
                   </table>
                 </div>
