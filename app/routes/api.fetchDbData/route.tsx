@@ -57,7 +57,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         });
       const query = gql`
   query MyQuery3($storeid: uuid!) {
-  store_products(limit: 50, where: {store_id: {_eq: $storeid},vto_enabled:{_eq:true}}) {
+  store_products(limit: 250, where: {store_id: {_eq: $storeid},vto_enabled:{_eq:true}}) {
     store_id
     title
     uuid
