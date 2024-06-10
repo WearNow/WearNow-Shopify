@@ -101,6 +101,7 @@ export default function ProductPage() {
       images
       price
       sku
+      vto_enabled
     }
   }
   `,
@@ -116,12 +117,17 @@ export default function ProductPage() {
           let images = sp.images.replace("[{'url': '", '');
           images = images.replace("'}]", '');
           console.log("images: :::", images);
+          if(sp.vto_enabled == true) {
+            setCheckedItems((prevState) => ({
+              ...prevState,
+              [sp.uuid]: true,
+            }));
+          }
           return {
             ...sp, // Spread the existing properties of the product
             image: images // Add the new image property
           };
         });
-
         setProducts(updatedStoreProducts);
         console.log("apollo client store id: :::", updatedStoreProducts);
       });
