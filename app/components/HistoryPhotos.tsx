@@ -1,7 +1,8 @@
 import * as React from "react";
 import { FC } from "react";
 import { HistoryModal } from "~/components/HistoryModal";
-import {fetchHistoryData} from '~/apis/history'
+import { fetchHistoryData } from "~/apis/history";
+import { HistoryNoData } from "./HistoryNoData";
 
 type ImageWithAltProps = {
   src: string;
@@ -62,7 +63,7 @@ const Card: FC<CardProps> = ({
   </div>
 );
 
-const HistoryPhotos: FC = (sessionData:any) => {
+const HistoryPhotos: FC = (sessionData: any) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [historyData, setHistoryData] = React.useState([]);
   const [historyModalProp, setHistoryModalProp] = React.useState({});
@@ -70,40 +71,39 @@ const HistoryPhotos: FC = (sessionData:any) => {
   React.useEffect(() => {
     // Call the fetchProducts function when the component mounts
     console.log("apollo useEffect :::");
-    fetchHistoryData(sessionData.authWithShop.store_id).then((updatedStoreProducts) => {
-      console.log("fetchHistoryData result: :::", updatedStoreProducts);
-      setHistoryData(updatedStoreProducts);
-    });
+    fetchHistoryData(sessionData.authWithShop.store_id).then(
+      (updatedStoreProducts) => {
+        console.log("fetchHistoryData result: :::", updatedStoreProducts);
+        setHistoryData(updatedStoreProducts);
+      }
+    );
   }, []);
 
-  const cards = historyData
+  const cards = historyData;
 
-  return (
+  const noData = !cards || cards.length === 0;
+
+  return noData ? (
+    <HistoryNoData tips="No photos created" />
+  ) : (
     <div className="flex flex-col bg-white">
       <HistoryModal
         isOpen={isOpen}
         {...historyModalProp}
         onClose={() => setIsOpen(false)}
       />
-      <div className=" flex gap-2 items-center mx-7 mt-10 text-sm font-semibold leading-5 text-slate-700 max-md:flex-wrap max-md:mt-10 max-md:mr-2.5">
-        <div className="flex-1 shrink-0 self-stretch my-auto h-px bg-gray-200" />
-        <div className="justify-center self-stretch px-3.5 py-2.5 bg-white rounded-lg border border-gray-300 border-solid shadow-sm">
-          Created Photos
-        </div>
-        <div className="flex-1 shrink-0 self-stretch my-auto h-px bg-gray-200" />
-      </div>
+      
       <div className="w-full max-md:max-w-full">
         <main className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-center gap-2.5 mx-5 pt-8 font-medium text-white flex-wrap max-md:mr-2.5 max-md:max-w-full">
           {cards.map((card, index) => (
             <Card
               key={index}
-              {...card} 
+              {...card}
               aspect="square"
               onClick={() => {
                 setIsOpen(true);
-                setHistoryModalProp({...card})
-              }
-              }
+                setHistoryModalProp({ ...card });
+              }}
             />
           ))}
         </main>
