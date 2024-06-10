@@ -114,6 +114,8 @@ const Settings = () => {
     });
   };
 
+  const planName = (activePlan?.package?.name || "--") + " Plan";
+
   return (
     <div className="flex flex-col bg-white">
       <DashboardHeader></DashboardHeader>
@@ -127,7 +129,7 @@ const Settings = () => {
                 ">
                   <div className="flex flex-col ">
                     <div className="text-lg leading-7 text-gray-800">
-                      {activePlan?.package?.name || "--"} Plan
+                      {planName}
                     </div>
                     <div className="flex mt-2.5 text-xs text-slate-600">
                       Quota resets on {formatDateToDMY(activePlan?.reset_date)}
@@ -135,7 +137,7 @@ const Settings = () => {
                   </div>
 
                   <div className="shrink-0 mx-4 w-px h-full bg-gray-200 max-lg:hidden" />
-                  <div className="flex w-[80%]  gap-5 self-stretch my-auto text-xs text-gray-800 max-lg:flex-wrap max-lg:w-full">
+                  <div className="flex gap-5 self-stretch my-auto text-xs text-gray-800 max-lg:flex-wrap max-lg:w-full w-[60%]">
                     <div className="product_page_row_content w-full">
                       <div className="flex w-full justify-between items-start flex-nowrap relative mx-auto my-0 mb-2">
                         <span className="h-[18px]  shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap">
@@ -201,7 +203,7 @@ const Settings = () => {
                         <input
                           type="checkbox"
                           className="sr-only peer"
-                          checked={notices.product_photo_updates}
+                          checked={notices?.product_photo_updates}
                           readOnly
                         />
                         <div
@@ -221,7 +223,7 @@ const Settings = () => {
                         <input
                           type="checkbox"
                           className="sr-only peer"
-                          checked={notices.tryonusage_update}
+                          checked={notices?.tryonusage_update}
                           readOnly
                         />
                         <div
@@ -241,7 +243,7 @@ const Settings = () => {
                         <input
                           type="checkbox"
                           className="sr-only peer"
-                          checked={notices.renewal_due}
+                          checked={notices?.renewal_due}
                           readOnly
                         />
                         <div
