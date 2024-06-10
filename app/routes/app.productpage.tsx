@@ -11,6 +11,7 @@ import {
   Checkbox,
   TextField,
 } from "@shopify/polaris";
+import axios from "axios";
 import Dashboard from "~/components/Dashboard";
 import DashboardHeader from "~/components/DashboardHeader";
 import DashboardModal from "~/components/DashboardModel";
@@ -24,6 +25,7 @@ import gql from "graphql-tag";
 import { fetchActivePlan } from "~/apis/plan";
 import { fetchUsage } from "~/apis/usage";
 import UsageComponent from "~/components/Usage";
+import { apiURL } from "~/services/Services";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
@@ -80,6 +82,7 @@ export default function ProductPage() {
   const [progress2, setProgress2] = React.useState(0);
   const [progressMax2, setProgressMax2] = React.useState(0);
   const [products, setProducts] = React.useState<any>([]);
+  const [fullData, setFullData] = React.useState<string>('');
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
   const Naviagte = useNavigate();
 
@@ -137,12 +140,84 @@ export default function ProductPage() {
   //   (newChecked: boolean) => setChecked(newChecked),
   //   []
   // );
-  const handleChange = useCallback((productId:string) => {
+  const fetchProductData = async (inputQueryValue:string) => {
+    console.log(inputQueryValue,"inputQueryValue")
+    try {
+      const data = JSON.stringify({
+        queryfor: "productData",
+        first: 1,
+        fields: "*",
+        pagination: "yes",
+        shop: sessionData.authWithShop.shop,
+        searchQuery: inputQueryValue,
+      });
+      console.log(data,"data sending for the quey");
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${apiURL}api/query`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+      axios
+        .request(config)
+        .then((response:any) => {
+          console.log(response,"response from graphql api");
+          setFullData(response.data.response);
+        })
+        .catch((error:any) => {
+          console.log(error);
+        }); 
+    } catch (error) {}
+  };
+  const handleChange = useCallback(async(productId:string) => {
+    console.log(productId,"productId="+productId);
+    const product = products.filter((p:any)=>p.uuid == productId);
+    console.log(product,"Pordductsasdfa",checkedItems[productId]);
+    const mutation=gql`
+    mutation MyMutation13($uuid:uuid,$vto_enabled:Boolean,$full_data:String) {
+        update_store_products(where: {uuid: {_eq: $uuid}}, _set: {vto_enabled: $vto_enabled, full_data: $full_data}) {
+          affected_rows
+          returning {
+            full_data
+            vto_enabled
+          }
+        }
+      }`
+
+    if(checkedItems[productId]){
+      const result = await client.mutate({
+        mutation: mutation,
+        fetchPolicy: "network-only",
+        variables: {           
+          uuid: productId,
+          vto_enabled: !checkedItems[productId],
+          full_data: null
+        },
+      });
+    }
+    else{
+      fetchProductData(product[0]?.product_id.replace("gid://shopify/Product/",''));
+      console.log(fullData,"Full DAta");
+      const result = await client.mutate({
+        mutation: mutation,
+        fetchPolicy: "network-only",
+        variables: {           
+          uuid: productId,
+          vto_enabled: !checkedItems[productId],
+          full_data: fullData
+        },
+      });
+      console.log(result);
+    }
         setCheckedItems((prevState) => ({
           ...prevState,
           [productId]: !prevState[productId],
         }));
-  }, []);
+       
+  }, [checkedItems,fullData]);
   const [value, setValue] = useState("200");
 
   const handleChangeData = useCallback(
@@ -227,11 +302,7 @@ export default function ProductPage() {
                             className="flex items-center gap-x-3"
                             style={{ gap: "64px" }}
                           >
-                            <Checkbox
-                              label=""
-                              checked={checked}
-                              onChange={handleChange}
-                            />
+                            
                             <div className="flex ">
                               <h3>Product</h3>
                               <button className="flex items-center gap-x-2">
@@ -299,12 +370,7 @@ export default function ProductPage() {
                       >
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                            <Checkbox
-                              label=""
-                              value={product.uuid}
-                              checked={checkedItems[product.uuid]}
-                              onChange={() => handleChange(product.uuid)}
-                            />
+                           
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-[40px] h-[40px] rounded-lg"
@@ -329,9 +395,9 @@ export default function ProductPage() {
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <Checkbox
                             label=""
-                            value={`virtual${product.uuid}`}
-                            checked={checkedItems[`virtual${product.uuid}`]}
-                            onChange={() => handleChange(`virtual${product.uuid}`)}
+                            value={`${product.uuid}`}
+                            checked={checkedItems[`${product.uuid}`]}
+                            onChange={() => handleChange(`${product.uuid}`)}
                           />
                         </td>
                         <td

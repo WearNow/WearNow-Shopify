@@ -11,7 +11,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const shop = body.shop;
   const pagination = body.pagination;
   const searchQuery = body.searchQuery;
-
+ 
 
 
   // Ensure all required fields are provided
@@ -31,6 +31,18 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   let data_response = {};
 
   switch (queryfor) {
+    case "productData":
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow"
+        };
+
+      const response= await fetch(`https://${shop}/admin/api/2024-01/products/${searchQuery}.json`, requestOptions);
+       message = "Product fetched successfully";
+       var pd = await response.json();
+       data_response=JSON.stringify(pd?.product)
+      break;
     case "collection":
       try {
         const graphql = JSON.stringify({
