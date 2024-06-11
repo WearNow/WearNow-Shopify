@@ -12,7 +12,52 @@ closeBtn.addEventListener("click", function(){
       section.style.zIndex = "3";
     }
 });
+let url = location.href;
+const parts = url.split('/');
+  
+  // The hostname is the third part (index 2) of the URL parts
+  const shopName = parts[2];
+console.log("url::::::::::::",shopName);
+// Fetch the current_id attribute
+const currentId = themeAiModel.getAttribute('current_id');
 
+// Log the current_id to the console
+console.log(currentId);
+async function fetchProduct(){
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "queryfor": "checkVirtualTryOn",
+  "shop": shopName
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+const response=await fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/fetchDbData", requestOptions);
+const nn= await response.json();
+return nn;
+}
+// Call the async function and handle the result 
+(async () => {
+    try {
+      const result = await fetchProduct();
+      console.log(result); // Handle the result here
+      var exists=result.response.filter((res)=> res.variant_id==currentId);
+      console.log(exists);
+      if(exists.length <=0) {
+      themeAiModel.style.display = "none";
+    } 
+    } catch (error) {
+      console.error('Error:', error); // Handle any errors here
+    }
+  })();
+console.log(result,"result::::::::::::::::::::::::::::::::",result);
 themeAiModel.addEventListener("click", function(){
     modelContainer.style.display = "block";
     var section = document.querySelector(".shopify-section");
