@@ -244,8 +244,8 @@ export default function ProductPage() {
       // 使用获取到的数据
       setProgressMax1(activePlan.package?.vto_limit);
       setProgressMax2(activePlan.package?.product_photo_limit);
-      setProgress1(usage?.vto_usage_count);
-      setProgress2(usage?.product_photos_usage_count);
+      setProgress1(usage?.vto_usage_count || 0);
+      setProgress2(usage?.product_photos_usage_count || 0);
     };
 
     fetchData();
