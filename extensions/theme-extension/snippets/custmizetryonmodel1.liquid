@@ -1,10 +1,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
-<div id="loader" style="display:none">
-    <img src="https://cdn.pixabay.com/animation/2023/05/02/04/29/04-29-06-428_512.gif" alt="Loading...">
-</div>
+
 <div id="model1" class="model">
-    <div
+    <div id="loader" style="display:none">
+    <img src="https://cdn.pixabay.com/animation/2023/05/02/04/29/04-29-06-428_512.gif" alt="Loading...">
+   </div>
+    {% comment %} <div
         class="bg-[#ffffff] flex flex-col gap-0 items-center justify-start h-[100%] relative overflow-hidden">
         <div class="pt-4 pb-4 flex flex-col gap-0 items-center justify-center self-stretch shrink-0 h-[580px] relative"
             style="
@@ -136,10 +136,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div
+        </div> {% endcomment %}
+        {% comment %} <div
             class="border-solid border-colors-border-border-secondary border-t border-r-[0] border-b-[0] border-l-[0] self-stretch shrink-0 h-0 relative">
-        </div>
+        </div> {% endcomment %}
         {% comment %} <div class="pt-6 pb-3 flex flex-col gap-4 items-center justify-start flex-1 w-[390px] relative"
             style="padding-bottom:100px">
             <div
@@ -179,10 +179,81 @@
             </div>
         </div> {% endcomment %}
 
+        <div class="wna_model_container">
+            <div class="wna_model_row">
+                <div class="wna_model_col">
+                    <div class="wna_model_img" style="position:relative">
+                        <img class="lokking_image" src="{{ "upload.png" | asset_img_url: '' }}" alt="">
+                        <img src="{{ "power_by_wna.png" | asset_img_url: '' }}" alt="" class="model_power_by">
+                        <div style="height:30px;width:30px;background:#E5E5EA;border-radius: 20px;cursor:pointer"
+                            class="wna_close_btn">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M0.323144 11.677C0.462882 11.8167 0.628821 11.9127 0.820961 11.9651C1.01892 12.0116 1.21397 12.0116 1.40611 11.9651C1.60408 11.9127 1.77293 11.8196 1.91266 11.6857L6 7.59112L10.0961 11.677C10.2358 11.8225 10.3988 11.9185 10.5852 11.9651C10.7773 12.0116 10.9694 12.0116 11.1616 11.9651C11.3595 11.9127 11.5284 11.8138 11.6681 11.6682C11.8195 11.5286 11.9185 11.3627 11.9651 11.1706C12.0116 10.9727 12.0116 10.7777 11.9651 10.5857C11.9185 10.3936 11.8224 10.2277 11.6769 10.088L7.59825 5.99345L11.6769 1.9076C11.8224 1.76792 11.9185 1.60204 11.9651 1.40997C12.0116 1.2179 12.0116 1.02583 11.9651 0.833758C11.9185 0.635868 11.8195 0.467079 11.6681 0.327392C11.5284 0.181884 11.3595 0.0858494 11.1616 0.039287C10.9694 -0.0130957 10.7773 -0.0130957 10.5852 0.039287C10.3988 0.0858494 10.2358 0.178974 10.0961 0.318661L6 4.40451L1.91266 0.309931C1.77293 0.176064 1.60408 0.0858494 1.40611 0.039287C1.21397 -0.0130957 1.01892 -0.0130957 0.820961 0.039287C0.628821 0.0858494 0.462882 0.178974 0.323144 0.318661C0.177584 0.464169 0.0815138 0.635868 0.0349345 0.833758C-0.0116448 1.02583 -0.0116448 1.2179 0.0349345 1.40997C0.0815138 1.60204 0.174672 1.76792 0.31441 1.9076L4.41048 5.99345L0.31441 10.088C0.174672 10.2277 0.0815138 10.3936 0.0349345 10.5857C-0.0116448 10.7777 -0.0116448 10.9727 0.0349345 11.1706C0.0815138 11.3627 0.177584 11.5315 0.323144 11.677Z"
+                                    fill="#8E8E93" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="wna_model_tittle_withcheck">
+                        <div class="wna_model_title_check_content">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z"
+                                    fill="#079455" />
+                            </svg>
+                            <h3 class="wna_model_check_title">
+                                Make sure you’re looking at the camera
+                            </h3>
+                        </div>
+                        <div class="wna_model_title_check_content">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M15.7803 5.96967C16.0732 6.26256 16.0732 6.73744 15.7803 7.03033L9.28033 13.5303C8.98744 13.8232 8.51256 13.8232 8.21967 13.5303L4.96967 10.2803C4.67678 9.98744 4.67678 9.51256 4.96967 9.21967C5.26256 8.92678 5.73744 8.92678 6.03033 9.21967L8.75 11.9393L14.7197 5.96967C15.0126 5.67678 15.4874 5.67678 15.7803 5.96967Z"
+                                    fill="#079455" />
+                            </svg>
+                            <h3 class="wna_model_check_title">
+                                Choose a photo with a well lit backgroung
+                            </h3>
+                        </div>
+                        <div class="wna_model_title_check_content">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9.99997 6.75C10.4142 6.75 10.75 7.08579 10.75 7.5V11C10.75 11.4142 10.4142 11.75 9.99997 11.75C9.58576 11.75 9.24997 11.4142 9.24997 11V7.5C9.24997 7.08579 9.58576 6.75 9.99997 6.75Z"
+                                    fill="#B54708" />
+                                <path
+                                    d="M11 13.5C11 14.0523 10.5523 14.5 10 14.5C9.44775 14.5 9.00003 14.0523 9.00003 13.5C9.00003 12.9477 9.44775 12.5 10 12.5C10.5523 12.5 11 12.9477 11 13.5Z"
+                                    fill="#B54708" />
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M10.0001 3.5C8.95474 3.5 8.21619 4.20232 7.84765 4.94672C7.65568 5.33448 6.75987 7.0441 5.84308 8.79353L5.81534 8.84646C4.92293 10.5493 4.01717 12.2777 3.80719 12.702C3.43513 13.4537 3.32934 14.4519 3.89956 15.316C4.46914 16.1791 5.44225 16.5 6.3636 16.5L13.6364 16.5C14.5577 16.5 15.5309 16.1791 16.1005 15.316C16.6707 14.4519 16.5649 13.4537 16.1928 12.702C15.9832 12.2784 15.08 10.555 14.189 8.85476L14.1569 8.79352C13.24 7.044 12.3443 5.33454 12.1525 4.94693C11.784 4.20242 11.0455 3.5 10.0001 3.5ZM9.19193 5.61225C9.59608 4.79592 10.4041 4.79592 10.8081 5.61225C11.0102 6.02061 11.9201 7.75686 12.8297 9.49243C13.7383 11.2262 14.6466 12.9594 14.8485 13.3673C15.2525 14.1837 14.8485 15 13.6364 15L6.3636 15C5.15153 15 4.74749 14.1837 5.15153 13.3673C5.35379 12.9587 6.26471 11.2205 7.17483 9.4838C8.08286 7.75111 8.99008 6.01994 9.19193 5.61225Z"
+                                    fill="#B54708" />
+                            </svg>
+                            <h3 class="wna_model_check_title">
+                                Avoid using group photos
+                            </h3>
+                        </div>
+    
+                    </div>
+                    <div class="wna_model_upload">
+                        <div class="wna_model_upload_content">
+                            <label for="dropzone-file"
+                                class="wna_upload_photo ">
+                                <div class="wna_upload_photo_title">
+                                    Upload Photo
+                                </div>
+                                <input id="dropzone-file" type="file" accept="image/*" class="hidden" />
+                            </label>
+                            <p class="wna_upload_photo_extension">
+                                PNG, JPG or GIF (max. 5MB)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 <script>
-    document.q
+
     document.getElementById('dropzone-file').addEventListener('change', function(event) {
         document.getElementById('loader').style.display="flex";
         const file = event.target.files[0];
@@ -194,19 +265,17 @@
             redirect: "follow"
         };
     
-        fetch("https://jacket-prev-manufactured-sb.trycloudflare.com/api/s3", requestOptions)
+        fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/s3", requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 document.getElementById('loader').style.display="none";
                 console.log("Upload successful!");
                 console.log("Image URL:", result.imageUrl);
                 document.querySelector(".lokking_image").src=result.imageUrl
-                Swal.fire({
-                    title: "Upload successful!",
-                    icon: "success"
-                  });
+                        document.getElementById('model1').style.display = 'none';
+                        document.getElementById('model2').style.display = 'block';
+                        document.querySelector(".addtocart_btn").style.display="flex"
             })
             .catch((error) => console.error(error));
     });
 </script>
-</div>
