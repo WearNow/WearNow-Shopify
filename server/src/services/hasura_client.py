@@ -33,6 +33,19 @@ class Client:
                 """, {"uuid": uuid}
     )
 
+    def create_vto_request(self, store_id): return self.run_query(
+                """
+                mutation insert_product_image_generation_request($store_id: uuid!) {
+                    insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "pending"}) {
+                        uuid
+                        status
+                        created_at
+                        results
+                    }
+                }
+
+                """, {"store_id": store_id}
+    )
     def add_store_products(self, objects): return self.run_query(
         """
             mutation AddStoreProducts($objects: [store_products_insert_input!]!) {
