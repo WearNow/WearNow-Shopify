@@ -7,17 +7,14 @@ import gql from "graphql-tag";
 import { constants } from "os";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const body = await request.json();
-  const queryfor = body.queryfor;
-  const shop = body.shop;
+  const body = await request.formData();
+  const queryfor = body.get('queryfor');
+  const shop = body.get('shop');
 
   // Ensure all required fields are provided
   if (!queryfor || !shop) {
     throw new Error("Missing required fields");
   }
-  await db.session.findFirst({
-    where: { shop },
-  });
 
   switch (queryfor) {
     case "checkVirtualTryOn":
@@ -56,21 +53,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           console.log(result.data.session, "apollo client");
         });
       const query = gql`
-  query MyQuery3($storeid: uuid!) {
-  store_products(limit: 250, where: {store_id: {_eq: $storeid},vto_enabled:{_eq:true}}) {
-    store_id
-    title
-    uuid
-    variant_id
-    product_id
-    images
-    price
-    sku
-    full_data
-    vto_enabled
-  }
-}
-`;
+      query MyQuery3($storeid: uuid!) {
+      store_products(limit: 250, where: {store_id: {_eq: $storeid},vto_enabled:{_eq:true}}) {
+        store_id
+        title
+        uuid
+        variant_id
+        product_id
+        images
+        price
+        sku
+        full_data
+        vto_enabled
+      }
+    }
+    `;
       const result = await client.query({
         query: query,
         fetchPolicy: "network-only",
