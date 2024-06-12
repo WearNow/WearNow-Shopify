@@ -24,20 +24,22 @@ const currentId = themeAiModel.getAttribute('current_id');
 // Log the current_id to the console
 console.log(currentId);
 async function fetchProduct(){
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+
 
 const raw = JSON.stringify({
   "queryfor": "checkVirtualTryOn",
   "shop": shopName
 });
 
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow"
-};
+        const queryfor = "checkVirtualTryOn";
+        const formdata = new FormData();
+        formdata.append("queryfor", queryfor);
+        formdata.append("shop", shopName);
+        const requestOptions = {
+            method: "POST",
+            body: formdata,
+            redirect: "follow"
+        };
 
 const response=await fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/fetchDbData", requestOptions);
 const nn= await response.json();
