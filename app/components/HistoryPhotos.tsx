@@ -3,6 +3,7 @@ import { FC } from "react";
 import { HistoryModal } from "~/components/HistoryModal";
 import { fetchHistoryData } from "~/apis/history";
 import { HistoryNoData } from "./HistoryNoData";
+import SkeletonCard from "./SkeletonCard";
 
 type ImageWithAltProps = {
   src: string;
@@ -67,6 +68,7 @@ const HistoryPhotos: FC = (sessionData: any) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [historyData, setHistoryData] = React.useState([]);
   const [historyModalProp, setHistoryModalProp] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     // Call the fetchProducts function when the component mounts
@@ -75,6 +77,7 @@ const HistoryPhotos: FC = (sessionData: any) => {
       (updatedStoreProducts) => {
         console.log("fetchHistoryData result: :::", updatedStoreProducts);
         setHistoryData(updatedStoreProducts);
+        setLoading(false)
       }
     );
   }, []);
@@ -83,7 +86,7 @@ const HistoryPhotos: FC = (sessionData: any) => {
 
   const noData = !cards || cards.length === 0;
 
-  return noData ? (
+  const normalizeComponent = noData ? (
     <HistoryNoData tips="No photos created" />
   ) : (
     <div className="flex flex-col bg-white">
@@ -109,6 +112,26 @@ const HistoryPhotos: FC = (sessionData: any) => {
         </main>
       </div>
     </div>
+  );
+
+  const LoadingComponent = (
+    <main className=" grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 flex-wrap items-center gap-2.5 mx-5 pt-8 font-medium text-white max-md:flex-wrap max-md:mr-2.5 max-md:max-w-full">
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+    </main>
+  );
+
+  return (
+    <>
+      <div className=" bg-white">
+        <div className="w-full max-md:max-w-full">
+          {loading ? LoadingComponent : normalizeComponent}
+        </div>
+      </div>
+    </>
   );
 };
 
