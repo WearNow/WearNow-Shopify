@@ -10,6 +10,9 @@ import {
   BlockStack,
   Checkbox,
   TextField,
+  SkeletonThumbnail,
+  SkeletonBodyText,
+  SkeletonDisplayText,
 } from "@shopify/polaris";
 import axios from "axios";
 import Dashboard from "~/components/Dashboard";
@@ -26,6 +29,8 @@ import { fetchActivePlan } from "~/apis/plan";
 import { fetchUsage } from "~/apis/usage";
 import UsageComponent from "~/components/Usage";
 import { apiURL } from "~/services/Services";
+import SkeletonProduct from "~/components/SkeletonProduct";
+import SkeletonText from "~/components/SkeletonText";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
@@ -82,29 +87,33 @@ export default function ProductPage() {
   const [progress2, setProgress2] = React.useState(0);
   const [progressMax2, setProgressMax2] = React.useState(0);
   const [products, setProducts] = React.useState<any>([]);
-  const [fullData, setFullData] = React.useState<string>('');
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
+  const [fullData, setFullData] = React.useState<string>("");
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const Naviagte = useNavigate();
 
-  const fetchProducts = async () => {
+  const [loading, setLoading] = React.useState(true);
+  const [usageLoading, setUsageLoading] = React.useState(true);
 
+  const fetchProducts = async () => {
     await client
       .query({
         query: gql`
-    query MyQuery3($storeid: uuid!) {
-    store_products(limit: 50, where: {store_id: {_eq: $storeid}}) {
-      store_id
-      title
-      uuid
-      variant_id
-      product_id
-      images
-      price
-      sku
-      vto_enabled
-    }
-  }
-  `,
+          query MyQuery3($storeid: uuid!) {
+            store_products(limit: 50, where: { store_id: { _eq: $storeid } }) {
+              store_id
+              title
+              uuid
+              variant_id
+              product_id
+              images
+              price
+              sku
+              vto_enabled
+            }
+          }
+        `,
         variables: {
           storeid: sessionData.authWithShop.store_id,
         },
@@ -112,27 +121,28 @@ export default function ProductPage() {
       .then((result) => {
         var store_products = result.data.store_products;
         // Map over store_products to create a new array with the added 'image' property
-        const updatedStoreProducts = store_products.map((sp: any, index: number) => {
-          // Assuming sp.images is already a JSON string that needs to be parsed
-          let images = sp.images.replace("[{'url': '", '');
-          images = images.replace("'}]", '');
-          console.log("images: :::", images);
-          if(sp.vto_enabled == true) {
-            setCheckedItems((prevState) => ({
-              ...prevState,
-              [sp.uuid]: true,
-            }));
+        const updatedStoreProducts = store_products.map(
+          (sp: any, index: number) => {
+            // Assuming sp.images is already a JSON string that needs to be parsed
+            let images = sp.images.replace("[{'url': '", "");
+            images = images.replace("'}]", "");
+            console.log("images: :::", images);
+            if (sp.vto_enabled == true) {
+              setCheckedItems((prevState) => ({
+                ...prevState,
+                [sp.uuid]: true,
+              }));
+            }
+            return {
+              ...sp, // Spread the existing properties of the product
+              image: images, // Add the new image property
+            };
           }
-          return {
-            ...sp, // Spread the existing properties of the product
-            image: images // Add the new image property
-          };
-        });
+        );
         setProducts(updatedStoreProducts);
+        setLoading(false)
         console.log("apollo client store id: :::", updatedStoreProducts);
       });
-
-
   };
   useEffect(() => {
     console.log(sessionData, "session data in main Index session");
@@ -146,8 +156,8 @@ export default function ProductPage() {
   //   (newChecked: boolean) => setChecked(newChecked),
   //   []
   // );
-  const fetchProductData = async (inputQueryValue:string) => {
-    console.log(inputQueryValue,"inputQueryValue")
+  const fetchProductData = async (inputQueryValue: string) => {
+    console.log(inputQueryValue, "inputQueryValue");
     try {
       const data = JSON.stringify({
         queryfor: "productData",
@@ -157,7 +167,7 @@ export default function ProductPage() {
         shop: sessionData.authWithShop.shop,
         searchQuery: inputQueryValue,
       });
-      console.log(data,"data sending for the quey");
+      console.log(data, "data sending for the quey");
       let config = {
         method: "post",
         maxBodyLength: Infinity,
@@ -169,61 +179,72 @@ export default function ProductPage() {
       };
       axios
         .request(config)
-        .then((response:any) => {
-          console.log(response,"response from graphql api");
+        .then((response: any) => {
+          console.log(response, "response from graphql api");
           setFullData(response.data.response);
         })
-        .catch((error:any) => {
+        .catch((error: any) => {
           console.log(error);
-        }); 
+        });
     } catch (error) {}
   };
-  const handleChange = useCallback(async(productId:string) => {
-    console.log(productId,"productId="+productId);
-    const product = products.filter((p:any)=>p.uuid == productId);
-    console.log(product,"Pordductsasdfa",checkedItems[productId]);
-    const mutation=gql`
-    mutation MyMutation13($uuid:uuid,$vto_enabled:Boolean,$full_data:String) {
-        update_store_products(where: {uuid: {_eq: $uuid}}, _set: {vto_enabled: $vto_enabled, full_data: $full_data}) {
-          affected_rows
-          returning {
-            full_data
-            vto_enabled
+  const handleChange = useCallback(
+    async (productId: string) => {
+      console.log(productId, "productId=" + productId);
+      const product = products.filter((p: any) => p.uuid == productId);
+      console.log(product, "Pordductsasdfa", checkedItems[productId]);
+      const mutation = gql`
+        mutation MyMutation13(
+          $uuid: uuid
+          $vto_enabled: Boolean
+          $full_data: String
+        ) {
+          update_store_products(
+            where: { uuid: { _eq: $uuid } }
+            _set: { vto_enabled: $vto_enabled, full_data: $full_data }
+          ) {
+            affected_rows
+            returning {
+              full_data
+              vto_enabled
+            }
           }
         }
-      }`
+      `;
 
-    if(checkedItems[productId]){
-      const result = await client.mutate({
-        mutation: mutation,
-        fetchPolicy: "network-only",
-        variables: {           
-          uuid: productId,
-          vto_enabled: !checkedItems[productId],
-          full_data: null
-        },
-      });
-    }
-    else{
-      fetchProductData(product[0]?.product_id.replace("gid://shopify/Product/",''));
-      console.log(fullData,"Full DAta");
-      const result = await client.mutate({
-        mutation: mutation,
-        fetchPolicy: "network-only",
-        variables: {           
-          uuid: productId,
-          vto_enabled: !checkedItems[productId],
-          full_data: fullData
-        },
-      });
-      console.log(result);
-    }
-        setCheckedItems((prevState) => ({
-          ...prevState,
-          [productId]: !prevState[productId],
-        }));
-       
-  }, [checkedItems,fullData]);
+      if (checkedItems[productId]) {
+        const result = await client.mutate({
+          mutation: mutation,
+          fetchPolicy: "network-only",
+          variables: {
+            uuid: productId,
+            vto_enabled: !checkedItems[productId],
+            full_data: null,
+          },
+        });
+      } else {
+        fetchProductData(
+          product[0]?.product_id.replace("gid://shopify/Product/", "")
+        );
+        console.log(fullData, "Full DAta");
+        const result = await client.mutate({
+          mutation: mutation,
+          fetchPolicy: "network-only",
+          variables: {
+            uuid: productId,
+            vto_enabled: !checkedItems[productId],
+            full_data: fullData,
+          },
+        });
+        console.log(result);
+      }
+      setCheckedItems((prevState) => ({
+        ...prevState,
+        [productId]: !prevState[productId],
+      }));
+    },
+    [checkedItems, fullData]
+  );
   const [value, setValue] = useState("200");
 
   const handleChangeData = useCallback(
@@ -246,10 +267,76 @@ export default function ProductPage() {
       setProgressMax2(activePlan.package?.product_photo_limit);
       setProgress1(usage?.vto_usage_count || 0);
       setProgress2(usage?.product_photos_usage_count || 0);
+
+
+      setUsageLoading(false)
     };
 
     fetchData();
   }, []);
+
+
+
+  
+
+  const normalizeComponent = products?.map((product: any) => (
+    <>
+      <tr
+        style={{
+          background: "#FFFFFF",
+          borderTop: "1px solid #bebcbf",
+        }}
+      >
+        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+          <div className="inline-flex items-center gap-x-3">
+            <div className="flex items-center gap-x-2">
+              <img
+                className="object-cover w-[40px] h-[40px] rounded-lg"
+                src={product.image}
+                alt={product.title}
+              />
+              <div>
+                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table">
+                  {product.title}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td className="px-4 py-4 text-sm text-[#0c5132] ">
+          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
+            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
+              Ready to create
+            </span>
+          </div>
+        </td>
+        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+          <Checkbox
+            label=""
+            value={`${product.uuid}`}
+            checked={checkedItems[`${product.uuid}`]}
+            onChange={() => handleChange(`${product.uuid}`)}
+          />
+        </td>
+        <td
+          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+          style={{ position: "relative", zIndex: "0" }}
+        >
+          <TextField
+            label=""
+            type="number"
+            value={value}
+            onChange={handleChangeData}
+            autoComplete="off"
+          />
+        </td>
+        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+          <span>20</span>
+        </td>
+      </tr>
+    </>
+  ));
+
   return (
     <>
       <DashboardHeader />
@@ -263,7 +350,7 @@ export default function ProductPage() {
                 Virtual Try-On Experiences Used
               </span>
               <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                {progress1}/{progressMax1 || ' ∞'}
+              {usageLoading ? <SkeletonText className="w-[50px] h-[18px]" /> : <span>{progress1}/{progressMax1 || " ∞"}</span>}
               </span>
             </div>
             <UsageComponent progress={progress1} progressMax={progressMax1} />
@@ -274,8 +361,8 @@ export default function ProductPage() {
                 Product Photos Created
               </span>
               <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[18px] text-[#232934] relative text-left whitespace-nowrap z-[1]">
-                {progress2}/{progressMax2|| ' ∞'}
-              </span>
+                {usageLoading ? <SkeletonText className="w-[50px] h-[18px]" /> : <span>{progress2}/{progressMax2 || " ∞"}</span>}
+                </span>
             </div>
             <UsageComponent progress={progress2} progressMax={progressMax2} />
           </div>
@@ -308,7 +395,6 @@ export default function ProductPage() {
                             className="flex items-center gap-x-3"
                             style={{ gap: "64px" }}
                           >
-                            
                             <div className="flex ">
                               <h3>Product</h3>
                               <button className="flex items-center gap-x-2">
@@ -365,66 +451,18 @@ export default function ProductPage() {
                     <tbody
                       className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                       style={{ background: "#fffcfc" }}
-                    >
-                      {products!=undefined && products?.map((product:any) =>(
-                        <>
-                      <tr
-                        style={{
-                          background: "#FFFFFF",
-                          borderTop: "1px solid #bebcbf",
-                        }}
-                      >
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                           
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-[40px] h-[40px] rounded-lg"
-                                src={product.image}
-                                alt={product.title}
-                              />
-                              <div>
-                                <h2 className="text-sm font-medium text-gray-800 dark:text-black product_title_table">
-                                 {product.title}
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-[#0c5132] ">
-                          <div className="read_to_create flex w-[107px] h-[20px] pt-[2px] pr-[8px] pb-[2px] pl-[8px] justify-center items-center flex-nowrap bg-[#cdfee1] rounded-[8px] relative  my-0">
-                            <span className="h-[16px] shrink-0 basis-auto font-['Inter'] text-[12px] font-[550] leading-[16px] text-[#0c5132] relative text-left whitespace-nowrap">
-                              Ready to create
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <Checkbox
-                            label=""
-                            value={`${product.uuid}`}
-                            checked={checkedItems[`${product.uuid}`]}
-                            onChange={() => handleChange(`${product.uuid}`)}
-                          />
-                        </td>
-                        <td
-                          className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                          style={{ position: "relative", zIndex: "0" }}
-                        >
-                          <TextField
-                            label=""
-                            type="number"
-                            value={value}
-                            onChange={handleChangeData}
-                            autoComplete="off"
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span>20</span>
-                        </td>
-                      </tr>
+                    ></tbody>
+                    {loading ? (
+                      <>
+                        <SkeletonProduct />
+                        <SkeletonProduct />
+                        <SkeletonProduct />
+                        <SkeletonProduct />
+                        <SkeletonProduct />
                       </>
-                      ))}
-                    </tbody>
+                    ) : (
+                      normalizeComponent
+                    )}
                   </table>
                 </div>
               </div>
