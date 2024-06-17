@@ -9,6 +9,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { SessionLoader } from "~/services/SessionLoader";
 import { fetchUsage } from "~/apis/usage";
 import UsageComponent from "~/components/Usage";
+import SettingsSkeleton from "~/components/SettingsSkeleton";
 
 export const loader = SessionLoader;
 
@@ -59,7 +60,7 @@ const Settings = () => {
   const [progressMax1, setProgressMax1] = React.useState(0);
   const [progress2, setProgress2] = React.useState(0);
   const [progressMax2, setProgressMax2] = React.useState(0);
-
+  const [loading, setLoading] = React.useState(true);
   const [activePlan, setActivePlan] = React.useState<any>();
 
   const sessionData = useLoaderData<typeof loader>();
@@ -115,8 +116,16 @@ const Settings = () => {
   };
 
   const planName = (activePlan?.package?.name || "--") + " Plan";
-
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Simulating a 2-second delay
+  }, []);
   return (
+    <>
+    {loading?(
+    <SettingsSkeleton/>
+    ):(
     <div className="flex flex-col bg-white">
       <DashboardHeader></DashboardHeader>
       <div className="w-full max-md:max-w-full mt-14">
@@ -260,6 +269,8 @@ const Settings = () => {
         </div>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

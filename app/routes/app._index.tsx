@@ -10,9 +10,7 @@ import db from "../db.server";
 import client from "../services/ApolloClient"
 import gql from "graphql-tag"
 import { ProgressBar } from '@shopify/polaris';
-
-
-
+import OnboardingSkelton from "~/components/OnboardingSkelton";
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
   const { admin } = await authenticate.admin(request);
@@ -240,6 +238,7 @@ export default function Index() {
   const [tabStep, setTabstep] = useState("1");
   const [secondTabColor, setSecondTabColor] = useState("");
   const [activeHeader, setActiveHeader] = useState("first");
+  const [loading, setLoading] = useState(true);
   const Naviagte = useNavigate()
   useEffect(() => {
     console.log(sessionData, "session data in main Index session");
@@ -261,7 +260,11 @@ export default function Index() {
       setTabstep("2");
     }
   }, [activeHeader])
-
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Simulating a 2-second delay
+  }, []);
   return (
     <>
       {sessionData.authWithShop?.state != 'active' ? (
@@ -269,23 +272,30 @@ export default function Index() {
           <ProgressBar progress={99} size="small" />
         </div>
       ) : (
-        <div className="onbording_step_container container w-full" style={{ maxWidth: "100%", background: "#fff", padding: "20px 50px" }}>
-          <h1 className="mb-2 onbording_step_title">Onboarding - {tabStep} of 2 steps</h1>
-          <div className="onboarding_steps  w-ful">
-            <button
-              style={{ backgroundColor: firstTabColor }}
-            ></button>
+        <>
+          {loading ? (   
+            <div className="onbording_step_container container w-full" style={{ maxWidth: "100%", background: "#fff", padding: "20px 50px" }}>
+              <OnboardingSkelton/>
+              </div>
+          ) : (
+            <div className="onbording_step_container container w-full" style={{ maxWidth: "100%", background: "#fff", padding: "20px 50px" }}>
+              <h1 className="mb-2 onbording_step_title">Onboarding - {tabStep} of 2 steps</h1>
+              <div className="onboarding_steps  w-ful">
+                <button
+                  style={{ backgroundColor: firstTabColor }}
+                ></button>
 
-            <button
-              style={{ backgroundColor: secondTabColor }}
-            ></button>
-          </div>
-
-          {activeHeader === "first" && (
-            <FirstHeader sessionData={sessionData} onActivate={() => { setActiveHeader("second"); }} />
+                <button
+                  style={{ backgroundColor: secondTabColor }}
+                ></button>
+              </div>
+              {activeHeader === "first" && (
+                <FirstHeader sessionData={sessionData} onActivate={() => { setActiveHeader("second"); }} />
+              )}
+              {activeHeader === "second" && <SecondHeader sessionData={sessionData} onActivate={() => { setActiveHeader("first"); }} />}
+            </div>
           )}
-          {activeHeader === "second" && <SecondHeader sessionData={sessionData} onActivate={() => { setActiveHeader("first"); }} />}
-        </div>
+        </>
       )}
     </>
   );

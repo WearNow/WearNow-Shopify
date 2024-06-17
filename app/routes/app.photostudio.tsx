@@ -14,6 +14,7 @@ import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import SidebarNavigation from "~/components/SidebarNavigation";
 import { Select,Spinner } from '@shopify/polaris';
+import PhotoStudioSkeleten from "~/components/PhotoStudioSkeleten";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const  admin1  = await authenticate.admin(request);
@@ -87,6 +88,7 @@ const PhotoStudio: React.FC = () => {
   const [active, setActive] = useState();
   const [save, setSave] = useState<string>("yes");
   const [loader, setLoader] = useState("no");
+  const [loading, setLoading] = useState(true);
   const stepModel = "02";
   const textModel = "Select a Model";
   const stepBackground = "03";
@@ -439,8 +441,17 @@ try {
     {label: '3', value: '3'},
     {label: '4', value: '4'},
   ];
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Simulating a 2-second delay
+  }, []);
   //console.log(model);
   return (
+  <>
+  {loading ? (
+    <PhotoStudioSkeleten/>
+  ):(
     <div className="photo_studio_container bg-white h-full">
       <DashboardHeader />
       <SidebarNavigation/>
@@ -744,6 +755,8 @@ try {
     </div >
     </div>
     </div>
+    )}
+    </>
   );
 };
 

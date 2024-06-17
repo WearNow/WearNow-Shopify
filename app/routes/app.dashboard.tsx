@@ -1,13 +1,5 @@
 import {
-  Box,
-  Card,
-  Layout,
-  Link,
-  List,
-  Page,
-  Text,
-  BlockStack,
-  ProgressBar
+  ProgressBar,
 } from "@shopify/polaris";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
@@ -17,6 +9,8 @@ import { useEffect, useState } from "react";
 import Dashboard from "~/components/Dashboard";
 import client from "../services/ApolloClient"
 import gql from "graphql-tag"
+import BillingSkelton from "~/components/BillingSkelton";
+import DashboardSkelton from "~/components/DashboardSkelton";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
@@ -66,6 +60,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return { authWithShop }
 };
 export default function DashboardPage() {
+  const [loading, setLoading] = useState(true);
   const sessionData = useLoaderData<typeof loader>();
   const Naviagte = useNavigate()
   useEffect(() => {
@@ -74,14 +69,26 @@ export default function DashboardPage() {
       Naviagte('/app/plan', { replace: true });
     }
   }, [sessionData]);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Simulating a 2-second delay
+  }, []);
   return (
     <>
       {sessionData.authWithShop?.state != 'active' ? (
         <div style={{ width: "100%" }}>
           <ProgressBar progress={99} size="small" />
+          <BillingSkelton/>
         </div>
       ) : (
-        <Dashboard sessionData={sessionData} />
+        <>
+          {loading ? (
+            <DashboardSkelton/>
+          ) : (
+            <Dashboard sessionData={sessionData} />
+          )};
+        </>
       )}
     </>
   );

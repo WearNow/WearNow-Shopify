@@ -10,6 +10,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
 import { LegacyStack, Tag, Autocomplete, Icon, Thumbnail } from '@shopify/polaris';
 import { SearchIcon } from '@shopify/polaris-icons';
+import VirtualTryOnSkelton from "~/components/VirtualTryOnSkelton";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
@@ -91,6 +92,7 @@ export default function VirtualTryOnPage() {
   const [poses, setPoses] = useState<any>();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [selectedOptionsPose, setSelectedOptionsPose] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   const deselectedOptions = useMemo(
     () => {
       const opt: any[] = [];
@@ -526,8 +528,19 @@ export default function VirtualTryOnPage() {
       { label: 'No', value: "false" },
       { label: 'Yes', value: "true" },
     ], []);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000); // Simulating a 2-second delay
+    }, []);
+  
   return (
     <>
+    {loading ? (
+      <VirtualTryOnSkelton/>
+    ):(
+      <>
       <DashboardHeader />
       <SidebarNavigation />
       <div className="vartualtryon_container mt-20 pppp">
@@ -680,7 +693,8 @@ export default function VirtualTryOnPage() {
           </div>
         </div>
       </div>
-
+      </>
+       )}
     </>
   );
   function titleCase(string: string) {
