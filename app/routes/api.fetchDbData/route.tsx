@@ -87,6 +87,43 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         })
       );
       break;
+    case "checkModels":
+      const gender = body.get('gender');
+      const querym = gql`
+  query MyQuery3($gender: String!) {
+    pretrained_models(where: {
+      gender: {_eq: $gender},
+    }) {
+      cover_image
+      description
+      ethnicity
+      skin_composition
+    }
+  }
+`;
+
+      const resultm = await client.query({
+        query: querym,
+        fetchPolicy: "network-only",
+        variables: {
+          gender: gender,
+        },
+      });
+
+      console.log(resultm);
+
+      var store_products = resultm.data.pretrained_models;
+
+
+      return cors(
+        request,
+        json({
+          success: true,
+          message: "Selected Model fetched successfully",
+          response: store_products,
+        })
+      );
+      break;
     case "selectedProdctsData":
       try {
         const selectedProducts = await db.selectProdcutData.findMany();
@@ -116,4 +153,3 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       );
   }
 };
-
