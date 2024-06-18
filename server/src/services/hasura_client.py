@@ -35,6 +35,11 @@ class Client:
 
     def create_vto_request(self, store_id): return self.run_query(
                 """
+                """,{}
+    )
+
+    def create_prod_request(self, store_id): return self.run_query(
+                """
                 mutation insert_product_image_generation_request($store_id: uuid!) {
                     insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "pending"}) {
                         uuid

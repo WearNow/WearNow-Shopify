@@ -1,6 +1,5 @@
 import re
 from typing import Optional, List
-
 from pydantic import BaseModel
 
 class SingleStoreProductOutput(BaseModel):
@@ -28,3 +27,15 @@ class StoreProductsOnboardingInput(BaseModel):
     model: str
     background: str
     pose: str
+
+class VTOImageOutPut(BaseModel):
+  request_id: str = ""
+  status: str = ""
+  createdAt: str = ""
+
+class VTOImageInput(BaseModel):
+  model_id: str
+  gender: str
+  size: str
+  store_id: str
+  store_product_id: str

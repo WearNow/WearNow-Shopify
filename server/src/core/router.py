@@ -5,6 +5,17 @@ from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInp
 
 router = APIRouter()
 
+@router.post("/single-product-image-request", status_code=201)
+async def handle_single_prod_request(request: Request):
+    body = await request.body()
+    body_str = body.decode()
+    data = json.loads(body_str)["input"]["input"]
+    store_prod = client.get_store_product(data)
+    request_response = client.create_prod_request(data["store_id"])
+    c_uuid = request_response["data"]["insert_product_image_generation_request_one"]["uuid"]
+    # print("store prod", store_prod)
+    return SingleStoreProductOutput(tracking=c_uuid, success=True)
+
 
 @router.post("/single-vto-request", status_code=201)
 async def handle_single_vto_request(request: Request):
