@@ -11,7 +11,7 @@ import client from "../services/ApolloClient"
 import gql from "graphql-tag"
 import { ProgressBar } from '@shopify/polaris';
 import OnboardingSkelton from "~/components/OnboardingSkelton";
-import PhotoStudioSkeleten from "~/components/PhotoStudioSkeleten";
+import SecondHeaderSkeleton from "~/components/SecondHeaderSkeleton";
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const admin1 = await authenticate.admin(request);
   const { admin } = await authenticate.admin(request);
@@ -255,9 +255,6 @@ export default function Index() {
       setFirstTabColor("blue");
       setTabstep("1")
     } else if (activeHeader === "second") {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000); // Simulating a 2-second delay
       setActiveHeader(activeHeader);
       setSecondTabColor("blue");
       setFirstTabColor("green");
@@ -279,7 +276,12 @@ export default function Index() {
         <>
           {loading ? (
             <div className="onbording_step_container container w-full" style={{ maxWidth: "100%", background: "#fff", padding: "20px 50px" }}>
-              <OnboardingSkelton />
+              {activeHeader === "second" ? (
+                <SecondHeaderSkeleton />
+              ) : (
+                <OnboardingSkelton />
+              )
+              }
             </div>
           ) : (
             <div className="onbording_step_container container w-full" style={{ maxWidth: "100%", background: "#fff", padding: "20px 50px" }}>
@@ -294,16 +296,18 @@ export default function Index() {
                 ></button>
               </div>
               {activeHeader === "first" && (
-                <FirstHeader sessionData={sessionData} onActivate={() => { setActiveHeader("second"); }} />
+                <FirstHeader sessionData={sessionData} onActivate={() => {
+                  setActiveHeader("second");
+                  setLoading(true);
+
+                  setTimeout(() => {
+                    setLoading(false);
+                  }, 2000);
+                }} />
               )}
-              <>
-                {activeHeader === "second" && loading ? (
-                  <PhotoStudioSkeleten />
-                ) : (
-                  <SecondHeader sessionData={sessionData} onActivate={() => { setActiveHeader("first"); }} />
-                )
-                }
-              </>
+
+              {activeHeader === "second" && <SecondHeader sessionData={sessionData} onActivate={() => { setActiveHeader("first"); }} />}
+
             </div>
           )}
         </>
