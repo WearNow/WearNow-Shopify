@@ -1,6 +1,7 @@
 import React from 'react'
 import UsageStatistics from './UsageStatistics'
 import DashboardHistory from './DashboardHistory'
+import { Link } from "@remix-run/react";
 // import PhotoCreated from './PhotoCreated'
 import  { useEffect, useState } from "react";
 function CompleteOnBording(sessionData:any) {
@@ -22,22 +23,22 @@ function CompleteOnBording(sessionData:any) {
                     </div>
                 </div>
                 <div className='flex w-full h-[80px] flex-col items-start shrink-0 flex-nowrap  z-[5]'>
-                    <div className='flex w-full flex-col items-start shrink-0 flex-nowrap bg-[#fff] relative z-[6]'>
+                <Link to='/app/plan' className='flex w-full flex-col items-start shrink-0 flex-nowrap bg-[#fff] relative z-[6]'>
                         <div className='flex justify-between h-[40px] pt-[20px] pr-[20px] pb-[20px] pl-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[7]'>
                             <span className="flex  justify-start items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#232934]">
                                 Enable Virtual Try-On
                             </span>
                             <div className='w-[16px] h-[16px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ChevronRight.png?v=1714384785)] bg-cover bg-no-repeat ' />
                         </div>
-                    </div>
-                    <div className='flex w-full   flex-col items-start shrink-0 flex-nowrap bg-[#fff] relative z-10'>
+                    </Link>
+                    <Link to='/app/plan' className='flex w-full   flex-col items-start shrink-0 flex-nowrap bg-[#fff] relative z-10'>
                         <div className='flex justify-between h-[40px] pt-[20px] pr-[20px] pb-[20px] pl-[20px] items-start self-stretch shrink-0 flex-nowrap relative z-[11]'>
                             <span className="flex justify-start items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#232934] ">
                                 Create Your First Product Photo
                             </span>
                             <div className='w-[16px] h-[16px] shrink-0 bg-[url(https://cdn.shopify.com/s/files/1/0843/1642/2421/files/ChevronRight.png?v=1714384785)] bg-cover bg-no-repeat' />
                         </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
             )}

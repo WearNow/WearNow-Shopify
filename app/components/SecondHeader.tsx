@@ -137,7 +137,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       .query({
         query: gql`
       query MyQuery4 {
-        default_pose(limit: 3) {
+        default_pose(where:{featured: {_eq: true}},limit: 3) {
           name
           image
           featured
@@ -145,7 +145,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
           created_at
           uuid
         }
-        default_background(limit: 3) {
+        default_background(where:{featured: {_eq: true}},limit: 3) {
           active
           created_at
           featured
@@ -153,7 +153,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
           name
           uuid
         }
-        pretrained_models(limit: 3) {
+        pretrained_models(where:{featured: {_eq: true}},limit: 3) {
           cover_image
           created_at
           description

@@ -149,40 +149,7 @@ wna_close_model_out_side.forEach(function (btn, index) {
     });
 });
 
-var select_skin_comosition_img_item_color = document.querySelectorAll(".select_skin_color .select_skin_comosition_img_item");
-   select_skin_comosition_img_item_color.forEach(function(element) {
-  element.addEventListener("click", function() {
-    var color_title = element.getAttribute("color_title"); 
-    document.querySelector(".wna_selected_color").innerHTML=color_title;
-    select_skin_comosition_img_item_color.forEach(function(item) {
-      item.classList.remove("active");
-    });
-    element.classList.add("active");
-  });
-});
 
-
-var select_skin_comosition_img_item_size = document.querySelectorAll(".select_skin_size .select_skin_comosition_img_item");
-   select_skin_comosition_img_item_size.forEach(function(element) {
-  element.addEventListener("click", function() {
-    var size_title = element.getAttribute("size_title"); 
-    document.querySelector(".wna_selected_size").innerHTML=size_title;
-    select_skin_comosition_img_item_size.forEach(function(item) {
-      item.classList.remove("active");
-    });
-    element.classList.add("active");
-  });
-});
-
-var gender_btn = document.querySelectorAll(".gender_btn button");
-gender_btn.forEach(function(button) {
-    button.addEventListener("click", function(event) {
-        gender_btn.forEach(function(btn) {
-            btn.classList.remove("active");
-        });
-        event.target.classList.add("active");
-    });
-});
 
 (function(){
 var closeBtns = document.querySelectorAll(".wna_close_btn");

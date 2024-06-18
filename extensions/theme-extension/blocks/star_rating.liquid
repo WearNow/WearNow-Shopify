@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441">
 {% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
 <button class="theme_ai_model" style="background:{{ block.settings.colour}}" current_id="{{product.variants.first.id}}">
-  <img src="{{ "wna.png" | asset_img_url: '30px' }}" height="30" width="30" loading="lazy">
-  {{block.settings.model_title}}
+  <img src="{{ "wna-brand-icon.png" | asset_img_url: '30px' }}" height="30" width="30" loading="lazy">
+  Try On
 </button>
 <span style="color:{{ block.settings.colour }}">
   {% render 'themeAi', rating: avg_rating %}
@@ -31,8 +31,7 @@
   "stylesheet": "newstyles.css",
   "javascript": "themeai.js",
   "settings": [
-    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#121212" },
-    {"type":"text","id":"model_title","label": "Enter the button title","default":"Try On"}
+    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#121212" }
   ]
 }
 {% endschema %}
