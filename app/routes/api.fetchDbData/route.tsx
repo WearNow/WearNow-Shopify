@@ -88,38 +88,47 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       );
       break;
     case "checkModels":
-      const gender = body.get('gender');
-      const querym = gql`
-  query MyQuery3($gender: String!) {
-    pretrained_models(where: {
-      gender: {_eq: $gender},
-    }) {
-      cover_image
-      description
-      ethnicity
-      skin_composition
-    }
-  }
-`;
-
+      const variant_id = body.get('variantID');
+      console.log(variant_id,"variantID");
+      const querym = gql`query MyQuery3($variant_id: String!){
+          product_photo_history(where:{
+            store_product:{
+              variant_id:{_eq:$variant_id}
+            }
+          }){
+            gender
+            size
+            skin_composition
+            generated_image
+            store_product{
+              store_id
+              store{
+                name
+                created_at
+              }
+              variant_id
+            }
+          }
+        }`;
+      console.log(querym,"querym");
       const resultm = await client.query({
         query: querym,
         fetchPolicy: "network-only",
         variables: {
-          gender: gender,
+          variant_id: variant_id,
         },
       });
 
       console.log(resultm);
-
-      var store_products = resultm.data.pretrained_models;
+ 
+      var store_products = resultm.data.product_photo_history;
 
 
       return cors(
         request,
         json({
           success: true,
-          message: "Selected Model fetched successfully",
+          message: "Generated photos fetched successfully",
           response: store_products,
         })
       );

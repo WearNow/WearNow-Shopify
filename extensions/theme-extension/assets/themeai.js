@@ -50,7 +50,7 @@ return nn;
     try {
       const result = await fetchProduct();
       console.log(result); // Handle the result here
-      var exists=result.response.filter((res)=> res.variant_id==currentId);
+      var exists=result.response.filter((res)=> res.variant_id==`gid://shopify/ProductVariant/${currentId}`);
       console.log(exists);
       if(exists.length <=0) {
       themeAiModel.style.display = "none";
@@ -59,7 +59,6 @@ return nn;
       console.error('Error:', error); // Handle any errors here
     }
   })();
-console.log(result,"result::::::::::::::::::::::::::::::::",result);
 themeAiModel.addEventListener("click", function(){
     modelContainer.style.display = "block";
     var section = document.querySelector(".shopify-section");
