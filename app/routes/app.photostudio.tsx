@@ -170,9 +170,11 @@ const PhotoStudio: React.FC = () => {
      }
    })
    .then((result) => {
+    let store_subscription = result.data.store_subscription;
+    setActive(store_subscription[0].package);
     let planname="partner_test"
     const myHeader = new Headers();
-        myHeader.append("X-Shopify-Access-Token", auth_session?.accessToken);
+        myHeader.append("X-Shopify-Access-Token", sessionData?.authWithShop?.accessToken);
   
         const requestOption = {
           method: "GET",
@@ -180,11 +182,10 @@ const PhotoStudio: React.FC = () => {
           redirect: "follow"
         };
   
-        fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption)
+        fetch(`https://${sessionData?.authWithShop?.shop}/admin/api/2024-04/shop.json`, requestOption)
           .then((response) => response.json())
           .then((result) => {planname=result.shop.plan_name})
           .catch((error) => console.error(error));
-     let store_subscription = result.data.store_subscription;
      if(planname=="partner_test"){
       store_subscription[0].package.number_of_products=5;
       store_subscription[0].package.pro_models=5;
@@ -192,10 +193,12 @@ const PhotoStudio: React.FC = () => {
       //store_subscription[0].package.vto_limit=5;
       store_subscription[0].package.vto_limit=5;
      }
+     console.log(store_subscription[0].package,"store_subscription[0].packagestore_subscription[0].package")
          setActive(store_subscription[0].package);
+         
    });
  },[]);
-
+ console.log("active: =>", active);
   async function getAllImages(){
     await client
     .query({

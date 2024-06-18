@@ -31,6 +31,7 @@ const ThumbnailSelector: React.FC<{
 
   // const segments = ModuleData
   console.log("module Data: =>", ModuleData);
+  console.log("active: =>", active);
   const onClickHandle = (e: any) => {
     setSelectModelId(e);
   };
@@ -292,7 +293,7 @@ const ThumbnailSelector: React.FC<{
              )}
           </div>
         </div>
-        {active.customized_models && (
+        {active?.customized_models && (
         <div className="mt-4 mb-4 PPPPP">
           <Upload
             description={
