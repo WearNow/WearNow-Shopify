@@ -1,14 +1,34 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-
+import SliderPopup from './SliderPopup';
+import {
+  Icon
+} from "@shopify/polaris";
+import {
+  XSmallIcon
+} from '@shopify/polaris-icons';
 interface DashboardModalProps {}
 
 const DashboardModal: React.FC<DashboardModalProps> = () => {
   const [open, setOpen] = useState<boolean>(true);
 
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
-
+  const slides = [
+    <div className="slide-content" key="1">
+      <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-1.png?v=1718002947"/>
+    </div>,
+    <div className="slide-content" key="2">
+      <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-2.png?v=1718002947"/>
+    </div>,
+    <div className="slide-content" key="3">
+      <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-1.png?v=1718002947"/>
+    </div>,
+    <div className="slide-content" key="4">
+    <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-2.png?v=1718002947"/>
+    </div>
+  ];
+  
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog className="relative z-10" initialFocus={cancelButtonRef} onClose={() => setOpen(false)}>
@@ -37,8 +57,8 @@ const DashboardModal: React.FC<DashboardModalProps> = () => {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="roundend_circle_overlay mx-auto flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                  <div className="sm:flex sm:items-start flex justify-between items-start">  
+                    <div className="roundend_circle_overlay flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                       {/* <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" /> */}
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 56 56" fill="none">
                         <rect x="4" y="4" width="48" height="48" rx="24" fill="#FEF0C7"/>
@@ -47,9 +67,20 @@ const DashboardModal: React.FC<DashboardModalProps> = () => {
                         <path d="M28 31.6C27.288 31.6 26.592 31.3889 25.9999 30.9933C25.4079 30.5977 24.9465 30.0355 24.674 29.3777C24.4016 28.7198 24.3303 27.996 24.4692 27.2977C24.6081 26.5993 24.9509 25.9579 25.4544 25.4544C25.9579 24.9509 26.5993 24.6081 27.2977 24.4692C27.996 24.3303 28.7198 24.4016 29.3777 24.674C30.0355 24.9465 30.5977 25.4079 30.9933 25.9999C31.3889 26.592 31.6 27.288 31.6 28C31.6 28.9548 31.2207 29.8705 30.5456 30.5456C29.8705 31.2207 28.9548 31.6 28 31.6ZM28 26.2C27.644 26.2 27.296 26.3056 27 26.5034C26.704 26.7011 26.4733 26.9823 26.337 27.3112C26.2008 27.6401 26.1651 28.002 26.2346 28.3512C26.304 28.7003 26.4755 29.0211 26.7272 29.2728C26.9789 29.5245 27.2997 29.696 27.6488 29.7654C27.998 29.8349 28.3599 29.7992 28.6888 29.663C29.0177 29.5267 29.2989 29.296 29.4966 29C29.6944 28.704 29.8 28.356 29.8 28C29.8 27.5226 29.6104 27.0648 29.2728 26.7272C28.9352 26.3896 28.4774 26.2 28 26.2Z" fill="#D86803"/>
                         </svg>
                     </div>
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left relative z[1]">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                    <div className="mt-3 text-left sm:ml-4 sm:mt-0 sm:text-left relative z[1]">
+                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 relative flex justify-between items-center	" >
                       Add WearNow to your theme
+                        <button
+                        type="button"
+                        className="close_btn inline-flex  justify-center  px-3 py-2 text-sm font-semibold text-gray-900ring-gray-300"
+                        onClick={() => setOpen(false)}
+                        ref={cancelButtonRef}
+                        >
+                            <Icon
+                            source={XSmallIcon}
+                            tone="base"
+                            />
+                        </button>
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
@@ -59,6 +90,7 @@ const DashboardModal: React.FC<DashboardModalProps> = () => {
                     </div>
                   </div>
                 </div>
+               <SliderPopup slides={slides} />
                 <div className="bg-gray-50 w-full justify-between px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                  <div className='btn_enabled sm:flex sm:flex-row-reverse'>
                   <button

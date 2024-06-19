@@ -1422,3 +1422,43 @@ select.cstm_select {
   gap: 10px;
 }
 /*  ========================  skelton code====================== */
+.slider_pop_up .slide {
+  display: none;
+}
+.slider_pop_up{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider_pop_up .slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slider_pop_up  .slide {
+  flex: 0 0 100%;
+}
+
+.slider_pop_up  .active {
+  display: block !important; 
+}
+
+.slider_pop_up  button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 20px;
+  border: none;
+  /* background-color: #333; */
+  color: #fff;
+  cursor: pointer;
+}
+
+.slider_pop_up  .prev {
+  left: 0;
+}
+
+.slider_pop_up  .next {
+  right: 0;
+}
