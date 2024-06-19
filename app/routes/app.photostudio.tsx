@@ -56,10 +56,22 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       auth_session=result?.data.session[0] ?? result?.data.session;
       //console.log(result.data.session, "apollo client");
     });
+    const myHeader = new Headers();
+    myHeader.append("X-Shopify-Access-Token", auth_session?.accessToken);
+  
+    const requestOption = {
+      method: "GET",
+      headers: myHeader,
+      redirect: "follow"
+    };
+    const shopData=await fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption);
+    const planShop=await shopData.json();
+    console.log(planShop);
     const authWithShop = {
       ...auth_session,
       shop: shop,
-      tryOn:false
+      tryOn:false,
+      planShop:planShop
     };
     //console.log(authWithShop,"auth session");
     
@@ -171,30 +183,36 @@ const PhotoStudio: React.FC = () => {
    })
    .then((result) => {
     let store_subscription = result.data.store_subscription;
-    setActive(store_subscription[0].package);
-    let planname="partner_test"
-    const myHeader = new Headers();
-        myHeader.append("X-Shopify-Access-Token", sessionData?.authWithShop?.accessToken);
-  
-        const requestOption = {
-          method: "GET",
-          headers: myHeader,
-          redirect: "follow"
-        };
-  
-        fetch(`https://${sessionData?.authWithShop?.shop}/admin/api/2024-04/shop.json`, requestOption)
-          .then((response) => response.json())
-          .then((result) => {planname=result.shop.plan_name})
-          .catch((error) => console.error(error));
-     if(planname=="partner_test"){
-      store_subscription[0].package.number_of_products=5;
-      store_subscription[0].package.pro_models=5;
-      store_subscription[0].package.product_photo_limit=5;
-      //store_subscription[0].package.vto_limit=5;
-      store_subscription[0].package.vto_limit=5;
-     }
-     console.log(store_subscription[0].package,"store_subscription[0].packagestore_subscription[0].package")
-         setActive(store_subscription[0].package);
+
+let planname = sessionData?.authWithShop?.planShop?.shop?.plan_name;
+
+if (planname == "partner_test") {
+  // Clone the package object to avoid modifying the read-only properties
+  let newPackage = {
+    ...store_subscription[0].package,
+    number_of_products: 5,
+    pro_models: 5,
+    product_photo_limit: 5,
+    vto_limit: 5
+  };
+
+  // Clone the store_subscription array and replace the package in the cloned object
+  let newStoreSubscription = [...store_subscription];
+  newStoreSubscription[0] = {
+    ...newStoreSubscription[0],
+    package: newPackage
+  };
+
+  // Update the original store_subscription variable with the modified array
+  store_subscription = newStoreSubscription;
+}
+
+console.log(store_subscription[0].package, "store_subscription[0].package");
+
+// Set the active package to the updated one
+setActive(store_subscription[0].package);
+
+    
          
    });
  },[]);
