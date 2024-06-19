@@ -17,20 +17,11 @@ const parts = url.split('/');
   
   // The hostname is the third part (index 2) of the URL parts
   const shopName = parts[2];
-console.log("url::::::::::::",shopName);
 // Fetch the current_id attribute
 const currentId = themeAiModel.getAttribute('current_id');
 
 // Log the current_id to the console
-console.log(currentId);
 async function fetchProduct(){
-
-
-const raw = JSON.stringify({
-  "queryfor": "checkVirtualTryOn",
-  "shop": shopName
-});
-
         const queryfor = "checkVirtualTryOn";
         const formdata = new FormData();
         formdata.append("queryfor", queryfor);
@@ -59,6 +50,29 @@ return nn;
       console.error('Error:', error); // Handle any errors here
     }
   })();
+  async function extpopup(){
+            const formdata = new FormData();
+            formdata.append("queryfor", "extpopup");
+            formdata.append("shop", shopName);
+            const requestOptions = {
+                method: "POST",
+                body: formdata,
+                redirect: "follow"
+            };
+    
+    const response=await fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/fetchDbData", requestOptions);
+    const nn= await response.json();
+    return nn;
+    }
+    // Call the async function and handle the result 
+    (async () => {
+        try {
+          await extpopup();
+        } catch (error) {
+          console.error('Error:', error); // Handle any errors here
+        }
+      })();
+  
 themeAiModel.addEventListener("click", function(){
     modelContainer.style.display = "block";
     var section = document.querySelector(".shopify-section");

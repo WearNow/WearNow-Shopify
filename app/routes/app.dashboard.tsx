@@ -36,6 +36,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
             onboarding_status
             uuid
             virtual_enabled
+            extension_enabled
           }
           store_id
           uuid

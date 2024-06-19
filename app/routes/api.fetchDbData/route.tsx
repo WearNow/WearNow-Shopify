@@ -15,10 +15,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (!queryfor || !shop) {
     throw new Error("Missing required fields");
   }
-
+  let auth_session = {};
   switch (queryfor) {
     case "checkVirtualTryOn":
-      let auth_session = {};
       await client
         .query({
           query: gql`
@@ -86,6 +85,45 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           response: store_products,
         })
       );
+      break;
+    case "extpopup":
+      
+      await client
+        .query({
+          query: gql`
+      query MyQuery2($shop: String!) {
+        session(limit: 10, where: {shop_id: {_eq: $shop}}) {
+          store_id
+          store {
+            uuid
+            extension_enabled
+          }
+        }
+      }
+    `,
+          fetchPolicy: "network-only",
+          variables: {
+            shop: shop,
+          },
+        })
+        .then((result) => {
+          auth_session = result?.data.session[0] ?? result?.data.session;
+          console.log(result.data.session, "apollo client");
+        });
+        if(!auth_session?.store?.extension_enabled) {
+          const MUTATION12 = gql`mutation MyMutation12($storeid:uuid) {
+            update_stores(where: {uuid: {_eq: $storeid}}, _set: {extension_enabled: true}) {
+              affected_rows
+            }
+          }`;
+          const result = await client.mutate({
+            mutation: MUTATION12,
+            fetchPolicy: "network-only",
+            variables: {
+              storeid: auth_session?.store_id,
+            },
+          });
+        }
       break;
     case "checkModels":
       const variant_id = body.get('variantID');

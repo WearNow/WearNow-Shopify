@@ -46,7 +46,9 @@ const DashboardHistory = (sessionData:any) => {
                     </div>
                 </button>
             </div> */}
+            {!sessionData?.authWithShop?.store?.extension_enabled && (
             < DashboardModel/>
+        )}
             <HistoryModal
                 isOpen={isOpen}
                 {...historyModalProp}

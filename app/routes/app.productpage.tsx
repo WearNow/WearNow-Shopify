@@ -55,6 +55,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
               onboarding_status
               uuid
               virtual_enabled
+              extension_enabled
             }
             store_id
             uuid
@@ -341,7 +342,9 @@ export default function ProductPage() {
     <>
       <DashboardHeader />
       <SidebarNavigation />
+      {!sessionData?.authWithShop?.store?.extension_enabled && (
       <DashboardModal />
+    )}
       <div className="product_page_container">
         <div className="product_page_row">
           <div className="product_page_row_content w-full">
