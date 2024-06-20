@@ -124,11 +124,26 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
       console.log(result.data.session, "apollo client");
     });
+
+    const myHeaders = new Headers();
+myHeaders.append("X-Shopify-Access-Token", auth_session?.accessToken);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+const tehme=await fetch(`https://${shop}/admin/api/2024-04/themes.json`, requestOptions);
+const theme_result= await tehme.json();
+const theme=theme_result.themes.filter(theme => theme.role=="main");
+console.log(theme);
   const authWithShop = {
     ...auth_session,
     shop: shop,
     tryOn: false,
-    products: responseJson
+    products: responseJson,
+    theme_result:theme,
   };
   console.log(authWithShop, "auth session");
   if (auth_session?.state == 'active' && packageID != undefined && packageID != null) {

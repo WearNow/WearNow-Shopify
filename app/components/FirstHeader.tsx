@@ -231,7 +231,8 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   };
 
   console.log(stylehide, "stylehidestylehidestylehide")
-
+  let shop=sessionData.authWithShop.shop.replace(".myshopify.com","");
+  const shopLink=`https://admin.shopify.com/store/${shop}/themes/${sessionData.authWithShop.theme_result[0].id}/editor?context=apps`
   return (
     <>
       {modals && (
@@ -407,7 +408,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                           Add our Try-On button to your store
                         </div>
                         <a
-                          href="https://admin.shopify.com/store/aditya-ai/themes/163522773269/editor?context=apps"
+                          href={shopLink}
                           target="_blank"
                         >
                           <img

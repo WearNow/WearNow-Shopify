@@ -190,10 +190,10 @@ if (planname == "partner_test") {
   // Clone the package object to avoid modifying the read-only properties
   let newPackage = {
     ...store_subscription[0].package,
-    number_of_products: 5,
-    pro_models: 5,
-    product_photo_limit: 5,
-    vto_limit: 5
+    number_of_products: 500,
+    pro_models: 500,
+    product_photo_limit: 500,
+    vto_limit: 500
   };
 
   // Clone the store_subscription array and replace the package in the cloned object
