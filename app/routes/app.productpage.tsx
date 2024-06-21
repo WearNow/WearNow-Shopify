@@ -56,6 +56,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
               uuid
               virtual_enabled
               extension_enabled
+              tryon_per_product
             }
             store_id
             uuid
@@ -246,7 +247,7 @@ export default function ProductPage() {
     },
     [checkedItems, fullData]
   );
-  const [value, setValue] = useState("200");
+  const [value, setValue] = useState(sessionData?.authWithShop?.store?.tryon_per_product);
 
   const handleChangeData = useCallback(
     (newValue: string) => setValue(newValue),

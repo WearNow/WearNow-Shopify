@@ -23,6 +23,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
   const [products, setProducts] = useState<any[]>([]);
   const [try_on, setTry_on] = useState<boolean>(sessionData?.store?.virtual_enabled);
   const [spinner, setSpinner] = useState<boolean>(false);
+  const [fullData, setFullData] = React.useState<string>("");
 
 
   const toggleModal = () => {
@@ -228,8 +229,74 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     } catch (error) {
       console.error('Error executing mutation:', error);
     }
-  };
+    
+      products.map((product:any)=>{
+      const mutation = gql`
+        mutation MyMutation13(
+          $uuid: uuid
+          $vto_enabled: Boolean
+          $full_data: String
+        ) {
+          update_store_products(
+            where: { uuid: { _eq: $uuid } }
+            _set: { vto_enabled: $vto_enabled, full_data: $full_data }
+          ) {
+            affected_rows
+            returning {
+              full_data
+              vto_enabled
+            }
+          }
+        }
+      `;
 
+     let productId=product?.product_id.replace("gid://shopify/Product/", "")
+        fetchProductData(
+          product?.product_id.replace("gid://shopify/Product/", "")
+        );
+        console.log(fullData, "Full DAta");
+        const result =  client.mutate({
+          mutation: mutation,
+          variables: {
+            uuid: productId,
+            vto_enabled: "true",
+            full_data: fullData,
+          },
+        });
+    });
+  };
+  const fetchProductData = async (inputQueryValue: string) => {
+    console.log(inputQueryValue, "inputQueryValue");
+    try {
+      const data = JSON.stringify({
+        queryfor: "productData",
+        first: 1,
+        fields: "*",
+        pagination: "yes",
+        shop: sessionData.authWithShop.shop,
+        searchQuery: inputQueryValue,
+      });
+      console.log(data, "data sending for the quey");
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${apiURL}api/query`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+      axios
+        .request(config)
+        .then((response: any) => {
+          console.log(response, "response from graphql api");
+          setFullData(response.data.response);
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    } catch (error) {}
+  };
   console.log(stylehide, "stylehidestylehidestylehide")
   let shop=sessionData.authWithShop.shop.replace(".myshopify.com","");
   const shopLink=`https://admin.shopify.com/store/${shop}/themes/${sessionData.authWithShop.theme_result[0].id}/editor?context=apps`
