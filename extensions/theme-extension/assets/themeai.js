@@ -44,7 +44,7 @@ return nn;
       var exists=result.response.filter((res)=> res.variant_id==`gid://shopify/ProductVariant/${currentId}`);
       console.log(exists);
       if(exists.length >0) {
-      themeAiModel.style.display = "block";
+      themeAiModel.style.display = "flex";
     } 
     } catch (error) {
       console.error('Error:', error); // Handle any errors here
