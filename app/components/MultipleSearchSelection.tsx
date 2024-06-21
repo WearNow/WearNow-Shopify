@@ -28,7 +28,7 @@ const MultipleSearchSelection: React.FC<{options:any}> = ({ options }) => {
                 <div className=" selected_items">
                     {selectedOptions.map((option) => (
                         <div key={option} className="flex items-center mb-1 rounded-lg border border-solid border-gray-300" style={{padding:"0px 10px"}}>
-                            <img src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/poseImage.png?v=1715341732" alt="" />
+                            <img height="100%" width="100%" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/poseImage.png?v=1715341732" alt="" />
                             <span className="px-2 py-1 mr-2 text-sm">
                                 {option}
                             </span>

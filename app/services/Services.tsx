@@ -1,2 +1,2 @@
-export const apiURL = `https://wearnow-shopify-7c945fcdc96d.herokuapp.com/`
+export const apiURL = `https://comments-investor-now-consistent.trycloudflare.com/`
 export const app_name = `wearnowai-1`;

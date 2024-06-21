@@ -15,9 +15,9 @@ const PhotoToShow: React.FC<Prop> = (prop: Prop) => {
     <>
       <div className="w-full h-full px-7 py-5 bg-zinc-100 rounded-2xl flex-col justify-center items-center gap-2.5 inline-flex">
         <div className="justify-start items-center inline-flex">
-          <img className="w-40 h-80 rounded-2xl" src={photoUrls[0]} />
-          <img className="w-44 h-96 rounded-2xl" src={photoUrls[1]} />
-          <img className="w-36 h-80 rounded-2xl" src={photoUrls[2]} />
+          <img height="100%" width="100%" className="w-40 h-80 rounded-2xl" src={photoUrls[0]} />
+          <img height="100%" width="100%" className="w-44 h-96 rounded-2xl" src={photoUrls[1]} />
+          <img height="100%" width="100%" className="w-36 h-80 rounded-2xl" src={photoUrls[2]} />
         </div>
         <div className="text-center text-zinc-800 text-3xl font-medium font-['SF Pro Display'] leading-9">Take Your Store to the Next Level</div>
         <div className="flex-col justify-start items-center gap-11 flex">

@@ -46,7 +46,7 @@ type ImageProps = {
 };
 
 const Image: React.FC<ImageProps> = ({ src, alt, className, loading }) => (
-  <img loading={loading} src={src} alt={alt} className={className} />
+  <img height="100%" width="100%" loading={loading} src={src} alt={alt} className={className} />
 );
 
 const Settings = () => {

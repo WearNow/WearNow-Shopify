@@ -38,9 +38,9 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ images }) => {
                 {images.map((image, index) => (
                     <div className="slide flex flex-col grow self-stretch px-8 py-5 w-full rounded-2xl bg-zinc-100 max-md:px-5 max-md:mt-10 max-md:max-w-full" style={{ paddingBottom: "77px" }}>
                         <div className='onboarding_carousel_slider_img'>
-                            <img className="slider_img1" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106" alt="Image 1" />
-                            <img className="slider_img2" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107" alt="Image 1" />
-                            <img className="slider_img3" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107" alt="Image 1" />
+                            <img height="100%" width="100%" className="slider_img1" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106" alt="Image 1" />
+                            <img height="100%" width="100%" className="slider_img2" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107" alt="Image 1" />
+                            <img height="100%" width="100%" className="slider_img3" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107" alt="Image 1" />
                         </div>
 
                         <div className="mt-12 text-3xl font-medium text-center text-zinc-800 max-md:mt-10 max-md:max-w-full">

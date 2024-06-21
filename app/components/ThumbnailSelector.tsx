@@ -270,9 +270,9 @@ const ThumbnailSelector: React.FC<{
               <Text as="h2" variant="headingSm">
                   {title} Library
               </Text>
-              {title!="Model" && (
+              {/*title!="Model" && (
                 <TabsDefaultExample></TabsDefaultExample>
-              )}
+              )*/}
             </div>
             {title=="Model" && (
             <div className="flex justify-end items-center ml-auto">
@@ -293,29 +293,29 @@ const ThumbnailSelector: React.FC<{
              )}
           </div>
         </div>
-        {active?.customized_models && (
-        <div className="mt-4 mb-4 PPPPP">
-          <Upload
-            description={
-              <>
-                <div className="w-full h-5 justify-center items-center gap-1.5 inline-flex">
-                  <div className="text-sky-700 text-sm font-semibold font-['Inter'] leading-tight">
-                    Upload Your Own {title}
-                  </div>
-                </div>
-                {title=="Model" && (
-                <div className="w-full mt-1 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
-                  15 Photos | Clear Face, No Accessories | This may take more
-                  time to create
-                </div>
-                )}
-              </>
-            }
-            onUpload={onUpload}
-            show="yes"
-          ></Upload>
-        </div>
-        )}
+        {/*active?.customized_models && (
+        // <div className="mt-4 mb-4 PPPPP">
+        //   <Upload
+        //     description={
+        //       <>
+        //         <div className="w-full h-5 justify-center items-center gap-1.5 inline-flex">
+        //           <div className="text-sky-700 text-sm font-semibold font-['Inter'] leading-tight">
+        //             Upload Your Own {title}
+        //           </div>
+        //         </div>
+        //         {title=="Model" && (
+        //         <div className="w-full mt-1 text-center text-slate-600 text-xs font-normal font-['Inter'] leading-none">
+        //           15 Photos | Clear Face, No Accessories | This may take more
+        //           time to create
+        //         </div>
+        //         )}
+        //       </>
+        //     }
+        //     onUpload={onUpload}
+        //     show="yes"
+        //   ></Upload>
+        // </div>
+        )*/}
 
         <Scrollable
           style={{

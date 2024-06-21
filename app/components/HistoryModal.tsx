@@ -37,7 +37,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
               : "border-gray-300 border-solid";
 
           return (
-            <img
+            <img height="100%" width="100%"
               key={index}
               loading="lazy"
               src={image.src}
@@ -72,7 +72,7 @@ interface ImageProps {
 }
 
 const Image: React.FC<ImageProps> = ({ src, alt, className, onClick }) => {
-  return <img src={src} alt={alt} className={className} onClick={onClick} />;
+  return <img height="100%" width="100%" src={src} alt={alt} className={className} onClick={onClick} />;
 };
 
 const downloadImage = (imageUrl: string, fileName?: string) => {
@@ -185,7 +185,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                     {name}
                   </span>
                   {/* close icon */}
-                  <img
+                  <img height="100%" width="100%"
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ea272d00063fbc53c6992b6ec914f938b207f5c946b741a15020bf6f3010929?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&"
                     className="ml-auto max-w-[24px] cursor-pointer"

@@ -16,16 +16,16 @@ const DashboardModal: React.FC<DashboardModalProps> = () => {
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
   const slides = [
     <div className="slide-content" key="1">
-      <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-1.png?v=1718002947"/>
+      <img height="100%" width="100%" src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-1.png?v=1718002947"/>
     </div>,
     <div className="slide-content" key="2">
-      <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-2.png?v=1718002947"/>
+      <img height="100%" width="100%" src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-2.png?v=1718002947"/>
     </div>,
     <div className="slide-content" key="3">
-      <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-1.png?v=1718002947"/>
+      <img height="100%" width="100%" src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-1.png?v=1718002947"/>
     </div>,
     <div className="slide-content" key="4">
-    <img src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-2.png?v=1718002947"/>
+    <img height="100%" width="100%" src="https://cdn.shopify.com/s/files/1/0875/7621/5865/files/Slide-2.png?v=1718002947"/>
     </div>
   ];
   

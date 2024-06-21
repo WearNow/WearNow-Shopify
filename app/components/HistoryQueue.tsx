@@ -10,7 +10,7 @@ type ImageWithAltProps = {
 };
 
 const ImageWithAlt: FC<ImageWithAltProps> = ({ src, alt, className }) => (
-  <img
+  <img height="100%" width="100%"
     loading="lazy"
     src={src}
     alt={alt}
@@ -94,7 +94,7 @@ const HistoryQueue: React.FC = (sessionData: any) => {
             ))}
           {historyData.length > 4 && (
             <div className="flex flex-shrink-0 overflow-hidden relative flex-col justify-center p-2.5 text-base font-black leading-6 text-center aspect-square">
-              <img
+              <img height="100%" width="100%"
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/32334fe4058ec04d72585033e3ef6fc6c6576853e810197959caf86948c9c43d?apiKey=f33f54c3e98c47d08e772cdbeee9d64d&"
                 alt="Background"

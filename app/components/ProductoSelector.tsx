@@ -116,7 +116,7 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
               <Listbox.Option key={uuid} value={uuid} selected={selected} >
                 <Listbox.TextOption selected={selected}>
                   <div style={{ display: 'inline-flex' }}>
-                    <img className="w-10 h-10" src={image}></img>
+                    <img height="100%" width="100%" className="w-10 h-10" src={image}></img>
                     <div className="w-96 leading-10 px-2 ">{title}</div>
                   </div>
                 </Listbox.TextOption>

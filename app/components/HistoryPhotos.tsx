@@ -12,7 +12,7 @@ type ImageWithAltProps = {
 };
 
 const ImageWithAlt: FC<ImageWithAltProps> = ({ src, alt, className }) => (
-  <img
+  <img height="100%" width="100%"
     loading="lazy"
     src={src}
     alt={alt}

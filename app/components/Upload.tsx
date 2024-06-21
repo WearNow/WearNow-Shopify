@@ -149,7 +149,7 @@ const UploadComponent: React.FC<{
             cursor: "pointer",
           }}
         >
-          <img
+          <img height="100%" width="100%"
             style={{
               width: "50px",
               height: "50px",

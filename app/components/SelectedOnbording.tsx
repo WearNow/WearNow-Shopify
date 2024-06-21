@@ -42,7 +42,7 @@ function SelectedOnbording(props:any) {
               <div className='flex w-[72px] pt-[6px] pr-[6px] pb-[6px] pl-[6px] items-center shrink-0 flex-nowrap bg-[#fff] relative overflow-hidden z-[15]'>
                 <div className='flex w-[60px] gap-[8px] items-start shrink-0 flex-nowrap bg-[#fdfdfd] rounded-[8px] relative overflow-hidden shadow-[0_0_0_0_rgba(0,0,0,0.08)_inset] z-[16]'>
                   <div className='w-[60px] h-[60px] shrink-0  relative z-[17]' >
-                   <img src={image} alt="" />
+                   <img height="100%" width="100%" src={image} alt="" />
                   </div>
                 </div>
               </div>

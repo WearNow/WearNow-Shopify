@@ -339,7 +339,7 @@ const ProductModal: React.FC<{
                 className="search_model flex gap-1 px-3 py-1.5 whitespace-nowrap bg-white border border-solid border-zinc-500 font-[450] rounded-[var(--p-border-radius-button)] text-[color:var(--p-color-text-secondary)] max-md:flex-wrap"
                 style={{ width: "74%", borderRadius: "10px" }}
               >
-                <img
+                <img height="100%" width="100%"
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e4a1b0c13fb249d11f4e19cda011d281e3460ad21e2eb935e99bdf9a0cd87b2?"
                   className="shrink-0 w-5 aspect-square"
@@ -354,7 +354,7 @@ const ProductModal: React.FC<{
                 />
               </div>
               <div className="flex gap-0.5 justify-center px-3 py-1.5 shadow-sm bg-[color:var(--p-color-bg-fill)] font-[550] rounded-[var(--p-border-radius-button)] text-[color:var(--p-color-text)]">
-                <img
+                <img height="100%" width="100%"
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/53a28fdab9bcb208d45fcf699a0e4716ecf152e2e5d485f24c2277277929c386?"
                   className="shrink-0 my-auto w-4 aspect-square"
@@ -391,7 +391,7 @@ const ProductModal: React.FC<{
                     />
                   )}
                <div >
-                  <img src={product?.node?.images?.nodes[0]?.src ?product.node.images.nodes[0].src + "&height=20":null} /></div>
+                  <img height="100%" width="100%" src={product?.node?.images?.nodes[0]?.src ?product.node.images.nodes[0].src + "&height=20":null} /></div>
                     <div className="product_title">{sub_str(product.node.title,0,20)}</div>
                </div>
                <div className="variant_item_content">
@@ -416,7 +416,7 @@ const ProductModal: React.FC<{
                       onChange={() => handleVariantCheckboxChange(item.id)} // Handle checkbox change
                     />
                    )}
-                    <div><img src={item?.image?.src ?item?.image?.src + "&height=20":null} /></div>
+                    <div><img height="100%" width="100%" src={item?.image?.src ?item?.image?.src + "&height=20":null} /></div>
                     <div>{sub_str(item.title,0,20)}</div>
                     </div>
                     )}

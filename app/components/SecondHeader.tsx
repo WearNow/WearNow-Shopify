@@ -457,7 +457,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                                 </div>
 
                                 <div className='w-[40px] h-[40px] shrink-0  bg-cover bg-no-repeat relative z-[43]' >
-                                  <img
+                                  <img height="100%" width="100%"
                                     src={product.image != undefined ? product.image + "&height=40" : ''}
                                   />
                                 </div>

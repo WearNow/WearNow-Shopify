@@ -264,7 +264,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     className="cursor-pointer flex gap-2 py-2 text-sm text-sky-600 whitespace-nowrap rounded-[999px]"
                     onClick={toggleModal}
                   >
-                    <img
+                    <img height="100%" width="100%"
                       alt=""
                       loading="lazy"
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cc89af2502dc60b7e5a40ab2e7cfde909366173eb23f85405e997a653a23f4d?"
@@ -307,7 +307,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                               <div
                                 className={`flex w-[40px] h-[40px] items-center shrink-0 flex-nowrap bg-#fff relative overflow-hidden`}
                               >
-                                <img
+                                <img height="100%" width="100%"
                                   src={item?.image != undefined ? item.image + "&height=40" : ''}
                                 />
 
@@ -392,7 +392,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                   </div>
                   <div className="flex flex-col p-4 mt-6 bg-gray-100 rounded-lg max-md:max-w-full">
                     <div className="flex gap-2 text-base leading-6 text-rose-600 max-md:flex-wrap">
-                      <img
+                      <img height="100%" width="100%"
                         alt=""
                         loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/a2df00a4d57b971da7afd071a3a5a9d4011244042a240bf6e8f3e18fb860bfa2?"
@@ -411,7 +411,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                           href={shopLink}
                           target="_blank"
                         >
-                          <img
+                          <img height="100%" width="100%"
                             alt=""
                             loading="lazy"
                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/98ba2f0d189170a63991e2def95b3c6f6c743ccb44ec9445b9ef6c4c041b5dbe?"
@@ -466,7 +466,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                     onClick={onActivate}
                     className="cursor-pointer flex gap-2 justify-center px-5 py-2.5 text-white whitespace-nowrap bg-sky-600 rounded-[999px]">
                     <div>Continue</div>
-                    <img
+                    <img height="100%" width="100%"
                       alt=""
                       loading="lazy"
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/7a067b12d00bde436bacd3fa9d23c21d9897d579f03dd72b488684836b3eada9?"

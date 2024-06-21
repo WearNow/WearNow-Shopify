@@ -41,8 +41,8 @@ const DashboardHistory = (sessionData:any) => {
             {/* <div className='photo_created'>
                 <button className='photo_created_btn'>
                     <div className='photo_created_content'style={{display:"block"}}>
-                        <img className="photo_created_rounded" src='https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Content.png?v=1714977637' />
-                        <img className='photo_created_choosfile_icon' src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/photo_created_icon_c3933789-a940-4208-979b-1b079877a371.png?v=1714977636"/>
+                        <img height="100%" width="100%" className="photo_created_rounded" src='https://cdn.shopify.com/s/files/1/0843/1642/2421/files/Content.png?v=1714977637' />
+                        <img height="100%" width="100%" className='photo_created_choosfile_icon' src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/photo_created_icon_c3933789-a940-4208-979b-1b079877a371.png?v=1714977636"/>
                     </div>
                 </button>
             </div> */}
@@ -60,32 +60,32 @@ const DashboardHistory = (sessionData:any) => {
                         setIsOpen(true);
                         setHistoryModalProp({...item})
                     }} key={index}>
-                        <img  src={item?.src} />
+                        <img height="100%" width="100%"  src={item?.src} />
                         <span>{item?.photos}+</span>
                     </div>
                 ))}
                 {/* <div className='product_create_select_item'>
-                    <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
+                    <img height="100%" width="100%"  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div>
                 <div className='product_create_select_item'>
-                    <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
+                    <img height="100%" width="100%"  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div>
                 <div className='product_create_select_item'>
-                    <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
+                    <img height="100%" width="100%"  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div>
                 <div className='product_create_select_item'>
-                    <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
+                    <img height="100%" width="100%"  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div>
                 <div className='product_create_select_item'>
-                    <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
+                    <img height="100%" width="100%"  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div>
                 <div className='product_create_select_item'>
-                    <img  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
+                    <img height="100%" width="100%"  src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/imghistory.png?v=1714736805"/>
                     <span>12+</span>
                 </div> */}
             </div>

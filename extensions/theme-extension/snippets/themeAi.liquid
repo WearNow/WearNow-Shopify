@@ -4,8 +4,8 @@
           <div class="model_row">
               <div class="model_col">
                   <div class="model_img_conten">
-                      <img src="{{ "newmodel1.png" | asset_img_url: '' }}" alt="" class="model_img">
-                      <img src="{{ "power_by_wna.png" | asset_img_url: '' }}" alt="" class="model_power_by">
+                      <img height="100%" width="100%" src="{{ "newmodel1.png" | asset_img_url: '' }}" alt="" class="model_img">
+                      <img height="100%" width="100%" src="{{ "power_by_wna.png" | asset_img_url: '' }}" alt="" class="model_power_by">
                       <div class="close_btn_model_content">
                           <svg class="close_btn_model" xmlns="http://www.w3.org/2000/svg" width="12" height="12"
                               viewBox="0 0 12 12" fill="none">
@@ -26,19 +26,19 @@
                       <h2 class="select_skin_title">Select your skin composition: <b class="wna_selected_color">Dark</b></h2>
                       <div class="select_skin_comosition_img select_skin_color">
                           <div class="select_skin_comosition_img_item active" color_title="Dark">
-                              <img src="{{ "Avatar1.png" | asset_img_url: '' }}" alt="">
+                              <img height="100%" width="100%" src="{{ "Avatar1.png" | asset_img_url: '' }}" alt="">
                               {% comment %} <span class="select_skin_comosition_img_title">Dark</span> {% endcomment %}
                           </div>
                           <div class="select_skin_comosition_img_item" color_title="Brown">
-                              <img src="{{ "Avatar2.png" | asset_img_url: '' }}" alt="">
+                              <img height="100%" width="100%" src="{{ "Avatar2.png" | asset_img_url: '' }}" alt="">
                               {% comment %} <span class="select_skin_comosition_img_title">Brown</span> {% endcomment %}
                           </div>
                           <div class="select_skin_comosition_img_item" color_title="Fair">
-                              <img src="{{ "Avatar3.png" | asset_img_url: '' }}" alt="">
+                              <img height="100%" width="100%" src="{{ "Avatar3.png" | asset_img_url: '' }}" alt="">
                               {% comment %} <span class="select_skin_comosition_img_title">Fair</span> {% endcomment %}
                           </div>
                           <div class="select_skin_comosition_img_item" color_title="White">
-                              <img src="{{ "Avatar5.png" | asset_img_url: '' }}" alt="">
+                              <img height="100%" width="100%" src="{{ "Avatar5.png" | asset_img_url: '' }}" alt="">
                               {% comment %} <span class="select_skin_comosition_img_title">White</span> {% endcomment %}
                           </div>
                       </div>
@@ -47,15 +47,15 @@
                       <h2 class="select_skin_title">Select your usual size: <b class="wna_selected_size">S</b></h2>
                       <div class="select_skin_comosition_img select_skin_size">
                           <div class="select_skin_comosition_img_item active" size_title="S">
-                              {% comment %} <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
+                              {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
                               <span class="select_skin_comosition_img_title">S</span>
                           </div>
                           <div class="select_skin_comosition_img_item" size_title="M">
-                              {% comment %} <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
+                              {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
                               <span class="select_skin_comosition_img_title">M</span>
                           </div>
                           <div class="select_skin_comosition_img_item" size_title="L">
-                              {% comment %} <img src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
+                              {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
                               <span class="select_skin_comosition_img_title">L</span>
                           </div>
                       </div>
@@ -164,10 +164,10 @@ console.log('Images:', images);      // Output: Images: ["https://cdn.shopify.co
 // If you want to access the first image URL
 const firstImageUrl = images[0];
 console.log('First Image URL:', firstImageUrl);  // Output: First Image URL: https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328
-        // Select the <img> element
+        // Select the <img height="100%" width="100%"> element
         const imgElement = document.querySelector('.model_img');
 
-        // Update the src attribute of the <img> element with the first image URL
+        // Update the src attribute of the <img height="100%" width="100%"> element with the first image URL
         imgElement.src = firstImageUrl;
       console.log(result,"model results"); // Handle the result here
     } catch (error) {

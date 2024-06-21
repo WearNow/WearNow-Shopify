@@ -34,9 +34,9 @@ const DashboardBlock:React.FC<{session:any,name:string,description:string,button
             </div>
             ):(
             <div className='virtual_tryon_with_studio_content' >
-                <img className="virtual_tryon_with_studio_img1" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106" alt="Image 1" />
-                <img className="virtual_tryon_with_studio_img2" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107" alt="Image 1" />
-                <img className="virtual_tryon_with_studio_img3" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107" alt="Image 1" />
+                <img height="100%" width="100%" className="virtual_tryon_with_studio_img1" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img3.png?v=1713943106" alt="Image 1" />
+                <img height="100%" width="100%" className="virtual_tryon_with_studio_img2" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img2.png?v=1713943107" alt="Image 1" />
+                <img height="100%" width="100%" className="virtual_tryon_with_studio_img3" src="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/onboardin_img1.png?v=1713943107" alt="Image 1" />
             </div>
             )}
             <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[36]'>

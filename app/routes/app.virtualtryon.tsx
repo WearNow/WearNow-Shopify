@@ -283,7 +283,7 @@ export default function VirtualTryOnPage() {
           tagLabel = titleCase(tagLabel);
           return (
             <Tag key={`option${option}`} onRemove={removeTag(option)}>
-              <img className="rounded_img" style={{ height: "40px", width: "40px" }} src={image[0].image} /> {image[0].name}
+              <img height="100%" width="100%" className="rounded_img" style={{ height: "40px", width: "40px" }} src={image[0].image} /> {image[0].name}
             </Tag>
           );
         })}
@@ -301,7 +301,7 @@ export default function VirtualTryOnPage() {
           tagLabel = titleCase(tagLabel);
           return (
             <Tag key={`option${option}`} onRemove={removeTagPose(option)} className="custom-tag">
-              <img className="rounded_img" style={{ height: "40px", width: "40px" }} src={image[0].image} /> {image[0].name}
+              <img height="100%" width="100%" className="rounded_img" style={{ height: "40px", width: "40px" }} src={image[0].image} /> {image[0].name}
             </Tag>
           );
         })}

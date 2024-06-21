@@ -6,7 +6,7 @@ function PerfactPicture() {
     <div className='perfactpicture_conainer'>
        <div className='perfactpicture_row'>
          <div className='perfactpicture_col'>
-           <img src="https://cdn.shopify.com/s/files/1/0634/4225/6063/files/bannerImage.png?v=1715860900"/>
+           <img height="100%" width="100%" src="https://cdn.shopify.com/s/files/1/0634/4225/6063/files/bannerImage.png?v=1715860900"/>
            <div className='perfactpicture_overlay_content'>
             <h2 className='perfactpicture_overlay_title'>Picture Perfect: Elevate Your Products with Expert Shots</h2>
             <Link to='/app/photostudio'>
