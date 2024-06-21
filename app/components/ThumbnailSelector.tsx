@@ -26,8 +26,12 @@ const ThumbnailSelector: React.FC<{
   active: any;
   handleChange:any;
   title: String;
-}> = ({ modelSelectId, setSelectModelId, ModuleData, active, handleChange, title }) => {
+  handleToggle:any;
+  isChecked:boolean;
+}> = ({ modelSelectId, setSelectModelId, ModuleData, active, handleChange, title, handleToggle,isChecked }) => {
   const isSelected = (index: string) => index === modelSelectId;
+
+
 
   // const segments = ModuleData
   console.log("module Data: =>", ModuleData);
@@ -283,8 +287,12 @@ const ThumbnailSelector: React.FC<{
               <div className="w-[36px] h-[28px] shrink-0 bg-[url(../assets/images/3cd34978-eac0-4005-a003-a90c6014efaf.png)] bg-cover bg-no-repeat relative z-[22]">
                 <div className="enabled_vartual_try_on try_on_active flex flex-col justify-center items-start p-1 my-auto rounded-xl">
                   <div className="switch">
-                    <input type="checkbox" id="switchxxx" />
+                    <input type="checkbox" id="switchxxx"
+checked={isChecked}
+onChange={handleToggle}
+                    />
                     <label htmlFor="switchxxx">Toggle</label>
+                    
                   </div>
                 </div>
               </div>

@@ -107,6 +107,8 @@ const PhotoStudio: React.FC = () => {
   const textBackground = "Select a Background";
   const stepPose = "04";
   const textPose = "Select a Pose";
+  const [isChecked, setIsChecked] = useState(false);
+
 
   const [selected, setSelected] = useState('1');
   const [photos, setPhotos] = React.useState([
@@ -238,7 +240,7 @@ setActive(store_subscription[0].package);
           name
           uuid
         }
-        pretrained_models(limit: $models,order_by: {created_at: desc}) {
+        pretrained_models(limit: $models,where: {gender: {_eq: "female"}},order_by: {created_at: desc}) {
           cover_image
           created_at
           description
@@ -405,6 +407,33 @@ try {
   const handleChange = (message:string)=>{
     getAllImages();
   }
+    // Function to handle the switch toggle
+    const handleToggle = async() => {
+      setIsChecked(!isChecked);
+      await client
+      .query({
+        query: gql`
+        query MyQuery4 ($models:Int,$gender:String){
+          pretrained_models(limit: $models,where: {gender: {_eq: $gender}},order_by: {created_at: desc}) {
+            cover_image
+            created_at
+            description
+            featured
+            name
+            uuid
+          }
+        }`,
+        fetchPolicy:"network-only",
+        variables: {
+          storeid: sessionData.authWithShop.store_id,
+          models: active?.pro_models,
+          gender: isChecked?"female": "male",
+        },
+      })
+      .then((result) => {
+           setModels(result.data.pretrained_models);
+      });
+    };
   const renderRight = () => {
     switch (currentStep) {
       case 0:
@@ -418,6 +447,8 @@ try {
             active={active}
             handleChange={handleChange}
             title="Model"
+            handleToggle={handleToggle}
+            isChecked={isChecked}
           />
         );
       case 2:
