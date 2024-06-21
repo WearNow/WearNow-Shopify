@@ -230,7 +230,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
       console.error('Error executing mutation:', error);
     }
     if(tt){
-      products.map((product:any)=>{
+      products.map(async(product:any)=>{
       const mutation = gql`
         mutation MyMutation13(
           $uuid: uuid
@@ -250,12 +250,12 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
         }
       `;
 
-     let productId=product?.product_id.replace("gid://shopify/Product/", "")
+     let productId=product?.uuid;
         fetchProductData(
           product?.product_id.replace("gid://shopify/Product/", "")
         );
-        console.log(fullData, "Full DAta");
-        const result =  client.mutate({
+        
+        const result =  await client.mutate({
           mutation: mutation,
           variables: {
             uuid: productId,
@@ -263,11 +263,12 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
             full_data: fullData,
           },
         });
+        console.log(result, "Full result");
     });
     }
   };
   const fetchProductData = async (inputQueryValue: string) => {
-    console.log(inputQueryValue, "inputQueryValue");
+    //console.log(inputQueryValue, "inputQueryValue");
     try {
       const data = JSON.stringify({
         queryfor: "productData",
@@ -277,7 +278,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
         shop: sessionData.authWithShop.shop,
         searchQuery: inputQueryValue,
       });
-      console.log(data, "data sending for the quey");
+      //console.log(data, "data sending for the quey");
       let config = {
         method: "post",
         maxBodyLength: Infinity,
@@ -290,7 +291,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
       axios
         .request(config)
         .then((response: any) => {
-          console.log(response, "response from graphql api");
+          //console.log(response, "response from graphql api");
           setFullData(response.data.response);
         })
         .catch((error: any) => {
