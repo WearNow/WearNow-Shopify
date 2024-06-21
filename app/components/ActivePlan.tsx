@@ -161,7 +161,7 @@ return (<div className='flex biling_item pt-[35px] pr-[32px] pb-[32px] pl-[32px]
                       Active Plan
                     </span>
                     <div className='w-[5px] h-[9px] shrink-0 relative z-[92]'>
-                      <div className='w-[5.308px] h-[9px] bg-[url(../assets/images/77b15dfe-7f0e-4813-88ad-09c6020e2db2.png)] bg-[length:100%_100%] bg-no-repeat relative z-[93] mt-[0.5px] mr-0 mb-0 ml-0' />
+                      <div className='w-[5.308px] h-[9px]  bg-[length:100%_100%] bg-no-repeat relative z-[93] mt-[0.5px] mr-0 mb-0 ml-0' />
                     </div>
                   </div>
                 </button>

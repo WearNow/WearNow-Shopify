@@ -279,7 +279,7 @@ export default function Index() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // Simulating a 2-second delay
+    }, 500); // Simulating a 2-second delay
   }, []);
   return (
     <>
@@ -317,7 +317,7 @@ export default function Index() {
 
                   setTimeout(() => {
                     setLoading(false);
-                  }, 2000);
+                  }, 500);
                 }} />
               )}
 

@@ -465,7 +465,7 @@ try {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // Simulating a 2-second delay
+    }, 500); // Simulating a 2-second delay
   }, []);
   //console.log(model);
   return (
