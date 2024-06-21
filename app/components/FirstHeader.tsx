@@ -229,7 +229,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
     } catch (error) {
       console.error('Error executing mutation:', error);
     }
-    
+    if(tt){
       products.map((product:any)=>{
       const mutation = gql`
         mutation MyMutation13(
@@ -264,6 +264,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
           },
         });
     });
+    }
   };
   const fetchProductData = async (inputQueryValue: string) => {
     console.log(inputQueryValue, "inputQueryValue");
