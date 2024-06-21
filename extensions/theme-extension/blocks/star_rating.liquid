@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;600&display=swap">
 <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0843/1642/2421/files/stylesheet.css?v=1713961441">
 {% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
-<button class="theme_ai_model" style="background:{{ block.settings.colour}}" current_id="{{product.variants.first.id}}">
+<button class="theme_ai_model" style="background:{{ block.settings.colour}};display:none" current_id="{{product.variants.first.id}}">
   <img height="100%" width="100%" src="{{ "wna-brand-icon.png" | asset_img_url: '30px' }}" height="30" width="30" loading="lazy">
   Try On
 </button>
