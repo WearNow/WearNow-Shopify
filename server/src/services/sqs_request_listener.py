@@ -1,38 +1,67 @@
+import json
 import time
 import boto3
+import uuid
 import pynvml
-from sqs_listener import SQSListener
+# from sqs_listener import SQSListener
+from pydantic import BaseModel
 
-def get_gpu_usage():
-    pynvml.nvmlInit()
-    handle = pynvml.nvmlDeviceGetHandleByIndex(0)
-    mem_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
-    gpu_usage = mem_info.used / mem_info.total
-    pynvml.nvmlShutdown()
-    return gpu_usage
 
-# AI SQS Request listener
-class SQSRequestListener(SQSListener):
+# class GarmentObject(BaseModel):
+#     model_image: str
+#     mask_image: str
+#     garment_image: str
+#     garment_type: str
 
-    def handle_message(self, body, attributes, messages_attributes):
-        if self.is_gpu_available():
-            self.process_tryon_request(body)
+
+SWAP_QUEUE = "https://sqs.us-east-1.amazonaws.com/471112843831/faceswap.fifo"
+GARMENT_QUEUE = "https://sqs.us-east-1.amazonaws.com/471112843831/ai_service.fifo"
+
+
+class SQSHandler:
+    def __init__(self, message_id, source_image, target_image, user_id, garment_object, request_type) -> None:
+        self.message_id = message_id
+        self.source_image = source_image
+        self.user_id = user_id
+        self.target_image = target_image
+        self.garment_object = garment_object
+        self.request_type = request_type
+        if self.request_type == "swap":
+            self.queue_url = SWAP_QUEUE
         else:
-            # Re-enqueue the message with a delay if GPU is busy
-            self.reenqueue_message(body, delay=60)
+            self.queue_url = GARMENT_QUEUE
 
-    def is_gpu_available(self):
-        return get_gpu_usage() < 0.8  # example threshold
+    def get_swap_object(self):
+        return {
+            "message_id": self.message_id,
+            "user_id": self.user_id,
+            "source_image": self.source_image,
+            "target_image": self.target_image
+        }
 
-    def process_tryon_request(self, body):
-        # Process the try-on request
-        pass
+    def get_garment_object(self):
+        return {
+            "message_id": self.message_id,
+            "user_id": self.user_id,
+            "model_image": self.garment_object["model_image"],
+            "mask_image": self.garment_object["mask_image"],
+            "garment_image": self.garment_object["garment_image"],
+            "garment_type": self.garment_object["garment_type"]
+        }
 
-    def reenqueue_message(self, body, delay):
-        sqs.send_message(QueueUrl=queue_url, MessageBody=body, DelaySeconds=delay)
+    def format_message_attributes(self, obj):
+        return {k: {"DataType": "String", "StringValue": v} for k, v in obj.items()}
 
-if __name__ == "__main__":
-    sqs = boto3.client('sqs')
-    queue_url = 'https://sqs.us-east-1.amazonaws.com/471112843831/ai_service_queue'
-    listener = SQSRequestListener(queue_url, region_name='us-east-1')
-    listener.listen()
+    def send_message(self):
+        sqs = boto3.client('sqs')
+        obj = self.get_swap_object() if self.request_type == "swap" else self.get_garment_object()
+        message_attributes = self.format_message_attributes(obj)
+
+        response = sqs.send_message(
+            QueueUrl=self.queue_url,
+            MessageGroupId="message_id1",
+            # Required for FIFO queues
+            MessageDeduplicationId=str(uuid.uuid4()),
+            MessageBody=json.dumps(obj)
+        )
+        return response

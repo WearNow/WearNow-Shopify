@@ -33,24 +33,77 @@ class Client:
                 """, {"uuid": uuid}
     )
 
-    def create_vto_request(self, store_id): return self.run_query(
-                """
-                """,{}
+    def create_vto_request(self, store_id, store_product_id, input_image): return self.run_query(
+        """
+        mutation insert_vto_generation_request($store_id: uuid!, $store_product_id: uuid!, $input_image: String!) {
+        insert_vto_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "PENDING", store_product_id: $store_product_id, input_image: $input_image}) {
+                uuid
+                status
+                created_at
+                results
+                store_product {
+                    images
+                }
+            }
+        }
+
+        """, {"store_id": store_id, "store_product_id": store_product_id, "input_image": input_image}
     )
 
-    def create_prod_request(self, store_id): return self.run_query(
-                """
-                mutation insert_product_image_generation_request($store_id: uuid!) {
-                    insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "pending"}) {
+    def get_prod_request(self, store_product_id): return self.run_query(
+        """
+        query product_image_request($store_product_id:uuid!){
+            product_image_generation_request(where:{
+                store_product_id:{_eq:$store_product_id}
+            }){
+                    background{
                         uuid
-                        status
-                        created_at
-                        results
+                        image
+                    }
+                    model{
+                        cover_image
+                        mask_image
+                    }
+                    results
+                    status
+                    time_lapsed
+                    store_product{
+                        uuid
+                        images
                     }
                 }
-
-                """, {"store_id": store_id}
+            }
+        """, {"store_product_id": store_product_id}
     )
+
+    def create_prod_request(self, store_id, model_id, store_pid, bgid): return self.run_query(
+        """
+        mutation insert_product_image_generation_request($store_id: uuid!, $store_product_id: uuid!, $model_id: uuid!, $background_id: uuid!) {
+            insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "pending", store_product_id: $store_product_id, model_id: $model_id, background_id: $background_id}) {
+                uuid
+                status
+                created_at
+                results
+                background {
+                    image
+                }
+                pose {
+                    image
+                }
+                model {
+                    name
+                    mask_image
+                    cover_image
+                    skin_composition
+                }
+                store_product {
+                    images
+                }
+            }
+        }
+        """, {"store_id": store_id,  "model_id": model_id, "background_id": bgid, "store_product_id": store_pid}
+    )
+
     def add_store_products(self, objects): return self.run_query(
         """
             mutation AddStoreProducts($objects: [store_products_insert_input!]!) {
@@ -121,4 +174,32 @@ class Client:
         }
         """,
         {"object": _set},
+    )
+
+    def update_product_image_request(self, uuid, results): return self.run_query(
+        """
+                mutation updadteProductRequest($uuid:uuid, $results:String!){
+                    update_product_image_generation_request(where:{
+                        uuid:{
+                        _eq:$uuid
+                        }
+                    }, _set:{
+                        status:"COMPLETE",
+                        results:$results
+                    }){
+                        affected_rows
+                    }
+                }
+                """, {"uuid": uuid, "results": results}
+    )
+
+
+    def update_vto_request(self, uuid, results): return self.run_query(
+        """
+        mutation updadteProductRequest($uuid: uuid, $results: String!) {
+            update_vto_image_generation_request(where: {uuid: {_eq: $uuid}}, _set: {status: "COMPLETE", results: $results}) {
+                affected_rows
+            }
+        }
+        """, {"uuid": uuid, "results": results}
     )

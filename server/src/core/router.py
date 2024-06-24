@@ -1,18 +1,47 @@
 import json
 from fastapi import APIRouter, Request
 from .utils.hasura_helpers import client
-from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput, SingleStoreProductOutput
+from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput, SingleStoreProductOutput, VTOImageOutPut
+from ..services import SQSHandler
 
 router = APIRouter()
+
 
 @router.post("/single-product-image-request", status_code=201)
 async def handle_single_prod_request(request: Request):
     body = await request.body()
     body_str = body.decode()
     data = json.loads(body_str)["input"]["input"]
-    store_prod = client.get_store_product(data)
-    request_response = client.create_prod_request(data["store_id"])
+    # store_prod = client.get_store_product(data)
+    print("DATA: ", data)
+    request_response = client.create_prod_request(
+        data["store_id"], data["model"], data["store_product_id"], data["background"])
     c_uuid = request_response["data"]["insert_product_image_generation_request_one"]["uuid"]
+    request_object = request_response["data"]["insert_product_image_generation_request_one"]
+    print("request_object: ", request_object)
+    # https://wearnow-storage.s3.amazonaws.com/testdata/mask.png
+    empty_placeholder_store_prod = ""
+    if not request_object["store_product"]:
+        return SingleStoreProductOutput(tracking="", success=False)
+
+    # print(request_object["store_product"]["images"])
+    store_product_image = json.loads(request_object["store_product"]["images"].replace(
+        "'", '"'))[0]["url"] if request_object["store_product"] else empty_placeholder_store_prod
+    model_image = request_object["model"]["cover_image"] if request_object["model"] else ""
+    mask_image = request_object["model"]["mask_image"] if request_object["model"] else ""
+
+    garment_object = {
+        "model_image": model_image,
+        "garment_image": store_product_image,
+        "mask_image": mask_image,
+        "garment_type": "upper_clothing"
+    }
+    sqs_handler = SQSHandler(garment_object=garment_object, request_type="garment",
+                             message_id="message_id1", source_image="https://res.cloudinary.com/dtabnh5py/image/upload/v1718561325/k3okplkalnhffvl924gc.jpg",
+                             target_image="https://res.cloudinary.com/dtabnh5py/image/upload/v1718560366/aoudxkq8jnomacxw3n2w.jpg",
+                             user_id=request_object["uuid"])
+    response = sqs_handler.send_message()
+    print("response: ", response)
     # print("store prod", store_prod)
     return SingleStoreProductOutput(tracking=c_uuid, success=True)
 
@@ -22,11 +51,34 @@ async def handle_single_vto_request(request: Request):
     body = await request.body()
     body_str = body.decode()
     data = json.loads(body_str)["input"]["input"]
-    store_prod = client.get_store_product(data)
-    request_response = client.create_vto_request(data["store_id"])
-    c_uuid = request_response["data"]["insert_product_image_generation_request_one"]["uuid"]
+    print("input data: ", data)
+    prod_request = client.get_prod_request(data["store_product_id"])
+    prod_image_request = prod_request["data"]["product_image_generation_request"]
+    if not prod_image_request:
+        return VTOImageOutPut(request_id="", status="FAILED")
+
+    if not prod_image_request[0]["results"]:
+        return VTOImageOutPut(request_id="", status="FAILED")
+
+    print("prod request: ", prod_image_request[0])
+    prod_image_result_image = json.loads(
+        prod_image_request[0]["results"])["results"]
+    vto_request_response = client.create_vto_request(
+        data["store_id"], data["store_product_id"], data["input_image"])
+    vto_request_id = vto_request_response["data"]["insert_vto_image_generation_request_one"]["uuid"]
+    print("VTO request: ", vto_request_id)
+    # send SQS message
+    sqs_handler = SQSHandler(garment_object={}, request_type="swap",
+                             message_id="message_id1", source_image=data["input_image"],
+                             target_image=prod_image_result_image[0] if len(
+                                 prod_image_result_image) > 0 else "",
+                             user_id=vto_request_id)
+    response = sqs_handler.send_message()
+    print("response: ", response)
+    # request_response = client.create_vto_request(data["store_id"])
+    # c_uuid = request_response["data"]["insert_product_image_generation_request_one"]["uuid"]
     # print("store prod", store_prod)
-    return SingleStoreProductOutput(tracking=c_uuid, success=True)
+    return VTOImageOutPut(request_id=vto_request_id, status="PENDING")
 
 
 @router.post("/request-vto", status_code=201)
@@ -64,7 +116,8 @@ async def handle_store_onboarding(request: Request):
         if "errors" in store_settings_count:
             raise Exception(str(store_settings_count["errors"]))
 
-        store_settings_count_total = store_settings_count["data"]["store_setting_aggregate"]["aggregate"]["count"]
+        store_settings_count_total = store_settings_count["data"][
+            "store_setting_aggregate"]["aggregate"]["count"]
         # print("store setting",
         #       store_settings_count["data"]["store_setting_aggregate"]["aggregate"]["count"])
         if not store_settings_count_total:
@@ -86,7 +139,8 @@ async def handle_store_onboarding(request: Request):
         if "errors" in notification_settings_count:
             raise Exception(str(notification_settings_count["errors"]))
 
-        notification_settings_count_total = notification_settings_count["data"]["notification_setting_aggregate"]["aggregate"]["count"]
+        notification_settings_count_total = notification_settings_count[
+            "data"]["notification_setting_aggregate"]["aggregate"]["count"]
 
         if not notification_settings_count_total:
             # print("notification setting", notification_settings_count)
