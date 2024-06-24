@@ -75,7 +75,7 @@ def poll_ai_sqs_queue():
                 print("No messages in queue. Waiting...")
             # await asyncio.sleep(1)
         except Exception as e:
-            print("Error recieving SQS mesage")
+            print("Error recieving SQS mesage: ", e)
 
         time.sleep(1)  # Polling interval
 
@@ -118,7 +118,7 @@ def poll_sqs_queue():
                 print("No messages in queue. Waiting...")
             # await asyncio.sleep(1)
         except Exception as e:
-            print("Error recieving SQS mesage")
+            print("Error recieving SQS mesage: ", e)
 
         time.sleep(1)  # Polling interval
 
