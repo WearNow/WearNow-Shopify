@@ -173,7 +173,7 @@ const ProductModal: React.FC<{
         const sendProducts:any[]=[];
         
         collabProduct.map(async(cp) => {
-          if(cp.product_id!=''){
+          if(cp.product_id!='' && cp.image!="" && cp.image!=null){
          var sp= {
             photos:[{url:cp.image?cp.image:"image"}],
             price:123,
