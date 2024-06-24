@@ -107,29 +107,35 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         }
       })
       .then((result) => {
-        let planname="partner_test"
-    const myHeader = new Headers();
-        myHeader.append("X-Shopify-Access-Token", sessionData.authWithShop?.accessToken);
-  
-        const requestOption = {
-          method: "GET",
-          headers: myHeader,
-          redirect: "follow"
-        };
-  
-        fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption)
-          .then((response) => response.json())
-          .then((result) => {planname=result.shop.plan_name})
-          .catch((error) => console.error(error));
-        let store_subscription = result.data.store_subscription;
-        if(planname=="partner_test"){
-          store_subscription[0].package.number_of_products=5;
-          store_subscription[0].package.pro_models=5;
-          store_subscription[0].package.product_photo_limit=5;
-          //store_subscription[0].package.vto_limit=5;
-          store_subscription[0].package.vto_limit=5;
-        }
-         setActive(store_subscription[0].package);
+          let store_subscription = result.data.store_subscription;
+
+          let planname = sessionData?.authWithShop?.planShop?.shop?.plan_name;
+          
+          if (planname == "partner_test") {
+            // Clone the package object to avoid modifying the read-only properties
+            let newPackage = {
+              ...store_subscription[0].package,
+              number_of_products: 500,
+              pro_models: 500,
+              product_photo_limit: 500,
+              vto_limit: 500
+            };
+          
+            // Clone the store_subscription array and replace the package in the cloned object
+            let newStoreSubscription = [...store_subscription];
+            newStoreSubscription[0] = {
+              ...newStoreSubscription[0],
+              package: newPackage
+            };
+          
+            // Update the original store_subscription variable with the modified array
+            store_subscription = newStoreSubscription;
+          }
+          
+          console.log(store_subscription[0].package, "store_subscription[0].package");
+          
+          // Set the active package to the updated one
+          setActive(store_subscription[0].package);
       });
   }, []);
   async function getAllImages() {

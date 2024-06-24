@@ -136,14 +136,27 @@ const requestOptions = {
 
 const tehme=await fetch(`https://${shop}/admin/api/2024-04/themes.json`, requestOptions);
 const theme_result= await tehme.json();
-const theme=theme_result.themes.filter(theme => theme.role=="main");
+console.log(theme_result,"theme_result")
+const theme=theme_result?.themes?.filter(theme => theme.role=="main");
 console.log(theme);
+const myHeader = new Headers();
+    myHeader.append("X-Shopify-Access-Token", auth_session?.accessToken);
+  
+    const requestOption = {
+      method: "GET",
+      headers: myHeader,
+      redirect: "follow"
+    };
+    const shopData=await fetch(`https://${shop}/admin/api/2024-04/shop.json`, requestOption);
+    const planShop=await shopData.json();
+    console.log(planShop);
   const authWithShop = {
     ...auth_session,
     shop: shop,
     tryOn: false,
     products: responseJson,
     theme_result:theme,
+    planShop:planShop
   };
   console.log(authWithShop, "auth session");
   if (auth_session?.state == 'active' && packageID != undefined && packageID != null) {
