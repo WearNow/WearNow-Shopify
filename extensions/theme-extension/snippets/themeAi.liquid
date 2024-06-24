@@ -103,6 +103,7 @@ var select_skin_comosition_img_item_color = document.querySelectorAll(".select_s
         color=color_title;
         console.log(photoData,color,size,gender);
     document.querySelector(".wna_selected_color").innerHTML=color_title;
+    getImageVTO(photoData,color,size,gender)
     select_skin_comosition_img_item_color.forEach(function(item) {
       item.classList.remove("active");
     });
@@ -119,6 +120,7 @@ var select_skin_comosition_img_item_size = document.querySelectorAll(".select_sk
     size=size_title;
     console.log(photoData,color,size,gender);
     document.querySelector(".wna_selected_size").innerHTML=size_title;
+    getImageVTO(photoData,color,size,gender);
     select_skin_comosition_img_item_size.forEach(function(item) {
       item.classList.remove("active");
     });
@@ -136,6 +138,7 @@ gender_btn.forEach(function(button) {
         console.log(event.target.classList[0]);
         gender=event.target.classList[0];
         console.log(photoData,color,size,gender);
+        getImageVTO(photoData,color,size,gender)
     });
 });
 async function fetchModels(){
@@ -144,8 +147,8 @@ async function fetchModels(){
         const formdata = new FormData();
         formdata.append("queryfor", queryfor); 
         formdata.append("shop", "shopName");
-       // formdata.append("variantID", currentId);
-        formdata.append("variantID", "czxc");
+        formdata.append("variantID", currentId);
+       // formdata.append("variantID", "czxc");
         const requestOptions = {
             method: "POST",
             body: formdata,
@@ -160,35 +163,59 @@ return nn;
     try {
       const result = await fetchModels();
       photoData=result.response;
-      const jsonString = result.response[1].generated_image;
-      const filteredPhotos = result.response.filter(photo => 
-  photo.gender === "female" && 
-  photo.size === "small" && 
-  photo.skin_composition === "Dark"
-);
-console.log(filteredPhotos,"filteredPhotos","filteredPhotosfilteredPhotos")
-// Parse the JSON string into an object
-const parsedObject = JSON.parse(jsonString);
-
-// Accessing properties of the parsed object
-const filename = parsedObject.filename;
-const images = parsedObject.images;
-
-console.log('Filename:', filename);  // Output: Filename: test.png
-console.log('Images:', images);      // Output: Images: ["https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328"]
-
-// If you want to access the first image URL
-const firstImageUrl = images[0];
-console.log('First Image URL:', firstImageUrl);  // Output: First Image URL: https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328
-        // Select the <img height="100%" width="100%"> element
-        const imgElement = document.querySelector('.model_img');
-
-        // Update the src attribute of the <img height="100%" width="100%"> element with the first image URL
-        imgElement.src = firstImageUrl;
+      getImageVTO(photoData,color,size,gender)
       console.log(result,"model results"); // Handle the result here
     } catch (error) {
       console.error('Error:', error); // Handle any errors here
     }
   })();
   console.log(photoData,color,size,gender);
+  function getImageVTO(photoData,color,size,gender){
+     switch (gender) {
+                    case "female_btn":
+                        vgender="female";
+                        break;
+                    case "male_btn":
+                        vgender="male";
+                        break;
+                }
+                switch (size) {
+                    case "S":
+                        vsize="small";
+                        break;
+                    case "M":
+                        vsize="medium";
+                        break;
+                    case "L":
+                        vsize="large";
+                        break;
+                }
+      const filteredPhotos = photoData.filter(photo => 
+  photo.gender === vgender && 
+  photo.size === vsize && 
+  photo.skin_composition === color
+);
+ const jsonString = filteredPhotos[0]?.generated_image;
+        if(jsonString){
+        console.log(filteredPhotos,"filteredPhotos","filteredPhotosfilteredPhotos")
+        // Parse the JSON string into an object
+        const parsedObject = JSON.parse(jsonString);
+
+        // Accessing properties of the parsed object
+        const filename = parsedObject.filename;
+        const images = parsedObject.images;
+
+        console.log('Filename:', filename);  // Output: Filename: test.png
+        console.log('Images:', images);      // Output: Images: ["https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328"]
+
+        // If you want to access the first image URL
+        const firstImageUrl = images[0];
+        console.log('First Image URL:', firstImageUrl);  // Output: First Image URL: https://cdn.shopify.com/s/files/1/0641/2268/3542/files/gallery-1.jpg?v=1716110328
+                // Select the <img height="100%" width="100%"> element
+                const imgElement = document.querySelector('.model_img');
+
+                // Update the src attribute of the <img height="100%" width="100%"> element with the first image URL
+                imgElement.src = firstImageUrl;
+        }
+  }
 </script>

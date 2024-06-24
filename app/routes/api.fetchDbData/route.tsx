@@ -181,8 +181,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           skin_composition:body.get('skin_composition'),
           input_image:body.get('input_image'),
           storeid: auth_session.store_id,
-          //store_product_id:body.get('store_product_id'),
-          store_product_id:"e8a6ada9-1dbb-4e12-bc0b-13ff8c004257",
+          store_product_id:body.get('store_product_id'),
+          //store_product_id:"e8a6ada9-1dbb-4e12-bc0b-13ff8c004257",
           model_id:body.get('model_id'),
         },
       });
