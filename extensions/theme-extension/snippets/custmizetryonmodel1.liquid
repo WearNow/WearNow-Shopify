@@ -253,29 +253,123 @@
         </div>
     </div>
 <script>
-
+    console.log("Initial Data:", photoData, color, size, gender, "Loaded");
+    let finalImageVTO= '';
     document.getElementById('dropzone-file').addEventListener('change', function(event) {
-        document.getElementById('loader').style.display="flex";
+        document.getElementById('loader').style.display = "flex";
         const file = event.target.files[0];
         const formdata = new FormData();
         formdata.append("file", file);
+
         const requestOptions = {
             method: "POST",
             body: formdata,
             redirect: "follow"
         };
-    
-        fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/s3", requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                document.getElementById('loader').style.display="none";
-                console.log("Upload successful!");
-                console.log("Image URL:", result.imageUrl);
-                document.querySelector(".lokking_image").src=result.imageUrl
-                        document.getElementById('model1').style.display = 'none';
-                        document.getElementById('model2').style.display = 'block';
-                        document.querySelector(".addtocart_btn").style.display="flex"
-            })
-            .catch((error) => console.error(error));
+
+        fetch(api_URL + "api/s3", requestOptions)
+            .then(response => response.json())
+            .then(async (result) => {
+                const formdata = new FormData();
+                switch (gender) {
+                    case "female_btn":
+                        formdata.append("gender", "female");
+                        break;
+                    case "male_btn":
+                        formdata.append("gender", "male");
+                        break;
+                }
+                switch (size) {
+                    case "S":
+                        formdata.append("size", "small");
+                        break;
+                    case "M":
+                        formdata.append("size", "medium");
+                        break;
+                    case "L":
+                        formdata.append("size", "large");
+                        break;
+                }
+                formdata.append("queryfor", "createVirtualTryOn");
+                formdata.append("shop", shopName);
+                formdata.append("skin_composition", color);
+                formdata.append("input_image", result.imageUrl);
+                formdata.append("store_product_id", photoData[0]?.store_product?.uuid || '');
+                formdata.append("model_id", photoData[0]?.request?.model_id || '');
+
+                const requestOptions = {
+                    method: "POST",
+                    body: formdata,
+                    redirect: "follow"
+                };
+
+                fetch(api_URL + "api/fetchDbData", requestOptions)
+                    .then(response => response.json())
+                    .then((resultin) => {
+                        console.log("Intermediate Result:", resultin);
+
+                        const requestId = resultin?.response?.data?.generateVTOImage?.request_id;
+                        if (requestId) {
+                            checkStatus(requestId);
+                        } else {
+                            console.error("No request_id found");
+                            document.getElementById('loader').style.display = "none";
+                        }
+                    }).catch(error => console.error("Intermediate Fetch Error:", error));
+            }).catch(error => console.error("Initial Fetch Error:", error));
     });
+
+    function checkStatus(requestId) {
+        const formdata = new FormData();
+        formdata.append("REQUEST_ID", requestId);
+        formdata.append("queryfor", "acknowledgements");
+        formdata.append("shop", shopName);
+
+        const requestOptions = {
+            method: "POST",
+            body: formdata,
+            redirect: "follow"
+        };
+
+        fetch(api_URL + "api/fetchDbData", requestOptions)
+            .then(response => response.json())
+            .then((resultunder) => {
+                console.log("Status Check Result:", resultunder);
+
+                if (resultunder.response.status === 'COMPLETE') {
+                    
+                    const results_json = resultunder.response.results;
+                    const results = JSON.parse(results_json);
+                    const image_url = results['results'][0];
+                    finalImageVTO=image_url;
+
+                    document.getElementById('loader').style.display = "none";
+                    console.log("Upload successful!");
+                    console.log("Image URL:", image_url);
+
+                    document.querySelector(".lokking_image").src = image_url;
+                    document.getElementById('model1').style.display = 'none';
+                    document.getElementById('model2').style.display = 'block';
+                   // document.querySelector(".addtocart_btn").style.display = "flex";
+
+                    // Ensure the latestModelWNA element is in the model2 element
+                    const latestModelWNA = document.getElementById('model2').querySelector('#latestModelWNA');
+                    if (latestModelWNA) {
+                        latestModelWNA.src = image_url;
+                    } else {
+                        console.error("latestModelWNA element not found in model2");
+                    }
+                } else if (resultunder.response.status === 'PENDING') {
+                    setTimeout(() => {
+                        checkStatus(requestId);
+                    }, 2000);  // Retry after 2 seconds
+                } else {
+                    console.error("Unexpected status:", resultunder.response.status);
+                    document.getElementById('loader').style.display = "none";
+                }
+            }).catch(error => console.error("Status Check Fetch Error:", error));
+    }
 </script>
+
+
+

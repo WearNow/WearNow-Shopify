@@ -17,6 +17,41 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
   let auth_session = {};
   switch (queryfor) {
+    case "acknowledgements":
+      let acknowledgement=[];
+      await client
+        .query({
+          query: gql`
+          query ($REQUEST_ID:uuid!){
+        vto_image_generation_request_by_pk(uuid:$REQUEST_ID){
+          uuid
+          body_type
+          results
+          status
+          input_image
+          created_at
+        }
+      }
+    `,
+          fetchPolicy: "network-only",
+          variables: {
+            REQUEST_ID: body.get('REQUEST_ID'),
+          },
+        })
+        .then((result) => {
+          console.log(result,"result for acknowledgement");
+          acknowledgement=result.data.vto_image_generation_request_by_pk;
+        });
+        return cors(
+          request,
+          json({
+            success: true,
+            message: "Selected VTO products fetched successfully",
+            response: acknowledgement,
+            request_id: body.get('REQUEST_ID'),
+          })
+        );
+      break;
     case "checkVirtualTryOn":
       await client
         .query({
@@ -74,6 +109,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           storeid: auth_session.store_id,
         },
       });
+      console.log(result,"enabled Products");
       var store_products = result.data.store_products;
 
 
@@ -83,6 +119,80 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           success: true,
           message: "Selected VTO products fetched successfully",
           response: store_products,
+        })
+      );
+      break;
+      case "createVirtualTryOn":
+      await client
+        .query({
+          query: gql`
+      query MyQuery2($shop: String!) {
+        session(limit: 10, where: {shop_id: {_eq: $shop}}) {
+          accessToken
+          shop_id
+          state
+          scope
+          isOnline
+          expires
+          store {
+            name
+            store_id
+            onboarding_status
+            uuid
+            virtual_enabled
+          }
+          store_id
+          uuid
+        }
+      }
+    `,
+          fetchPolicy: "network-only",
+          variables: {
+            shop: shop,
+          },
+        })
+        .then((result) => {
+          auth_session = result?.data.session[0] ?? result?.data.session;
+
+          console.log(result.data.session, "apollo client");
+        });
+      const mutation = gql`
+      mutation ($gender: String!,$size: String!,$skin_composition: String!,$input_image: String!,$storeid: String!,$store_product_id: String!,$model_id: String!) {
+        generateVTOImage(input:{
+          gender:$gender,
+          model_id:$model_id,
+          store_product_id:$store_product_id,
+          store_id:$storeid,
+          size:$size,
+          skin_composition:$skin_composition,
+          input_image:$input_image
+        }){
+          request_id
+          status
+        }
+      }
+    `;
+      const muation_result = await client.mutate({
+        mutation: mutation,
+        fetchPolicy: "network-only",
+        variables: {
+          gender:body.get('gender'),
+          size:body.get('size'),
+          skin_composition:body.get('skin_composition'),
+          input_image:body.get('input_image'),
+          storeid: auth_session.store_id,
+          //store_product_id:body.get('store_product_id'),
+          store_product_id:"e8a6ada9-1dbb-4e12-bc0b-13ff8c004257",
+          model_id:body.get('model_id'),
+        },
+      });
+      console.log(muation_result,"muation_result Products");
+      return cors(
+        request,
+        json({
+          success: true,
+          message: "Selected VTO products fetched successfully",
+          response: muation_result,
         })
       );
       break;
@@ -138,7 +248,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
             size
             skin_composition
             generated_image
+            request{
+              model_id
+            }
             store_product{
+              uuid
               store_id
               store{
                 name
@@ -199,5 +313,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         json({ success: false, error: "Invalid query type" })
       );
   }
+  return null;
 };
 

@@ -4,6 +4,7 @@ var mainModelWna = document.querySelector(".main_model_wna");
 var closeBtn = document.querySelector(".close_btn_model_content");
 var themeAiModel = document.querySelector(".theme_ai_model");
 
+
 var model_btn = document.querySelectorAll(".model_btn");
 closeBtn.addEventListener("click", function(){
     modelContainer.style.display = "none";
@@ -32,7 +33,7 @@ async function fetchProduct(){
             redirect: "follow"
         };
 
-const response=await fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/fetchDbData", requestOptions);
+const response=await fetch(api_URL+"api/fetchDbData", requestOptions);
 const nn= await response.json();
 return nn;
 }
@@ -60,7 +61,7 @@ return nn;
                 redirect: "follow"
             };
     
-    const response=await fetch("https://wearnow-shopify-7c945fcdc96d.herokuapp.com/api/fetchDbData", requestOptions);
+    const response=await fetch(api_URL+"api/fetchDbData", requestOptions);
     const nn= await response.json();
     return nn;
     }
@@ -177,3 +178,4 @@ closeBtns.forEach(function (btn, index) {
     });
 });
 })();
+console.log("sd",photoData,color,size,gender,"ss");
