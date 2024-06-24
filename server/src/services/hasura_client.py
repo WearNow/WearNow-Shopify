@@ -79,7 +79,7 @@ class Client:
     def create_prod_request(self, store_id, model_id, store_pid, bgid): return self.run_query(
         """
         mutation insert_product_image_generation_request($store_id: uuid!, $store_product_id: uuid!, $model_id: uuid!, $background_id: uuid!) {
-            insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "pending", store_product_id: $store_product_id, model_id: $model_id, background_id: $background_id}) {
+            insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "PENDING", store_product_id: $store_product_id, model_id: $model_id, background_id: $background_id}) {
                 uuid
                 status
                 created_at

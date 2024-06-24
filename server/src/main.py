@@ -125,11 +125,11 @@ def poll_sqs_queue():
 
 @app.on_event("startup")
 async def startup_event():
-    thread = threading.Thread(target=poll_sqs_queue, daemon=True)
-    thread.start()
+    # thread = threading.Thread(target=poll_sqs_queue, daemon=True)
+    # thread.start()
 
-    thread2 = threading.Thread(target=poll_ai_sqs_queue, daemon=True)
-    thread2.start()
+    # thread2 = threading.Thread(target=poll_ai_sqs_queue, daemon=True)
+    # thread2.start()
     print("Started SQS listener thread for AI_SERVICE_RESULT_QUEUE_URL")
     print("started SQS listener thread")
     # asyncio.create_task(poll_sqs_queue())
