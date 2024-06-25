@@ -113,6 +113,7 @@ export default function ProductPage() {
               price
               sku
               vto_enabled
+              allocated_vto_count
             }
           }
         `,
@@ -333,7 +334,7 @@ export default function ProductPage() {
           />
         </td>
         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-          <span>20</span>
+          <span>{product.allocated_vto_count}</span>
         </td>
       </tr>
     </>

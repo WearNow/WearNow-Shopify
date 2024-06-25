@@ -236,7 +236,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         }
       break;
     case "checkModels":
-      const variant_id = body.get('variantID');
+      let variant_id = body.get('variantID');
+      variant_id=variant_id?.replace("gid://shopify/ProductVariant/","");
+      variant_id="gid://shopify/ProductVariant/"+variant_id;
       console.log(variant_id,"variantID");
       const querym = gql`query MyQuery3($variant_id: String!){
           product_photo_history(where:{
