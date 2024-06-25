@@ -76,6 +76,28 @@ class Client:
         """, {"store_product_id": store_product_id}
     )
 
+    def create_prod_photo_history(self, _set): return self.run_query(
+        """
+                mutation insert_product_photo_history($object:product_photo_history_insert_input!){
+                    insert_product_photo_history_one(object:$object){
+                        created_at
+                        gender
+                        uuid
+                    }
+                }
+                """, {"object": _set}
+    )
+    def get_prod_photo_request_obj(self, uuid): return self.run_query(
+                """
+                query get_product_photo_request($uuid:uuid!){
+                    product_image_generation_request_by_pk(uuid:$uuid){
+                        model_id
+                        store_product_id
+                        
+                    }
+                }
+                """, {"uuid": uuid}
+    )
     def create_prod_request(self, store_id, model_id, store_pid, bgid): return self.run_query(
         """
         mutation insert_product_image_generation_request($store_id: uuid!, $store_product_id: uuid!, $model_id: uuid!, $background_id: uuid!) {
@@ -192,7 +214,6 @@ class Client:
                 }
                 """, {"uuid": uuid, "results": results}
     )
-
 
     def update_vto_request(self, uuid, results): return self.run_query(
         """

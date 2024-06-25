@@ -62,7 +62,19 @@ def poll_ai_sqs_queue():
                         # message_id = message["MessageId"]
                         result_body = json.loads(message["Body"])
                         request_id = result_body["user_id"]
-                        updated_request = client.update_product_image_request(request_id, json.dumps(result_body))
+                        updated_request = client.update_product_image_request(
+                            request_id, json.dumps(result_body))
+                        prod_request_object = client.get_prod_photo_request_obj(
+                            request_id)
+                        print("prod_request_object: ", prod_request_object)
+                        client.create_prod_photo_history({
+                            "gender": "female",
+                            "generated_image": result_body["results"][0],
+                            "request_id": request_id,
+                            "size": "",
+                            "skin_composition": "",
+                            "store_product_id": prod_request_object["data"]["product_image_generation_request_by_pk"]["store_product_id"]
+                        })
                         print("Rquest updated sucessfully: ", updated_request)
                         # # Delete message after processing
                         sqs.delete_message(
@@ -78,6 +90,7 @@ def poll_ai_sqs_queue():
             print("Error recieving SQS mesage: ", e)
 
         time.sleep(1)  # Polling interval
+
 
 def poll_sqs_queue():
     sqs = boto3.client('sqs')
@@ -105,7 +118,8 @@ def poll_sqs_queue():
                         print("#"*100)
                         print("request_id: ", request_id)
                         # TODO: update specific vto request and add to history
-                        updated_request = client.update_vto_request(request_id, json.dumps(result_body))
+                        updated_request = client.update_vto_request(
+                            request_id, json.dumps(result_body))
                         print("Rquest updated sucessfully: ", updated_request)
                         # Delete message after processing
                         sqs.delete_message(
