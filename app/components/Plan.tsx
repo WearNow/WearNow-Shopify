@@ -199,11 +199,15 @@ const Plan:React.FC<{item:any,active:any,loader:string,handleBilling:any,package
                     <span className="h-[18px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap ">
                       {active.cycle=="yearly" ? (
                         <>
+                        {item.cycle == "monthly" ? "Downgrade" :(
+                          <>
                         {active.price>item.price ? "Downgrade":"Upgrade"}
+                        </>
+                      )}
                         </>
                       ):(
                         <>
-                        {item.cycle == "yearly" ? "upgrade" :(
+                        {item.cycle == "yearly" ? "Upgrade" :(
                           <>
                         {active.price>item.price ? "Downgrade":"Upgrade"}
                         </>
