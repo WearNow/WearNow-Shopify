@@ -16,6 +16,22 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
   const [package_id, setPackageId] = useState("");
   const [loading, setLoading] = useState(true);
   const packages = packageData;
+
+  const handleTabClick1 = () => {
+    setActiveTab(1);
+    setBgcolorTab("black")
+    setColorTab("white")
+    setBgcolorTab2("white")
+    setColorTab2("black")
+  };
+  const handleTabClick2 = () => {
+    setActiveTab(2);
+    setBgcolorTab("white")
+    setColorTab("black")
+    setBgcolorTab2("black")
+    setColorTab2("white")
+  };
+
   useEffect(() => {
     client
       .query({
@@ -47,7 +63,10 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
           setActive(store_subscription[0].package);
           console.log(store_subscription[0].package, 'subscription');
           if (store_subscription[0].package.cycle == 'yearly') {
-            setActiveTab(2);
+            handleTabClick2();
+          }
+          else{
+            handleTabClick1();
           }
         }
 
@@ -55,20 +74,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
   }, []);
 
 
-  const handleTabClick1 = () => {
-    setActiveTab(1);
-    setBgcolorTab("black")
-    setColorTab("white")
-    setBgcolorTab2("white")
-    setColorTab2("black")
-  };
-  const handleTabClick2 = () => {
-    setActiveTab(2);
-    setBgcolorTab("white")
-    setColorTab("black")
-    setBgcolorTab2("black")
-    setColorTab2("white")
-  };
+
 
   const handleBilling = async (uuid: any, cycle: string) => {
     setPackageId(uuid);
