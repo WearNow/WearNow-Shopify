@@ -111,6 +111,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const plan = formData.get("plan");
   const packageID = formData.get("packageID");
   const trial = formData.get("trial");
+  const plan_name=formData.get("plan_name");
 
   const auth_session = await db.session.findFirst({
     where: { shop },
@@ -137,7 +138,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   //console.log(trial,"trial");
   
     let variables = {
-      name: "Basic",
+      name: plan_name,
       returnUrl: `https://admin.shopify.com/store/${newshop.replace(".myshopify.com",'')}/apps/${app_name}/app?packageID=${packageID}`,
       lineItems: [
           {
@@ -226,10 +227,11 @@ export default function PlanPage() {
         price = item.price;
         plan= 'EVERY_30_DAYS';
       }
+      let plan_name=item.name;
       let packageID=uuid;
       let trial=active==undefined?14:0;
       
-      submit({ price, shop, plan, packageID, trial }, { method: "post" })
+      submit({ price, shop, plan, packageID, trial,plan_name }, { method: "post" })
   });
     
 
