@@ -164,7 +164,7 @@ const Plan:React.FC<{item:any,active:any,loader:string,handleBilling:any,package
                    
                   </div>
                 </div>
-                {active?.price>item.price ? (
+                {/* {active?.price>item.price ? (
                   <button className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer' style={{opacity:0.3,pointerEvents:"unset"}}>
                   <div className='flex pt-[11px] pr-[18px] pb-[11px] pl-[18px] gap-[8px] justify-center items-center grow shrink-0 basis-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative '>
                    
@@ -177,7 +177,7 @@ const Plan:React.FC<{item:any,active:any,loader:string,handleBilling:any,package
                     </div>
                   </div>
                 </button>
-                ):(
+                ):( */}
                   <>
                   {loader=='yes' && item.uuid==package_id ?(
                     <button style={{pointerEvents:"unset",opacity:0.3}} className='flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap border-none relative pointer'>
