@@ -98,7 +98,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
               try-on experiences.
             </span>
           </div>
-        {!active?.cycle || active?.cycle == "monthly" ? (
+       
           <div className='flex w-[316px] h-[52px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] gap-[8px] items-start shrink-0 flex-nowrap bg-[rgba(116,116,128,0.08)] rounded-[100px]  top-[153px]  z-[3]'>
             {/* {loading ? (  <SkeletonTabs /> ) : (
           <> */}
@@ -118,19 +118,7 @@ const Billing: React.FC<{ handlesubmit: any, packageData: any, store_id: any }> 
 
             {/* )} */}
           </div>
-        ) : (
-          <div className='flex w-[130px] h-[52px] pt-[4px] pr-[4px] pb-[4px] pl-[4px] gap-[8px] items-start shrink-0 flex-nowrap bg-[rgba(116,116,128,0.08)] rounded-[100px]  top-[153px]  z-[3]'>
-            <div className='flex w-[150px] pt-[10px] pr-[10px] pointer pb-[10px] pl-[10px] gap-[4px] justify-center items-baseline shrink-0 flex-nowrap rounded-[100px] relative z-[6]' style={{ background: "black" }}>
-              <span className="flex w-[43px] h-[24px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#1d2127] relative text-center whitespace-nowrap z-[7]" style={{ color: "#fff" }}>
-                Yearly
-              </span>
-              <span className="flex w-[70px] h-[18px] justify-center items-start shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#1d2127] relative text-center whitespace-nowrap z-[8]" style={{ color: "#fff" }}>
-                40% off
-              </span>
-
-            </div>
-          </div>
-        )}
+       
         {activeTab === 1 &&
           <div className='biling_container flex  h-[550px] gap-px items-end shrink-0 flex-nowrap rounded-[16px]   top-[235px] z-[9]'>
             {packages?.filter((item: any) => item.cycle === "monthly").map((item: any, index: number) => (
