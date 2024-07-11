@@ -72,7 +72,7 @@ const HistoryPhotos: FC = (sessionData: any) => {
 
   React.useEffect(() => {
     // Call the fetchProducts function when the component mounts
-    console.log("apollo useEffect :::");
+    console.log("apollo fetchHistoryData useEffect :::");
     fetchHistoryData(sessionData.authWithShop.store_id).then(
       (updatedStoreProducts) => {
         console.log("fetchHistoryData result: :::", updatedStoreProducts);
@@ -95,7 +95,7 @@ const HistoryPhotos: FC = (sessionData: any) => {
         {...historyModalProp}
         onClose={() => setIsOpen(false)}
       />
-      
+
       <div className="w-full max-md:max-w-full">
         <main className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-center gap-2.5 mx-5 pt-8 font-medium text-white flex-wrap max-md:mr-2.5 max-md:max-w-full">
           {cards.map((card, index) => (
