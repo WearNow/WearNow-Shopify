@@ -1,2 +1,2 @@
-export const apiURL = `https://teststorewna.myshopify.com/`
-export const app_name = `x-staging-wna`;
+export const apiURL = `https://shopapp.wearnow.ai/`
+export const app_name = `wearnowai-1`;
