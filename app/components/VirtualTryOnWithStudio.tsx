@@ -6,16 +6,16 @@ import gql from 'graphql-tag';
 import ComingSoon from "./ComingSoon";
 import DashboardBlock from "./DashboardBlock";
 
-const VirtualTryOnWithStudio: React.FC<{sessionData:any}> = (sessionData) => {
+const VirtualTryOnWithStudio: React.FC<{ sessionData: any }> = (sessionData) => {
   const [modals, setModals] = useState<boolean>(false);
   const [products, setProducts] = useState<any[]>([]);
-  const session=sessionData.sessionData.sessionData;
+  const session = sessionData.sessionData.sessionData;
   //console.log("sessionData:::=>",sessionData.sessionData.sessionData);
   const toggleModal = () => {
     setModals(!modals);
   };
   const fetchProducts = async () => {
-    
+
     await client
       .query({
         query: gql`
@@ -31,38 +31,38 @@ const VirtualTryOnWithStudio: React.FC<{sessionData:any}> = (sessionData) => {
       sku
     }
   }
-  `,fetchPolicy: "network-only",
+  `, fetchPolicy: "network-only",
         variables: {
           storeid: session.authWithShop.store_id,
         },
       })
-      .then((result:any) => {
-       var store_products = result.data.store_products;
+      .then((result: any) => {
+        var store_products = result.data.store_products;
         // Map over store_products to create a new array with the added 'image' property
-        const updatedStoreProducts = store_products.map((sp:any, index:number) => {
+        const updatedStoreProducts = store_products.map((sp: any, index: number) => {
           // Assuming sp.images is already a JSON string that needs to be parsed
-          let images = sp.images.replace("[{'url': '",'');
-          images = images.replace("'}]",'');
-          console.log("images: :::" , images);
+          let images = sp.images.replace("[{'url': '", '');
+          images = images.replace("'}]", '');
+          console.log("images: :::", images);
           return {
             ...sp, // Spread the existing properties of the product
             image: images // Add the new image property
           };
         });
-         
+
         setProducts(updatedStoreProducts);
-        console.log("apollo client store id: :::",updatedStoreProducts);
+        console.log("apollo client store id: :::", updatedStoreProducts);
       });
 
 
-};
-useEffect(() => {
-  // Call the fetchProducts function when the component mounts
-  fetchProducts();
-}, []);
+  };
+  useEffect(() => {
+    // Call the fetchProducts function when the component mounts
+    fetchProducts();
+  }, []);
   return (
     <>
-    {modals && (
+      {modals && (
         <ProductModal
           isOpen={modals}
           toggleModal={toggleModal}
@@ -70,15 +70,14 @@ useEffect(() => {
           fetchProducts={fetchProducts}
           products={products}
         />
-      )} 
-    <div className='virtual_tryon_with_studio  flex w-full gap-[10px] items-start flex-nowrap bg-[#fff] rounded-[16px] relative mx-auto '>
-    <DashboardBlock session={session} name="Virtual Try-on" description="Adjust settings for your try-on integration or enable try-on for
-                more products" buttonName="Change Settings" buttonLink="/app/virtualtryon" addProduct="yes" toggleModal={toggleModal} />
-    
-      <DashboardBlock session={session} name="Virtual Photo Studio" description="Create stunning pro-grade product photos with unlimited
-                customisation in a few minutes" buttonName="Create Photo" buttonLink="/app/photostudio" addProduct="no" toggleModal={toggleModal}/>
-    </div>
-    <ComingSoon/>
+      )}
+      <div className='virtual_tryon_with_studio  flex w-full gap-[10px] items-start flex-nowrap bg-[#fff] rounded-[16px] relative mx-auto '>
+        <DashboardBlock session={session} name="Virtual Try-on" description="Virtual Try-On experiences will be enabled on your store 24 hours after a product is added." buttonName="Change Settings" buttonLink="/app/virtualtryon" addProduct="yes" toggleModal={toggleModal} />
+
+        <DashboardBlock session={session} name="Virtual Photo Studio" description="Create stunning pro-grade product photos with unlimited
+                customisation in a few minutes" buttonName="Create Photo" buttonLink="/app/photostudio" addProduct="no" toggleModal={toggleModal} />
+      </div>
+      <ComingSoon />
     </>
   )
 }

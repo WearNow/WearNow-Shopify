@@ -134,7 +134,7 @@ const ProductSelector: React.FC <{ product: any,products:any, handleCheckboxChan
 
   const lazyLoadingMarkup = lazyLoading ? <Listbox.Loading accessibilityLabel={`${query ? 'Filtering' : 'Loading'} customer segments`} /> : null;
 
-  const noResultsMarkup = segmentOptions.length === 0 ? <EmptySearchResult title="" description={`No segments found matching "${query}"`} /> : null;
+  const noResultsMarkup = segmentOptions.length === 0 ? <EmptySearchResult title="" description={`No products added. Please add products on the dashboard`} /> : null;
   const listboxMarkup = (
     // <div className='h-[642px] overflow-hidden'>
     <div>

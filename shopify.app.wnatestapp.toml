@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "a28402f3abfe7445bd4a9ff368bf306f"
+name = "wnatestapp"
+handle = "wnatestapp"
+application_url = "https://southwest-testament-labeled-wrap.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "teststorewna.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,read_themes,write_products"
+
+[auth]
+redirect_urls = [
+  "https://southwest-testament-labeled-wrap.trycloudflare.com/auth/callback",
+  "https://southwest-testament-labeled-wrap.trycloudflare.com/auth/shopify/callback",
+  "https://southwest-testament-labeled-wrap.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-07"
+
+[pos]
+embedded = false
