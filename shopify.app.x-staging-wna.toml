@@ -3,7 +3,7 @@
 client_id = "765b11ac4e52a762b5e5956b22ca5c3b"
 name = "X-staging-wna"
 handle = "x-staging-wna"
-application_url = "https://invasion-briefly-filters-cfr.trycloudflare.com"
+application_url = "https://injection-resistant-ordered-verse.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "read_products,read_themes,write_products"
 
 [auth]
 redirect_urls = [
-  "https://invasion-briefly-filters-cfr.trycloudflare.com/auth/callback",
-  "https://invasion-briefly-filters-cfr.trycloudflare.com/auth/shopify/callback",
-  "https://invasion-briefly-filters-cfr.trycloudflare.com/api/auth/callback"
+  "https://injection-resistant-ordered-verse.trycloudflare.com/auth/callback",
+  "https://injection-resistant-ordered-verse.trycloudflare.com/auth/shopify/callback",
+  "https://injection-resistant-ordered-verse.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

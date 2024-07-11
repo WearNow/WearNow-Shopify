@@ -72,10 +72,10 @@ const VirtualTryOnWithStudio: React.FC<{ sessionData: any }> = (sessionData) => 
         />
       )}
       <div className='virtual_tryon_with_studio  flex w-full gap-[10px] items-start flex-nowrap bg-[#fff] rounded-[16px] relative mx-auto '>
-        <DashboardBlock session={session} name="Virtual Try-on" description="Virtual Try-On experiences will be enabled on your store 24 hours after a product is added." buttonName="Change Settings" buttonLink="/app/virtualtryon" addProduct="yes" toggleModal={toggleModal} />
+        <DashboardBlock session={session} name="Virtual Try-on" description="Virtual Try-On experiences will be enabled on your store 24 hours after a product is added." buttonName="Add Products" buttonLink="/app/photostudio" addProduct="yes" toggleModal={toggleModal} />
 
-        <DashboardBlock session={session} name="Virtual Photo Studio" description="Create stunning pro-grade product photos with unlimited
-                customisation in a few minutes" buttonName="Create Photo" buttonLink="/app/photostudio" addProduct="no" toggleModal={toggleModal} />
+        {/* <DashboardBlock session={session} name="Virtual Photo Studio" description="Create stunning pro-grade product photos with unlimited
+                customisation in a few minutes" buttonName="Create Photo" buttonLink="/app/photostudio" addProduct="no" toggleModal={toggleModal} /> */}
       </div>
       <ComingSoon />
     </>
