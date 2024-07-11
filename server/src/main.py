@@ -67,15 +67,18 @@ def poll_ai_sqs_queue():
                         prod_request_object = client.get_prod_photo_request_obj(
                             request_id)
                         print("prod_request_object: ", prod_request_object)
-                        client.create_prod_photo_history({
-                            "gender": "female",
-                            "generated_image": result_body["results"][0],
-                            "request_id": request_id,
-                            "size": "",
-                            "skin_composition": "",
-                            "store_product_id": prod_request_object["data"]["product_image_generation_request_by_pk"]["store_product_id"]
-                        })
-                        print("Rquest updated sucessfully: ", updated_request)
+
+                        if len(result_body["results"]) > 0:
+                            client.create_prod_photo_history({
+                                "gender": "female",
+                                "generated_image": result_body["results"][0],
+                                "request_id": request_id,
+                                "size": "",
+                                "skin_composition": "",
+                                "store_product_id": prod_request_object["data"]["product_image_generation_request_by_pk"]["store_product_id"]
+                            })
+                            print("Rquest updated sucessfully: ",
+                                  updated_request)
                         # # Delete message after processing
                         sqs.delete_message(
                             QueueUrl=AI_SERVICE_RESULT_QUEUE_URL,
