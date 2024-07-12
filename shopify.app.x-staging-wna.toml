@@ -3,7 +3,7 @@
 client_id = "765b11ac4e52a762b5e5956b22ca5c3b"
 name = "X-staging-wna"
 handle = "x-staging-wna"
-application_url = "https://klein-nj-ambient-proud.trycloudflare.com"
+application_url = "https://military-spotlight-normally-seller.trycloudflare.com"
 embedded = true
 
 [build]
@@ -16,9 +16,9 @@ scopes = "read_products,read_themes,write_products"
 
 [auth]
 redirect_urls = [
-  "https://klein-nj-ambient-proud.trycloudflare.com/auth/callback",
-  "https://klein-nj-ambient-proud.trycloudflare.com/auth/shopify/callback",
-  "https://klein-nj-ambient-proud.trycloudflare.com/api/auth/callback"
+  "https://military-spotlight-normally-seller.trycloudflare.com/auth/callback",
+  "https://military-spotlight-normally-seller.trycloudflare.com/auth/shopify/callback",
+  "https://military-spotlight-normally-seller.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

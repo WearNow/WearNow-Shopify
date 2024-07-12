@@ -17,6 +17,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
   const [backgrounds, setBackgrounds] = useState<any>();
   const [poses, setPoses] = useState<any>();
   const [model, setModel] = useState<string>();
+  const [modelName, setModelName] = useState<string>("");
   const [background, setBackground] = useState<string>();
   const [pose, setPose] = useState<string>();
   const [tmpModel, setTmpModel] = useState<string>();
@@ -282,6 +283,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     switch (type) {
       case 'model':
         setModel(id);
+        setModelName(models.filter((m: any) => id == m.uuid)[0].name)
         setCurrentStep(2);
         if (pose) {
           setStylehide({ opacity: 1, pointerEvents: "unset" });
@@ -317,14 +319,14 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     }
     if (background && currentStep == 3) {
       if (currentStep < 4) {
-        const related_poses = await getPosesByModel("ETH-Male")
+        const related_poses = await getPosesByModel(modelName)
         setPoses(related_poses.pretrained_models)
         setCurrentStep(currentStep + 1)
         console.log("poses linked: ", related_poses)
       }
     }
 
-    if (tmpModel) { setModel(tmpModel); }
+    if (tmpModel) { setModel(tmpModel); setModelName(models.filter((m: any) => tmpModel == m.uuid)[0].name) }
     if (tmpPose) { setPose(tmpPose); }
     if (tmpBackground) { setBackground(tmpBackground); }
     if (pose) {
@@ -336,7 +338,9 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     switch (step) {
       case '01':
         setCurrentStep(1);
-        if (tmpModel) { setModel(tmpModel); }
+        if (tmpModel) {
+          setModel(tmpModel); setModelName(models.filter((m: any) => tmpModel == m.uuid)[0].name)
+        }
         if (tmpPose) { setPose(tmpPose); }
         if (tmpBackground) { setBackground(tmpBackground); }
         setStylehide({ opacity: 0.3, pointerEvents: "none" });
@@ -354,7 +358,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         console.log("we are in third step", background);
         setTmpBackground(background);
         setBackground(undefined);
-        if (tmpModel) { setModel(tmpModel); }
+        if (tmpModel) { setModel(tmpModel); setModelName(models.filter((m: any) => tmpModel == m.uuid)[0].name) }
         if (tmpPose) { setPose(tmpPose); }
         setCurrentStep(3);
         setStylehide({ opacity: 0.3, pointerEvents: "none" });
@@ -363,7 +367,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         console.log("we are in forth step", pose);
         setTmpPose(pose);
         setPose(undefined);
-        if (tmpModel) { setModel(tmpModel); }
+        if (tmpModel) { setModel(tmpModel); setModelName(models.filter((m: any) => tmpModel == m.uuid)[0].name) }
         if (tmpBackground) { setBackground(tmpBackground); }
         setCurrentStep(4);
         setStylehide({ opacity: 0.3, pointerEvents: "none" });
@@ -642,7 +646,6 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
 
                   <SelectedOnbording save={save} step="01" value={checkedProduct} data={product.title} image={product.image} handleEdit={handleEdit} handleSelectChange={handleSelectChange} selected={selected} />
                 ))}
-
                 {model && background && !pose && (
                   <>
                     {models.filter((m: any) => model == m.uuid).map((m: any) => (
@@ -662,7 +665,6 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                     {backgrounds.filter((b: any) => background == b.uuid).map((b: any) => (
                       <SelectedOnbording save={save} step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
                     ))}
-
                     {poses.filter((p: any) => pose == p.uuid).map((p: any) => (
                       <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.cover_image} handleEdit={handleEdit} />
                     ))}
