@@ -23,6 +23,10 @@ function shuffle(array: any) {
   }
 }
 
+function filterUnique(array: any) {
+  const uniqueData = [...new Map(array.map((item: any) => [item.name, item])).values()];
+  return uniqueData
+}
 function ensureNoConsecutiveDuplicates(array: any) {
   shuffle(array);
 
@@ -118,6 +122,7 @@ const PhotoStudio: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [checkedProduct, setCheckedProduct] = useState<string>();
   const [models, setModels] = useState<any>();
+  const [allmodels, setAllModels] = useState<any>();
   const [backgrounds, setBackgrounds] = useState<any>();
   const [poses, setPoses] = useState<any>();
   const [model, setModel] = useState<string>();
@@ -285,7 +290,8 @@ const PhotoStudio: React.FC = () => {
       })
       .then((result) => {
         //console.log("Result images: model,background,pose :::" , result);
-        setModels(ensureNoConsecutiveDuplicates(JSON.parse(JSON.stringify(result.data.pretrained_models))));
+        setModels(filterUnique(JSON.parse(JSON.stringify(result.data.pretrained_models))));
+        setAllModels(ensureNoConsecutiveDuplicates(JSON.parse(JSON.stringify(result.data.pretrained_models))));
         setBackgrounds(result.data.default_background);
         setPoses(ensureNoConsecutiveDuplicates(JSON.parse(JSON.stringify(result.data.pretrained_models))));
       });
@@ -363,7 +369,7 @@ const PhotoStudio: React.FC = () => {
     if (model && currentStep == 1) {
       if (currentStep < 3) {
         setCurrentStep(currentStep + 1)
-        setPoses(models.filter((e: any) => e.name === modelName));
+        setPoses(allmodels.filter((e: any) => e.name === modelName));
       }
     }
     if (background && currentStep == 2) {
@@ -459,7 +465,7 @@ const PhotoStudio: React.FC = () => {
         },
       })
       .then((result) => {
-        setModels(ensureNoConsecutiveDuplicates(JSON.parse(JSON.stringify(result.data.pretrained_models))));
+        setModels(filterUnique(JSON.parse(JSON.stringify(result.data.pretrained_models))));
       });
   };
   const renderRight = () => {
@@ -473,6 +479,7 @@ const PhotoStudio: React.FC = () => {
             setSelectModelId={(id: string) => {
               setModel(id);
               setModelName(models.filter((m: any) => id == m.uuid)[0].name);
+              setPoses(allmodels.filter((e: any) => e.name === modelName));
             }}
             ModuleData={models}
             active={active}
@@ -608,7 +615,7 @@ const PhotoStudio: React.FC = () => {
                           :
                           <>
                             {poses.filter((p: any) => pose == p.uuid).map((p: any) => (
-                              <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                              <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.cover_image} handleEdit={handleEdit} />
                             ))}
                           </>
                         }
@@ -656,7 +663,7 @@ const PhotoStudio: React.FC = () => {
                               :
                               <>
                                 {poses.filter((p: any) => pose == p.uuid).map((p: any) => (
-                                  <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                                  <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.cover_image} handleEdit={handleEdit} />
                                 ))}
                               </>
                             }
@@ -692,7 +699,7 @@ const PhotoStudio: React.FC = () => {
                               :
                               <>
                                 {poses.filter((p: any) => pose == p.uuid).map((p: any) => (
-                                  <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                                  <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.cover_image} handleEdit={handleEdit} />
                                 ))}
                               </>
                             }
@@ -739,7 +746,7 @@ const PhotoStudio: React.FC = () => {
                               <SelectedOnbording save={save} step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
                             ))}
                             {poses.filter((p: any) => pose == p.uuid).map((p: any) => (
-                              <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                              <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.cover_image} handleEdit={handleEdit} />
                             ))}
                           </>
                         )}

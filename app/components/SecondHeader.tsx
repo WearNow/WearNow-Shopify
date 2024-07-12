@@ -6,7 +6,7 @@ import SelectedOnbording from "./SelectedOnbording";
 import FadedOnboarding from "./FadedOnboarding";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
-import { Checkbox,Select,Spinner } from '@shopify/polaris';
+import { Checkbox, Select, Spinner } from '@shopify/polaris';
 
 const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
 
@@ -45,8 +45,27 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     [],
   );
 
-
-  useEffect(() => { 
+  const getPosesByModel = async (name: string) => {
+    const GET_POSES_BY_MODEL = gql`query getPosesByModel($name: String) {
+      pretrained_models(where: {name: {_eq: $name}}, limit: 3) {
+        uuid
+        cover_image
+        name
+        featured
+      }
+    }
+    `
+    const { data, errors } = await client.query({
+      query: GET_POSES_BY_MODEL,
+      variables: { name }
+    })
+    if (errors?.length! > 0) {
+      console!.log("errors: ", errors)
+      throw Error(`Error getting model poses: ${e}`)
+    }
+    return data
+  }
+  useEffect(() => {
     const MyMutationn = gql`
     mutation MyMutation3 ($photo_per_product:String!,$uuid:uuid!){
         update_stores(where: {uuid: {_eq: $uuid}}, _set: {photo_per_product: $photo_per_product}) {
@@ -60,16 +79,16 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       }
    `;
 
-      const result = client.mutate({
-        mutation: MyMutationn,
-        variables: {
-          photo_per_product: selected,
-          uuid: sessionData.authWithShop.store_id
-        },
-      });
+    const result = client.mutate({
+      mutation: MyMutationn,
+      variables: {
+        photo_per_product: selected,
+        uuid: sessionData.authWithShop.store_id
+      },
+    });
 
-      console.log('Mutation result:', result);
-    }, [selected])
+    console.log('Mutation result:', result);
+  }, [selected])
 
   useEffect(() => {
     client
@@ -107,35 +126,35 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         }
       })
       .then((result) => {
-          let store_subscription = result.data.store_subscription;
+        let store_subscription = result.data.store_subscription;
 
-          let planname = sessionData?.authWithShop?.planShop?.shop?.plan_name;
-          
-          if (planname == "partner_test") {
-            // Clone the package object to avoid modifying the read-only properties
-            let newPackage = {
-              ...store_subscription[0].package,
-              number_of_products: 500,
-              pro_models: 500,
-              product_photo_limit: 500,
-              vto_limit: 500
-            };
-          
-            // Clone the store_subscription array and replace the package in the cloned object
-            let newStoreSubscription = [...store_subscription];
-            newStoreSubscription[0] = {
-              ...newStoreSubscription[0],
-              package: newPackage
-            };
-          
-            // Update the original store_subscription variable with the modified array
-            store_subscription = newStoreSubscription;
-          }
-          
-          console.log(store_subscription[0].package, "store_subscription[0].package");
-          
-          // Set the active package to the updated one
-          setActive(store_subscription[0].package);
+        let planname = sessionData?.authWithShop?.planShop?.shop?.plan_name;
+
+        if (planname == "partner_test") {
+          // Clone the package object to avoid modifying the read-only properties
+          let newPackage = {
+            ...store_subscription[0].package,
+            number_of_products: 500,
+            pro_models: 500,
+            product_photo_limit: 500,
+            vto_limit: 500
+          };
+
+          // Clone the store_subscription array and replace the package in the cloned object
+          let newStoreSubscription = [...store_subscription];
+          newStoreSubscription[0] = {
+            ...newStoreSubscription[0],
+            package: newPackage
+          };
+
+          // Update the original store_subscription variable with the modified array
+          store_subscription = newStoreSubscription;
+        }
+
+        console.log(store_subscription[0].package, "store_subscription[0].package");
+
+        // Set the active package to the updated one
+        setActive(store_subscription[0].package);
       });
   }, []);
   async function getAllImages() {
@@ -177,7 +196,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         console.log("Result images: model,background,pose :::", result);
         setModels(result.data.pretrained_models);
         setBackgrounds(result.data.default_background);
-        setPoses(result.data.default_pose);
+        // setPoses(result.data.default_pose);
       });
   }
   useEffect(() => {
@@ -258,7 +277,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       }));
     }
   };
-  const handleSelection = (id: string, type: string) => {
+  const handleSelection = async (id: string, type: string) => {
     console.log("handleSelection ::", id, type);
     switch (type) {
       case 'model':
@@ -278,6 +297,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       case 'pose':
         setCurrentStep(4);
         setPose(id);
+        console.log("setting pose: ", id)
         setStylehide({ opacity: 1, pointerEvents: "unset" });
         break;
     }
@@ -297,9 +317,13 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     }
     if (background && currentStep == 3) {
       if (currentStep < 4) {
+        const related_poses = await getPosesByModel("ETH-Male")
+        setPoses(related_poses.pretrained_models)
         setCurrentStep(currentStep + 1)
+        console.log("poses linked: ", related_poses)
       }
     }
+
     if (tmpModel) { setModel(tmpModel); }
     if (tmpPose) { setPose(tmpPose); }
     if (tmpBackground) { setBackground(tmpBackground); }
@@ -406,10 +430,10 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
   }
   console.log(currentStep);
   const options = [
-    {label: '1', value: '1'},
-    {label: '2', value: '2'},
-    {label: '3', value: '3'},
-    {label: '4', value: '4'},
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '3', value: '3' },
+    { label: '4', value: '4' },
   ];
   return (
     <div className="self-stretch second_header">
@@ -495,14 +519,14 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
 
                   </div>
                   <div className='flex w-full h-full flex-col gap-[6px] items-start ' style={{ marginLeft: "50px", marginTop: "20px", width: "calc(100% - 50px)" }}>
-                     
-                      <Select
-                          label="Please select the number of photos you would like to create"
-                          options={options}
-                          onChange={handleSelectChange}
-                          value={selected}
-                        />
-                   
+
+                    <Select
+                      label="Please select the number of photos you would like to create"
+                      options={options}
+                      onChange={handleSelectChange}
+                      value={selected}
+                    />
+
                     <span className="h-[18px] self-stretch font-['SF_Pro_Display'] text-[14px] font-normal leading-[17.5px] text-[#475466] relative text-left  z-[69]">
                       All the photos in a creation request will have very minor
                       changes between them
@@ -638,8 +662,9 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                     {backgrounds.filter((b: any) => background == b.uuid).map((b: any) => (
                       <SelectedOnbording save={save} step={stepBackground} data={b.name} image={b.image} handleEdit={handleEdit} />
                     ))}
+
                     {poses.filter((p: any) => pose == p.uuid).map((p: any) => (
-                      <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.image} handleEdit={handleEdit} />
+                      <SelectedOnbording save={save} step={stepPose} data={p.name} image={p.cover_image} handleEdit={handleEdit} />
                     ))}
 
                   </>
@@ -655,7 +680,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
 
 
 
-            <div className='flex  h-[44px] gap-[20px] items-start shrink-0 flex-nowrap  top-[535px] left-0 z-[82]' style={{marginTop:"20px"}}>
+            <div className='flex  h-[44px] gap-[20px] items-start shrink-0 flex-nowrap  top-[535px] left-0 z-[82]' style={{ marginTop: "20px" }}>
               {stylehide.opacity != 1 ? (
                 <button onClick={handleButtonNext} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer'>
                   <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
@@ -669,76 +694,76 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
                 </button>
               ) : (
                 <>
-                { save == "saved" ? (
-                  
-                  <div className='flex w-full h-[102px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#e8f6e9] rounded-[8px] mx-auto my-0'>
-                  <div className='flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative'>
-                    <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[1]'>
-                      <div className='flex gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative z-[2]'>
-                        <div className='w-[18px] h-[18px] shrink-0 relative overflow-hidden z-[3]'>
-                          <div className='w-[15px] h-[15px] bg-no-repeat relative z-[4] mr-0 mb-0 ml-[1.5px]' >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-                              <path d="M9 1.55664C7.51664 1.55664 6.06659 1.99651 4.83323 2.82062C3.59986 3.64473 2.63856 4.81607 2.07091 6.18651C1.50325 7.55696 1.35472 9.06496 1.64411 10.5198C1.9335 11.9747 2.64781 13.311 3.6967 14.3599C4.7456 15.4088 6.08197 16.1231 7.53683 16.4125C8.99168 16.7019 10.4997 16.5534 11.8701 15.9857C13.2406 15.4181 14.4119 14.4568 15.236 13.2234C16.0601 11.99 16.5 10.54 16.5 9.05664C16.4978 7.06819 15.7069 5.1618 14.3009 3.75575C12.8948 2.3497 10.9885 1.55882 9 1.55664ZM9 12.8066C8.85167 12.8066 8.70666 12.7627 8.58332 12.6802C8.45999 12.5978 8.36386 12.4807 8.30709 12.3436C8.25033 12.2066 8.23547 12.0558 8.26441 11.9103C8.29335 11.7648 8.36478 11.6312 8.46967 11.5263C8.57456 11.4214 8.7082 11.35 8.85368 11.321C8.99917 11.2921 9.14997 11.307 9.28701 11.3637C9.42406 11.4205 9.54119 11.5166 9.6236 11.64C9.70602 11.7633 9.75 11.9083 9.75 12.0566C9.75 12.2555 9.67098 12.4463 9.53033 12.587C9.38968 12.7276 9.19891 12.8066 9 12.8066ZM9.75 9.80664C9.75 10.0056 9.67098 10.1963 9.53033 10.337C9.38968 10.4776 9.19891 10.5566 9 10.5566C8.80109 10.5566 8.61032 10.4776 8.46967 10.337C8.32902 10.1963 8.25 10.0056 8.25 9.80664V6.05664C8.25 5.85773 8.32902 5.66696 8.46967 5.52631C8.61032 5.38566 8.80109 5.30664 9 5.30664C9.19891 5.30664 9.38968 5.38566 9.53033 5.52631C9.67098 5.66696 9.75 5.85773 9.75 6.05664V9.80664Z" fill="#03543F" />
-                            </svg>
+                  {save == "saved" ? (
+
+                    <div className='flex w-full h-[102px] pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#e8f6e9] rounded-[8px] mx-auto my-0'>
+                      <div className='flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative'>
+                        <div className='flex flex-col gap-[6px] items-start self-stretch shrink-0 flex-nowrap relative z-[1]'>
+                          <div className='flex gap-[8px] items-center self-stretch shrink-0 flex-nowrap relative z-[2]'>
+                            <div className='w-[18px] h-[18px] shrink-0 relative overflow-hidden z-[3]'>
+                              <div className='w-[15px] h-[15px] bg-no-repeat relative z-[4] mr-0 mb-0 ml-[1.5px]' >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
+                                  <path d="M9 1.55664C7.51664 1.55664 6.06659 1.99651 4.83323 2.82062C3.59986 3.64473 2.63856 4.81607 2.07091 6.18651C1.50325 7.55696 1.35472 9.06496 1.64411 10.5198C1.9335 11.9747 2.64781 13.311 3.6967 14.3599C4.7456 15.4088 6.08197 16.1231 7.53683 16.4125C8.99168 16.7019 10.4997 16.5534 11.8701 15.9857C13.2406 15.4181 14.4119 14.4568 15.236 13.2234C16.0601 11.99 16.5 10.54 16.5 9.05664C16.4978 7.06819 15.7069 5.1618 14.3009 3.75575C12.8948 2.3497 10.9885 1.55882 9 1.55664ZM9 12.8066C8.85167 12.8066 8.70666 12.7627 8.58332 12.6802C8.45999 12.5978 8.36386 12.4807 8.30709 12.3436C8.25033 12.2066 8.23547 12.0558 8.26441 11.9103C8.29335 11.7648 8.36478 11.6312 8.46967 11.5263C8.57456 11.4214 8.7082 11.35 8.85368 11.321C8.99917 11.2921 9.14997 11.307 9.28701 11.3637C9.42406 11.4205 9.54119 11.5166 9.6236 11.64C9.70602 11.7633 9.75 11.9083 9.75 12.0566C9.75 12.2555 9.67098 12.4463 9.53033 12.587C9.38968 12.7276 9.19891 12.8066 9 12.8066ZM9.75 9.80664C9.75 10.0056 9.67098 10.1963 9.53033 10.337C9.38968 10.4776 9.19891 10.5566 9 10.5566C8.80109 10.5566 8.61032 10.4776 8.46967 10.337C8.32902 10.1963 8.25 10.0056 8.25 9.80664V6.05664C8.25 5.85773 8.32902 5.66696 8.46967 5.52631C8.61032 5.38566 8.80109 5.30664 9 5.30664C9.19891 5.30664 9.38968 5.38566 9.53033 5.52631C9.67098 5.66696 9.75 5.85773 9.75 6.05664V9.80664Z" fill="#03543F" />
+                                </svg>
+                              </div>
+                            </div>
+                            <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Rounded'] text-[16px] font-normal leading-[24px] text-[#046c4e] relative text-left whitespace-nowrap z-[5]">
+                              Your photo is being created! This usually takes 5-10 mins the
+                              first time.
+                            </span>
                           </div>
                         </div>
-                        <span className="h-[24px] grow shrink-0 basis-auto font-['SF_Pro_Rounded'] text-[16px] font-normal leading-[24px] text-[#046c4e] relative text-left whitespace-nowrap z-[5]">
-                          Your photo is being created! This usually takes 5-10 mins the
-                          first time.
-                        </span>
+                        <Link to="/app/dashboard" className="w-full">
+                          <button className='w-full flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap rounded-[24px] border-none relative z-[6] pointer'>
+                            <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] justify-between items-center grow shrink-0 basis-0 flex-nowrap bg-[#10741b] rounded-[999px] relative overflow-hidden z-[7]'>
+                              <span className="h-[18px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap z-[8]">
+                                Explore our Dashboard
+                              </span>
+                              <div className='w-[16px] h-[16px] shrink-0 relative overflow-hidden z-[9]'>
+                                <div className='w-[5.333px] h-[9.333px]  bg-no-repeat relative z-10  mr-0 mb-0 ml-[5.334px]'>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                    <path d="M10.2567 7.11996L6.45604 3.56929C6.18738 3.31863 5.76471 3.33196 5.51404 3.60129C5.26271 3.87063 5.27671 4.29263 5.54538 4.54396L9.30604 8.05663L5.54538 11.5693C5.27671 11.8206 5.26204 12.2426 5.51338 12.512C5.64471 12.6526 5.82204 12.7233 6.00071 12.7233C6.16404 12.7233 6.32738 12.664 6.45604 12.544L10.2567 8.99329C10.5214 8.74529 10.6674 8.41329 10.6674 8.05663C10.6674 7.69996 10.5214 7.36796 10.2567 7.11996Z" fill="white" />
+                                  </svg>
+                                </div>
+                              </div>
+                            </div>
+                          </button>
+                        </Link>
                       </div>
                     </div>
-                    <Link to="/app/dashboard" className="w-full">
-                    <button className='w-full flex gap-[8px] justify-center items-center self-stretch shrink-0 flex-nowrap rounded-[24px] border-none relative z-[6] pointer'>
-                      <div className='flex pt-[8px] pr-[12px] pb-[8px] pl-[12px] justify-between items-center grow shrink-0 basis-0 flex-nowrap bg-[#10741b] rounded-[999px] relative overflow-hidden z-[7]'>
-                        <span className="h-[18px] grow shrink-0 basis-auto font-['SF_Pro_Display'] text-[14px] font-medium leading-[17.5px] text-[#fff] relative text-left whitespace-nowrap z-[8]">
-                          Explore our Dashboard
-                        </span>
-                        <div className='w-[16px] h-[16px] shrink-0 relative overflow-hidden z-[9]'>
-                          <div className='w-[5.333px] h-[9.333px]  bg-no-repeat relative z-10  mr-0 mb-0 ml-[5.334px]'>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                              <path d="M10.2567 7.11996L6.45604 3.56929C6.18738 3.31863 5.76471 3.33196 5.51404 3.60129C5.26271 3.87063 5.27671 4.29263 5.54538 4.54396L9.30604 8.05663L5.54538 11.5693C5.27671 11.8206 5.26204 12.2426 5.51338 12.512C5.64471 12.6526 5.82204 12.7233 6.00071 12.7233C6.16404 12.7233 6.32738 12.664 6.45604 12.544L10.2567 8.99329C10.5214 8.74529 10.6674 8.41329 10.6674 8.05663C10.6674 7.69996 10.5214 7.36796 10.2567 7.11996Z" fill="white" />
-                            </svg>
+                  ) : (
+                    <>
+                      {loader == 'yes' ? (
+                        <button style={{ pointerEvents: "unset", opacity: 0.3 }} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' >
+                          <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
+                            <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
+                              <Spinner accessibilityLabel="Small spinner example" size="small" />
+                            </span>
+                          </div>
+                        </button>
+                      ) : (
+                        <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' >
+                          <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
+                            <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
+                              Save
+                            </span>
+                          </div>
+                        </button>
+                      )}
+                      <Link to="/app/dashboard" className="flex justify-center items-end">
+                        <div className='flex w-[134px] justify-center items-end shrink-0 flex-nowrap relative z-[88]'>
+                          <div className='flex w-[134px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[999px] relative overflow-hidden z-[89]'>
+                            <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#4b5059] relative text-left whitespace-nowrap z-[90]">
+                              I’ll do this later
+                            </span>
                           </div>
                         </div>
-                      </div>
-                    </button>
-                    </Link>
-                  </div>
-                </div>
-                ):(
-                  <>
-                {loader=='yes' ? (
-                  <button style={{pointerEvents:"unset",opacity:0.3}} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' >
-                  <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
-                    <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
-                    <Spinner accessibilityLabel="Small spinner example" size="small" />
-                    </span>
-                  </div>
-                </button>
-              ): (
-                <button onClick={handleSave} className='flex w-[82px] justify-center items-end shrink-0 flex-nowrap border-none relative z-[83] pointer' >
-                  <div className='flex w-[82px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[999px] relative overflow-hidden z-[84]'>
-                    <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#fff] relative text-left z-[85]">
-                      Save
-                    </span>
-                  </div>
-                </button>
-                )}
-                <Link to="/app/dashboard" className="flex justify-center items-end">
-                <div className='flex w-[134px] justify-center items-end shrink-0 flex-nowrap relative z-[88]'>
-                  <div className='flex w-[134px] pt-[10px] pr-[18px] pb-[10px] pl-[18px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[999px] relative overflow-hidden z-[89]'>
-                    <span className="h-[24px] shrink-0 basis-auto font-['SF_Pro_Display'] text-[16px] font-medium leading-[24px] text-[#4b5059] relative text-left whitespace-nowrap z-[90]">
-                      I’ll do this later
-                    </span>
-                  </div>
-                </div>
-              </Link>
-              </>
+                      </Link>
+                    </>
+                  )}
+                </>
               )}
-              </>
-              )}
-              
+
             </div>
           </div>
 
