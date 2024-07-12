@@ -12,6 +12,7 @@ from starlette.middleware.cors import CORSMiddleware
 from src.auth.router import router as auth_router
 from src.core.router import router as core_router
 from src.core.utils.hasura_helpers import client
+from src.core.utils.utils import create_or_update_user_stat
 
 SWAP_RESULT_SQS_QUEUE_URL = "https://sqs.us-east-1.amazonaws.com/471112843831/faceswap_result.fifo"
 AI_SERVICE_RESULT_QUEUE_URL = "https://sqs.us-east-1.amazonaws.com/471112843831/ai_service_result.fifo"
@@ -76,6 +77,9 @@ def poll_ai_sqs_queue():
                             "store_product_id": prod_request_object["data"]["product_image_generation_request_by_pk"]["store_product_id"]
                         })
                         print("Rquest updated sucessfully: ", updated_request)
+                        store_id = prod_request_object["data"]["product_image_generation_request_by_pk"]["store_id"]
+                        create_or_update_user_stat(1, None, store_id)
+
                         # # Delete message after processing
                         sqs.delete_message(
                             QueueUrl=AI_SERVICE_RESULT_QUEUE_URL,
@@ -121,6 +125,10 @@ def poll_sqs_queue():
                         updated_request = client.update_vto_request(
                             request_id, json.dumps(result_body))
                         print("Rquest updated sucessfully: ", updated_request)
+                        # create_or_update_user_stat(1, None, store_id)
+                        # store_id = prod_request_object["data"]["product_image_generation_request_by_pk"]["store_id"]
+                        # create_or_update_user_stat(1, None, store_id)
+
                         # Delete message after processing
                         sqs.delete_message(
                             QueueUrl=SWAP_RESULT_SQS_QUEUE_URL,
