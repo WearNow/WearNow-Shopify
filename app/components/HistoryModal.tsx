@@ -251,7 +251,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                 </section>
               </div>
               <footer className="flex flex-col pl-3 pt-6 pb-3 mt-20 text-base font-medium leading-6 max-md:px-5 max-md:mt-10">
-                <button
+                {/* <button
                   className="justify-center py-2.5 pr-4 pl-7 text-white bg-sky-700 border border-sky-700 shadow-sm rounded-[99px] max-md:pr-7 max-md:pl-5"
                   onClick={() => {
                     showNotification({
@@ -262,7 +262,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                   }}
                 >
                   Add to product listing
-                </button>
+                </button> */}
                 <button
                   className="flex gap-1.5 justify-center px-4 py-2.5 mt-3 bg-white border border-gray-300 shadow-sm rounded-[99px] text-slate-700 max-md:px-5"
                   onClick={() => {
