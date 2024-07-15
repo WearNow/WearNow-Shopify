@@ -91,6 +91,7 @@ const DashboardBlock: React.FC<{ session: any, name: string, description: string
           </div>
 
         </Link> */}
+
         {addProduct == "yes" && (
           <div onClick={toggleModal} style={{ cursor: "pointer" }} className='flex w-[147px] h-[40px] pt-[8px] pr-[16px] pb-[8px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[28px] border-solid border border-[#2d9cdb] relative overflow-hidden shadow-[0_2px_5px_0_rgba(60,66,87,0.08)] z-[47] pointer'>
             <span className="h-[20px] shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-normal leading-[20px] text-white tracking-[-0.24px] relative text-left whitespace-nowrap z-20 flex justify-center gap-5">
@@ -103,6 +104,23 @@ const DashboardBlock: React.FC<{ session: any, name: string, description: string
 
             </span>
           </div>
+        )}
+        {addProduct == "no" && (
+
+          <Link to={buttonLink} className='flex w-[147px] h-[40px] pt-[8px] pr-[16px] pb-[8px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap bg-[#047ac6] rounded-[28px] border-solid border border-[#2d9cdb] relative overflow-hidden shadow-[0_2px_5px_0_rgba(60,66,87,0.08)] z-[47] pointer'>
+
+            <span className="flex w-full h-[20px] justify-center items-center shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-semibold leading-[20px] text-[#fff] tracking-[-0.5px] relative text-center whitespace-nowrap z-[48]">
+              {buttonName}
+            </span>
+            <div className='w-[16px] h-[16px] shrink-0 relative z-[49]'>
+              <div className='w-[8.301px] h-[14.6px]  bg-no-repeat relative z-50 mt-[0.7px] mr-0 mb-0 ml-[5px]'>
+                <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M0.293164 2.40888C-0.0977214 2.018 -0.0977214 1.38425 0.293164 0.99336C0.68405 0.602474 1.3178 0.602474 1.70869 0.99336L8.00842 7.29309C8.39894 7.68361 8.39894 8.31678 8.00842 8.7073L1.70869 15.007C1.3178 15.3979 0.68405 15.3979 0.293164 15.007C-0.0977214 14.6161 -0.0977214 13.9824 0.293164 13.5915L5.88448 8.0002L0.293164 2.40888Z" fill="white" />
+                </svg>
+              </div>
+            </div>
+
+          </Link>
         )}
       </div>
     </div>
