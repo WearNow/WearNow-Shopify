@@ -468,10 +468,10 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                         className="shrink-0 my-auto aspect-square w-[18px]"
                       />
                       <div className="flex-1 max-md:max-w-full">
-                        Virtual Try-On is not active on your store
+                        Virtual Try-On experiences will be ready in 24 hours
                       </div>
                     </div>
-                    <div className="flex flex-col justify-center mt-3 text-sm font-medium text-white rounded-3xl border border-sky-600 border-solid max-md:max-w-full">
+                    {/* <div className="flex flex-col justify-center mt-3 text-sm font-medium text-white rounded-3xl border border-sky-600 border-solid max-md:max-w-full">
                       <div className="flex gap-0 justify-between px-3 py-2 border-2 border-solid bg-slate-800 border-slate-800 rounded-[999px] max-md:flex-wrap">
                         <div className="flex-1 max-md:max-w-full">
                           Add our Try-On button to your store
@@ -488,7 +488,7 @@ const FirstHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionD
                           />
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   <div style={{ display: "none" }} className=" flex w-full pt-[16px] pr-[16px] pb-[16px] pl-[16px] gap-[12px] items-center flex-nowrap bg-[#fde8eb] rounded-[8px] relative mx-auto my-0">
                     <div className="flex flex-col gap-[12px] items-start grow shrink-0 basis-0 flex-nowrap relative">

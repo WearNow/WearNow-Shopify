@@ -91,13 +91,13 @@ const DashboardBlock: React.FC<{ session: any, name: string, description: string
           </div>
 
         </Link>
-        {addProduct == "yes" && (
+        {/* {addProduct == "yes" && (
           <div onClick={toggleModal} style={{ cursor: "pointer" }} className='flex w-[126px] h-[40px] pt-[6px] pr-[16px] pb-[6px] pl-[16px] gap-[8px] justify-center items-center shrink-0 flex-nowrap rounded-[4px] relative z-[19]'>
             <span className="h-[20px] shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-normal leading-[20px] text-[#323338] tracking-[-0.24px] relative text-left whitespace-nowrap z-20">
               Add Products
             </span>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )
