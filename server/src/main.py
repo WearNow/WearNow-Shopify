@@ -80,7 +80,12 @@ def poll_ai_sqs_queue():
                                 "store_product_id": prod_request_object["data"]["product_image_generation_request_by_pk"]["store_product_id"]
                             })
                             print("Rquest updated sucessfully: ",
-                                  updated_request)
+                                    updated_request)
+
+                            if prod_request_object["public"]:
+                                store_id = prod_request_object["data"]["product_image_generation_request_by_pk"]["store_id"]
+                                create_or_update_user_stat(1, None, store_id)
+
                         # # Delete message after processing
                         sqs.delete_message(
                             QueueUrl=AI_SERVICE_RESULT_QUEUE_URL,
