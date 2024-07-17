@@ -75,6 +75,7 @@ def poll_ai_sqs_queue():
                                 "generated_image": result_body["results"][0],
                                 "request_id": request_id,
                                 "size": "",
+                                "public": prod_request_object["public"],
                                 "skin_composition": "",
                                 "store_product_id": prod_request_object["data"]["product_image_generation_request_by_pk"]["store_product_id"]
                             })

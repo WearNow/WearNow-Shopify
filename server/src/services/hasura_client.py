@@ -142,6 +142,7 @@ class Client:
                 query get_product_photo_request($uuid:uuid!){
                     product_image_generation_request_by_pk(uuid:$uuid){
                         model_id
+                        public
                         store_product_id
                         store_id
                         
@@ -150,10 +151,10 @@ class Client:
                 """, {"uuid": uuid}
     )
 
-    def create_prod_request(self, store_id, model_id, store_pid, bgid): return self.run_query(
+    def create_prod_request(self, store_id, model_id, store_pid, bgid, public): return self.run_query(
         """
-        mutation insert_product_image_generation_request($store_id: uuid!, $store_product_id: uuid!, $model_id: uuid!, $background_id: uuid!) {
-            insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "PENDING", store_product_id: $store_product_id, model_id: $model_id, background_id: $background_id}) {
+        mutation insert_product_image_generation_request($store_id: uuid!, $store_product_id: uuid!, $model_id: uuid!, $background_id: uuid!, $public: boolean!) {
+            insert_product_image_generation_request_one(object: {store_id: $store_id, generated_count: 0, status: "PENDING", store_product_id: $store_product_id, model_id: $model_id, background_id: $background_id, public: $public}) {
                 uuid
                 status
                 created_at
@@ -175,7 +176,7 @@ class Client:
                 }
             }
         }
-        """, {"store_id": store_id,  "model_id": model_id, "background_id": bgid, "store_product_id": store_pid}
+        """, {"store_id": store_id,  "model_id": model_id, "background_id": bgid, "store_product_id": store_pid, "public": public}
     )
 
     def add_store_products(self, objects): return self.run_query(

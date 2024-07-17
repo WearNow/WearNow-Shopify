@@ -21,8 +21,9 @@ async def handle_single_prod_request(request: Request):
     data = json.loads(body_str)["input"]["input"]
     # store_prod = client.get_store_product(data)
     print("DATA: ", data)
+    public_state = data["public"]
     request_response = client.create_prod_request(
-        data["store_id"], data["model"], data["store_product_id"], data["background"])
+        data["store_id"], data["model"], data["store_product_id"], data["background"], public_state)
     c_uuid = request_response["data"]["insert_product_image_generation_request_one"]["uuid"]
     request_object = request_response["data"]["insert_product_image_generation_request_one"]
     print("request_object: ", request_object)
