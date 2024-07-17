@@ -3,8 +3,15 @@ from fastapi import APIRouter, Request
 from .utils.hasura_helpers import client
 from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput, SingleStoreProductOutput, VTOImageOutPut
 from ..services import SQSHandler
+from .utils.utils import create_or_update_user_stat
 
 router = APIRouter()
+
+
+@router.post("/test-stat-handler", status_code=201)
+async def test_stat_handler(request: Request):
+    store_id = "08f773d8-610a-4e65-b263-10dd1f042d04"
+    create_or_update_user_stat(1, 1, store_id)
 
 
 @router.post("/single-product-image-request", status_code=201)

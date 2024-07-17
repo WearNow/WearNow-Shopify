@@ -17,6 +17,55 @@ class Client:
         assert request.ok, f"Failed with code {request.status_code}"
         return request.json()
 
+    def get_service_usage_activity(self, store_id): return self.run_query(
+        """
+            query get_service_usage_activity($store_id: uuid!){
+                service_usage_activity(where:{
+                    store_id:{
+                        _eq: $store_id
+                    }
+                    }){
+                    uuid
+                    created_at
+                    store_id
+                    product_photos_usage_count
+                    vto_usage_count
+                }
+            }
+        """, {"store_id": store_id}
+    )
+
+    def update_service_usage_activity(self, photo_count, vto_count, store_id, uuid): return self.run_query(
+        """
+                mutation update_service_usage_activity($uuid: uuid!, $photo_count: bigint!, $vto_count: bigint!, $store_id: uuid!) {
+                    update_service_usage_activity_by_pk(pk_columns: {uuid: $uuid}, _set: {product_photos_usage_count: $photo_count, store_id: $store_id, vto_usage_count: $vto_count}) {
+                        created_at
+                        product_photos_usage_count
+                        vto_usage_count
+                    }
+                }
+                """, {
+            "photo_count": photo_count,
+            "vto_count": vto_count,
+            "store_id": store_id,
+            "uuid": uuid
+        }
+    )
+
+    def insert_service_usage_activity(self, photo_count, vto_count, store_id): return self.run_query(
+        """
+                mutation insert_service_usage_activity($photo_count: bigint!, $vto_count: bigint!, $store_id: uuid!) {
+                    insert_service_usage_activity(objects: {product_photos_usage_count: $photo_count, store_id: $store_id, vto_usage_count: $vto_count}) {
+                        affected_rows
+                    }
+                }
+                """, {
+            "photo_count": photo_count,
+            "vto_count": vto_count,
+            "store_id": store_id
+        }
+    )
+
     def get_store_product(self, uuid): return self.run_query(
         """
                     query store_products_by_pk($uuid: uuid!){
@@ -87,17 +136,20 @@ class Client:
                 }
                 """, {"object": _set}
     )
+
     def get_prod_photo_request_obj(self, uuid): return self.run_query(
-                """
+        """
                 query get_product_photo_request($uuid:uuid!){
                     product_image_generation_request_by_pk(uuid:$uuid){
                         model_id
                         store_product_id
+                        store_id
                         
                     }
                 }
                 """, {"uuid": uuid}
     )
+
     def create_prod_request(self, store_id, model_id, store_pid, bgid): return self.run_query(
         """
         mutation insert_product_image_generation_request($store_id: uuid!, $store_product_id: uuid!, $model_id: uuid!, $background_id: uuid!) {
