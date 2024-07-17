@@ -81,7 +81,7 @@ const DashboardBlock: React.FC<{ session: any, name: string, description: string
 
           <span className="flex w-full h-[20px] justify-center items-center shrink-0 basis-auto font-['SF_Pro_Text'] text-[15px] font-semibold leading-[20px] text-[#fff] tracking-[-0.5px] relative text-center whitespace-nowrap z-[48]">
             {buttonName}
-          </span>
+          </span>c
           <div className='w-[16px] h-[16px] shrink-0 relative z-[49]'>
             <div className='w-[8.301px] h-[14.6px]  bg-no-repeat relative z-50 mt-[0.7px] mr-0 mb-0 ml-[5px]'>
               <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">

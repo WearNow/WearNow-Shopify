@@ -15,6 +15,7 @@ import gql from "graphql-tag";
 import SidebarNavigation from "~/components/SidebarNavigation";
 import { Select, Spinner } from '@shopify/polaris';
 import PhotoStudioSkeleten from "~/components/PhotoStudioSkeleten";
+import models_data from './picked-models.json'; // Adjust the path as needed
 
 function shuffle(array: any) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -378,6 +379,7 @@ const PhotoStudio: React.FC = () => {
       }
     }
   }
+
   const handleSave = async () => {
     setLoader("yes");
     let count = 0;
@@ -401,13 +403,12 @@ const PhotoStudio: React.FC = () => {
     } catch (error) {
       //console.error('Error executing mutation:', error);
     }
-    //console.log(active?.product_photo_limit,"count",count);
-    if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
-      const MyMutation = gql`
-    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
+    const MyMutation = gql`
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!, $public: Boolean!){
       generateSingleStoreProduct(input:{
         background:$background,
         model:$model,
+        public: $public,
         pose:$pose,
         store_id:$store_id,
         store_product_id: $productId
@@ -416,6 +417,8 @@ const PhotoStudio: React.FC = () => {
         tracking
       }
     } `;
+    //console.log(active?.product_photo_limit,"count",count);
+    if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
 
       try {
         const result = await client.mutate({
@@ -423,18 +426,45 @@ const PhotoStudio: React.FC = () => {
           variables: {
             background: background,
             model: model,
+            public: true,
             pose: pose,
             store_id: sessionData.authWithShop.store_id,
             productId: checkedProduct
           },
         });
-        setSave("saved");
-        setCurrentStep(9);
         //console.log('Mutation result:', result);
 
       } catch (error) {
         //console.error('Error executing mutation:', error);
       }
+
+      // generate a loop of 20 product images
+      for (let x = 0; x < models_data.length; x++) {
+        const model_obj = models_data[x];
+        try {
+          const result = await client.mutate({
+            mutation: MyMutation,
+            variables: {
+              background: background,
+              model: model_obj.uuid,
+              public: false,
+              pose: pose,
+              store_id: sessionData.authWithShop.store_id,
+              productId: checkedProduct
+            },
+          });
+          // setSave("saved");
+          // setCurrentStep(9);
+          //console.log('Mutation result:', result);
+
+        } catch (error) {
+          //console.error('Error executing mutation:', error);
+        }
+      }
+      // update finalization state
+      setSave("saved");
+      setCurrentStep(9);
+
     }
 
   }

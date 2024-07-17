@@ -3,7 +3,7 @@
 client_id = "765b11ac4e52a762b5e5956b22ca5c3b"
 name = "X-staging-wna"
 handle = "x-staging-wna"
-application_url = "https://tamil-til-davis-watson.trycloudflare.com"
+application_url = "https://annoying-cg-construction-avon.trycloudflare.com"
 embedded = true
 
 [build]
@@ -12,13 +12,13 @@ dev_store_url = "teststorewna.myshopify.com"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_products,read_themes,write_products"
+scopes = "read_product_listings,read_products,read_themes,unauthenticated_read_selling_plans,unauthenticated_write_checkouts,write_checkouts,write_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://tamil-til-davis-watson.trycloudflare.com/auth/callback",
-  "https://tamil-til-davis-watson.trycloudflare.com/auth/shopify/callback",
-  "https://tamil-til-davis-watson.trycloudflare.com/api/auth/callback"
+  "https://annoying-cg-construction-avon.trycloudflare.com/auth/callback",
+  "https://annoying-cg-construction-avon.trycloudflare.com/auth/shopify/callback",
+  "https://annoying-cg-construction-avon.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

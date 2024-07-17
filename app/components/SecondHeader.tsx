@@ -7,6 +7,7 @@ import FadedOnboarding from "./FadedOnboarding";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import { Checkbox, Select, Spinner } from '@shopify/polaris';
+import models_data from '../routes/picked-models.json'; // Adjust the path as needed
 
 const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
 
@@ -375,6 +376,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     }
   };
   const handleSave = async () => {
+    console.log(models_data)
+    console.log("reached save state")
     setLoader("yes");
     let count = 0;
     const query = gql`query MyQuery7 ($storeID:uuid!) {
@@ -397,13 +400,14 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     } catch (error) {
       console.error('Error executing mutation:', error);
     }
-    if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
-      const MyMutation = gql`
-    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!){
+
+    const MyMutation = gql`
+    mutation MyMutation($background: String!, $model: String!, $pose: String!, $store_id: String!, $productId: String!, $public: Boolean!){
       generateSingleStoreProduct(input:{
         background:$background,
         model:$model,
         pose:$pose,
+        public: $public,
         store_id:$store_id,
         store_product_id: $productId
       }){
@@ -412,6 +416,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       }
     } `;
 
+    if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
+      // generate single product picture or public view
       try {
         const result = await client.mutate({
           mutation: MyMutation,
@@ -419,16 +425,44 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
             background: background,
             model: model,
             pose: pose,
+            public: true,
             store_id: sessionData.authWithShop.store_id,
             productId: checkedProduct
           },
         });
-        setSave("saved");
         console.log('Mutation result:', result);
 
       } catch (error) {
         console.error('Error executing mutation:', error);
       }
+
+      // generate a loop of 24 product images
+      for (let x = 0; x < models_data.length; x++) {
+        const model_obj = models_data[x];
+
+
+
+        try {
+          const result = await client.mutate({
+            mutation: MyMutation,
+            variables: {
+              background: background,
+              model: model_obj.uuid,
+              pose: pose,
+              public: false,
+              store_id: sessionData.authWithShop.store_id,
+              productId: checkedProduct
+            },
+          });
+          console.log('Mutation result:', result);
+
+        } catch (error) {
+          console.error('Error executing mutation:', error);
+        }
+      }
+      // TODO: handle state finalization and cleanup
+      setSave("saved");
+
     }
 
   }

@@ -21,10 +21,11 @@ export const fetchHistoryData = async (store_id: string) => {
   return await client
     .query({
       query: gql`query MyQuery($store_id:uuid){
-          product_photo_history(where: {request: {store_id: {_eq: $store_id}}}) {
+          product_photo_history(where: {request: {store_id: {_eq: $store_id}, public: {_eq: true}}}) {
             generated_image
             created_at
             uuid
+            public
             store_product {
               images
               product_id
@@ -87,7 +88,8 @@ export const fetchHistoryQueueData = async (store_id: string) => {
   return await client
     .query({
       query: gql`query MyQuery($store_id:uuid){
-        product_image_generation_request(where: {store_id: {_eq: $store_id}, status: {_eq: "PENDING"}}) {
+        product_image_generation_request(where: {store_id: {_eq: $store_id}, status: {_eq: "PENDING"}, public: {_eq: true}}) {
+          public
           store_product {
             title
             variant_id
