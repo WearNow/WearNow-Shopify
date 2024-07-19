@@ -66,13 +66,13 @@ return nn;
     return nn;
     }
     // Call the async function and handle the result 
-    (async () => {
-        try {
-          await extpopup();
-        } catch (error) {
-          console.error('Error:', error); // Handle any errors here
-        }
-      })();
+    // (async () => {
+    //     try {
+    //       await extpopup();
+    //     } catch (error) {
+    //       console.error('Error:', error); // Handle any errors here
+    //     }
+    //   })();
   
 themeAiModel.addEventListener("click", function(){
     modelContainer.style.display = "block";

@@ -220,13 +220,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           auth_session = result?.data.session[0] ?? result?.data.session;
           console.log(result.data.session, "apollo client");
         });
+        let extresult;
         if(!auth_session?.store?.extension_enabled) {
           const MUTATION12 = gql`mutation MyMutation12($storeid:uuid) {
             update_stores(where: {uuid: {_eq: $storeid}}, _set: {extension_enabled: true}) {
               affected_rows
             }
           }`;
-          const result = await client.mutate({
+           extresult = await client.mutate({
             mutation: MUTATION12,
             fetchPolicy: "network-only",
             variables: {
@@ -234,6 +235,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
             },
           });
         }
+        return cors(
+          request,
+          json({
+            success: true,
+            message: "Selected VTO products fetched successfully",
+            response: extresult,
+          })
+        );
       break;
     case "checkModels":
       let variant_id = body.get('variantID');
