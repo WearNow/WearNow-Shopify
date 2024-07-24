@@ -82,7 +82,7 @@ def poll_ai_sqs_queue():
                             print("Rquest updated sucessfully: ",
                                     updated_request)
 
-                            if prod_request_object["public"]:
+                            if prod_request_object["data"]["product_image_generation_request_by_pk"]["public"]:
                                 store_id = prod_request_object["data"]["product_image_generation_request_by_pk"]["store_id"]
                                 create_or_update_user_stat(1, None, store_id)
 
