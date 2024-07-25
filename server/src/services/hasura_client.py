@@ -110,6 +110,10 @@ class Client:
                         image
                     }
                     model{
+                        skin_composition
+                        size
+                        gender
+                        name
                         cover_image
                         mask_image
                     }

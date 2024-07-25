@@ -36,12 +36,15 @@ async def handle_single_prod_request(request: Request):
     store_product_image = json.loads(request_object["store_product"]["images"].replace(
         "'", '"'))[0]["url"] if request_object["store_product"] else empty_placeholder_store_prod
     model_image = request_object["model"]["cover_image"] if request_object["model"] else ""
+    model_image = request_object["model"]["cover_image"] if request_object["model"] else ""
     mask_image = request_object["model"]["mask_image"] if request_object["model"] else ""
+    mask_background = request_object["background"]["image"] if request_object["background"] else ""
 
     garment_object = {
         "model_image": model_image,
         "garment_image": store_product_image,
         "mask_image": mask_image,
+        "background_image": mask_background,
         "garment_type": "upper_clothing"
     }
     sqs_handler = SQSHandler(garment_object=garment_object, request_type="garment",
