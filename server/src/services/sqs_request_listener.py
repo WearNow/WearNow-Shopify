@@ -46,7 +46,8 @@ class SQSHandler:
             "model_image": self.garment_object["model_image"],
             "mask_image": self.garment_object["mask_image"],
             "garment_image": self.garment_object["garment_image"],
-            "garment_type": self.garment_object["garment_type"]
+            "garment_type": self.garment_object["garment_type"],
+            "background_image": self.garment_object["background_image"]
         }
 
     def format_message_attributes(self, obj):
