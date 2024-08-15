@@ -441,7 +441,7 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         const model_obj = models_data[x];
 
 
-
+        console.log("model_obj: ", model_obj.skin_composition)
         try {
           const result = await client.mutate({
             mutation: MyMutation,
@@ -460,6 +460,29 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
           console.error('Error executing mutation:', error);
         }
       }
+
+      // send email for admin
+      try {
+        fetch(`http://wearnowcorebackendservicealb-1803009701.us-east-1.elb.amazonaws.com/api/send-sns-message`, {
+          method: "POST",
+          body: JSON.stringify(
+            {
+              "data": {
+                "subject": "New Store product photos uploaded",
+                "message": `Approve or regenerate here https://wearnow.retool.com/apps/7e73c1b2-53be-11ef-bed8-57d60d3a2c4d/Internal%20Pre-Gen%20Approval#${sessionData.authWithShop.store_id}`
+              }
+            }
+          )
+        })
+          .then((response) => response.json())
+          .then((result) => console.log(result.shop.plan_name, "data returned"))
+          .catch((error) => console.error(error));
+
+
+      } catch (error) {
+        console.log("Error: ", error)
+      }
+
       // TODO: handle state finalization and cleanup
       setSave("saved");
 
