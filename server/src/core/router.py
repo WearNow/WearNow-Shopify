@@ -4,6 +4,7 @@ from .utils.hasura_helpers import client
 from .schemas import StoreProductsOnboardingResponse, StoreProductsOnboardingInput, SingleStoreProductOutput, VTOImageOutPut
 from ..services import SQSHandler
 from .utils.utils import create_or_update_user_stat
+from .utils.sns import send_sns_message
 
 router = APIRouter()
 
@@ -55,6 +56,18 @@ async def handle_single_prod_request(request: Request):
     print("response: ", response)
     # print("store prod", store_prod)
     return SingleStoreProductOutput(tracking=c_uuid, success=True)
+
+
+@router.post("/send-sns-message", status_code=201)
+async def trigger_send_sns_message(request: Request):
+    body = await request.body()
+    body_str = body.decode()
+    data = json.loads(body_str)["data"]
+    subject = data["subject"]
+    message = data["message"]
+    send_sns_message(subject, message)
+    print("Data: ", data)
+    return {}
 
 
 @router.post("/single-vto-request", status_code=201)
