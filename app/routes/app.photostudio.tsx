@@ -417,6 +417,13 @@ const PhotoStudio: React.FC = () => {
         tracking
       }
     } `;
+    const SEND_SNS_QUERY = gql`mutation sendSnsMessage($message:String!, $subject: String!){
+      sendSnsMessage(input: {
+        message: $message
+        subject: $subject
+      })
+    }
+    `
     //console.log(active?.product_photo_limit,"count",count);
     if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
 
@@ -464,25 +471,20 @@ const PhotoStudio: React.FC = () => {
 
       // send email for admin
       try {
-        fetch(`http://wearnowcorebackendservicealb-1803009701.us-east-1.elb.amazonaws.com/api/send-sns-message`, {
-          method: "POST",
-          body: JSON.stringify(
-            {
-              "data": {
-                "subject": "New Store product photos uploaded",
-                "message": `Approve or regenerate here https://wearnow.retool.com/apps/7e73c1b2-53be-11ef-bed8-57d60d3a2c4d/Internal%20Pre-Gen%20Approval#${sessionData.authWithShop.store_id}`
-              }
-            }
-          )
-        })
-          .then((response) => response.json())
-          .then((result) => console.log(result.shop.plan_name, "data returned"))
-          .catch((error) => console.error(error));
-
+        const result = await client.mutate({
+          mutation: SEND_SNS_QUERY,
+          variables: {
+            "message": "New Store product photos uploaded",
+            "subject": `Approve or regenerate here https://wearnow.retool.com/apps/7e73c1b2-53be-11ef-bed8-57d60d3a2c4d/Internal%20Pre-Gen%20Approval#${sessionData.authWithShop.store_id}`
+          },
+        });
+        console.log('Mutation result:', result);
 
       } catch (error) {
-        console.log("Error: ", error)
+        console.error('Error executing mutation:', error);
       }
+
+
       // update finalization state
       setSave("saved");
       setCurrentStep(9);
