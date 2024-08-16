@@ -67,7 +67,7 @@ async def trigger_send_sns_message(request: Request):
     # data = json.loads(body_str)["data"]
     subject = data["subject"]
     message = data["message"]
-    send_sns_message(subject, message)
+    send_sns_message(message, subject)
     print("Data: ", data)
     return True
 

@@ -19,7 +19,7 @@ def send_sns_message(subject, message):
     #     Protocol='email',
     #     Endpoint='bdere12345@gmail.com',
     # )
-
+    print(subject, ">>", message)
     # Send a message
     response = sns_client.publish(
         TopicArn=topic_arn,
