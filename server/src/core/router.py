@@ -62,12 +62,14 @@ async def handle_single_prod_request(request: Request):
 async def trigger_send_sns_message(request: Request):
     body = await request.body()
     body_str = body.decode()
-    data = json.loads(body_str)["data"]
+    data = json.loads(body_str)["input"]["input"]
+    print(data, ": DATA")
+    # data = json.loads(body_str)["data"]
     subject = data["subject"]
     message = data["message"]
     send_sns_message(subject, message)
     print("Data: ", data)
-    return {}
+    return True
 
 
 @router.post("/single-vto-request", status_code=201)
