@@ -38,7 +38,8 @@ async def handle_single_prod_request(request: Request):
         "'", '"'))[0]["url"] if request_object["store_product"] else empty_placeholder_store_prod
     model_image = request_object["model"]["cover_image"] if request_object["model"] else ""
     model_image = request_object["model"]["cover_image"] if request_object["model"] else ""
-    mask_image = request_object["model"]["mask_image"] if request_object["model"] else ""
+    # mask_image = request_object["model"]["mask_image"] if request_object["model"] else ""
+    mask_image = request_object["model"]["lower_mask"] if request_object["model"] else ""
     mask_background = request_object["background"]["image"] if request_object["background"] else ""
 
     garment_object = {

@@ -172,6 +172,8 @@ class Client:
                 model {
                     name
                     mask_image
+                    lower_mask
+                    upper_mask
                     cover_image
                     skin_composition
                 }
