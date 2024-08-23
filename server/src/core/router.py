@@ -46,7 +46,7 @@ async def handle_single_prod_request(request: Request):
         "model_image": model_image,
         "garment_image": store_product_image,
         "mask_image": mask_image,
-        "background_image": mask_background,
+        "background_image": "",
         "garment_type": "upper_clothing"
     }
     sqs_handler = SQSHandler(garment_object=garment_object, request_type="garment",
