@@ -1,94 +1,115 @@
-
-      <div class="model_container"style="display:none;">
-        <div class="wna_close_model_out_side">clsoe model</div>
-          <div class="model_row">
-              <div class="model_col">
-                  <div class="model_img_conten">
-                      <img height="100%" width="100%" src="{{ "newmodel1.png" | asset_img_url: '' }}" alt="" class="model_img">
-                      <img height="100%" width="100%" src="{{ "power_by_wna.png" | asset_img_url: '' }}" alt="" class="model_power_by">
-                      <div class="close_btn_model_content">
-                          <svg class="close_btn_model" xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                              viewBox="0 0 12 12" fill="none">
-                              <path
-                                  d="M0.323144 11.677C0.462882 11.8167 0.628821 11.9127 0.820961 11.9651C1.01892 12.0116 1.21397 12.0116 1.40611 11.9651C1.60408 11.9127 1.77293 11.8196 1.91266 11.6857L6 7.59112L10.0961 11.677C10.2358 11.8225 10.3988 11.9185 10.5852 11.9651C10.7773 12.0116 10.9694 12.0116 11.1616 11.9651C11.3595 11.9127 11.5284 11.8138 11.6681 11.6682C11.8195 11.5286 11.9185 11.3627 11.9651 11.1706C12.0116 10.9727 12.0116 10.7777 11.9651 10.5857C11.9185 10.3936 11.8224 10.2277 11.6769 10.088L7.59825 5.99345L11.6769 1.9076C11.8224 1.76792 11.9185 1.60204 11.9651 1.40997C12.0116 1.2179 12.0116 1.02583 11.9651 0.833758C11.9185 0.635868 11.8195 0.467079 11.6681 0.327392C11.5284 0.181884 11.3595 0.0858494 11.1616 0.039287C10.9694 -0.0130957 10.7773 -0.0130957 10.5852 0.039287C10.3988 0.0858494 10.2358 0.178974 10.0961 0.318661L6 4.40451L1.91266 0.309931C1.77293 0.176064 1.60408 0.0858494 1.40611 0.039287C1.21397 -0.0130957 1.01892 -0.0130957 0.820961 0.039287C0.628821 0.0858494 0.462882 0.178974 0.323144 0.318661C0.177584 0.464169 0.0815138 0.635868 0.0349345 0.833758C-0.0116448 1.02583 -0.0116448 1.2179 0.0349345 1.40997C0.0815138 1.60204 0.174672 1.76792 0.31441 1.9076L4.41048 5.99345L0.31441 10.088C0.174672 10.2277 0.0815138 10.3936 0.0349345 10.5857C-0.0116448 10.7777 -0.0116448 10.9727 0.0349345 11.1706C0.0815138 11.3627 0.177584 11.5315 0.323144 11.677Z"
-                                  fill="#8E8E93" />
-                          </svg>
-                      </div>
-                  </div>
-                  <div class="select_gender">
-                      <h2 class="gender_title">Select your gender </h2>
-                      <div class="gender_btn">
-                          <button class="female_btn active">Female</button>
-                          <button class="male_btn">Male</button>
-                      </div>
-                  </div>
-                  <div class="select_skin_comosition">
-                      <h2 class="select_skin_title">Select your skin composition: <b class="wna_selected_color">Dark</b></h2>
-                      <div class="select_skin_comosition_img select_skin_color">
-                          <div class="select_skin_comosition_img_item active" color_title="Dark">
-                              <img height="100%" width="100%" src="{{ "Avatar1.png" | asset_img_url: '' }}" alt="">
-                              {% comment %} <span class="select_skin_comosition_img_title">Dark</span> {% endcomment %}
-                          </div>
-                          <div class="select_skin_comosition_img_item" color_title="Brown">
-                              <img height="100%" width="100%" src="{{ "Avatar2.png" | asset_img_url: '' }}" alt="">
-                              {% comment %} <span class="select_skin_comosition_img_title">Brown</span> {% endcomment %}
-                          </div>
-                          <div class="select_skin_comosition_img_item" color_title="Fair">
-                              <img height="100%" width="100%" src="{{ "Avatar3.png" | asset_img_url: '' }}" alt="">
-                              {% comment %} <span class="select_skin_comosition_img_title">Fair</span> {% endcomment %}
-                          </div>
-                          <div class="select_skin_comosition_img_item" color_title="White">
-                              <img height="100%" width="100%" src="{{ "Avatar5.png" | asset_img_url: '' }}" alt="">
-                              {% comment %} <span class="select_skin_comosition_img_title">White</span> {% endcomment %}
-                          </div>
-                      </div>
-                  </div>
-                  <div class="select_skin_comosition">
-                      <h2 class="select_skin_title">Select your usual size: <b class="wna_selected_size">S</b></h2>
-                      <div class="select_skin_comosition_img select_skin_size">
-                          <div class="select_skin_comosition_img_item active" size_title="S">
-                              {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
-                              <span class="select_skin_comosition_img_title">S</span>
-                          </div>
-                          <div class="select_skin_comosition_img_item" size_title="M">
-                              {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
-                              <span class="select_skin_comosition_img_title">M</span>
-                          </div>
-                          <div class="select_skin_comosition_img_item" size_title="L">
-                              {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
-                              <span class="select_skin_comosition_img_title">L</span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="footer_model">
-                      <div class="footer_content_model">
-                          <button class="customise_try_on_btn">
-                              Customise Try-On
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
-                                  fill="none">
-                                  <path
-                                      d="M10.2562 7.06305L6.45555 3.51238C6.18689 3.26171 5.76422 3.27504 5.51356 3.54438C5.26222 3.81371 5.27622 4.23571 5.54489 4.48704L9.30556 7.99971L5.54489 11.5124C5.27622 11.7637 5.26156 12.1857 5.51289 12.455C5.64422 12.5957 5.82156 12.6664 6.00022 12.6664C6.16356 12.6664 6.32689 12.607 6.45555 12.487L10.2562 8.93638C10.5209 8.68838 10.6669 8.35638 10.6669 7.99971C10.6669 7.64304 10.5209 7.31105 10.2562 7.06305Z"
-                                      fill="#047AC6" />
-                              </svg>
-                          </button>
-                          <form method="post" action="/cart/add">
-                            <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
-                            {% comment %} <input min="1" type="number" id="quantity" name="quantity" value="1"/> {% endcomment %}
-                            <button type="submit" class="add_to_cart_btn">
-                              Add to cart
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
-                                  fill="none">
-                                  <path
-                                      d="M10.2562 7.06305L6.45555 3.51238C6.18689 3.26171 5.76422 3.27504 5.51356 3.54438C5.26222 3.81371 5.27622 4.23571 5.54489 4.48704L9.30556 7.99971L5.54489 11.5124C5.27622 11.7637 5.26156 12.1857 5.51289 12.455C5.64422 12.5957 5.82156 12.6664 6.00022 12.6664C6.16356 12.6664 6.32689 12.607 6.45555 12.487L10.2562 8.93638C10.5209 8.68838 10.6669 8.35638 10.6669 7.99971C10.6669 7.64304 10.5209 7.31105 10.2562 7.06305Z"
-                                      fill="white" />
-                              </svg>
-                          </button>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div>
+<div class="model_container" style="display:none;">
+  <div class="wna_close_model_out_side">clsoe model</div>
+  <div class="model_row">
+    <div class="model_col">
+      <div class="model_img_conten">
+        <img height="100%" width="100%" src="{{ "newmodel1.png" | asset_img_url: '' }}" alt="" class="model_img">
+        <img
+          height="100%"
+          width="100%"
+          src="{{ "power_by_wna.png" | asset_img_url: '' }}"
+          alt=""
+          class="model_power_by"
+        >
+        <div class="close_btn_model_content">
+          <svg
+            class="close_btn_model"
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+          >
+            <path
+                d="M0.323144 11.677C0.462882 11.8167 0.628821 11.9127 0.820961 11.9651C1.01892 12.0116 1.21397 12.0116 1.40611 11.9651C1.60408 11.9127 1.77293 11.8196 1.91266 11.6857L6 7.59112L10.0961 11.677C10.2358 11.8225 10.3988 11.9185 10.5852 11.9651C10.7773 12.0116 10.9694 12.0116 11.1616 11.9651C11.3595 11.9127 11.5284 11.8138 11.6681 11.6682C11.8195 11.5286 11.9185 11.3627 11.9651 11.1706C12.0116 10.9727 12.0116 10.7777 11.9651 10.5857C11.9185 10.3936 11.8224 10.2277 11.6769 10.088L7.59825 5.99345L11.6769 1.9076C11.8224 1.76792 11.9185 1.60204 11.9651 1.40997C12.0116 1.2179 12.0116 1.02583 11.9651 0.833758C11.9185 0.635868 11.8195 0.467079 11.6681 0.327392C11.5284 0.181884 11.3595 0.0858494 11.1616 0.039287C10.9694 -0.0130957 10.7773 -0.0130957 10.5852 0.039287C10.3988 0.0858494 10.2358 0.178974 10.0961 0.318661L6 4.40451L1.91266 0.309931C1.77293 0.176064 1.60408 0.0858494 1.40611 0.039287C1.21397 -0.0130957 1.01892 -0.0130957 0.820961 0.039287C0.628821 0.0858494 0.462882 0.178974 0.323144 0.318661C0.177584 0.464169 0.0815138 0.635868 0.0349345 0.833758C-0.0116448 1.02583 -0.0116448 1.2179 0.0349345 1.40997C0.0815138 1.60204 0.174672 1.76792 0.31441 1.9076L4.41048 5.99345L0.31441 10.088C0.174672 10.2277 0.0815138 10.3936 0.0349345 10.5857C-0.0116448 10.7777 -0.0116448 10.9727 0.0349345 11.1706C0.0815138 11.3627 0.177584 11.5315 0.323144 11.677Z"
+                fill="#8E8E93" />
+          </svg>
+        </div>
       </div>
+      <div class="select_gender">
+        <h2 class="gender_title">Select your gender UPDATE</h2>
+        <div class="gender_btn">
+          <button class="female_btn active">Female</button>
+          <button class="male_btn">Male</button>
+        </div>
+      </div>
+      <div class="select_skin_comosition">
+        <h2 class="select_skin_title pb-1">Select your skin composition: <b class="wna_selected_color">Dark</b></h2>
+        <div class="select_skin_comosition_img select_skin_color">
+          <div class="select_skin_comosition_img_item active" color_title="Dark">
+            <img height="100%" width="100%" src="{{ "Avatar1.png" | asset_img_url: '' }}" alt="">
+            {% comment %} <span class="select_skin_comosition_img_title">Dark</span> {% endcomment %}
+          </div>
+          <div class="select_skin_comosition_img_item" color_title="Brown">
+            <img height="100%" width="100%" src="{{ "Avatar2.png" | asset_img_url: '' }}" alt="">
+            {% comment %} <span class="select_skin_comosition_img_title">Brown</span> {% endcomment %}
+          </div>
+          <div class="select_skin_comosition_img_item" color_title="Fair">
+            <img height="100%" width="100%" src="{{ "Avatar3.png" | asset_img_url: '' }}" alt="">
+            {% comment %} <span class="select_skin_comosition_img_title">Fair</span> {% endcomment %}
+          </div>
+          <div class="select_skin_comosition_img_item" color_title="White">
+            <img height="100%" width="100%" src="{{ "Avatar5.png" | asset_img_url: '' }}" alt="">
+            {% comment %} <span class="select_skin_comosition_img_title">White</span> {% endcomment %}
+          </div>
+        </div>
+      </div>
+      <div class="select_skin_comosition">
+        <h2 class="select_skin_title pb-1">Select your usual size: <b class="wna_selected_size">S</b></h2>
+        <div class="select_skin_comosition_img select_skin_size">
+          <div class="select_skin_comosition_img_item active" size_title="S">
+            {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
+            <span class="select_skin_comosition_img_title">S</span>
+          </div>
+          <div class="select_skin_comosition_img_item" size_title="M">
+            {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
+            <span class="select_skin_comosition_img_title">M</span>
+          </div>
+          <div class="select_skin_comosition_img_item" size_title="L">
+            {% comment %} <img height="100%" width="100%" src="{{ "Avatarsize.png" | asset_img_url: '' }}" alt=""> {% endcomment %}
+            <span class="select_skin_comosition_img_title">L</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer_model">
+        <div class="footer_content_model">
+          <button class="customise_try_on_btn">
+            Customise Try-On
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                  d="M10.2562 7.06305L6.45555 3.51238C6.18689 3.26171 5.76422 3.27504 5.51356 3.54438C5.26222 3.81371 5.27622 4.23571 5.54489 4.48704L9.30556 7.99971L5.54489 11.5124C5.27622 11.7637 5.26156 12.1857 5.51289 12.455C5.64422 12.5957 5.82156 12.6664 6.00022 12.6664C6.16356 12.6664 6.32689 12.607 6.45555 12.487L10.2562 8.93638C10.5209 8.68838 10.6669 8.35638 10.6669 7.99971C10.6669 7.64304 10.5209 7.31105 10.2562 7.06305Z"
+                  fill="#047AC6" />
+            </svg>
+          </button>
+          <form method="post" action="/cart/add">
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            {% comment %} <input min="1" type="number" id="quantity" name="quantity" value="1"/> {% endcomment %}
+            <button type="submit" class="add_to_cart_btn">
+              Add to cart
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                    d="M10.2562 7.06305L6.45555 3.51238C6.18689 3.26171 5.76422 3.27504 5.51356 3.54438C5.26222 3.81371 5.27622 4.23571 5.54489 4.48704L9.30556 7.99971L5.54489 11.5124C5.27622 11.7637 5.26156 12.1857 5.51289 12.455C5.64422 12.5957 5.82156 12.6664 6.00022 12.6664C6.16356 12.6664 6.32689 12.607 6.45555 12.487L10.2562 8.93638C10.5209 8.68838 10.6669 8.35638 10.6669 7.99971C10.6669 7.64304 10.5209 7.31105 10.2562 7.06305Z"
+                    fill="white" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 var api_URL=`https://shopapp.wearnow.ai/`;
 let color="Dark";
@@ -103,6 +124,14 @@ var select_skin_comosition_img_item_color = document.querySelectorAll(".select_s
         color=color_title;
         console.log(photoData,color,size,gender);
     document.querySelector(".wna_selected_color").innerHTML=color_title;
+    console.log(photoData)
+    // filter by skin tone
+    const skinToneFilter = filterBySkinTone(photoData,color_title)
+    const randomModel = Math.floor(Math.random() * skinToneFilter.length);
+    console.log("skinToneFilter: ", skinToneFilter[randomModel])
+    console.log("generated image: ", skinToneFilter[randomModel].generated_image)
+    const generated_image = skinToneFilter[randomModel].generated_image;
+    document.getElementsByClassName("model_img").src=generated_image
     getImageVTO(photoData,color,size,gender)
     select_skin_comosition_img_item_color.forEach(function(item) {
       item.classList.remove("active");
@@ -141,9 +170,37 @@ gender_btn.forEach(function(button) {
         getImageVTO(photoData,color,size,gender)
     });
 });
+
+function filterBySkinTone(data, skinTone) {
+  // Define a mapping of skin tones to model names
+  const skinToneToModelName = {
+    "Dark": "BLK Female",
+    "Brown": "EA Male",
+    "Fair": "SA Male",
+    "White": "SA Female",
+    // Add more mappings as needed
+  };
+
+  // Get the corresponding model name based on the provided skin tone
+  const modelName = skinToneToModelName[skinTone];
+
+  // Check if a valid model name was found for the given skin tone
+  if (!modelName) {
+    console.error(`No model found for the given skin tone: ${skinTone}`);
+    return [];
+  }
+
+  // Filter the data to find matches based on the model name
+  const filteredData = data.filter(item =>
+    item.request?.model?.name === modelName
+  );
+
+  return filteredData;
+}
+
 async function fetchModels(){
     const currentId = {{product.variants.first.id}}
-        const queryfor = "checkModels";
+        const queryfor = "getModelsHistorySet";
         const formdata = new FormData();
         formdata.append("queryfor", queryfor); 
         formdata.append("shop", "shopName");
