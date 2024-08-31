@@ -7,7 +7,7 @@ import FadedOnboarding from "./FadedOnboarding";
 import client from "../services/ApolloClient";
 import gql from "graphql-tag";
 import { Checkbox, Select, Spinner } from '@shopify/polaris';
-import models_data from '../routes/picked-models.json'; // Adjust the path as needed
+// import models_data from '../routes/picked-models.json'; // Adjust the path as needed
 
 const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ sessionData, onActivate }) => {
 
@@ -376,7 +376,6 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
     }
   };
   const handleSave = async () => {
-    console.log(models_data)
     console.log("reached save state")
     setLoader("yes");
     let count = 0;
@@ -422,6 +421,298 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       })
     }
     `
+    const DEFAULT_MODELS = [
+      {
+        "name": "BLK Female",
+        "size": "Small",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:44.434265+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/F_BLK_Small2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_full_dresses_F_BLK_Small2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_lower_F_BLK_Small2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_upper_F_BLK_Small2_Full.jpg\n",
+        "skin_composition": "BLK Female",
+        "uuid": "37ad1dbf-f846-4403-a8e6-87834f576d36"
+      },
+      {
+        "name": "BLK Female",
+        "size": "Small",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:45.334279+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/F_BLK_Small1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_full_dresses_F_BLK_Small1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_lower_F_BLK_Small1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_upper_F_BLK_Small1_Full.jpg\n",
+        "skin_composition": "BLK Female",
+        "uuid": "9b18b6a3-c115-4ee9-b9eb-8011cdba5714"
+      },
+      {
+        "name": "BLK Female",
+        "size": "Medium",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:42.070433+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/F_BLK_Med3_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_full_dresses_F_BLK_Med3_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_lower_F_BLK_Med3_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_upper_F_BLK_Med3_Full.jpg\n",
+        "skin_composition": "BLK Female",
+        "uuid": "9b7a545a-fde7-4926-b029-0039d78272f9"
+      },
+      {
+        "name": "BLK Female",
+        "size": "Medium",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:41.262308+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/F_BLK_Med1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_full_dresses_F_BLK_Med1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_lower_F_BLK_Med1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_upper_F_BLK_Med1_Full.jpg\n",
+        "skin_composition": "BLK Female",
+        "uuid": "d9c3be13-069c-4642-b736-37d04f7d3424"
+      },
+      {
+        "name": "BLK Female",
+        "size": "Large",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:36.860391+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/F_BLK_Lg2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_full_dresses_F_BLK_Lg2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_lower_F_BLK_Lg2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_upper_F_BLK_Lg2_Full.jpg\n",
+        "skin_composition": "BLK Female",
+        "uuid": "5d65b27a-4766-4fdd-8175-0b6304d638bd"
+      },
+      {
+        "name": "BLK Female",
+        "size": "Large",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:34.680264+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/F_BLK_Lg1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_full_dresses_F_BLK_Lg1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_lower_F_BLK_Lg1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_upper_F_BLK_Lg1_Full.jpg\n",
+        "skin_composition": "BLK Female",
+        "uuid": "3fb2407f-fc21-4042-9190-df2b087aad08"
+      },
+      {
+        "name": "EA Male",
+        "size": "Small",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:01.69554+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/M_EA_Small1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_full_dresses_M_EA_Small1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_lower_M_EA_Small1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_upper_M_EA_Small1_Full.jpg\n",
+        "skin_composition": "EA Male",
+        "uuid": "3c5ce263-c657-49b5-b98b-2ea953bdf109"
+      },
+      {
+        "name": "EA Male",
+        "size": "Small",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:00.893482+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/M_EA_Small2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_full_dresses_M_EA_Small2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_lower_M_EA_Small2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_upper_M_EA_Small2_Full.jpg\n",
+        "skin_composition": "EA Male",
+        "uuid": "d3376721-5c92-4c80-9664-016c6afa6c90"
+      },
+      {
+        "name": "EA Male",
+        "size": "Medium",
+        "gender": "male",
+        "created_at": "2024-07-23T10:50:59.068302+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/M_EA_Med1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_full_dresses_M_EA_Med1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_lower_M_EA_Med1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_upper_M_EA_Med1_Full.jpg\n",
+        "skin_composition": "EA Male",
+        "uuid": "d408a80b-8af5-4852-a524-a3adcffa0e60"
+      },
+      {
+        "name": "EA Male",
+        "size": "Medium",
+        "gender": "male",
+        "created_at": "2024-07-23T10:50:58.246389+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/M_EA_Med2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_full_dresses_M_EA_Med2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_lower_M_EA_Med2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_upper_M_EA_Med2_Full.jpg\n",
+        "skin_composition": "EA Male",
+        "uuid": "0e3d19da-0ca2-4365-bb09-c49f7ac32320"
+      },
+      {
+        "name": "EA Male",
+        "size": "Large",
+        "gender": "male",
+        "created_at": "2024-07-23T10:50:56.62594+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/M_EA_Lg1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_full_dresses_M_EA_Lg1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_lower_M_EA_Lg1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_upper_M_EA_Lg1_Full.jpg\n",
+        "skin_composition": "EA Male",
+        "uuid": "a2b51c8d-0b80-45a6-98b0-694a4b5b83ef"
+      },
+      {
+        "name": "EA Male",
+        "size": "Large",
+        "gender": "male",
+        "created_at": "2024-07-23T10:50:55.0381+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/M_EA_Lg3_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_full_dresses_M_EA_Lg3_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_lower_M_EA_Lg3_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_upper_M_EA_Lg3_Full.jpg\n",
+        "skin_composition": "EA Male",
+        "uuid": "7f99b473-a8aa-4cf4-9e7a-6594e37a9070"
+      },
+      {
+        "name": "SA Male",
+        "size": "Small",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:31.805287+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/M_SA_Small1_Lower.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_full_dresses_M_SA_Small1_Lower.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_lower_M_SA_Small1_Lower.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_upper_M_SA_Small1_Lower.jpg\n",
+        "skin_composition": "SA Male",
+        "uuid": "98bdc400-c292-4bce-9533-0a54689b85d7"
+      },
+      {
+        "name": "SA Male",
+        "size": "Small",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:33.788322+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/M_SA_Small2_Lower.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_full_dresses_M_SA_Small2_Lower.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_lower_M_SA_Small2_Lower.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_upper_M_SA_Small2_Full.jpg\n",
+        "skin_composition": "SA Male",
+        "uuid": "48909ba5-2389-4241-aea1-9476f5188a86"
+      },
+      {
+        "name": "SA Male",
+        "size": "Medium",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:30.986455+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/M_SA_Med2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_full_dresses_M_SA_Med2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_lower_M_SA_Med2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_upper_M_SA_Med2_Full.jpg\n",
+        "skin_composition": "SA Male",
+        "uuid": "441d5d0d-9097-4cbd-a5ed-67f8840f9906"
+      },
+      {
+        "name": "SA Male",
+        "size": "Medium",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:28.880867+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/M_SA_Med1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_full_dresses_M_SA_Med1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_lower_M_SA_Med1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_upper_M_SA_Med1_Full.jpg\n",
+        "skin_composition": "SA Male",
+        "uuid": "5f6f67c7-75a8-4c79-8a5e-e70fc9b442e8"
+      },
+      {
+        "name": "SA Male",
+        "size": "Large",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:27.265508+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/M_SA_Lg2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_full_dresses_M_SA_Lg2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_lower_M_SA_Lg2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_upper_M_SA_Lg2_Full.jpg\n",
+        "skin_composition": "SA Male",
+        "uuid": "c4d5998b-da42-485f-81e5-4737f88e53a5"
+      },
+      {
+        "name": "SA Male",
+        "size": "Large",
+        "gender": "male",
+        "created_at": "2024-07-23T10:51:28.065432+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/M_SA_Lg1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_full_dresses_M_SA_Lg1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_lower_M_SA_Lg1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_upper_M_SA_Lg1_Full.jpg\n",
+        "skin_composition": "SA Male",
+        "uuid": "ae28a136-ccb7-41c2-ae40-c7c8ca7a758e"
+      },
+      {
+        "name": "SA Female",
+        "size": "Small",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:15.724408+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/F_SA_Small3_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_full_dresses_F_SA_Small3_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_lower_F_SA_Small3_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_upper_F_SA_Small3_Full.jpg\n",
+        "skin_composition": "SA Female",
+        "uuid": "269b15f1-1e8a-4e3e-9b52-702b419591b1"
+      },
+      {
+        "name": "SA Female",
+        "size": "Small",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:17.36324+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/F_SA_Small1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_full_dresses_F_SA_Small1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_lower_F_SA_Small1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_upper_F_SA_Small1_Full.jpg\n",
+        "skin_composition": "SA Female",
+        "uuid": "72b0d55c-c04a-4e56-a9e7-bfd1b9a478da"
+      },
+      {
+        "name": "SA Female",
+        "size": "Medium",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:14.151136+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/F_SA_Med2_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_full_dresses_F_SA_Med2_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_lower_F_SA_Med2_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_upper_F_SA_Med2_Full.jpg\n",
+        "skin_composition": "SA Female",
+        "uuid": "d307939b-2c80-47b7-a848-f27b09a2b375"
+      },
+      {
+        "name": "SA Female",
+        "size": "Medium",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:13.262044+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/F_SA_Med1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_full_dresses_F_SA_Med1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_lower_F_SA_Med1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_upper_F_SA_Med1_Full.jpg\n",
+        "skin_composition": "SA Female",
+        "uuid": "4d85b6c4-a07b-44f7-a925-7a65e5562f1d"
+      },
+      {
+        "name": "SA Female",
+        "size": "Large",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:12.459438+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/F_SA_Lg3_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_full_dresses_F_SA_Lg3_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_lower_F_SA_Lg3_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_upper_F_SA_Lg3_Full.jpg\n",
+        "skin_composition": "SA Female",
+        "uuid": "d8d1774f-5f42-4988-9614-9db71e9a3fb1"
+      },
+      {
+        "name": "SA Female",
+        "size": "Large",
+        "gender": "female",
+        "created_at": "2024-07-23T10:51:10.858727+00:00",
+        "cover_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/F_SA_Lg1_Full.jpg\n",
+        "mask_image": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_full_dresses_F_SA_Lg1_Full.jpg\n",
+        "lower_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_lower_F_SA_Lg1_Full.jpg\n",
+        "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_upper_F_SA_Lg1_Full.jpg\n",
+        "skin_composition": "SA Female",
+        "uuid": "bec98011-72b1-460b-8f2b-90cff51562f4"
+      }
+    ]
+
+
     if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
       // generate single product picture or public view
       try {
@@ -443,8 +734,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       }
 
       // generate a loop of 24 product images
-      for (let x = 0; x < models_data.length; x++) {
-        const model_obj = models_data[x];
+      for (let x = 0; x < DEFAULT_MODELS.length; x++) {
+        const model_obj = DEFAULT_MODELS[x];
 
 
         console.log("model_obj: ", model_obj.skin_composition)
