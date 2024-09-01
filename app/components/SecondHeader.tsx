@@ -421,8 +421,9 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
       })
     }
     `
+
     const DEFAULT_MODELS = [
-    {
+      {
         "name": "White Male",
         "size": "Large",
         "gender": "male",
@@ -433,8 +434,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/White Male/Large/Mask_upper_M_WT_Lg2_Full.jpg\n",
         "skin_composition": "White Male",
         "uuid": "44cbbfb1-de97-405b-aa79-1a8047c827db"
-    },
-    {
+      },
+      {
         "name": "SA Male",
         "size": "Medium",
         "gender": "male",
@@ -445,8 +446,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Medium/Mask_upper_M_SA_Med1_Full.jpg\n",
         "skin_composition": "SA Male",
         "uuid": "5f6f67c7-75a8-4c79-8a5e-e70fc9b442e8"
-    },
-    {
+      },
+      {
         "name": "White Male",
         "size": "Medium",
         "gender": "male",
@@ -457,8 +458,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/White Male/Medium/Mask_upper_M_WT_Med1_Full.jpg\n",
         "skin_composition": "White Male",
         "uuid": "579ada00-40b3-42ed-ac89-6aa72344df5b"
-    },
-    {
+      },
+      {
         "name": "White Male",
         "size": "Small",
         "gender": "male",
@@ -469,8 +470,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/White Male/Small/Mask_upper_M_WT_Small1_Full.jpg\n",
         "skin_composition": "White Male",
         "uuid": "24cade26-c97b-4c39-89ae-cf82ba7e5d3d"
-    },
-    {
+      },
+      {
         "name": "EA Male",
         "size": "Large",
         "gender": "male",
@@ -481,8 +482,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Large/Mask_upper_M_EA_Lg3_Full.jpg\n",
         "skin_composition": "EA Male",
         "uuid": "7f99b473-a8aa-4cf4-9e7a-6594e37a9070"
-    },
-    {
+      },
+      {
         "name": "EA Male",
         "size": "Medium",
         "gender": "male",
@@ -493,8 +494,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Medium/Mask_upper_M_EA_Med3_Full.jpg\n",
         "skin_composition": "EA Male",
         "uuid": "9fab3de5-9a44-48b5-b8a4-2024e382f59b"
-    },
-    {
+      },
+      {
         "name": "EA Male",
         "size": "Small",
         "gender": "male",
@@ -505,8 +506,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Male/Small/Mask_upper_M_EA_Small3_Full.jpg\n",
         "skin_composition": "EA Male",
         "uuid": "8cf154c8-4f70-44fb-a5cd-b61d52b33cda"
-    },
-    {
+      },
+      {
         "name": "White Female",
         "size": "Large",
         "gender": "female",
@@ -517,8 +518,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/White Female/Large/Mask_upper_F_WT_Lg1_Full.jpg\n",
         "skin_composition": "White Female",
         "uuid": "f5f94e52-a6c4-4476-a4c7-4f6db23e737f"
-    },
-    {
+      },
+      {
         "name": "White Female",
         "size": "Medium",
         "gender": "female",
@@ -529,8 +530,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/White Female/Medium/Mask_upper_F_WT_Med1_Full.jpg\n",
         "skin_composition": "White Female",
         "uuid": "e0183596-06e6-4226-b72e-2bcb8cadd7f0"
-    },
-    {
+      },
+      {
         "name": "White Female",
         "size": "Small",
         "gender": "female",
@@ -541,8 +542,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/White Female/Small/Mask_upper_body_F_WT_Small3_Full.jpg\n",
         "skin_composition": "White Female",
         "uuid": "e8f6289a-40b8-4629-ae12-c3dd2868c7e7"
-    },
-    {
+      },
+      {
         "name": "SA Female",
         "size": "Large",
         "gender": "female",
@@ -553,8 +554,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Large/Mask_upper_F_SA_Lg1_Full.jpg\n",
         "skin_composition": "SA Female",
         "uuid": "bec98011-72b1-460b-8f2b-90cff51562f4"
-    },
-    {
+      },
+      {
         "name": "SA Female",
         "size": "Medium",
         "gender": "female",
@@ -565,8 +566,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Medium/Mask_upper_F_SA_Med1_Full.jpg\n",
         "skin_composition": "SA Female",
         "uuid": "4d85b6c4-a07b-44f7-a925-7a65e5562f1d"
-    },
-    {
+      },
+      {
         "name": "SA Female",
         "size": "Small",
         "gender": "female",
@@ -577,8 +578,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Female/Small/Mask_upper_F_SA_Small3_Full.jpg\n",
         "skin_composition": "SA Female",
         "uuid": "269b15f1-1e8a-4e3e-9b52-702b419591b1"
-    },
-    {
+      },
+      {
         "name": "BLK Male",
         "size": "Large",
         "gender": "male",
@@ -589,8 +590,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Male/Large/Mask_upper_M_BLK_Lg1_Full.jpg\n",
         "skin_composition": "BLK Male",
         "uuid": "ef3bfb23-95b5-4f97-895f-b079a6984fa7"
-    },
-    {
+      },
+      {
         "name": "BLK Male",
         "size": "Medium",
         "gender": "male",
@@ -601,8 +602,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Male/Medium/Mask_upper_M_BLK_Med3_Full.jpg\n",
         "skin_composition": "BLK Male",
         "uuid": "38465811-ece2-4ea1-a203-6f053c70b405"
-    },
-    {
+      },
+      {
         "name": "BLK Male",
         "size": "Small",
         "gender": "male",
@@ -613,8 +614,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Male/Small/Mask_upper_M_BLK_Small2_Full.jpg\n",
         "skin_composition": "BLK Male",
         "uuid": "ca648c6b-0ebb-4993-a817-e2689e720e10"
-    },
-    {
+      },
+      {
         "name": "SA Male",
         "size": "Large",
         "gender": "male",
@@ -625,8 +626,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Large/Mask_upper_M_SA_Lg3_Full.jpg\n",
         "skin_composition": "SA Male",
         "uuid": "238c2aab-f09f-474b-b43d-1517c481d7b0"
-    },
-    {
+      },
+      {
         "name": "SA Male",
         "size": "Small",
         "gender": "male",
@@ -637,8 +638,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/SA Male/Small/Mask_upper_M_SA_Small1_Lower.jpg\n",
         "skin_composition": "SA Male",
         "uuid": "98bdc400-c292-4bce-9533-0a54689b85d7"
-    },
-    {
+      },
+      {
         "name": "BLK Female",
         "size": "Large",
         "gender": "female",
@@ -649,8 +650,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Large/Mask_upper_F_BLK_Lg1_Full.jpg\n",
         "skin_composition": "BLK Female",
         "uuid": "3fb2407f-fc21-4042-9190-df2b087aad08"
-    },
-    {
+      },
+      {
         "name": "BLK Female",
         "size": "Medium",
         "gender": "female",
@@ -661,8 +662,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Medium/Mask_upper_F_BLK_Med2_Full.jpg\n",
         "skin_composition": "BLK Female",
         "uuid": "248f9a9e-2e10-4e53-881e-d5b52a55ce17"
-    },
-    {
+      },
+      {
         "name": "BLK Female",
         "size": "Small",
         "gender": "female",
@@ -673,8 +674,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/BLK Female/Small/Mask_upper_F_BLK_Small3_Full.jpg\n",
         "skin_composition": "BLK Female",
         "uuid": "31527a2e-c88a-47ae-977c-038c5c053d2c"
-    },
-    {
+      },
+      {
         "name": "EA Female",
         "size": "Large",
         "gender": "female",
@@ -685,8 +686,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Female/Large/Mask_upper_F_EA_Lg1_Full.jpg\n",
         "skin_composition": "EA Female",
         "uuid": "bae3ee15-db93-480d-90ff-f4c199f6c135"
-    },
-    {
+      },
+      {
         "name": "EA Female",
         "size": "Medium",
         "gender": "female",
@@ -697,8 +698,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Female/Medium/Mask_upper_F_EA_Med2_Full.jpg\n",
         "skin_composition": "EA Female",
         "uuid": "b5e201e0-87bb-4918-bdd3-529939568a5d"
-    },
-    {
+      },
+      {
         "name": "EA Female",
         "size": "Small",
         "gender": "female",
@@ -709,8 +710,8 @@ const SecondHeader: React.FC<{ sessionData: any, onActivate: any }> = ({ session
         "upper_mask": "https://wearnow-bucket.s3.us-east-1.amazonaws.com/EA Female/Small/Mask_upper_F_EA_Small1_Full.jpg\n",
         "skin_composition": "EA Female",
         "uuid": "e90a4fdc-43ab-4164-9ad1-38c866548102"
-    }
-]
+      }
+    ]
 
     if (!active?.product_photo_limit || active?.product_photo_limit >= count) {
       // generate single product picture or public view
