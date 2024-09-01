@@ -672,6 +672,7 @@ const PhotoStudio: React.FC = () => {
         "uuid": "e90a4fdc-43ab-4164-9ad1-38c866548102"
       }
     ]
+
     setLoader("yes");
     let count = 0;
     const query = gql`query MyQuery7 ($storeID:uuid!) {
